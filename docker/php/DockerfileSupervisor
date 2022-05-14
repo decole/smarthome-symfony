@@ -1,0 +1,21 @@
+FROM registry.gitlab.com/decole/uberserver-symfony:base
+
+MAINTAINER decole <decole2014@yandex.ru>
+
+ARG NEW_RELIC_AGENT_VERSION
+ARG NEW_RELIC_LICENSE_KEY
+ARG NEW_RELIC_SUPERVISORNAME
+ARG NEW_RELIC_DAEMON_ADDRESS
+
+# Download and install NewRelic PHP extension. This generates newrelic.ini file at /usr/local/etc/php/conf.d/newrelic.ini
+RUN curl -L "https://download.newrelic.com/php_agent/archive/${NEW_RELIC_AGENT_VERSION}/newrelic-php5-${NEW_RELIC_AGENT_VERSION}-linux.tar.gz" | tar -C /tmp -zx \
+ && export NR_INSTALL_USE_CP_NOT_LN=1 \
+ && export NR_INSTALL_SILENT=1 \
+ && /tmp/newrelic-php5-*/newrelic-install install \
+ && rm -rf /tmp/newrelic-php5-* /tmp/nrinstall*
+
+# Install supervisor
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends supervisor
+
+COPY docker/supervisor/supervisord.conf /etc/supervisor
