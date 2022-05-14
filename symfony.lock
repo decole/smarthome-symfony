@@ -83,6 +83,18 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.12"
     },
+    "kevinpapst/adminlte-bundle": {
+        "version": "3.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.9",
+            "ref": "36a77f782cd6f7cd761384c6a301fedf018e37e5"
+        },
+        "files": [
+            "config/packages/admin_lte.yaml"
+        ]
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -263,15 +275,6 @@
         "files": [
             "config/packages/mailer.yaml"
         ]
-    },
-    "symfony/mailgun-mailer": {
-        "version": "5.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "4.4",
-            "ref": "addcb559b32d9dbb4843826b063565e1b15a2a57"
-        }
     },
     "symfony/maker-bundle": {
         "version": "1.42",
