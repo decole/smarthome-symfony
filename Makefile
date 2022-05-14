@@ -1,5 +1,3 @@
-first-init: rm-docker-compose docker-create-network-cpa build up env composer-install genrsa migration
-
 up:
 	docker-compose up -d
 
@@ -33,6 +31,9 @@ fixture:
 
 test-clean-output:
 	docker-compose exec php-fpm php bin/codecept clean
+
+ps:
+	docker-compose ps
 
 perm:
 	sudo chown -R ${USER}:${USER} var
