@@ -1,5 +1,7 @@
 # What is this
 
+AdminLTE3 bundle docs: https://github.com/kevinpapst/AdminLTEBundle/blob/master/Resources/docs/configurations.md 
+
 > Pet project for my smart home infrastructure.
 
 - [x] Добавить PostgreSQL в .env
@@ -8,6 +10,7 @@
 - [x] добавить PostgreSql в docker-compose.yaml
 - [x] sh script for pushing project docker images
 - [ ] adminlte3 for symfony - https://github.com/kevinpapst/AdminLTEBundle
+- [ ] mqtt service
 - [ ] auth system 
 - [ ] 
 

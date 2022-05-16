@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Application\Http\Web\Home;
 
 
 use Symfony\Component\HttpFoundation\Response;
