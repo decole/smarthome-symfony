@@ -83,18 +83,6 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.12"
     },
-    "kevinpapst/adminlte-bundle": {
-        "version": "3.6",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "0.9",
-            "ref": "36a77f782cd6f7cd761384c6a301fedf018e37e5"
-        },
-        "files": [
-            "config/packages/admin_lte.yaml"
-        ]
-    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -130,6 +118,9 @@
     },
     "psr/log": {
         "version": "2.0.0"
+    },
+    "roave/security-advisories": {
+        "version": "dev-latest"
     },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
