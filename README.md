@@ -1,5 +1,10 @@
 # What is this
 
+AdminLte3: https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
+
+
+Symfony Docs: https://symfony.com/doc/5.4/routing.html
+
 > Pet project for my smart home infrastructure.
 
 - [x] Добавить PostgreSQL в .env
@@ -7,9 +12,10 @@
 - [x] пофиксить .env-local
 - [x] добавить PostgreSql в docker-compose.yaml
 - [x] sh script for pushing project docker images
-- [ ] adminlte3 for symfony - https://github.com/kevinpapst/AdminLTEBundle
+- [x] add adminlte3 distributive
+- [ ] mqtt service
 - [ ] auth system 
-- [ ] 
+- [ ]
 
 
 ----

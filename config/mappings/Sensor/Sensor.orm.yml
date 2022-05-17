@@ -1,0 +1,21 @@
+App\Domain\Doctrine\Sensor\Entity\Sensor:
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    placement:
+      type: string
+    redirectUrl:
+      type: string
+    isEnable:
+      type: boolean
+    dateStart:
+      type: datetime_immutable
+    dateEnd:
+      type: datetime_immutable
+    isDeleted:
+      type: boolean
+    deletedAt:
+      type: datetime_immutable
+      nullable: true

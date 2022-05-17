@@ -1,0 +1,12 @@
+parameters:
+  router.request_context.host: '%env(APP_HOST)%'
+  router.request_context.scheme: '%env(APP_SCHEME)%'
+
+services:
+  _defaults:
+    public: false
+    autowire: true
+    autoconfigure: true
+
+  App\Application\Cli\:
+    resource: '%kernel.project_dir%/src/Application/Cli/**/*Command.php'
