@@ -4,18 +4,38 @@ App\Domain\Doctrine\Sensor\Entity\Sensor:
     id:
       id: true
       type: uuid
-    placement:
+    name:
       type: string
-    redirectUrl:
+      unique: true
+    topic:
       type: string
-    isEnable:
+      unique: true
+    payload_min:
+      type: integer
+    payload_max:
+      type: integer
+    payload:
+      type: string
+      nullable: true
+    message_info:
+      type: string
+      nullable: true
+    message_ok:
+      type: string
+      nullable: true
+    message_warn:
+      type: string
+      nullable: true
+    type:
+      type: smallint
+    status:
+      type: smallint
+    notify:
       type: boolean
-    dateStart:
+    createdAt:
       type: datetime_immutable
-    dateEnd:
+      name: created_at
+    updatedAt:
       type: datetime_immutable
-    isDeleted:
-      type: boolean
-    deletedAt:
-      type: datetime_immutable
+      name: updated_at
       nullable: true

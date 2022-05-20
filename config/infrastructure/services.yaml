@@ -2,3 +2,32 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
+
+  App\Infrastructure\Mqtt\Service\MqttHandleService:
+    arguments:
+      $logger: '@monolog.logger.mqtt_transport'
+      $broker: '%env(MQTT_BROKER_URL)%'
+      $port: '%env(MQTT_PORT)%'
+
+  App\Infrastructure\Mqtt\Service\MqttService: ~
+
+  app.cache.adapter.redis:
+    parent: 'cache.adapter.redis'
+    tags:
+      - { name: 'cache.pool', namespace: 'doctrine_query' }
+
+  redis_client:
+    class: Redis
+    factory: Symfony\Component\Cache\Adapter\RedisAdapter::createConnection
+    arguments:
+      - '%env(REDIS_DSN)%'
+
+  redis_adapter:
+    class: Symfony\Component\Cache\Adapter\RedisTagAwareAdapter
+    arguments:
+      - '@redis_client'
+      - 'uberserver_app'
+
+  App\Infrastructure\Cache\CacheService:
+    arguments:
+      $cache: '@redis_adapter'
