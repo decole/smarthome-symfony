@@ -38,3 +38,7 @@ Create project by:
 - Yii2 (simple / advanced) 
 - Laravel (7/8/9)
 - Symfony (current version)
+
+
+## Список задействованных ключей кэша
+    - topicsByType - тип устройства и задействованные топики
