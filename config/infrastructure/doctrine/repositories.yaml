@@ -1,0 +1,12 @@
+services:
+  _instanceof:
+    App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository:
+      tags: [ 'doctrine.repository' ]
+      calls:
+        - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+
+  Doctrine\ORM\EntityManager: '@doctrine.orm.entity_manager'
+
+  App\Infrastructure\Doctrine\Repository\:
+    resource: '%kernel.project_dir%/src/Infrastructure/Doctrine/Repository/**/*Repository.php'
+    autowire: true

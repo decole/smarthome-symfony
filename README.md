@@ -42,3 +42,10 @@ Create project by:
 
 ## Список задействованных ключей кэша
     - topicsByType - тип устройства и задействованные топики
+
+
+## Queue:
+
+php bin/console messenger:consume async - async send emails
+
+в последствии нужно будет сделать задачу в supervisor чтобы отправлять письма

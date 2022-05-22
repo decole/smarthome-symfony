@@ -24,7 +24,7 @@ migration:
 	docker-compose exec php-fpm php bin/console d:m:m --no-interaction
 
 new-migration:
-	docker-compose exec php-fpm php bin/console d:m:diff
+	docker-compose exec php-fpm php bin/console make:migration
 
 fixture:
 	docker-compose exec php-fpm php bin/console d:f:l --no-interaction --purge-with-truncate
