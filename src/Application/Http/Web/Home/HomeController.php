@@ -19,10 +19,4 @@ class HomeController extends AbstractController
             'number' => $number,
         ]);
     }
-
-    #[Route('/login', name: "login")]
-    public function login(): Response
-    {
-        return $this->render('auth/login.html.twig', []);
-    }
 }

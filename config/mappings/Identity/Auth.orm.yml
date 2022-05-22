@@ -1,0 +1,10 @@
+App\Domain\Doctrine\Identity\Entity\Auth:
+  type: embeddable
+  fields:
+    login:
+      type: string
+      unique: true
+    passwordHash:
+      type: string
+    authKey:
+      type: string
