@@ -23,11 +23,7 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Sensor\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Sensor'
-            identity:
+            user:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Identity\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Identity'
-            user:
-                type: yml
-                prefix: 'App\Domain\Doctrine\User\Entity'
-                dir: '%kernel.project_dir%/config/mappings/User'

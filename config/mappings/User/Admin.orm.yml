@@ -1,6 +1,0 @@
-App\Domain\Doctrine\User\Entity\Admin:
-  type: entity
-  fields:
-    name:
-      type: string
-      nullable: true

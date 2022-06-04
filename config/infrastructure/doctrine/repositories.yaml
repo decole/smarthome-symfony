@@ -10,3 +10,6 @@ services:
   App\Infrastructure\Doctrine\Repository\:
     resource: '%kernel.project_dir%/src/Infrastructure/Doctrine/Repository/**/*Repository.php'
     autowire: true
+
+  App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface:
+    class: App\Infrastructure\Doctrine\Repository\Identity\UserRepository

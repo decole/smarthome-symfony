@@ -4,19 +4,19 @@
 namespace App\Domain\Doctrine\SecureSystem\Service;
 
 
+use App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface;
 use App\Domain\Doctrine\SecureSystem\Dto\RegisterDto;
-use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 
 class RegistrationValidateService
 {
     private bool $valid = true;
     private array $errors = [];
 
-    public function __construct(private UserRepository $repository)
+    public function __construct(private UserRepositoryInterface $repository)
     {
     }
 
-    public function validate(RegisterDto $dto, string $csrfSessionToken): array
+    final public function validate(RegisterDto $dto, string $csrfSessionToken): array
     {
         $this->validCsfr($dto, $csrfSessionToken);
         $this->checkNotEmpty($dto);

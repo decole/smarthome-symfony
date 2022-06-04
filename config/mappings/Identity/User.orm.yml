@@ -5,21 +5,20 @@ App\Domain\Doctrine\Identity\Entity\User:
   discriminatorColumn:
     name: user_type
     type: string
-  discriminatorMap:
-    admin: App\Domain\Doctrine\User\Entity\Admin
   fields:
     id:
       id: true
       type: uuid
-    isMessagesEnabled:
+    email:
+      type: string
+      unique: true
+      length: 180
+    roles:
+      type: json
+    password:
+      type: string
+    isVerified:
       type: boolean
-  embedded:
-    auth:
-      class: App\Domain\Doctrine\Identity\Entity\Auth
-      columnPrefix: false
-    contact:
-      class: App\Domain\Doctrine\Identity\Entity\Contact
-      columnPrefix: false
-    activity:
-      class: App\Domain\Doctrine\Identity\Entity\Activity
-      columnPrefix: false
+    name:
+      type: string
+      unique: true
