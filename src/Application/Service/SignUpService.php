@@ -5,48 +5,44 @@ namespace App\Application\Service;
 
 
 use App\Domain\Doctrine\Common\Transactions\TransactionInterface;
-use App\Domain\Doctrine\Identity\Entity\Auth;
-use App\Domain\Doctrine\Identity\Entity\Contact;
 use App\Domain\Doctrine\Identity\Entity\User;
 use App\Domain\Doctrine\SecureSystem\Dto\RegisterDto;
-use App\Domain\Doctrine\User\Entity\Admin;
 use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
-use App\Infrastructure\Security\Auth\EmailVerifier;
+use App\Infrastructure\Security\Auth\Service\EmailVerifyService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SignUpService
 {
     public function __construct(
         private TransactionInterface $transaction,
         private UserRepository $userRepository,
-        private EmailVerifier $emailVerifier,
+        private EmailVerifyService $emailVerifier,
+        private UserPasswordHasherInterface $passwordHasher,
         private string $email,
         private string $subject,
     ) {
-
     }
 
-    final public function sugnUp(RegisterDto $dto): User
+    final public function signUp(RegisterDto $dto): User
     {
-        /** @var Admin $user */
-        $user = $this->transaction->transactional(
-            function () use ($dto) {
-                $user = new Admin(
-                    new Auth($dto->getName(), $dto->getPassword()),
-                    new Contact($dto->getEmail())
-                );
+        $user = new User();
+        $user->setName($dto->getName());
+        $user->setEmail($dto->getEmail());
+        $user->setRoles([User::ROLE_USER]);
+        $user->setPassword($this->passwordHasher->hashPassword($user, $dto->getPassword()));
 
-                $this->userRepository->save($user);
-
-                return $user;
+        $this->transaction->transactional(
+            function () use ($user) {
+                $this->userRepository->add($user, true);
             }
         );
 
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
             (new TemplatedEmail())
                 ->from(new Address($this->email,  $this->subject))
-                ->to($user->getContact()->getEmail())
+                ->to($user->getEmail())
         ->subject('Please Confirm your Email')
         ->htmlTemplate('registration/confirmation_email.html.twig')
         );

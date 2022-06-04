@@ -39,4 +39,3 @@ perm:
 	sudo chown -R ${USER}:${USER} var
 	sudo chown -R ${USER}:${USER} vendor
 	sudo chown -R ${USER}:${USER} tests
-	sudo chown -R ${USER}:${USER} .psalm

@@ -4,3 +4,5 @@ services:
     autoconfigure: true
 
   App\Domain\Doctrine\SecureSystem\Service\RegistrationValidateService: ~
+
+  App\Domain\Doctrine\SecureSystem\Service\LoginFormAuthenticator: ~

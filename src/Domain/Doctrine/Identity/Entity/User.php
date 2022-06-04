@@ -1,64 +1,54 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Identity\Entity;
 
-
 use App\Domain\Doctrine\Common\Traits\Entity;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[UniqueEntity(fields: ['auth.login'], message: 'There is already an account with this auth.login')]
-abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
+/**
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="`user`")
+ */
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Entity;
 
-    protected Activity $activity;
-    protected $email;
-    protected $roles = [];
-    protected $password;
-    protected bool $isMessagesEnabled = false;
-    private $isVerified = false;
+    public const ROLE_USER = 'ROLE_USER';
 
-    public function __construct(private Auth $auth, private Contact $contact)
+    private string $name;
+
+    private $email;
+
+    private $roles = [];
+
+    private $password;
+
+    private bool $isVerified;
+
+    public function __construct()
     {
         $this->identify();
-        $this->activity = new Activity();
+        $this->isVerified = false;
     }
 
-    public function getAuth(): Auth
+    public function getEmail(): ?string
     {
-        return $this->auth;
+        return $this->email;
     }
 
-    public function changeAuth(Auth $auth): void
+    public function setEmail(string $email): self
     {
-        $this->auth = $auth;
-    }
+        $this->email = $email;
 
-    public function getContact(): Contact
-    {
-        return $this->contact;
-    }
-
-    public function changeContact(Contact $contact): void
-    {
-        $this->contact = $contact;
-    }
-
-    public function getType(): string
-    {
-        $fullClassName = explode(
-            "\\",
-            strtolower(static::class)
-        );
-        return end($fullClassName);
+        return $this;
     }
 
     public function getUserIdentifier(): string
     {
-        return $this->auth->getLogin();
+        return (string) $this->email;
     }
 
     /**
@@ -66,7 +56,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return $this->auth->getLogin();
+        return (string) $this->email;
     }
 
     /**
@@ -75,8 +65,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLE_USER; // todo debug this
 
         return array_unique($roles);
     }
@@ -103,26 +92,43 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
     public function getSalt(): ?string
     {
         return null;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function eraseCredentials()
     {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
-
-    abstract public static function signUp(Auth $auth, string $email, ?string $telegram, ?int $telegramId): User;
 
     public function isVerified(): bool
     {
-        return $this->activity->isConfirmed();
+        return $this->isVerified;
     }
 
-    public function setIsVerified(): self
+    public function setIsVerified(): void
     {
-        $this->activity->confirm();
+        $this->isVerified = true;
+    }
 
-        return $this;
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 }

@@ -36,8 +36,6 @@ services:
     arguments:
       $cache: '@redis_adapter'
 
-  App\Infrastructure\Security\Auth\EmailVerifier: ~
+  App\Infrastructure\Security\Auth\Service\EmailVerifyService: ~
 
   App\Infrastructure\Security\Auth\Service\CsrfService: ~
-
-  App\Infrastructure\Doctrine\Repository\Identity\UserRepository: ~

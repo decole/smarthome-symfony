@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Security\Auth;
 
-use App\Domain\Doctrine\User\Entity\Admin;
+namespace App\Infrastructure\Security\Auth\Service;
+
+
+use App\Domain\Doctrine\Identity\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
-class EmailVerifier
+class EmailVerifyService
 {
     private VerifyEmailHelperInterface $verifyEmailHelper;
     private MailerInterface $mailer;
@@ -26,11 +28,11 @@ class EmailVerifier
 
     public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void
     {
-        /** @var Admin $user */
+        /** @var User $user */
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
             (string)$user->getId(),
-            $user->getContact()->getEmail(),
+            $user->getEmail(),
             ['id' => (string)$user->getId()]
         );
 
@@ -49,8 +51,8 @@ class EmailVerifier
      */
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
     {
-        /** @var Admin $user */
-        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getContact()->getEmail());
+        /** @var User $user */
+        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), (string)$user->getId(), $user->getEmail());
 
         $user->setIsVerified();
 
