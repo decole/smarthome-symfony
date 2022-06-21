@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Application\Service;
+namespace App\Infrastructure\Security\Register\Service;
 
 
 use App\Domain\Doctrine\Common\Transactions\TransactionInterface;

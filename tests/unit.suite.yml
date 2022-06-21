@@ -1,0 +1,15 @@
+actor: UnitTester
+modules:
+  enabled:
+    - Asserts:
+    - Symfony:
+        app_path: 'src'
+        environment: 'test'
+    - Doctrine2:
+        depends: Symfony
+#    - DataFactory:
+#        depends: Doctrine2
+#          - \Helper\Factories
+#    - \App\Tests\_support\Modules\DataBuilderModule:
+#        depends: Doctrine2
+    - \App\Tests\Helper\Unit

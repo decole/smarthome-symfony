@@ -1,20 +1,35 @@
 version: "3.4"
 services:
   php-fpm:
-    build: ./docker/php
+    image: registry.gitlab.com/decole/uberserver-symfony:app
     container_name: uberserver-symfony
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
       - "RABBITMQ_PORT=5672"
       - "RABBITMQ_HOST=docker-rabbitmq"
+      - "PHP_IDE_CONFIG=serverName=Docker"
     volumes:
       - ./:/var/www
+      - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
     networks:
       - uberserver
 
+#  supervisor:
+#    image: registry.gitlab.com/decole/uberserver-symfony:supervisor
+#    container_name: uberserver-symfony-supervisor
+#    volumes:
+#      - ./docker/supervisor/config:/etc/supervisor/conf.d
+#      - ./:/var/www
+#    restart: always
+#    command: /usr/bin/supervisord
+#    depends_on:
+#      - postgres
+#    networks:
+#      - uberserver
+
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     container_name: uberserver-web
     restart: always
     volumes:
@@ -24,8 +39,8 @@ services:
     depends_on:
       - php-fpm
     ports:
-      - "80:80"
-      - "443:443"
+      - "84:80"
+#      - "443:443"
     networks:
       - uberserver
 
@@ -36,13 +51,30 @@ services:
       - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
       - uberserver-postgres:/var/lib/postgresql/data
     ports:
-      - "54321:5432"
+      - "54322:5432"
     environment:
       - "POSTGRES_DB=uberserver"
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
     networks:
       - uberserver
+
+  redis:
+    image: redis:6.0
+    container_name: uberserver-redis
+    networks:
+      - uberserver
+
+  redisinsight:
+      image: redislabs/redisinsight:latest
+      container_name: uberserver-redisinsight
+      restart: always
+      ports:
+          - "8001:8001"
+#      volumes:
+#          - ./docker-compose/.dev/redisinsight:/db
+      networks:
+          - uberserver
 
 volumes:
   uberserver-postgres:

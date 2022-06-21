@@ -1,0 +1,7 @@
+App\Domain\Doctrine\Sensor\Entity\SensorPressure:
+  type: entity
+  fields:
+    payload_min:
+      type: string
+    payload_max:
+      type: string

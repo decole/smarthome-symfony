@@ -1,5 +1,16 @@
 App\Domain\Doctrine\Sensor\Entity\Sensor:
+  table: 'sensor'
   type: entity
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: sensor_type
+    type: string
+  discriminatorMap:
+    temperature: App\Domain\Doctrine\Sensor\Entity\SensorTemperature
+    humidity: App\Domain\Doctrine\Sensor\Entity\SensorHumidity
+    leakage: App\Domain\Doctrine\Sensor\Entity\SensorLeakage
+    pressure: App\Domain\Doctrine\Sensor\Entity\SensorPressure
+    dryContact: App\Domain\Doctrine\Sensor\Entity\SensorDryContact
   fields:
     id:
       id: true
@@ -10,24 +21,9 @@ App\Domain\Doctrine\Sensor\Entity\Sensor:
     topic:
       type: string
       unique: true
-    payload_min:
-      type: integer
-    payload_max:
-      type: integer
     payload:
       type: string
       nullable: true
-    message_info:
-      type: string
-      nullable: true
-    message_ok:
-      type: string
-      nullable: true
-    message_warn:
-      type: string
-      nullable: true
-    type:
-      type: smallint
     status:
       type: smallint
     notify:
@@ -39,3 +35,7 @@ App\Domain\Doctrine\Sensor\Entity\Sensor:
       type: datetime_immutable
       name: updated_at
       nullable: true
+  embedded:
+    statusMessage:
+      class: App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage
+      columnPrefix: false

@@ -1,0 +1,12 @@
+App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage:
+  type: embeddable
+  fields:
+    message_info:
+      type: string
+      nullable: true
+    message_ok:
+      type: string
+      nullable: true
+    message_warn:
+      type: string
+      nullable: true

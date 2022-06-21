@@ -1,6 +1,11 @@
+{% extends "layout/layout.html.twig" %}
 
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <h1>Index</h1>
+    <p class="important">
+        Welcome on my awesome homepage.
+    </p>
     <h1>Your lucky number is {{ number }}</h1>
-
-    {% for flash in app.flashes('success') %}
-        <div class="alert alert-danger" role="alert">{{ flash }}</div>
-    {% endfor %}
+{% endblock %}

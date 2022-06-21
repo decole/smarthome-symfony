@@ -1,0 +1,7 @@
+App\Domain\Doctrine\Sensor\Entity\SensorLeakage:
+  type: entity
+  fields:
+    payload_dry:
+      type: string
+    payload_wet:
+      type: string
