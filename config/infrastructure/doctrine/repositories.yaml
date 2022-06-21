@@ -11,5 +11,6 @@ services:
     resource: '%kernel.project_dir%/src/Infrastructure/Doctrine/Repository/**/*Repository.php'
     autowire: true
 
+  # Репозиторий security обвертки Symfony, под общее правило не подпадает. Регистрирую отдельно
   App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface:
     class: App\Infrastructure\Doctrine\Repository\Identity\UserRepository

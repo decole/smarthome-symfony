@@ -39,3 +39,12 @@ services:
   App\Infrastructure\Security\Auth\Service\EmailVerifyService: ~
 
   App\Infrastructure\Security\Auth\Service\CsrfService: ~
+
+  App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService: ~
+
+  App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory: ~
+
+  App\Infrastructure\Security\Register\Service\SignUpService:
+    arguments:
+      $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
+      $subject: '%env(EMAIL_REGISTRATION_EMAIL_SUBJECT)%'

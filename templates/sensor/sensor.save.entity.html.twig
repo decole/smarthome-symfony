@@ -1,0 +1,141 @@
+{% if action == 'create' %}
+    {% set page_name = 'Форма создания сенсора' %}
+    {% set action_form = path('sensors_create_by_type', {type: sensor.type}) %}
+    {% set back = path('sensors_create') %}
+{% else %}
+    {% set page_name = 'Форма изменения сенсора ' ~ sensor.name %}
+    {% set action_form = path('sensors_update_by_id', {id: entityId}) %}
+    {% set back = path('sensors') %}
+{% endif %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{ page_name }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ path('sensors_create') }}">Создание сенсоров</a></li>
+                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <span class="card-title">{{ page_name }} [{{ typeTranscribe[sensor.type]|capitalize }}]</span>
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="POST" action="{{ action_form }}">
+                        <div class="card-body">
+                            {% if errors is not empty %}
+
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        {% for error in errors %}
+                                            <li>{{ error.propertyPath }} - {{ error.message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            {% endif %}
+                            <div class="form-group">
+                                <label>Название сенсора</label>
+                                <input type="text" name="name" value="{{ sensor.name }}" class="form-control" placeholder="Кухня температура" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label>Топик</label>
+                                <input type="text" name="topic" value="{{ sensor.topic }}" class="form-control" placeholder="hall/example">
+                            </div>
+                            <div class="form-group">
+                                <label>Текущее состояние сенсора</label>
+                                <input type="text" name="payload" value="{{ sensor.payload }}" class="form-control" placeholder="10">
+                            </div>
+                            {% if sensor.type == 'temperature' or sensor.type == 'humidity' or sensor.type == 'pressure' %}
+                            <div class="form-group">
+                                <label>Значение минимальное</label>
+                                <input type="text" name="payload_min" value="{{ sensor.payload_min }}" class="form-control" placeholder="10" required>
+                            </div>
+                            {% endif %}
+                            {% if sensor.type == 'temperature' or sensor.type == 'humidity' or sensor.type == 'pressure' %}
+                            <div class="form-group">
+                                <label>Значение максимальное</label>
+                                <input type="text" name="payload_max" value="{{ sensor.payload_max }}" class="form-control" placeholder="40" required>
+                            </div>
+                            {% endif %}
+                            {% if sensor.type == 'leakage' %}
+                                <div class="form-group">
+                                    <label>Значение - сухо</label>
+                                    <input type="text" name="payload_dry" value="{{ sensor.payload_dry }}" class="form-control" placeholder="0" required>
+                                </div>
+                            {% endif %}
+                            {% if sensor.type == 'leakage' %}
+                                <div class="form-group">
+                                    <label>Значение - протечка</label>
+                                    <input type="text" name="payload_wet" value="{{ sensor.payload_wet }}" class="form-control" placeholder="1" required>
+                                </div>
+                            {% endif %}
+                            {% if sensor.type == 'dryContact' %}
+                                <div class="form-group">
+                                    <label>Значение - есть сигнал</label>
+                                    <input type="text" name="payload_high" value="{{ sensor.payload_high }}" class="form-control" placeholder="1" required>
+                                </div>
+                            {% endif %}
+                            {% if sensor.type == 'dryContact' %}
+                                <div class="form-group">
+                                    <label>Значение - нет сигнала</label>
+                                    <input type="text" name="payload_low" value="{{ sensor.payload_low }}" class="form-control" placeholder="0" required>
+                                </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label>Текст для информации</label>
+                                <input type="text" name="message_info" value="{{ sensor.message_info }}" class="form-control" placeholder="Сенсор Кухня температура">
+                            </div>
+                            <div class="form-group">
+                                <label>Текст для статуса Oк</label>
+                                <input type="text" name="message_ok" value="{{ sensor.message_ok }}" class="form-control" placeholder="Сенсор Кухня температура, все хорошо">
+                            </div>
+                            <div class="form-group">
+                                <label>Текст для вывода алерта</label>
+                                <input type="text" name="message_warn" value="{{ sensor.message_warn }}" class="form-control" placeholder="Внимание, что то произошло">
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch" {% if sensor.status == 'on' %} checked {% endif %}>
+                                <label class="custom-control-label" for="statusSwitch">Статус сенсора</label>
+                            </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch" {% if sensor.notify == 'on' %} checked {% endif %}>
+                                <label class="custom-control-label" for="notifySwitch">Присылать оповещения</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

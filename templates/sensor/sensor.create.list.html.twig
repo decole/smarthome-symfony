@@ -1,0 +1,67 @@
+{% set page_name = 'Создание сенсора. Выбор типа' %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{ page_name }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 row-cols-md-2 offset-md-3 row-cols-lg-2 offset-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Список типов сенсоров</span>
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <a href="{{ path('sensors') }}" type="submit" class="btn btn-primary">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                            <tr>
+                                <th width="80%">Type</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sensorType in sensorTypes %}
+                                <tr>
+                                    <td>{{ typeTranscribe[sensorType]|capitalize }}</td>
+                                    <td>
+                                        <a href="{{ path('sensors_create') }}/{{ sensorType }}" class="btn btn-warning">Создать</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

@@ -19,11 +19,15 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            sensor:
-                type: yml
-                prefix: 'App\Domain\Doctrine\Sensor\Entity'
-                dir: '%kernel.project_dir%/config/mappings/Sensor'
             user:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Identity\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Identity'
+            deviceCommon:
+                type: yml
+                prefix: 'App\Domain\Doctrine\DeviceCommon\Entity'
+                dir: '%kernel.project_dir%/config/mappings/DeviceCommon'
+            sensor:
+                type: yml
+                prefix: 'App\Domain\Doctrine\Sensor\Entity'
+                dir: '%kernel.project_dir%/config/mappings/Sensor'

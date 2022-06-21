@@ -7,7 +7,4 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Application\Service\SignUpService:
-    arguments:
-      $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
-      $subject: '%env(EMAIL_REGISTRATION_EMAIL_SUBJECT)%'
+  App\Application\Service\Validation\Sensor\SensorValidationService: ~

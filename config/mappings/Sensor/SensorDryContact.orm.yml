@@ -1,0 +1,7 @@
+App\Domain\Doctrine\Sensor\Entity\SensorDryContact:
+  type: entity
+  fields:
+    payload_high:
+      type: string
+    payload_low:
+      type: string
