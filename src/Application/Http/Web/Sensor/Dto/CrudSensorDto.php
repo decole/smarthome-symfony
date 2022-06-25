@@ -8,7 +8,7 @@ use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateSensorDto implements ValidationDtoInterface
+class CrudSensorDto implements ValidationDtoInterface
 {
     #[Assert\NotBlank]
     #[Assert\Choice(choices: Sensor::SENSOR_TYPES)]

@@ -121,12 +121,12 @@
                             </div>
 
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch" {% if sensor.status == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="statusSwitch">Статус сенсора</label>
+                                <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch0" {% if sensor.status == 'on' %} checked {% endif %}>
+                                <label class="custom-control-label" for="statusSwitch0">Статус сенсора</label>
                             </div>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch" {% if sensor.notify == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="notifySwitch">Присылать оповещения</label>
+                            <div class="custom-control custom-switch pb-2">
+                                <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch1" {% if sensor.notify == 'on' %} checked {% endif %}>
+                                <label class="custom-control-label" for="notifySwitch1">Присылать оповещения</label>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Сохранить</button>
