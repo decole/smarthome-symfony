@@ -44,6 +44,10 @@ services:
 
   App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory: ~
 
+  App\Infrastructure\Doctrine\Service\Relay\RelayCrudService: ~
+
+  App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory: ~
+
   App\Infrastructure\Security\Register\Service\SignUpService:
     arguments:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'

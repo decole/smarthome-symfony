@@ -8,3 +8,5 @@ services:
     autoconfigure: true
 
   App\Application\Service\Validation\Sensor\SensorValidationService: ~
+
+  App\Application\Service\Validation\Relay\RelayValidationService: ~

@@ -1,0 +1,60 @@
+App\Domain\Doctrine\Relay\Entity\Relay:
+  table: 'relay'
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    name:
+      type: string
+      unique: true
+    topic:
+      type: string
+      unique: true
+    checkTopic:
+      type: string
+      name: check_topic
+      nullable: true
+    commandOn:
+      name: command_on
+      type: string
+    commandOff:
+      type: string
+      name: command_off
+    checkTopicPayloadOn:
+      type: string
+      name: check_topic_payload_on
+      nullable: true
+    checkTopicPayloadOff:
+      type: string
+      name: check_topic_payload_off
+      nullable: true
+    isFeedbackPayload:
+      type: boolean
+      name: is_feedback_payload
+      default: false
+    payload:
+      type: string
+      nullable: true
+    lastCommand:
+      type: string
+      name: last_command
+      nullable: true
+    type:
+      type: string
+      nullable: false
+    status:
+      type: smallint
+    notify:
+      type: boolean
+    createdAt:
+      type: datetime_immutable
+      name: created_at
+    updatedAt:
+      type: datetime_immutable
+      name: updated_at
+      nullable: true
+  embedded:
+    statusMessage:
+      class: App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage
+      columnPrefix: false

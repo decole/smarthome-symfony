@@ -5,7 +5,7 @@ namespace App\Infrastructure\Doctrine\Service\Sensor;
 
 
 use App\Application\Helper\StringHelper;
-use App\Application\Http\Web\Sensor\Dto\CreateSensorDto;
+use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
@@ -17,6 +17,7 @@ use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
 use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use App\Infrastructure\Doctrine\Service\Sensor\Exception\AdvancedFieldsException;
 use App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory;
+use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
@@ -27,11 +28,13 @@ use Webmozart\Assert\Assert;
 
 final class SensorCrudService
 {
+    use StatusMessageTrait;
+
     public function __construct(private SensorCrudFactory $crud)
     {
     }
 
-    public function validate(CreateSensorDto $sensorDto, bool $isUpdate = false): ConstraintViolationListInterface
+    public function validate(CrudSensorDto $sensorDto, bool $isUpdate = false): ConstraintViolationListInterface
     {
         $this->crud->getValidationService()->setValue($sensorDto);
 
@@ -43,6 +46,8 @@ final class SensorCrudService
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
+        assert($dto instanceof CrudSensorDto);
+
         $entity = $this->getNewEntityByDto($dto);
 
         return $this->crud->save($entity);
@@ -56,7 +61,7 @@ final class SensorCrudService
     /**
      * @throws OptimisticLockException|ORMException
      */
-    public function update(string $id, CreateSensorDto $dto): EntityInterface
+    public function update(string $id, CrudSensorDto $dto): EntityInterface
     {
         /** @var SensorTemperature|SensorHumidity|SensorPressure|SensorDryContact|SensorLeakage $entity */
         $entity = $this->crud->getRepository()->findById($id);
@@ -108,9 +113,9 @@ final class SensorCrudService
         return array_keys(Sensor::DISCRIMINATOR_MAP);
     }
 
-    public function createSensorDto(string $type, ?Request $request): CreateSensorDto
+    public function createSensorDto(string $type, ?Request $request): CrudSensorDto
     {
-        $dto = new CreateSensorDto();
+        $dto = new CrudSensorDto();
         $dto->type = $type;
 
         if ($request === null) {
@@ -129,13 +134,13 @@ final class SensorCrudService
     /**
      * @throws NonUniqueResultException
      */
-    public function entitySensorDto(string $id): CreateSensorDto
+    public function entitySensorDto(string $id): CrudSensorDto
     {
         /** @var SensorTemperature|SensorHumidity|SensorPressure|SensorDryContact|SensorLeakage $entity */
         $entity = $this->crud->getRepository()->findById($id);
         $rc = new ReflectionClass($entity);
 
-        $dto = new CreateSensorDto();
+        $dto = new CrudSensorDto();
         $dto->type = $entity->getType();
         $dto->name = $entity->getName();
         $dto->topic = $entity->getTopic();
@@ -148,9 +153,7 @@ final class SensorCrudService
         $dto->payload_high = $rc->hasMethod('getPayloadHigh') ? $entity?->getPayloadHigh() : null;
         $dto->payload_low = $rc->hasMethod('getPayloadLow') ? $entity?->getPayloadLow() : null;
 
-        $dto->message_info = $entity->getStatusMessage()->getMessageInfo();
-        $dto->message_ok = $entity->getStatusMessage()->getMessageOk();
-        $dto->message_warn = $entity->getStatusMessage()->getMessageWarn();
+        $this->setStatusMessage($dto, $entity);
 
         $dto->status = $entity->getStatus() === Sensor::STATUS_ACTIVE ? 'on' : null;
         $dto->notify = $entity->isNotify() ? 'on' : null;
@@ -159,10 +162,10 @@ final class SensorCrudService
     }
 
     /**
-     * @param CreateSensorDto $dto
+     * @param CrudSensorDto $dto
      * @return Sensor
      */
-    public function getNewEntityByDto(CreateSensorDto $dto): Sensor
+    public function getNewEntityByDto(CrudSensorDto $dto): Sensor
     {
         Assert::inArray($dto->type, $this->getTypes());
 

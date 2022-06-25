@@ -31,3 +31,7 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Sensor\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Sensor'
+            relay:
+                type: yml
+                prefix: 'App\Domain\Doctrine\Relay\Entity'
+                dir: '%kernel.project_dir%/config/mappings/Relay'
