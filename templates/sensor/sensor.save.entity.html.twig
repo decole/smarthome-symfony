@@ -60,11 +60,11 @@
                             {% endif %}
                             <div class="form-group">
                                 <label>Название сенсора</label>
-                                <input type="text" name="name" value="{{ sensor.name }}" class="form-control" placeholder="Кухня температура" autofocus>
+                                <input type="text" name="name" value="{{ sensor.name }}" class="form-control" placeholder="Кухня температура" required autofocus>
                             </div>
                             <div class="form-group">
                                 <label>Топик</label>
-                                <input type="text" name="topic" value="{{ sensor.topic }}" class="form-control" placeholder="hall/example">
+                                <input type="text" name="topic" value="{{ sensor.topic }}" class="form-control" placeholder="hall/example" required>
                             </div>
                             <div class="form-group">
                                 <label>Текущее состояние сенсора</label>

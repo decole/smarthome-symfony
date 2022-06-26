@@ -29,6 +29,10 @@ final class RelayValidationService implements ValidationInterface
 
         $list = $this->checkIsFeedbackLogic($list);
 
+        if ($this->dto->name === null || $this->dto->topic === null) {
+            return $list;
+        }
+
         if (!$isUpdate) {
             $list = $this->uniqueValidate($list);
         }

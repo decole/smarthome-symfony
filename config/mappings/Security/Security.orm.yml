@@ -1,0 +1,47 @@
+App\Domain\Doctrine\Security\Entity\Security:
+  table: 'security'
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    securityType:
+      name: security_type
+      type: string
+      nullable: false
+    name:
+      type: string
+      unique: true
+    topic:
+      type: string
+      unique: true
+    payload:
+      type: string
+      nullable: true
+    detectPayload:
+      name: detect_payload
+      type: string
+    holdPayload:
+      name: hold_payload
+      type: string
+    lastCommand:
+      type: string
+      name: last_command
+      nullable: true
+    params:
+      type: json
+    status:
+      type: smallint
+    notify:
+      type: boolean
+    createdAt:
+      type: datetime_immutable
+      name: created_at
+    updatedAt:
+      type: datetime_immutable
+      name: updated_at
+      nullable: true
+  embedded:
+    statusMessage:
+      class: App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage
+      columnPrefix: false

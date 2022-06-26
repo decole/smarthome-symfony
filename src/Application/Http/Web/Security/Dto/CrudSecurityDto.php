@@ -1,19 +1,19 @@
 <?php
 
 
-namespace App\Application\Http\Web\Sensor\Dto;
+namespace App\Application\Http\Web\Security\Dto;
 
 
 use App\Application\Service\Validation\ValidationDtoInterface;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Doctrine\Security\Entity\Security;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CrudSensorDto implements ValidationDtoInterface
+class CrudSecurityDto implements ValidationDtoInterface
 {
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Choice(choices: Sensor::SENSOR_TYPES)]
-    public ?string $type = null;
+    #[Assert\Choice(choices: Security::SECURITY_TYPES)]
+    public ?string $type = Security::MQTT_TYPE;
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
@@ -22,15 +22,19 @@ class CrudSensorDto implements ValidationDtoInterface
     #[Assert\NotBlank]
     #[Assert\NotNull]
     public ?string $topic = null;
-
     public ?string $payload = null;
 
-    public ?string $payload_min = null;
-    public ?string $payload_max = null;
-    public ?string $payload_dry = null;
-    public ?string $payload_wet = null;
-    public ?string $payload_high = null;
-    public ?string $payload_low = null;
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    public ?string $detectPayload = null;
+
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    public ?string $holdPayload = null;
+
+    public ?string $lastCommand = null;
+
+    public array $params = [];
 
     public ?string $message_info = null;
     public ?string $message_ok = null;

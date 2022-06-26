@@ -1,17 +1,16 @@
 <?php
 
 
-namespace App\Infrastructure\Doctrine\Service\Relay;
+namespace App\Infrastructure\Doctrine\Service\Security;
 
 
 use App\Application\Helper\StringHelper;
-use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
+use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
-use App\Domain\Doctrine\Relay\Entity\Relay;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Doctrine\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
-use App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory;
+use App\Infrastructure\Doctrine\Service\Security\Factory\SecurityCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
@@ -21,15 +20,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Webmozart\Assert\Assert;
 
-final class RelayCrudService
+final class SecurityCrudService
 {
     use StatusMessageTrait, CommonCrudFieldTraits;
 
-    public function __construct(private RelayCrudFactory $crud)
+    public function __construct(private SecurityCrudFactory $crud)
     {
     }
 
-    public function validate(CrudRelayDto $relayDto, bool $isUpdate = false): ConstraintViolationListInterface
+    public function validate(CrudSecurityDto $relayDto, bool $isUpdate = false): ConstraintViolationListInterface
     {
         $this->crud->getValidationService()->setValue($relayDto);
 
@@ -41,7 +40,7 @@ final class RelayCrudService
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
-        assert($dto instanceof CrudRelayDto);
+        assert($dto instanceof CrudSecurityDto);
 
         $entity = $this->getNewEntityByDto($dto);
 
@@ -56,22 +55,20 @@ final class RelayCrudService
     /**
      * @throws OptimisticLockException|ORMException
      */
-    public function update(string $id, CrudRelayDto $dto): EntityInterface
+    public function update(string $id, CrudSecurityDto $dto): EntityInterface
     {
         $entity = $this->crud->getRepository()->findById($id);
 
-        assert($entity instanceof Relay);
+        assert($entity instanceof Security);
+
+        $entity->setType($dto->type);
 
         $this->setDtoToEntityCommonParams($entity, $dto);
 
-        $entity->setType($dto->type);
+        $entity->setDetectPayload($dto->detectPayload);
+        $entity->setHoldPayload($dto->holdPayload);
         $entity->setLastCommand($dto->lastCommand);
-        $entity->setCommandOn($dto->commandOn);
-        $entity->setCommandOff($dto->commandOff);
-        $entity->setIsFeedbackPayload($dto->isFeedbackPayload === 'on');
-        $entity->setCheckTopic($dto->checkTopic);
-        $entity->setCheckTopicPayloadOn($dto->checkTopicPayloadOn);
-        $entity->setCheckTopicPayloadOff($dto->checkTopicPayloadOff);
+        $entity->setParams($dto->params);
 
         $entity->setStatusMessage(new StatusMessage(
             $dto->message_info,
@@ -79,7 +76,7 @@ final class RelayCrudService
             $dto->message_warn
         ));
 
-        $entity->setStatus($dto->status === 'on' ? Relay::STATUS_ACTIVE : Relay::STATUS_DEACTIVATE);
+        $entity->setStatus($dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE);
         $entity->setNotify($dto->notify === 'on');
         $entity->setUpdatedAt();
 
@@ -100,12 +97,12 @@ final class RelayCrudService
 
     public function getTypes(): array
     {
-        return Relay::RELAY_TYPES;
+        return Security::SECURITY_TYPES;
     }
 
-    public function createRelayDto(?Request $request): CrudRelayDto
+    public function createSecurityDto(?Request $request): CrudSecurityDto
     {
-        $dto = new CrudRelayDto();
+        $dto = new CrudSecurityDto();
 
         if ($request === null) {
             return $dto;
@@ -123,58 +120,52 @@ final class RelayCrudService
     /**
      * @throws NonUniqueResultException
      */
-    public function entityRelayDto(string $id): CrudRelayDto
+    public function entityRelayDto(string $id): CrudSecurityDto
     {
         $entity = $this->crud->getRepository()->findById($id);
 
-        assert($entity instanceof Relay);
+        assert($entity instanceof Security);
 
-        $dto = new CrudRelayDto();
+        $dto = new CrudSecurityDto();
 
         $this->setEntityToDtoCommonParams($dto, $entity);
 
-        $dto->commandOn = $entity->getCommandOn();
-        $dto->commandOff = $entity->getCommandOff();
+        $dto->detectPayload = $entity->getDetectPayload();
+        $dto->holdPayload = $entity->getHoldPayload();
         $dto->lastCommand = $entity->getLastCommand();
 
-        $dto->isFeedbackPayload = $entity->isFeedbackPayload() === true ? 'on' : null;
-        $dto->checkTopic = $entity->getCheckTopic();
-        $dto->checkTopicPayloadOn = $entity->getCheckTopicPayloadOn();
-        $dto->checkTopicPayloadOff = $entity->getCheckTopicPayloadOff();
+        $dto->params = $entity->getParams();
 
         $this->setStatusMessage($dto, $entity);
 
-        $dto->status = $entity->getStatus() === Sensor::STATUS_ACTIVE ? 'on' : null;
+        $dto->status = $entity->getStatus() === Security::STATUS_ACTIVE ? 'on' : null;
 
         return $dto;
     }
 
     /**
-     * @param CrudRelayDto $dto
-     * @return Relay
+     * @param CrudSecurityDto $dto
+     * @return Security
      */
-    public function getNewEntityByDto(CrudRelayDto $dto): Relay
+    public function getNewEntityByDto(CrudSecurityDto $dto): Security
     {
         Assert::inArray($dto->type, $this->getTypes());
 
-        return new Relay(
-            type: $dto->type,
+        return new Security(
+            securityType: $dto->type,
             name: $dto->name,
             topic: $dto->topic,
             payload: $dto->payload,
-            commandOn: $dto->commandOn,
-            commandOff: $dto->commandOff,
-            checkTopic: $dto->checkTopic,
-            checkTopicPayloadOn: $dto->checkTopicPayloadOn,
-            checkTopicPayloadOff: $dto->checkTopicPayloadOff,
-            lastCommand: null,
-            isFeedbackPayload: $dto->isFeedbackPayload === 'on',
+            detectPayload: $dto->detectPayload,
+            holdPayload: $dto->holdPayload,
+            lastCommand: $dto->lastCommand,
+            params: $dto->params,
             statusMessage: new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,
                 $dto->message_warn
             ),
-            status: $dto->status === 'on' ? Sensor::STATUS_ACTIVE : Sensor::STATUS_DEACTIVATE,
+            status: $dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE,
             notify: $dto->notify === 'on',
         );
     }

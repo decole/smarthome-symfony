@@ -1,8 +1,11 @@
 <?php
 
+
 namespace App\Domain\Doctrine\Relay\Entity;
 
+
 use App\Domain\Doctrine\Common\Traits\CreatedAt;
+use App\Domain\Doctrine\Common\Traits\CrudCommonFields;
 use App\Domain\Doctrine\Common\Traits\Entity;
 use App\Domain\Doctrine\Common\Traits\UpdatedAt;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
@@ -34,7 +37,7 @@ final class Relay implements EntityInterface
         self::WATERING_SWIFT_TYPE => 'клапан автополива',
     ];
 
-    use Entity, CreatedAt, UpdatedAt;
+    use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
 
     public function __construct(
         private string $type,
@@ -56,36 +59,6 @@ final class Relay implements EntityInterface
         $this->onCreated();
         $this->checkStatusType($status);
         $this->checkRelayType($type);
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getTopic(): string
-    {
-        return $this->topic;
-    }
-
-    public function setTopic(string $topic): void
-    {
-        $this->topic = $topic;
-    }
-
-    public function getPayload(): ?string
-    {
-        return $this->payload;
-    }
-
-    public function setPayload(?string $payload): void
-    {
-        $this->payload = $payload;
     }
 
     public function getType(): string
@@ -198,6 +171,11 @@ final class Relay implements EntityInterface
     public function setNotify(bool $notify): void
     {
         $this->notify = $notify;
+    }
+
+    public function setUpdatedAt(): void
+    {
+        $this->onUpdated();
     }
 
     private function checkStatusType(int $status): void

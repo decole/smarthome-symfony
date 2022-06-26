@@ -5,6 +5,7 @@ namespace App\Domain\Doctrine\Sensor\Entity;
 
 
 use App\Domain\Doctrine\Common\Traits\CreatedAt;
+use App\Domain\Doctrine\Common\Traits\CrudCommonFields;
 use App\Domain\Doctrine\Common\Traits\Entity;
 use App\Domain\Doctrine\Common\Traits\UpdatedAt;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
@@ -49,7 +50,7 @@ class Sensor implements EntityInterface
         SensorDryContact::TYPE => 'датчик сухого контакта',
     ];
 
-    use Entity, CreatedAt, UpdatedAt;
+    use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
 
     public function __construct(
         private string $name,
@@ -67,36 +68,6 @@ class Sensor implements EntityInterface
     final public function getType(): string
     {
         return static::TYPE;
-    }
-
-    final public function getName(): string
-    {
-        return $this->name;
-    }
-
-    final public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    final public function getTopic(): string
-    {
-        return $this->topic;
-    }
-
-    final public function setTopic(string $topic): void
-    {
-        $this->topic = $topic;
-    }
-
-    final public function getPayload(): ?string
-    {
-        return $this->payload;
-    }
-
-    final public function setPayload(?string $payload): void
-    {
-        $this->payload = $payload;
     }
 
     final public function getStatusMessage(): StatusMessage
@@ -128,6 +99,11 @@ class Sensor implements EntityInterface
     final public function setNotify(bool $isNotify): void
     {
         $this->notify = $isNotify;
+    }
+
+    final public function setUpdatedAt(): void
+    {
+        $this->onUpdated();
     }
 
     private function checkStatusType(int $status): void

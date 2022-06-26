@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Domain\Doctrine\Common\Traits;
 
 

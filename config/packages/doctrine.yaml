@@ -35,3 +35,7 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Relay\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Relay'
+            security:
+                type: yml
+                prefix: 'App\Domain\Doctrine\Security\Entity'
+                dir: '%kernel.project_dir%/config/mappings/Security'

@@ -1,27 +1,27 @@
 <?php
 
 
-namespace App\Application\Service\Validation\Sensor;
+namespace App\Application\Service\Validation\Security;
 
 
-use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
+use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Application\Service\Validation\ValidationInterface;
-use App\Infrastructure\Doctrine\Interfaces\RelayRepositoryInterface;
+use App\Infrastructure\Doctrine\Interfaces\SecurityRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class SensorValidationService implements ValidationInterface
+final class SecurityValidationService implements ValidationInterface
 {
-    private CrudSensorDto $dto;
+    private CrudSecurityDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private RelayRepositoryInterface $repository)
+    public function __construct(private ValidatorInterface $validator, private SecurityRepositoryInterface $repository)
     {
     }
 
-    public function validate(bool $isUpdate = false): ConstraintViolationListInterface
+    public function validate(bool $isUpdate): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
@@ -47,7 +47,7 @@ final class SensorValidationService implements ValidationInterface
     {
         if ($this->repository->findByName($this->dto->name)) {
             $list->add(new ConstraintViolation(
-                message: 'Sensor name already exist.',
+                message: 'Security device name already exist.',
                 messageTemplate: null,
                 parameters: [$this->dto->name],
                 root: 'name',
@@ -58,7 +58,7 @@ final class SensorValidationService implements ValidationInterface
 
         if ($this->repository->findByTopic($this->dto->topic)) {
             $list->add(new ConstraintViolation(
-                message: 'Sensor topic already exist.',
+                message: 'Security device topic already exist.',
                 messageTemplate: null,
                 parameters: [$this->dto->topic],
                 root: 'topic',
