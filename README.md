@@ -12,8 +12,8 @@
 - [x] auth system 
 - [x] abstract CRUD factory
 - [x] sensor CRUD
-- [ ] relay CRUD
-- [ ] Security CRUD
+- [x] relay CRUD
+- [x] Security CRUD
 - [ ] Fire-secure CRUD
 - [ ] Notification CRUD
 - [ ] Alice Smart Home CRUD
@@ -23,6 +23,11 @@
 - [ ] Mqtt service validation
 - [ ] Api service validation
 - [ ] Http service validation
+
+----
+
+> **Пометка**: пока только датчики из mqtt с передачей детекции дижения всегда, даже кода это деатектировано. 
+> Сам сервис понимает в каком он состоянии и как реагировать на сигнал датчиков.
 
 ----
 
@@ -38,7 +43,7 @@
 - php-cli - supervisor
 - postgresql
 - redis
-- redisinsight
+- redis-insight
 - ~~supervisor~~ - пока не реализованы очереди и т.д., пожтому пока сервис не работает
 - ~~rabbitMQ~~ - пока не реализованы очереди и т.д., пожтому пока сервис не работает
 - ~~логирование~~

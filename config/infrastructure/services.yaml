@@ -48,6 +48,10 @@ services:
 
   App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory: ~
 
+  App\Infrastructure\Doctrine\Service\Security\SecurityCrudService: ~
+
+  App\Infrastructure\Doctrine\Service\Security\Factory\SecurityCrudFactory: ~
+
   App\Infrastructure\Security\Register\Service\SignUpService:
     arguments:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'

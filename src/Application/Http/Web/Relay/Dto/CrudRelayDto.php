@@ -11,20 +11,25 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CrudRelayDto implements ValidationDtoInterface
 {
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Choice(choices: Relay::RELAY_TYPES)]
     public ?string $type = Relay::DRY_RELAY_TYPE;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     public ?string $name = null;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     public ?string $topic = null;
     public ?string $payload = null;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     public ?string $commandOn = null;
 
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     public ?string $commandOff = null;
 
     public ?string $isFeedbackPayload = null;

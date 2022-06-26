@@ -17,6 +17,7 @@ use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
 use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use App\Infrastructure\Doctrine\Service\Sensor\Exception\AdvancedFieldsException;
 use App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory;
+use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -28,7 +29,7 @@ use Webmozart\Assert\Assert;
 
 final class SensorCrudService
 {
-    use StatusMessageTrait;
+    use StatusMessageTrait, CommonCrudFieldTraits;
 
     public function __construct(private SensorCrudFactory $crud)
     {
@@ -67,9 +68,7 @@ final class SensorCrudService
         $entity = $this->crud->getRepository()->findById($id);
         $rc = new ReflectionClass($entity);
 
-        $entity->setName($dto->name);
-        $entity->setTopic($dto->topic);
-        $entity->setPayload($dto->payload);
+        $this->setDtoToEntityCommonParams($entity, $dto);
 
         if ($rc->hasMethod('getPayloadMin')) {
             $entity->setPayloadMin($dto->payload_min);
@@ -92,6 +91,7 @@ final class SensorCrudService
 
         $entity->setStatus($dto->status === 'on' ? Sensor::STATUS_ACTIVE : Sensor::STATUS_DEACTIVATE);
         $entity->setNotify($dto->notify === 'on');
+        $entity->setUpdatedAt();
 
         return $this->crud->save($entity);
     }
@@ -141,10 +141,8 @@ final class SensorCrudService
         $rc = new ReflectionClass($entity);
 
         $dto = new CrudSensorDto();
-        $dto->type = $entity->getType();
-        $dto->name = $entity->getName();
-        $dto->topic = $entity->getTopic();
-        $dto->payload = $entity->getPayload();
+
+        $this->setEntityToDtoCommonParams($dto, $entity);
 
         $dto->payload_min = $rc->hasMethod('getPayloadMin') ? $entity?->getPayloadMin() : null;
         $dto->payload_max = $rc->hasMethod('getPayloadMax') ? $entity?->getPayloadMax() : null;
@@ -156,7 +154,6 @@ final class SensorCrudService
         $this->setStatusMessage($dto, $entity);
 
         $dto->status = $entity->getStatus() === Sensor::STATUS_ACTIVE ? 'on' : null;
-        $dto->notify = $entity->isNotify() ? 'on' : null;
 
         return $dto;
     }

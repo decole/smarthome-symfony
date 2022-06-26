@@ -9,12 +9,12 @@ trait CreatedAt
 {
     protected DateTimeImmutable $createdAt;
 
-    public function getCreatedAt(): DateTimeImmutable
+    final public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    protected function onCreated()
+    final public function onCreated(): void
     {
         $this->createdAt = new DateTimeImmutable('now', new \DateTimeZone('utc'));
     }
