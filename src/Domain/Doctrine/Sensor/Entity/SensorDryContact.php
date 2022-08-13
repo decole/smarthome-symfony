@@ -19,7 +19,7 @@ class SensorDryContact extends Sensor
         private bool $notify,
 
         private ?string $payload_high = null,
-        private ?string $payload_low = null,
+        private ?string $payload_low = null
     ) {
         parent::__construct(
             $this->name,

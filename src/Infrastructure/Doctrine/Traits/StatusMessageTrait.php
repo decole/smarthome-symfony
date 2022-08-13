@@ -1,9 +1,11 @@
 <?php
 
+
 namespace App\Infrastructure\Doctrine\Traits;
 
+
 use App\Application\Service\Validation\ValidationDtoInterface;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
+use App\Domain\Contract\Repository\EntityInterface;
 
 trait StatusMessageTrait
 {

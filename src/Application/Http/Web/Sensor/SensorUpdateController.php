@@ -30,10 +30,10 @@ final class SensorUpdateController extends AbstractController
 
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
-        $sensorDto = $this->crud->entitySensorDto($id);
+        $sensorDto = $this->crud->entityByDto($id);
 
         if ($request->isMethod('post')) {
-            $sensorDto = $this->crud->createSensorDto($sensorDto->type, $request);
+            $sensorDto = $this->crud->createDto($sensorDto->type, $request);
 
             $errors = $this->crud->validate($sensorDto, true);
 

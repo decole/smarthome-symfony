@@ -77,3 +77,9 @@ AdminLte3: https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
 Symfony Docs: https://symfony.com/doc/5.4/routing.html
 
 Codeception Docs: https://codeception.com/docs/05-UnitTests
+
+
+
+### Prometheus:
+
+https://github.com/artprima/prometheus-metrics-bundle

@@ -19,7 +19,7 @@ class SensorPressure extends Sensor
         private bool $notify,
 
         private ?string $payload_min = null,
-        private ?string $payload_max = null,
+        private ?string $payload_max = null
     ) {
         parent::__construct(
             $this->name,

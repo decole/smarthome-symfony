@@ -7,7 +7,7 @@ namespace App\Application\Service\Validation\Relay;
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Application\Service\Validation\ValidationInterface;
-use App\Infrastructure\Doctrine\Interfaces\RelayRepositoryInterface;
+use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

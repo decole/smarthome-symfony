@@ -1,0 +1,118 @@
+{% if action == 'create' %}
+    {% set page_name = 'Форма создания датчика пожарной системы' %}
+    {% set action_form = path('fire_secure_create') %}
+    {% set back = path('fire_secure') %}
+{% else %}
+    {% set page_name = 'Форма изменения датчика пожарной системы ' ~ security.name %}
+    {% set action_form = path('fire_secure_update_by_id', {id: entityId}) %}
+    {% set back = path('fire_secure') %}
+{% endif %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{ page_name }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ path('security_create') }}">Настройка датчика пожарной системы</a></li>
+                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <span class="card-title">{{ page_name }}</span>
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="POST" action="{{ action_form }}">
+                        <div class="card-body">
+                            {% if errors is not empty %}
+
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        {% for error in errors %}
+                                            <li>{{ error.propertyPath }} - {{ error.message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            {% endif %}
+                            <div class="form-group">
+                                <label>Название пожарного датчика</label>
+                                <input type="text" name="name" value="{{ security.name }}" class="form-control" placeholder="ПШС 1" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label>Топик</label>
+                                <input type="text" name="topic" value="{{ security.topic }}" class="form-control" placeholder="security/move01" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Текущее состояние</label>
+                                <input type="text" name="payload" value="{{ security.payload }}" class="form-control" placeholder="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>сигнал Норма</label>
+                                <input type="text" name="normalPayload" value="{{ security.normalPayload }}" class="form-control" placeholder="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>сигнал Пожар</label>
+                                <input type="text" name="alertPayload" value="{{ security.alertPayload }}" class="form-control" placeholder="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Последняя команда</label>
+                                <input type="text" name="lastCommand" value="{{ security.lastCommand }}" class="form-control" placeholder="off">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Текст для информации</label>
+                                <input type="text" name="message_info" value="{{ security.message_info }}" class="form-control" placeholder="ПШС1">
+                            </div>
+                            <div class="form-group">
+                                <label>Текст для статуса Oк</label>
+                                <input type="text" name="message_ok" value="{{ security.message_ok }}" class="form-control" placeholder="ПШС1, работает штатно">
+                            </div>
+                            <div class="form-group">
+                                <label>Текст для вывода алерта</label>
+                                <input type="text" name="message_warn" value="{{ security.message_warn }}" class="form-control" placeholder="Внимание, ошибка в работе ПШС1">
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch1" {% if security.status == 'on' %} checked {% endif %}>
+                                <label class="custom-control-label" for="statusSwitch1">Статус пожарного датчика</label>
+                            </div>
+                            <div class="custom-control custom-switch pb-2">
+                                <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch2" {% if security.notify == 'on' %} checked {% endif %}>
+                                <label class="custom-control-label" for="notifySwitch2">Присылать оповещения</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

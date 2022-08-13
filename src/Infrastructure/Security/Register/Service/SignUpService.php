@@ -21,7 +21,7 @@ class SignUpService
         private EmailVerifyService $emailVerifier,
         private UserPasswordHasherInterface $passwordHasher,
         private string $email,
-        private string $subject,
+        private string $subject
     ) {
     }
 

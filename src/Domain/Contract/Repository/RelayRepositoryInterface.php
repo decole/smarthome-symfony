@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Infrastructure\Doctrine\Interfaces;
+namespace App\Domain\Contract\Repository;
 
 
 use App\Domain\Doctrine\Relay\Entity\Relay;

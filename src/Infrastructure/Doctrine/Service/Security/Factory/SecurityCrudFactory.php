@@ -7,14 +7,14 @@ namespace App\Infrastructure\Doctrine\Service\Security\Factory;
 use App\Application\Service\Factory\AbstractCrudFactory;
 use App\Application\Service\Validation\Security\SecurityValidationService;
 use App\Application\Service\Validation\ValidationInterface;
-use App\Infrastructure\Doctrine\Interfaces\SecurityRepositoryInterface;
+use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 
 final class SecurityCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
         private SecurityRepositoryInterface $repository,
-        private SecurityValidationService $validation,
+        private SecurityValidationService $validation
     ) {
     }
 

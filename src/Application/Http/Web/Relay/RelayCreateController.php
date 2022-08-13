@@ -28,7 +28,7 @@ final class RelayCreateController extends AbstractController
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
-        $relayDto = $this->crud->createRelayDto($request);
+        $relayDto = $this->crud->createDto($request);
 
         if ($request->isMethod('post')) {
 

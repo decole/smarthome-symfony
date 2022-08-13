@@ -52,7 +52,15 @@ services:
 
   App\Infrastructure\Doctrine\Service\Security\Factory\SecurityCrudFactory: ~
 
+  App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService: ~
+
+  App\Infrastructure\Doctrine\Service\FireSecurity\Factory\FireSecurityCrudFactory: ~
+
   App\Infrastructure\Security\Register\Service\SignUpService:
     arguments:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
       $subject: '%env(EMAIL_REGISTRATION_EMAIL_SUBJECT)%'
+
+  App\Infrastructure\Prometheus\Metric\MyMetricsCollector:
+    tags:
+      - { name: prometheus_metrics_bundle.metrics_generator }

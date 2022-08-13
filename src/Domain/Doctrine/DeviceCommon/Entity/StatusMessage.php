@@ -9,7 +9,7 @@ class StatusMessage
     public function __construct(
         private ?string $message_info = null,
         private ?string $message_ok = null,
-        private ?string $message_warn = null,
+        private ?string $message_warn = null
     ) {
     }
 
