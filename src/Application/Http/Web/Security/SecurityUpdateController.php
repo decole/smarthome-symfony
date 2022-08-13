@@ -30,7 +30,7 @@ final class SecurityUpdateController extends AbstractController
 
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
-        $securityDto = $this->crud->entityRelayDto($id);
+        $securityDto = $this->crud->entityByDto($id);
 
         if ($request->isMethod('post')) {
             $securityDto = $this->crud->createSecurityDto($request);

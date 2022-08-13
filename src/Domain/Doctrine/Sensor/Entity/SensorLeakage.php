@@ -19,7 +19,7 @@ class SensorLeakage extends Sensor
         private bool $notify,
 
         private ?string $payload_dry = null,
-        private ?string $payload_wet = null,
+        private ?string $payload_wet = null
     ) {
         parent::__construct(
             $this->name,

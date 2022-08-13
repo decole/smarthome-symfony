@@ -23,7 +23,7 @@ class MqttHandleService
         private MqttService $service,
         private LoggerInterface $logger,
         private string $broker,
-        private string $port,
+        private string $port
     ) {
         $this->client = new Client();
     }

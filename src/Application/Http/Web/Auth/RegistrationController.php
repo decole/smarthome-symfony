@@ -18,7 +18,7 @@ class RegistrationController extends AbstractController
     public function __construct(
         private CsrfService $csrf,
         private RegistrationValidateService $validation,
-        private SignUpService $service,
+        private SignUpService $service
     ) {
     }
 

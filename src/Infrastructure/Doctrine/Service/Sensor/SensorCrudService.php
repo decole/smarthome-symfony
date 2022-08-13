@@ -7,6 +7,7 @@ namespace App\Infrastructure\Doctrine\Service\Sensor;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use App\Domain\Doctrine\Sensor\Entity\SensorDryContact;
@@ -14,13 +15,11 @@ use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;
 use App\Domain\Doctrine\Sensor\Entity\SensorLeakage;
 use App\Domain\Doctrine\Sensor\Entity\SensorPressure;
 use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use App\Infrastructure\Doctrine\Service\Sensor\Exception\AdvancedFieldsException;
 use App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +64,7 @@ final class SensorCrudService
     public function update(string $id, CrudSensorDto $dto): EntityInterface
     {
         /** @var SensorTemperature|SensorHumidity|SensorPressure|SensorDryContact|SensorLeakage $entity */
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
         $rc = new ReflectionClass($entity);
 
         $this->setDtoToEntityCommonParams($entity, $dto);
@@ -91,7 +90,7 @@ final class SensorCrudService
 
         $entity->setStatus($dto->status === 'on' ? Sensor::STATUS_ACTIVE : Sensor::STATUS_DEACTIVATE);
         $entity->setNotify($dto->notify === 'on');
-        $entity->setUpdatedAt();
+        $entity->onUpdated();
 
         return $this->crud->save($entity);
     }
@@ -101,7 +100,7 @@ final class SensorCrudService
      */
     public function delete(string $id): void
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         if ($entity) {
             $this->crud->delete($entity);
@@ -113,7 +112,7 @@ final class SensorCrudService
         return array_keys(Sensor::DISCRIMINATOR_MAP);
     }
 
-    public function createSensorDto(string $type, ?Request $request): CrudSensorDto
+    public function createDto(string $type, ?Request $request): CrudSensorDto
     {
         $dto = new CrudSensorDto();
         $dto->type = $type;
@@ -131,13 +130,10 @@ final class SensorCrudService
         return $dto;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function entitySensorDto(string $id): CrudSensorDto
+    public function entityByDto(string $id): CrudSensorDto
     {
         /** @var SensorTemperature|SensorHumidity|SensorPressure|SensorDryContact|SensorLeakage $entity */
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
         $rc = new ReflectionClass($entity);
 
         $dto = new CrudSensorDto();
@@ -186,7 +182,7 @@ final class SensorCrudService
     /**
      * Дополнительные уникальные поля разных типов сенсоров
      *
-     * @param ValidationDtoInterface $dto
+     * @param CrudSensorDto $dto
      * @return array
      */
     private function getAdvancedFields(ValidationDtoInterface $dto): array

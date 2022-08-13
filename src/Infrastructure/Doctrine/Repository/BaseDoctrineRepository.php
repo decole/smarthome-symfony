@@ -4,7 +4,7 @@
 namespace App\Infrastructure\Doctrine\Repository;
 
 
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
+use App\Domain\Contract\Repository\EntityInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;

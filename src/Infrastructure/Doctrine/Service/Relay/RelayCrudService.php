@@ -7,15 +7,14 @@ namespace App\Infrastructure\Doctrine\Service\Relay;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
 use App\Domain\Doctrine\Relay\Entity\Relay;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -58,7 +57,7 @@ final class RelayCrudService
      */
     public function update(string $id, CrudRelayDto $dto): EntityInterface
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         assert($entity instanceof Relay);
 
@@ -81,7 +80,7 @@ final class RelayCrudService
 
         $entity->setStatus($dto->status === 'on' ? Relay::STATUS_ACTIVE : Relay::STATUS_DEACTIVATE);
         $entity->setNotify($dto->notify === 'on');
-        $entity->setUpdatedAt();
+        $entity->onUpdated();
 
         return $this->crud->save($entity);
     }
@@ -91,7 +90,7 @@ final class RelayCrudService
      */
     public function delete(string $id): void
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         if ($entity) {
             $this->crud->delete($entity);
@@ -103,7 +102,7 @@ final class RelayCrudService
         return Relay::RELAY_TYPES;
     }
 
-    public function createRelayDto(?Request $request): CrudRelayDto
+    public function createDto(?Request $request): CrudRelayDto
     {
         $dto = new CrudRelayDto();
 
@@ -120,12 +119,9 @@ final class RelayCrudService
         return $dto;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function entityRelayDto(string $id): CrudRelayDto
+    public function entityByDto(string $id): CrudRelayDto
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         assert($entity instanceof Relay);
 

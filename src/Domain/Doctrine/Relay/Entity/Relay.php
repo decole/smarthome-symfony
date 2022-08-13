@@ -4,12 +4,12 @@
 namespace App\Domain\Doctrine\Relay\Entity;
 
 
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Traits\CreatedAt;
 use App\Domain\Doctrine\Common\Traits\CrudCommonFields;
 use App\Domain\Doctrine\Common\Traits\Entity;
 use App\Domain\Doctrine\Common\Traits\UpdatedAt;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use Webmozart\Assert\Assert;
 
 final class Relay implements EntityInterface
@@ -53,7 +53,7 @@ final class Relay implements EntityInterface
         private bool $isFeedbackPayload,
         private StatusMessage $statusMessage,
         private int $status,
-        private bool $notify,
+        private bool $notify
     ) {
         $this->identify();
         $this->onCreated();
@@ -171,11 +171,6 @@ final class Relay implements EntityInterface
     public function setNotify(bool $notify): void
     {
         $this->notify = $notify;
-    }
-
-    public function setUpdatedAt(): void
-    {
-        $this->onUpdated();
     }
 
     private function checkStatusType(int $status): void

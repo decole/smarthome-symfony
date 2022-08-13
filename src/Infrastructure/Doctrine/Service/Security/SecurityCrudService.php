@@ -7,14 +7,13 @@ namespace App\Infrastructure\Doctrine\Service\Security;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
 use App\Domain\Doctrine\Security\Entity\Security;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use App\Infrastructure\Doctrine\Service\Security\Factory\SecurityCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -28,9 +27,9 @@ final class SecurityCrudService
     {
     }
 
-    public function validate(CrudSecurityDto $relayDto, bool $isUpdate = false): ConstraintViolationListInterface
+    public function validate(CrudSecurityDto $dto, bool $isUpdate = false): ConstraintViolationListInterface
     {
-        $this->crud->getValidationService()->setValue($relayDto);
+        $this->crud->getValidationService()->setValue($dto);
 
         return $this->crud->validate($isUpdate);
     }
@@ -57,7 +56,7 @@ final class SecurityCrudService
      */
     public function update(string $id, CrudSecurityDto $dto): EntityInterface
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         assert($entity instanceof Security);
 
@@ -78,7 +77,7 @@ final class SecurityCrudService
 
         $entity->setStatus($dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE);
         $entity->setNotify($dto->notify === 'on');
-        $entity->setUpdatedAt();
+        $entity->onUpdated();
 
         return $this->crud->save($entity);
     }
@@ -88,7 +87,7 @@ final class SecurityCrudService
      */
     public function delete(string $id): void
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         if ($entity) {
             $this->crud->delete($entity);
@@ -117,12 +116,9 @@ final class SecurityCrudService
         return $dto;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function entityRelayDto(string $id): CrudSecurityDto
+    public function entityByDto(string $id): CrudSecurityDto
     {
-        $entity = $this->crud->getRepository()->findById($id);
+        $entity = $this->crud->getEntityById($id);
 
         assert($entity instanceof Security);
 

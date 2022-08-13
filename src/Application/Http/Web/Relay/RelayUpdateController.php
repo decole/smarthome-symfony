@@ -30,10 +30,10 @@ final class RelayUpdateController extends AbstractController
 
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
-        $relayDto = $this->crud->entityRelayDto($id);
+        $relayDto = $this->crud->entityByDto($id);
 
         if ($request->isMethod('post')) {
-            $relayDto = $this->crud->createRelayDto($request);
+            $relayDto = $this->crud->createDto($request);
 
             $errors = $this->crud->validate($relayDto, true);
 

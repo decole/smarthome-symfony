@@ -7,7 +7,7 @@ namespace App\Application\Service\Validation\Sensor;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Application\Service\Validation\ValidationInterface;
-use App\Infrastructure\Doctrine\Interfaces\RelayRepositoryInterface;
+use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

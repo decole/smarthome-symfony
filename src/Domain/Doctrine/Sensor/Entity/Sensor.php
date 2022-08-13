@@ -4,12 +4,12 @@
 namespace App\Domain\Doctrine\Sensor\Entity;
 
 
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Traits\CreatedAt;
 use App\Domain\Doctrine\Common\Traits\CrudCommonFields;
 use App\Domain\Doctrine\Common\Traits\Entity;
 use App\Domain\Doctrine\Common\Traits\UpdatedAt;
 use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
 use Webmozart\Assert\Assert;
 
 class Sensor implements EntityInterface
@@ -58,7 +58,7 @@ class Sensor implements EntityInterface
         private ?string $payload,
         private StatusMessage $statusMessage,
         private int $status,
-        private bool $notify,
+        private bool $notify
     ) {
         $this->identify();
         $this->onCreated();
@@ -99,11 +99,6 @@ class Sensor implements EntityInterface
     final public function setNotify(bool $isNotify): void
     {
         $this->notify = $isNotify;
-    }
-
-    final public function setUpdatedAt(): void
-    {
-        $this->onUpdated();
     }
 
     private function checkStatusType(int $status): void

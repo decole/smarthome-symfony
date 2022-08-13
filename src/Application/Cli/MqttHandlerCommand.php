@@ -16,7 +16,7 @@ class MqttHandlerCommand extends Command
 
     public function __construct(
         private LoggerInterface $logger,
-        private MqttHandleService $handler,
+        private MqttHandleService $handler
     ) {
         parent::__construct();
     }

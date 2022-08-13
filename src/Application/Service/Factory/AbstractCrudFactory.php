@@ -5,7 +5,7 @@ namespace App\Application\Service\Factory;
 
 
 use App\Application\Service\Validation\ValidationInterface;
-use App\Infrastructure\Doctrine\Interfaces\EntityInterface;
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -20,6 +20,11 @@ abstract class AbstractCrudFactory
     final public function validate(bool $isUpdate = false): ConstraintViolationListInterface
     {
         return $this->getValidationService()->validate($isUpdate);
+    }
+
+    final public function getEntityById(string $id): ?EntityInterface
+    {
+        return $this->getRepository()->findById($id);
     }
 
     final public function list(): array

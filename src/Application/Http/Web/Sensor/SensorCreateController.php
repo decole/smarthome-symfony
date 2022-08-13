@@ -39,7 +39,7 @@ final class SensorCreateController extends AbstractController
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
-        $sensorDto = $this->crud->createSensorDto($type, $request);
+        $sensorDto = $this->crud->createDto($type, $request);
 
         if ($request->isMethod('post')) {
             $errors = $this->crud->validate($sensorDto);

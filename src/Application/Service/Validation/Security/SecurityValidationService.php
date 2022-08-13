@@ -7,7 +7,7 @@ namespace App\Application\Service\Validation\Security;
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Application\Service\Validation\ValidationInterface;
-use App\Infrastructure\Doctrine\Interfaces\SecurityRepositoryInterface;
+use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
