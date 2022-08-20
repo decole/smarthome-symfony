@@ -14,3 +14,5 @@ services:
   App\Application\Service\Validation\Security\SecurityValidationService: ~
 
   App\Application\Service\Validation\FireSecurity\FireSecurityValidationService: ~
+
+  App\Application\Cli\Handler\TelegramNotificationHandler: ~

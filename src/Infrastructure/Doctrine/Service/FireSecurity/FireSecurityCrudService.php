@@ -8,7 +8,7 @@ use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
+use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
 use App\Domain\Doctrine\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Service\FireSecurity\Factory\FireSecurityCrudFactory;

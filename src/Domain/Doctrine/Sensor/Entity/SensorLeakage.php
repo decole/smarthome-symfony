@@ -4,7 +4,7 @@
 namespace App\Domain\Doctrine\Sensor\Entity;
 
 
-use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
+use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 
 class SensorLeakage extends Sensor
 {

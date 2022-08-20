@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Infrastructure\Event\:
+    resource: '%kernel.project_dir%/src/Infrastructure/Event/**/*tListener.php'

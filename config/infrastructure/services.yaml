@@ -1,6 +1,7 @@
 imports:
   - { resource: 'doctrine/repositories.yaml' }
   - { resource: 'doctrine/transactions.yaml' }
+  - { resource: 'events.yaml' }
 
 services:
   _defaults:
@@ -64,3 +65,8 @@ services:
   App\Infrastructure\Prometheus\Metric\MyMetricsCollector:
     tags:
       - { name: prometheus_metrics_bundle.metrics_generator }
+
+  App\Infrastructure\Telegram\Service\TelegramService:
+    arguments:
+      $apiToken: '%env(TELEGRAM_BOT_TOKEN)%'
+      $logger: "@monolog.logger.telegram_service"

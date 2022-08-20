@@ -8,7 +8,7 @@ use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
+use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use App\Domain\Doctrine\Sensor\Entity\SensorDryContact;
 use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;

@@ -12,5 +12,5 @@ interface UserRepositoryInterface
 
     public function remove(User $entity, bool $flush = false): void;
 
-    public function findOneByLogin(string $login): ?User;
+    public function findOneByName(string $name): ?User;
 }

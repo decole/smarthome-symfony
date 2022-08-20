@@ -23,10 +23,10 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Identity\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Identity'
-            deviceCommon:
+            embedded:
                 type: yml
-                prefix: 'App\Domain\Doctrine\DeviceCommon\Entity'
-                dir: '%kernel.project_dir%/config/mappings/DeviceCommon'
+                prefix: 'App\Domain\Doctrine\Common\Embedded'
+                dir: '%kernel.project_dir%/config/mappings/Embedded'
             sensor:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Sensor\Entity'

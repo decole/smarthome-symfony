@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Doctrine\DeviceCommon\Entity;
+namespace App\Domain\Doctrine\Common\Embedded;
 
 
 class StatusMessage

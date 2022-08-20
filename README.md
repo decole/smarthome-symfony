@@ -2,6 +2,8 @@
 
 > Pet project for my smart home infrastructure.
 
+### First stage
+
 - [x] Добавить PostgreSQL в .env
 - [x] пофиксить .env
 - [x] пофиксить .env-local
@@ -14,8 +16,8 @@
 - [x] sensor CRUD
 - [x] relay CRUD
 - [x] Security CRUD
-- [ ] Fire-secure CRUD
-- [ ] Notification CRUD
+- [x] Fire-secure CRUD
+- [x] Notification CRUD
 - [ ] Alice Smart Home CRUD
 - [ ] Alice Skill CRUD
 - [ ] Alice Notify Alerts System CRUD
@@ -44,8 +46,8 @@
 - postgresql
 - redis
 - redis-insight
-- ~~supervisor~~ - пока не реализованы очереди и т.д., пожтому пока сервис не работает
-- ~~rabbitMQ~~ - пока не реализованы очереди и т.д., пожтому пока сервис не работает
+- supervisor
+- rabbitMQ
 - ~~логирование~~
 - ~~мониторинг~~
 - ~~CI/CD~~

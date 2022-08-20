@@ -54,7 +54,7 @@ class RegistrationValidateService
             return;
         }
 
-        $user = $this->repository->findOneByLogin($dto->getName());
+        $user = $this->repository->findOneByName($dto->getName());
 
         if ($user !== null) {
             $this->addError('login', 'Login exist');

@@ -1,0 +1,14 @@
+{{ define "telegram.text" }}
+  {{ if gt (len .Alerts.Firing) 0 }}🚨🚨 FIRING ALERTS 🚨🚨{{ end }}
+  {{ range .Alerts.Firing }}
+      💥 <b>{{ .Labels.alertname }}</b> 💥
+      🔹 <b>Description:</b> {{ .Annotations.description }}
+      🔹 <b>Summary:</b> {{ .Annotations.summary }}
+  {{ end }}
+  {{ if gt (len .Alerts.Resolved) 0 }}✅✅ RESOLVED ALERTS ✅✅{{ end }}
+  {{ range .Alerts.Resolved }}
+      🟢 <b>{{ .Labels.alertname }}</b> 🟢
+      🔹 <b>Description:</b> {{ .Annotations.description }}
+      🔹 <b>Summary:</b> {{ .Annotations.summary }}
+  {{ end }}
+{{ end }}
