@@ -1,0 +1,24 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 5m
+  receiver: 'alertmanager-bot'
+
+receivers:
+  - name: alertmanager-bot
+    telegram_configs:
+      - send_resolved: true
+        http_config:
+          follow_redirects: true
+        api_url: https://api.telegram.org
+        bot_token: '5124649562:AAGLlrczAo690u1LHuv3zSDDVrmiapDcZG0'
+        chat_id: -689509648
+        disable_notifications: false
+        message: '{{ template "telegram.text" . }}'
+        parse_mode: 'HTML'
+templates:
+  - /etc/alertmanager/*.tmpl

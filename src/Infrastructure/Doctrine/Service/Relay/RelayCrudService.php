@@ -8,7 +8,7 @@ use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage;
+use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 use App\Domain\Doctrine\Relay\Entity\Relay;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory;

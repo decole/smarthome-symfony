@@ -2,6 +2,8 @@ monolog:
     channels:
         - deprecation
         - mqtt_transport
+        - telegram_service
+        - event_handler
 
 when@dev:
     monolog:
@@ -23,6 +25,16 @@ when@dev:
                 type: stream
                 path: '%kernel.logs_dir%/%kernel.environment%.mqtt_transport.log'
                 channels: [ mqtt_transport ]
+            telegram_service:
+                level: debug
+                type: stream
+                path: '%kernel.logs_dir%/%kernel.environment%.telegram_sender_service.log'
+                channels: [ telegram_service ]
+            event_handler:
+                level: debug
+                type: stream
+                path: '%kernel.logs_dir%/%kernel.environment%.event_handler.log'
+                channels: [ event_handler ]
 
 when@test:
     monolog:

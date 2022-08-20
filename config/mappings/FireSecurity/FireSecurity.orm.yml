@@ -37,5 +37,5 @@ App\Domain\Doctrine\FireSecurity\Entity\FireSecurity:
       nullable: true
   embedded:
     statusMessage:
-      class: App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage
+      class: App\Domain\Doctrine\Common\Embedded\StatusMessage
       columnPrefix: false

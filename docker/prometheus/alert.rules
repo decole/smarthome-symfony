@@ -1,22 +1,31 @@
 groups:
-- name: example
+- name: alertname
   rules:
 
-  # Alert for any instance that is unreachable for >2 minutes.
-  - alert: service_down
-    expr: up == 0
-    for: 2m
-    labels:
-      severity: page
-    annotations:
-      summary: "Instance {{ $labels.instance }} down"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+#  # Alert for any instance that is unreachable for >2 minutes.
+#  - alert: service_down
+#    expr: up == 0
+#    for: 2m
+#    labels:
+#      severity: page
+#    annotations:
+#      summary: "Instance {{ $labels.instance }} down"
+#      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+#
+#  - alert: high_load
+#    expr: node_load1 > 0.5
+#    for: 2m
+#    labels:
+#      severity: page
+#    annotations:
+#      summary: "Instance {{ $labels.instance }} under high load"
+#      description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
 
-  - alert: high_load
-    expr: node_load1 > 0.5
-    for: 2m
+  - alert: Test Host High-Cpu-Load
+    expr: sum without (instance) ((100 - ((avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100)) > 80 )* on(instance) group_left(nodename) node_uname_info{})
+    for: 0m
     labels:
-      severity: page
+      severity: warning
     annotations:
-      summary: "Instance {{ $labels.instance }} under high load"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
+      summary: Swarm node == {{ $labels.nodename }} == CPU usage is at {{ humanize $value}}%.
+      description: Node == {{ $labels.nodename }} == CPU usage is at {{ humanize $value}}%.

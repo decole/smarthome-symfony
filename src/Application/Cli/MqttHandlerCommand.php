@@ -10,7 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MqttHandlerCommand extends Command
+final class MqttHandlerCommand extends Command
 {
     protected static $defaultName = 'cli:mqtt';
 
@@ -23,12 +23,18 @@ class MqttHandlerCommand extends Command
 
     public function configure(): void
     {
-        $this->setDescription('Обрабатывает лендинги из ЯндексДиска');
+        $this->setDescription('Слушает MQTT транспорт');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->handler->listen();
+        try {
+            $this->handler->listen();
+        } catch (\Throwable $exception) {
+            $this->logger->critical('Crash MQTT listener', [
+                'exception' => $exception->getMessage(),
+            ]);
+        }
 
         return 0;
     }

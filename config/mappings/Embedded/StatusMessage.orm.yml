@@ -1,4 +1,4 @@
-App\Domain\Doctrine\DeviceCommon\Entity\StatusMessage:
+App\Domain\Doctrine\Common\Embedded\StatusMessage:
   type: embeddable
   fields:
     message_info:

@@ -52,14 +52,11 @@ final class UserRepository extends ServiceEntityRepository implements PasswordUp
         $this->add($user, true);
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function findOneByLogin(string $login): ?User
+    public function findOneByName(string $name): ?User
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.auth.login = :login')
-            ->setParameter('login', $login)
+            ->andWhere('u.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
     }
