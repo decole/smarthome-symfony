@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Sensor\Entity;
-
 
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 

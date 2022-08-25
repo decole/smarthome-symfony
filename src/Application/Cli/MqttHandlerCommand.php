@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Cli;
-
 
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use Psr\Log\LoggerInterface;

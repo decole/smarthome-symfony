@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Telegram\Service;
-
 
 use App\Infrastructure\Telegram\Exception\TelegramServiceException;
 use Psr\Log\LoggerInterface;

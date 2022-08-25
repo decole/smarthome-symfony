@@ -3,16 +3,10 @@
 namespace App\Domain\Doctrine\Identity\Entity;
 
 use App\Domain\Doctrine\Common\Traits\Entity;
-use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
- */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+final class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Entity;
 
@@ -27,6 +21,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     private bool $isVerified;
+
+    private ?int $telegramId;
 
     public function __construct()
     {
@@ -117,7 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function setIsVerified(): void
+    public function setVerified(): void
     {
         $this->isVerified = true;
     }
@@ -130,5 +126,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    public function getTelegramId(): ?int
+    {
+        return $this->telegramId;
+    }
+
+    public function setTelegramId(?int $telegramId): void
+    {
+        $this->telegramId = $telegramId;
     }
 }

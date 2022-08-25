@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\FireSecurity\Dto;
-
 
 use App\Application\Service\Validation\ValidationDtoInterface;
 use Symfony\Component\Validator\Constraints as Assert;

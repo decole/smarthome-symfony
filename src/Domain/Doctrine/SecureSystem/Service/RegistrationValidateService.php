@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\SecureSystem\Service;
-
 
 use App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface;
 use App\Domain\Doctrine\SecureSystem\Dto\RegisterDto;

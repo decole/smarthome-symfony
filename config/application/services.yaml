@@ -16,3 +16,13 @@ services:
   App\Application\Service\Validation\FireSecurity\FireSecurityValidationService: ~
 
   App\Application\Cli\Handler\TelegramNotificationHandler: ~
+
+  App\Application\Service\DeviceData\DataValidationService: ~
+
+  App\Application\Service\Alert\AlertService: ~
+
+  App\Application\Service\DeviceData\DataResolver: ~
+
+  App\Application\Service\DeviceData\DataCacheService: ~
+
+  App\Application\Service\DeviceData\DeviceCacheService: ~

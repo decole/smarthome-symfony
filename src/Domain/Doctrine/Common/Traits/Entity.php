@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Common\Traits;
-
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;

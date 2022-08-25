@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Security\Auth\Service;
-
 
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

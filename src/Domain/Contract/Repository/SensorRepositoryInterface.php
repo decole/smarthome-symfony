@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Contract\Repository;
-
 
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 
@@ -10,7 +8,7 @@ interface SensorRepositoryInterface
 {
     public function save(EntityInterface $sensor): EntityInterface;
 
-    public function findAll(): array;
+    public function findAll(?int $status = null): array;
 
     public function findById(string $id): ?Sensor;
 

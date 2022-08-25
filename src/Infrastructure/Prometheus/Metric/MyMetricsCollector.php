@@ -5,7 +5,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Prometheus\Metric;
 
-
 use Artprima\PrometheusMetricsBundle\Metrics\RequestMetricsCollectorInterface;
 use Artprima\PrometheusMetricsBundle\Metrics\TerminateMetricsCollectorInterface;
 use Prometheus\CollectorRegistry;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Repository\Security;
-
 
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Doctrine\Security\Entity\Security;

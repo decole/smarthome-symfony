@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Service\Sensor\Factory;
 
-
+use App\Application\Service\DeviceData\DeviceCacheService;
 use App\Application\Service\Factory\AbstractCrudFactory;
 use App\Application\Service\Validation\Sensor\SensorValidationService;
 use App\Application\Service\Validation\ValidationInterface;
@@ -14,8 +13,10 @@ class SensorCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
         private SensorRepositoryInterface $repository,
-        private SensorValidationService $validation
+        private SensorValidationService $validation,
+        DeviceCacheService $cacheService
     ) {
+        $this->cacheService = $cacheService;
     }
 
     final public function getRepository(): BaseDoctrineRepository

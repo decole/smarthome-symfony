@@ -2,7 +2,6 @@
 
 namespace App\Domain\Doctrine\Common\Traits;
 
-
 use DateTimeImmutable;
 
 trait CreatedAt

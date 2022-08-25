@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Sensor\Dto;
-
 
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;

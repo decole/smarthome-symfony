@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Cache;
-
 
 use DateInterval;
 use Psr\Cache\CacheException;
@@ -20,7 +18,7 @@ class CacheService
     /**
      * @throws InvalidArgumentException
      */
-    public function get(string $key): ?string
+    public function get(string $key): mixed
     {
         return $this->cache->getItem($key)->get();
     }
@@ -28,7 +26,7 @@ class CacheService
     /**
      * @throws InvalidArgumentException
      */
-    public function getOrSet(string $key, callable $callback): ?string
+    public function getOrSet(string $key, callable $callback): mixed
     {
         return $this->cache->get($key, $callback);
     }
@@ -38,6 +36,7 @@ class CacheService
      */
     public function set(string $key, mixed $value, ?array $tags = null, int $lifetime = 0): void
     {
+        $this->cache->delete($key);
         $this->cache->get(
             $key,
             function (CacheItemInterface $item) use ($value, $tags, $lifetime)

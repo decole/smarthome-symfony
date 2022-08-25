@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Service\Validation\Sensor;
-
 
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\ValidationDtoInterface;

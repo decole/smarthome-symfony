@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Service\FireSecurity\Factory;
 
-
+use App\Application\Service\DeviceData\DeviceCacheService;
 use App\Application\Service\Factory\AbstractCrudFactory;
 use App\Application\Service\Validation\FireSecurity\FireSecurityValidationService;
 use App\Application\Service\Validation\ValidationInterface;
@@ -14,8 +13,10 @@ final class FireSecurityCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
         private FireSecurityRepositoryInterface $repository,
-        private FireSecurityValidationService $validation
+        private FireSecurityValidationService $validation,
+        DeviceCacheService $cacheService
     ) {
+        $this->cacheService = $cacheService;
     }
 
     public function getRepository(): BaseDoctrineRepository

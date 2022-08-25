@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\SecureSystem\Dto;
-
 
 use Symfony\Component\HttpFoundation\Request;
 

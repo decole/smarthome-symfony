@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Repository\Sensor;
-
 
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;

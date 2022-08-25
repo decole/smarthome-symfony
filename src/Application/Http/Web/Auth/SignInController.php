@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Auth;
-
 
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
