@@ -21,10 +21,9 @@
 - [ ] Alice Smart Home CRUD
 - [ ] Alice Skill CRUD
 - [ ] Alice Notify Alerts System CRUD
-- [ ] Constructor data pages CRUD
-- [ ] Mqtt service validation
-- [ ] Api service validation
-- [ ] Http service validation
+- [x] Mqtt service validation - listen mqtt devices
+- [ ] Api service validation - validate devices with api interface
+- [ ] Http service validation - monitoring uptime
 
 ----
 
@@ -48,27 +47,23 @@
 - redis-insight
 - supervisor
 - rabbitMQ
-- ~~логирование~~
-- ~~мониторинг~~
-- ~~CI/CD~~
-
-
-## Список задействованных ключей кэша
-    - topicsByType - тип устройства и задействованные топики
+- логирование - логирование пока в файлики var/log проекта
+- мониторинг - Prometheus
+- ~~CI/CD~~ - как только будет (MVP) Minimal version product, так сразу прикручу
 
 
 ## Queue:
 
-php bin/console messenger:consume async - async send emails
+php bin/console messenger:consume async - async send emails, telegram message
 
-в последствии нужно будет сделать задачу в supervisor чтобы отправлять письма
+работает через контейнер supervisor
 
 
 ## History
 
 Create project by: 
-- Yii2 (simple / advanced) 
-- Laravel (7/8/9)
+- Yii2 (simple / advanced) [deprecated project]
+- Laravel (7/8/9) [deprecated project]
 - Symfony (5.4 - current LTS version)
 
 
@@ -79,9 +74,5 @@ AdminLte3: https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
 Symfony Docs: https://symfony.com/doc/5.4/routing.html
 
 Codeception Docs: https://codeception.com/docs/05-UnitTests
-
-
-
-### Prometheus:
 
 https://github.com/artprima/prometheus-metrics-bundle
