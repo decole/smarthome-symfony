@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Sensor\Entity;
-
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
@@ -63,6 +61,11 @@ class Sensor implements EntityInterface
         $this->identify();
         $this->onCreated();
         $this->checkStatusType($status);
+    }
+
+    public static function alias(): string
+    {
+        return 'sensor';
     }
 
     final public function getType(): string

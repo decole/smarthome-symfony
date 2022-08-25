@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Api;
-
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

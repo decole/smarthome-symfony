@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Common\Embedded;
 
 

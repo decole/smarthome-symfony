@@ -2,9 +2,9 @@
 
 namespace App\Domain\Contract\Device;
 
-use App\Domain\Payload\Dto\MessageDto;
+use App\Domain\Payload\DevicePayload;
 
 interface ValidationDeviceService
 {
-    public function validate(MessageDto $message): bool;
+    public function validate(DevicePayload $message): bool;
 }

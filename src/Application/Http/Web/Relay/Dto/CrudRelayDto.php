@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Relay\Dto;
-
 
 use App\Application\Service\Validation\ValidationDtoInterface;
 use App\Domain\Doctrine\Relay\Entity\Relay;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Relay;
-
 
 use App\Domain\Doctrine\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;

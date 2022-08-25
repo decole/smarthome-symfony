@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Event\Listener;
-
 
 use App\Domain\Notification\Event\NotificationEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;

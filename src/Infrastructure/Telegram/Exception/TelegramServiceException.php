@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Telegram\Exception;
-
 
 use Exception;
 

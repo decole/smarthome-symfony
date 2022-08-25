@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Home;
-
 
 use App\Domain\Doctrine\Identity\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

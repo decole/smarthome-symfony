@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Auth;
-
 
 use App\Infrastructure\Security\Auth\Service\CsrfService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

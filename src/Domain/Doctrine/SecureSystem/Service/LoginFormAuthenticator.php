@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\SecureSystem\Service;
-
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

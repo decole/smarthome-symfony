@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Security\Auth\Service;
-
 
 use App\Domain\Doctrine\Identity\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,7 +52,7 @@ class EmailVerifyService
         /** @var User $user */
         $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), (string)$user->getId(), $user->getEmail());
 
-        $user->setIsVerified();
+        $user->setVerified();
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

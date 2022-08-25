@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App;
-
 
 use App\DependencyInjection\RepositoryCompiler;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;

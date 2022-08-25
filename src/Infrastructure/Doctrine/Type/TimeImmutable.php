@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Type;
-
 
 use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

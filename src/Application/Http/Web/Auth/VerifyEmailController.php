@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Auth;
-
 
 use App\Domain\Doctrine\Identity\Entity\User;
 use App\Infrastructure\Security\Auth\Service\EmailVerifyService;

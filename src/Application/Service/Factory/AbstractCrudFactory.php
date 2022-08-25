@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Application\Service\Factory;
 
-
+use App\Application\Service\DeviceData\DeviceCacheService;
 use App\Application\Service\Validation\ValidationInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
@@ -13,6 +12,8 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 abstract class AbstractCrudFactory
 {
+    protected DeviceCacheService $cacheService;
+
     abstract public function getRepository(): BaseDoctrineRepository;
 
     abstract public function getValidationService(): ValidationInterface;
@@ -37,7 +38,10 @@ abstract class AbstractCrudFactory
      */
     final public function save(EntityInterface $entity): EntityInterface
     {
-        return $this->getRepository()->save($entity);
+        $entity = $this->getRepository()->save($entity);
+        $this->refreshDeviceCache();
+
+        return $entity;
     }
 
     /**
@@ -46,5 +50,16 @@ abstract class AbstractCrudFactory
     final public function delete(EntityInterface $entity): void
     {
         $this->getRepository()->delete($entity);
+        $this->refreshDeviceCache();
+    }
+
+    final public function refreshDeviceCache(): void
+    {
+        $this->getCacheService()->create();
+    }
+
+    final public function getCacheService(): DeviceCacheService
+    {
+        return $this->cacheService;
     }
 }

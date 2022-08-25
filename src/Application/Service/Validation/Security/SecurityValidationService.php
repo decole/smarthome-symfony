@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Service\Validation\Security;
-
 
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\ValidationDtoInterface;

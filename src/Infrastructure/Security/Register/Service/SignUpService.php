@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Security\Register\Service;
-
 
 use App\Domain\Doctrine\Common\Transactions\TransactionInterface;
 use App\Domain\Doctrine\Identity\Entity\User;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Sensor;
-
 
 use App\Domain\Doctrine\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Service\Sensor\Exception;
-
 
 use App\Application\Exception\HandledException;
 

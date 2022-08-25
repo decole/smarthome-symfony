@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Relay\Entity;
-
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
@@ -59,6 +57,11 @@ final class Relay implements EntityInterface
         $this->onCreated();
         $this->checkStatusType($status);
         $this->checkRelayType($type);
+    }
+
+    public static function alias(): string
+    {
+        return 'relay';
     }
 
     public function getType(): string

@@ -1,10 +1,8 @@
 <?php
 
+namespace App\Domain\Payload;
 
-namespace App\Domain\Payload\Dto;
-
-
-class MessageDto
+final class DevicePayload
 {
     public function __construct(private string $topic, private string $payload)
     {

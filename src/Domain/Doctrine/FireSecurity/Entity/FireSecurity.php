@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\FireSecurity\Entity;
-
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
@@ -43,6 +41,11 @@ final class FireSecurity implements EntityInterface
         $this->onCreated();
 
         $this->checkStatusType($status);
+    }
+
+    public static function alias(): string
+    {
+        return 'fireSecurity';
     }
 
     public function getStatus(): int

@@ -22,3 +22,6 @@ App\Domain\Doctrine\Identity\Entity\User:
     name:
       type: string
       unique: true
+    telegramId:
+      type: integer
+      nullable: true

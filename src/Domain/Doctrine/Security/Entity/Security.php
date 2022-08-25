@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Doctrine\Security\Entity;
-
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
@@ -39,6 +37,14 @@ final class Security implements EntityInterface
         self::API_TYPE => 'api датчик',
     ];
 
+    public const GUARD_STATE = 'guard';
+    public const HOLD_STATE = 'hold';
+
+    public const GUARD_STATE_MAP = [
+        self::GUARD_STATE,
+        self::HOLD_STATE,
+    ];
+
     public function __construct(
         private string $securityType,
         private string $name,
@@ -60,6 +66,11 @@ final class Security implements EntityInterface
 
         $this->checkStatusType($status);
         $this->checkSecurityType($securityType);
+    }
+
+    public static function alias(): string
+    {
+        return 'security';
     }
 
     public function getType(): string
@@ -141,6 +152,18 @@ final class Security implements EntityInterface
     public function setParams(array $params): void
     {
         $this->params = $params;
+    }
+
+    public function isGuard(): bool
+    {
+        return $this->getLastCommand() === self::GUARD_STATE;
+    }
+
+    public function setGuardState(string $state): void
+    {
+        Assert::inArray($state, self::GUARD_STATE_MAP);
+
+        $this->lastCommand = $state;
     }
 
     private function checkStatusType(int $status): void

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Http\Web\Auth;
-
 
 use App\Domain\Doctrine\SecureSystem\Dto\RegisterDto;
 use App\Domain\Doctrine\SecureSystem\Service\RegistrationValidateService;

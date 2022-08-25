@@ -1,26 +1,24 @@
 <?php
 
-
 namespace App\Infrastructure\Mqtt\Service;
 
-
-use App\Domain\Payload\Dto\MessageDto;
-use Psr\Log\LoggerInterface;
+use App\Application\Service\DeviceData\DataResolver;
+use App\Application\Service\DeviceData\DeviceCacheService;
+use App\Domain\Payload\DevicePayload;
 use Mosquitto\Client;
 use Mosquitto\Message;
+use Psr\Log\LoggerInterface;
+use Throwable;
 
-class MqttHandleService
+final class MqttHandleService
 {
-    private const CACHE_LIMIT = 120;
-
-    private const CACHE_TOPIC_LIST = 'mqtt_topic_list';
-
     private bool $isConnect = false;
 
     private Client $client;
 
     public function __construct(
-        private MqttService $service,
+        private DeviceCacheService $deviceCacheService,
+        private DataResolver $resolver,
         private LoggerInterface $logger,
         private string $broker,
         private string $port
@@ -28,8 +26,28 @@ class MqttHandleService
         $this->client = new Client();
     }
 
+    public function process(Message $message): void
+    {
+        try {
+            $payload = $this->createPayload($message);
+            $this->resolver->resolveDevicePayload($payload);
+        } catch (Throwable $exception) {
+            $this->logger->info('Error mqtt listen process', [
+                'topic' => $message->topic,
+                'payload' => $message->payload,
+                'exception' => $exception->getMessage(),
+            ]);
+        }
+    }
+
+    public function post(DevicePayload $message): void
+    {
+        $this->client->publish($message->getTopic(), $message->getPayload(), 1, 0);
+    }
+
     public function listen(): void
     {
+        $this->deviceCacheService->create();
         $this->connectClient();
         $this->registerClient();
 
@@ -38,31 +56,16 @@ class MqttHandleService
         }
     }
 
-    public function process(Message $message): void
-    {
-        $this->service->route($message);
-
-//        $this->logger->info('mqtt message', [
-//            'topic' => $message->topic,
-//            'payload' => $message->payload,
-//        ]);
-    }
-
-    public function post(MessageDto $message): void
-    {
-        $this->client->publish($message->getTopic(), $message->getPayload(), 1, 0);
-    }
-
-    private function connectClient(): void
-    {
-        $this->client->connect($this->broker, $this->port, 5);
-    }
-
     public function disconnect(): void
     {
         if ($this->isConnect) {
             $this->client->disconnect();
         }
+    }
+
+    private function connectClient(): void
+    {
+        $this->client->connect($this->broker, $this->port, 5);
     }
 
     private function registerClient(): void
@@ -79,5 +82,10 @@ class MqttHandleService
         $this->client->onMessage([$this, 'process']);
 
         register_shutdown_function([$this, 'disconnect']);
+    }
+
+    private function createPayload(Message $messageMqtt): DevicePayload
+    {
+        return (new DevicePayload(topic: $messageMqtt->topic, payload: $messageMqtt->payload));
     }
 }

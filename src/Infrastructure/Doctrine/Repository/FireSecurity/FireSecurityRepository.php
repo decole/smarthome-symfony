@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Infrastructure\Doctrine\Repository\FireSecurity;
-
 
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Contract\Repository;
-
 
 use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
 
@@ -10,7 +8,7 @@ interface FireSecurityRepositoryInterface
 {
     public function save(EntityInterface $sensor): EntityInterface;
 
-    public function findAll(): array;
+    public function findAll(?int $status = null): array;
 
     public function findById(string $id): ?FireSecurity;
 
