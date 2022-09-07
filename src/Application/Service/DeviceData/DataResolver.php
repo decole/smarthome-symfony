@@ -17,7 +17,7 @@ final class DataResolver
 {
     public function __construct(
         private DataValidationService $validateService,
-        private DataCacheService $cacheService,
+        private DeviceDataCacheService $cacheService,
         private AlertService $alertService,
         private UserRepository $repository
     ) {

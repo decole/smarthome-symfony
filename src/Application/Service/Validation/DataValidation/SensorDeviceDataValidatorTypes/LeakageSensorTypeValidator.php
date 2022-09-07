@@ -2,6 +2,7 @@
 
 namespace App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
+use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\SensorTypeValidatorInterface;
 use App\Domain\Doctrine\Sensor\Entity\SensorLeakage;
 use App\Domain\Payload\DevicePayload;
 

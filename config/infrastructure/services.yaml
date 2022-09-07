@@ -14,8 +14,6 @@ services:
       $broker: '%env(MQTT_BROKER_URL)%'
       $port: '%env(MQTT_PORT)%'
 
-  App\Infrastructure\Mqtt\Service\MqttService: ~
-
   app.cache.adapter.redis:
     parent: 'cache.adapter.redis'
     tags:
@@ -56,6 +54,10 @@ services:
   App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService: ~
 
   App\Infrastructure\Doctrine\Service\FireSecurity\Factory\FireSecurityCrudFactory: ~
+
+  App\Infrastructure\Doctrine\Service\Page\PageCrudService: ~
+
+  App\Infrastructure\Doctrine\Service\Page\Factory\PageCrudFactory: ~
 
   App\Infrastructure\Security\Register\Service\SignUpService:
     arguments:

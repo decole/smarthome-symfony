@@ -2,6 +2,7 @@
 
 namespace App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
+use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\SensorTypeValidatorInterface;
 use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;
 use App\Domain\Doctrine\Sensor\Entity\SensorPressure;
 use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;

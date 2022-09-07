@@ -1,0 +1,12 @@
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+        <span class="info-box-icon bg-yellow"><i class="fas fa-microchip"></i></span>
+        <div class="info-box-content sensor-control" data-sensor-topic="{{ device.topic }}" data-sensor-id="{{ device.id }}">
+            <span class="info-box-text">{{ device.name }}</span>
+            <span class="info-box-number">
+                <span data-sensor-value="{{ device.topic }}">{{ device.payload }}</span>
+                <span class="prefix">{% if device.type == 'temperature' %}°C{% elseif device.type == 'humidity' %}%{% elseif device.type == 'leakage' %} {% elseif device.type == 'pressure' %}Bar{% elseif device.type == 'dryContact' %}{% endif %}</span>
+            </span>
+        </div>
+    </div>
+</div>

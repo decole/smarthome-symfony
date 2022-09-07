@@ -6,3 +6,5 @@ services:
   App\Domain\Doctrine\SecureSystem\Service\RegistrationValidateService: ~
 
   App\Domain\Doctrine\SecureSystem\Service\LoginFormAuthenticator: ~
+
+  App\Domain\Doctrine\Page\Service\PageGidratorService: ~

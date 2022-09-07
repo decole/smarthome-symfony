@@ -43,3 +43,7 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\Doctrine\FireSecurity\Entity'
                 dir: '%kernel.project_dir%/config/mappings/FireSecurity'
+            site-page:
+                type: yml
+                prefix: 'App\Domain\Doctrine\Page\Entity'
+                dir: '%kernel.project_dir%/config/mappings/Page'

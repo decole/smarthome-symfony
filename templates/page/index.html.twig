@@ -1,0 +1,25 @@
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <h1>{{ title }}</h1>
+
+    <div class="row">
+        {% for device in devices %}
+
+            {% if device.type == 'sensor' %}
+                {% include 'common/sensor.html.twig' with {'device': device.entity} only %}
+            {% elseif device.type == 'relay' %}
+                {% include 'common/relay.html.twig' with {'device': device.entity} only %}
+            {% elseif device.type == 'security' %}
+                {% include 'common/security.html.twig' with {'device': device.entity} only %}
+            {% elseif device.type == 'fireSecurity' %}
+                {% include 'common/fireSecurity.html.twig' with {'device': device.entity} only %}
+            {% endif %}
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

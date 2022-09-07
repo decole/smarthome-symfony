@@ -3,7 +3,7 @@
 namespace App\Application\Service\Factory;
 
 use App\Application\Service\DeviceData\DeviceCacheService;
-use App\Application\Service\Validation\ValidationInterface;
+use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\Exception\ORMException;

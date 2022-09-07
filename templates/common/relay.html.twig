@@ -1,0 +1,23 @@
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+        <span class="info-box-icon bg-yellow"><i class="far fa-hdd"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-text">{{ device.name }}</span>
+            <div class="btn-group relay-control" data-swift-topic="{{ device.topic }}" data-swift-topic-check="{{ device.checkTopic }}" data-swift-id="{{ device.id }}" data-swift-on="{{ device.commandOn }}" data-swift-off="{{ device.commandOff }}">
+                <button type="button" class="btn btn-outline-success active" data-swift-topic="{{ device.topic }}" data-swift-check="{{ device.checkTopicPayloadOn }}" value="{{ device.commandOn }}">On</button>
+                <button type="button" class="btn btn-outline-danger" data-swift-topic="{{ device.topic }}" data-swift-check="{{ device.checkTopicPayloadOff }}" value="{{ device.commandOff }}">Off</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<pre>
+    private string $name,
+    private string $topic,
+    private ?string $payload,
+    private string $commandOn,
+    private string $commandOff,
+    private ?string $checkTopic,
+    private ?string $checkTopicPayloadOn,
+    private ?string $checkTopicPayloadOff,
+</pre>-->

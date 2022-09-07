@@ -1,0 +1,19 @@
+App\Domain\Doctrine\Page\Entity\Page:
+  table: 'page'
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    name:
+      type: string
+      unique: true
+    config:
+      type: json
+    createdAt:
+      type: datetime_immutable
+      name: created_at
+    updatedAt:
+      type: datetime_immutable
+      name: updated_at
+      nullable: true

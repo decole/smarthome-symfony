@@ -42,7 +42,9 @@ final class MqttHandleService
 
     public function post(DevicePayload $message): void
     {
+        $this->connectClient();
         $this->client->publish($message->getTopic(), $message->getPayload(), 1, 0);
+        $this->disconnect();
     }
 
     public function listen(): void

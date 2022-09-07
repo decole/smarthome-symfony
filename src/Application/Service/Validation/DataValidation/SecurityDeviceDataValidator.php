@@ -3,6 +3,7 @@
 namespace App\Application\Service\Validation\DataValidation;
 
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
+use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
 use App\Domain\Doctrine\Security\Entity\Security;
 
 final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
