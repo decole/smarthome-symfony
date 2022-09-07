@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\Sensor\Dto;
 
-use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use Symfony\Component\Validator\Constraints as Assert;
 

@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\Relay\Dto;
 
-use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Doctrine\Relay\Entity\Relay;
 use Symfony\Component\Validator\Constraints as Assert;
 

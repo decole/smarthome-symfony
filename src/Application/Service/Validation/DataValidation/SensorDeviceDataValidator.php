@@ -4,6 +4,7 @@ namespace App\Application\Service\Validation\DataValidation;
 
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\Factory\SensorDeviceDataTypeValidatorFactory;
+use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
 
 final class SensorDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {

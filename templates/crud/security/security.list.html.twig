@@ -1,0 +1,75 @@
+{% set page_name = 'Настрока охранной системы' %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{ page_name }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Список датчиков охранной системы</span>
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <a href="{{ path('security_admin_create') }}" type="submit" class="btn btn-primary">Создать</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sec in security %}
+
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ sec.name|e }}</td>
+                                    <td>{{ typeTranscribe[sec.type]|capitalize }}</td>
+                                    <td>{% if sec.status == 1 %}Active{% else %}Deactivate{% endif %}</td>
+                                    <td>
+                                        <a href="{{ path('security_admin_update_by_id', {id: sec.id}) }}" class="btn btn-warning">Изменить</a>
+                                        <a href="{{ path('security_admin_delete_by_id', {id: sec.id}) }}" class="btn btn-danger">Удалить</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

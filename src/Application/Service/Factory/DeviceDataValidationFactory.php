@@ -3,13 +3,13 @@
 namespace App\Application\Service\Factory;
 
 use App\Application\Exception\DeviceDataException;
-use App\Application\Service\Validation\DataValidation\DeviceDataValidatorInterface;
 use App\Application\Service\Validation\DataValidation\EmptyDataValidator;
 use App\Application\Service\Validation\DataValidation\FireSecurityDeviceDataValidator;
 use App\Application\Service\Validation\DataValidation\RelayDeviceDataValidator;
 use App\Application\Service\Validation\DataValidation\SecurityDeviceDataValidator;
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidator;
 use App\Domain\Contract\Repository\EntityInterface;
+use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
 use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
 use App\Domain\Doctrine\Relay\Entity\Relay;
 use App\Domain\Doctrine\Security\Entity\Security;

@@ -7,22 +7,10 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Application\Service\Validation\Sensor\SensorValidationService: ~
-
-  App\Application\Service\Validation\Relay\RelayValidationService: ~
-
-  App\Application\Service\Validation\Security\SecurityValidationService: ~
-
-  App\Application\Service\Validation\FireSecurity\FireSecurityValidationService: ~
-
   App\Application\Cli\Handler\TelegramNotificationHandler: ~
-
-  App\Application\Service\DeviceData\DataValidationService: ~
-
-  App\Application\Service\Alert\AlertService: ~
 
   App\Application\Service\DeviceData\DataResolver: ~
 
-  App\Application\Service\DeviceData\DataCacheService: ~
-
-  App\Application\Service\DeviceData\DeviceCacheService: ~
+  App\Application\Service\:
+    resource: '%kernel.project_dir%/src/Application/Service/**/*Service.php'
+    autowire: true

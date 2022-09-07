@@ -93,7 +93,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ path('watering') }}" class="nav-link {{ 'security_page' in route ? 'active' }}">
                         <i class="nav-icon fas fa-tint"></i>
                         <p>
                             Полив
@@ -101,7 +101,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ path('fire_secure_page') }}" class="nav-link {{ 'fire_secure_page' in route ? 'active' }}">
                         <i class="nav-icon fab fa-free-code-camp fa-circle"></i>
                         <p>
                             Пожарная система
@@ -110,7 +110,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ path('security_page') }}" class="nav-link {{ 'security_page' in route ? 'active' }}">
                         <i class="nav-icon fas fa-user-lock"></i>
                         <p>
                             Охранная система
@@ -119,7 +119,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ path('devices') }}" class="nav-link {{ 'devices' in route ? 'active' }}">
                         <i class="nav-icon fas fa-folder-open"></i>
                         <p>
                             Все данные
@@ -127,23 +127,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{ path('outbuilding') }}" class="nav-link {{ 'outbuilding' in route ? 'active' }}">
                         <i class="nav-icon fas fa-border-style"></i>
                         <p>
                             Пристройка
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-store-alt"></i>
-                        <p>
-                            Теплица
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item menu-open">
+                <li class="nav-item {{ 'admin' in route ? 'menu-is-opening menu-open' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -153,27 +144,33 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ path('sensors') }}" class="nav-link {{ 'sensors' in route ? 'active' }}">
+                            <a href="{{ path('sensors_admin') }}" class="nav-link {{ 'sensors_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Сенсоры</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('relays') }}" class="nav-link {{ 'relays' in route ? 'active' }}">
+                            <a href="{{ path('relay_admin') }}" class="nav-link {{ 'relay_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Реле</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('security') }}" class="nav-link {{ 'security' in route ? 'active' }}">
+                            <a href="{{ path('security_admin') }}" class="nav-link {{ 'security_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Охранка</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('fire_secure') }}" class="nav-link {{ 'fire_secure' in route ? 'active' }}">
+                            <a href="{{ path('fire_secure_admin') }}" class="nav-link {{ 'fire_secure_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Пожарка</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('page_admin') }}" class="nav-link {{ 'page_admin' in route ? 'active' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Страницы</p>
                             </a>
                         </li>
                     </ul>

@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\FireSecurity\Dto;
 
-use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CrudFireSecurityDto implements ValidationDtoInterface

@@ -4,7 +4,7 @@ namespace App\Infrastructure\Doctrine\Service\Security;
 
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
-use App\Application\Service\Validation\ValidationDtoInterface;
+use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 use App\Domain\Doctrine\Security\Entity\Security;

@@ -2,7 +2,8 @@
 
 > Pet project for my smart home infrastructure.
 
-### First stage
+
+### First stage (MVP)
 
 - [x] Добавить PostgreSQL в .env
 - [x] пофиксить .env
@@ -18,12 +19,28 @@
 - [x] Security CRUD
 - [x] Fire-secure CRUD
 - [x] Notification CRUD
+- [x] Telegram notification
+- [x] Email notification
 - [ ] Alice Smart Home CRUD
 - [ ] Alice Skill CRUD
 - [ ] Alice Notify Alerts System CRUD
+- [x] Constructor data pages CRUD
 - [x] Mqtt service validation - listen mqtt devices
 - [ ] Api service validation - validate devices with api interface
 - [ ] Http service validation - monitoring uptime
+
+### Second stage
+
+- [ ] Api service validation
+- [ ] Http service validation
+- [ ] Log application
+- [ ] Log services
+- [ ] Grafana
+- [ ] Prometheus alerting by application and services
+- [ ] CI
+- [ ] CD
+- [ ] Telegram bot
+- [ ] ...
 
 ----
 
@@ -31,10 +48,6 @@
 > Сам сервис понимает в каком он состоянии и как реагировать на сигнал датчиков.
 
 ----
-
-**На проде и на разраб стенде docker-compose.yaml файлы разные будут, поэтому нужно
-скопировать docker-compose.yaml.dist в docker-compose.yaml и в нем настраивать все под
-свои нужды.**
 
 
 ## Services
@@ -74,5 +87,8 @@ AdminLte3: https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
 Symfony Docs: https://symfony.com/doc/5.4/routing.html
 
 Codeception Docs: https://codeception.com/docs/05-UnitTests
+
+
+### Prometheus:
 
 https://github.com/artprima/prometheus-metrics-bundle
