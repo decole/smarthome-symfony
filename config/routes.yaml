@@ -7,3 +7,16 @@ api:
   resource: '../src/Application/Http/Api'
   type: annotation
   prefix: /api
+
+when@prod:
+  web:
+    resource: '../src/Application/Http/Web'
+    type: annotation
+    prefix: /
+    schemes:  [ https ]
+
+  api:
+    resource: '../src/Application/Http/Api'
+    type: annotation
+    prefix: /api
+    schemes:  [ https ]
