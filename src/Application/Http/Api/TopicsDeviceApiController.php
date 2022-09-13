@@ -11,8 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class TopicsDeviceApiController
 {
-    public function __construct(private ApiUriTranscribeService $service, private DeviceDataCacheService $deviceDataCacheService)
-    {
+    public function __construct(
+        private ApiUriTranscribeService $service,
+        private DeviceDataCacheService $deviceDataCacheService
+    ) {
     }
 
     #[Route('/device/topics')]
