@@ -72,3 +72,5 @@ services:
     arguments:
       $apiToken: '%env(TELEGRAM_BOT_TOKEN)%'
       $logger: "@monolog.logger.telegram_service"
+
+  App\Infrastructure\AliceSkill\Service\AliceSkillService: ~
