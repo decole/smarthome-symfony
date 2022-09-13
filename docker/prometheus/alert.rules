@@ -27,5 +27,5 @@ groups:
     labels:
       severity: warning
     annotations:
-      summary: Swarm node == {{ $labels.nodename }} == CPU usage is at {{ humanize $value}}%.
-      description: Node == {{ $labels.nodename }} == CPU usage is at {{ humanize $value}}%.
+      summary: Docker node == {{ $labels.nodename }} == CPU usage is at {{ humanize $value }}%.
+      description: Node == {{ $labels.nodename }} == CPU usage is at {{ humanize $value }}%.

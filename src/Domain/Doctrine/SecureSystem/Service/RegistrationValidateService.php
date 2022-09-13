@@ -82,6 +82,10 @@ class RegistrationValidateService
         if (!filter_var($dto->getEmail(), FILTER_VALIDATE_EMAIL)) {
             $this->addError('email', 'Invalid email format');
         }
+
+        if ($this->repository->findOneByEmail($dto->getEmail())) {
+            $this->addError('email', 'email is exist');
+        }
     }
 
     private function isValid(): bool

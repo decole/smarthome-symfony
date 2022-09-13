@@ -12,5 +12,7 @@ interface UserRepositoryInterface
 
     public function findOneByName(string $name): ?User;
 
+    public function findOneByEmail(string $email): ?User;
+
     public function findAllWithTelegramId(): array;
 }
