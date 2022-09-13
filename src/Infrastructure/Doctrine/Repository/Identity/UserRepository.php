@@ -3,16 +3,12 @@
 namespace App\Infrastructure\Doctrine\Repository\Identity;
 
 use App\Domain\Doctrine\Identity\Entity\User;
-use App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface;
-use App\Domain\Doctrine\Relay\Entity\Relay;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
-use Webmozart\Assert\Assert;
 
 final class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepositoryInterface
 {
@@ -58,6 +54,15 @@ final class UserRepository extends ServiceEntityRepository implements PasswordUp
         return $this->createQueryBuilder('u')
             ->andWhere('u.name = :name')
             ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByEmail(string $email): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $email)
             ->getQuery()
             ->getOneOrNullResult();
     }
