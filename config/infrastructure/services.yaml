@@ -74,3 +74,7 @@ services:
       $logger: "@monolog.logger.telegram_service"
 
   App\Infrastructure\AliceSkill\Service\AliceSkillService: ~
+
+  App\Infrastructure\YandexSmartHome\Service\SmartHomeService: ~
+
+  App\Infrastructure\YandexSmartHome\Service\DeviceService: ~
