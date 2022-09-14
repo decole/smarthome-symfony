@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\YandexSmartHome\Device;
 
-use Modules\AliceSmartHome\Services\Devices\Schemas\RelaySchema;
-use Modules\AliceSmartHome\Services\Dto\DeviceDto;
+use App\Infrastructure\YandexSmartHome\Dto\DeviceDto;
+use App\Infrastructure\YandexSmartHome\Schema\RelaySchema;
 
 class RelayDevice extends AbstractDevice implements DeviceInterface
 {

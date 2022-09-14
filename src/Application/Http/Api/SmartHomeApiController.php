@@ -8,10 +8,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
 
 final class SmartHomeApiController
 {
-    public function __construct(private SmartHomeService $service)
+    public function __construct(private SmartHomeService $service, private LoggerInterface $logger)
     {
     }
 
@@ -77,7 +78,9 @@ final class SmartHomeApiController
     {
         $content = file_get_contents('php://input');
 
-        $this->saveToLog($content);
+        $this->logger->info('/alice_home/v1.0/user/devices/action', [
+            'json' => $content,
+        ]);
 
         $query = json_decode($content);
 

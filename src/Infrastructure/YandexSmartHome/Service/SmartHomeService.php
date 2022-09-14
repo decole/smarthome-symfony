@@ -2,19 +2,21 @@
 
 namespace App\Infrastructure\YandexSmartHome\Service;
 
-use Illuminate\Http\Request;
-use Modules\AliceSmartHome\Services\Devices\DeviceInterface;
-use Modules\AutoWatering\Events\MqttMessagePosting;
+use App\Domain\Payload\DevicePayload;
+use App\Infrastructure\Mqtt\Service\MqttHandleService;
+use App\Infrastructure\YandexSmartHome\Device\DeviceInterface;
+use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
-class SmartHomeService
+final class SmartHomeService
 {
+    public function __construct(private DeviceService $deviceService, private MqttHandleService $service)
+    {
+    }
+
     public function getRequestId(Request $request): string
     {
-        if (isset($request->header()['x-request-id'])) {
-            return current($request->header()['x-request-id']);
-        }
-
-        return 'bad-request-id';
+        return $request->headers->get('x-request-id') ?? 'bad-request-id';
     }
 
     /**
@@ -51,8 +53,8 @@ class SmartHomeService
      */
     public function relayAction(string $topic, $query): bool
     {
-        if (!key_exists(0, $query->payload->devices) ||
-            !key_exists(0, $query->payload->devices[0]->capabilities)
+        if (!array_key_exists(0, $query->payload->devices) ||
+            !array_key_exists(0, $query->payload->devices[0]->capabilities)
         ) {
             throw new Exception('not valid relay action state');
         }
@@ -61,7 +63,7 @@ class SmartHomeService
 
         $payload = $state ? 'on' : 'off';
 
-        MqttMessagePosting::dispatch($topic, $payload);
+        $this->service->post(new DevicePayload($topic, $payload));
 
         return $state;
     }
