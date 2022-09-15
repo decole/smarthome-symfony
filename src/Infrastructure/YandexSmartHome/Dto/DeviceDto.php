@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\YandexSmartHome\Dto;
 
-use Modules\AliceSmartHome\Services\Devices\Schemas\SchemaInterface;
+use App\Infrastructure\YandexSmartHome\Schema\SchemaInterface;
 
 class DeviceDto
 {

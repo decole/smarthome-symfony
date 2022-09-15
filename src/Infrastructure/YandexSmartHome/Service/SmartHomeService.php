@@ -42,7 +42,11 @@ final class SmartHomeService
                 continue;
             }
 
-            $result[] = $this->deviceService->getDevice($id);
+            $entity = $this->deviceService->getDevice($id);
+
+            if ($entity !== null) {
+                $result[] = $entity;
+            }
         }
 
         return $result;

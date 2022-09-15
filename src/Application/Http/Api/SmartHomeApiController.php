@@ -67,6 +67,7 @@ final class SmartHomeApiController
     {
         $requestId = $this->service->getRequestId($request);
         $devices = $this->service->devicesQuery($request->getContent());
+
         $presenter = new DeviceListQueryPresenter($devices, $requestId);
 
         return new JsonResponse($presenter->present());

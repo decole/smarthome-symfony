@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\YandexSmartHome\Device;
 
-class LampMargulisDevice extends RelayDevice implements DeviceInterface
+class LampMargulisDevice extends RelayDevice
 {
     public function getId(): string
     {

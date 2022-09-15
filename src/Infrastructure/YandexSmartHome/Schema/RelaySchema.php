@@ -4,7 +4,9 @@ namespace App\Infrastructure\YandexSmartHome\Schema;
 
 class RelaySchema implements SchemaInterface
 {
-    public function __construct(private string $id, private mixed $state)
+    private ?string $state = null;
+
+    public function __construct(private string $id)
     {
     }
 
@@ -26,5 +28,10 @@ class RelaySchema implements SchemaInterface
                 ]
             ],
         ];
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 }
