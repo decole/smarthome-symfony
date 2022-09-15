@@ -2,18 +2,28 @@
 
 namespace App\Infrastructure\YandexSmartHome\Service;
 
-use Modules\AliceSmartHome\Services\Devices\DeviceInterface;
+use App\Infrastructure\YandexSmartHome\Device\DeviceInterface;
+use App\Infrastructure\YandexSmartHome\Device\LampMargulisDevice;
 
-class DeviceService
+final class DeviceService
 {
-    public function getDevice(string $id): DeviceInterface
+    public function getDevice(string $id): ?DeviceInterface
     {
-        foreach ($this->devices as $device) {
+        foreach ($this->getDeviceList() as $deviceClass) {
+            $device = new $deviceClass();
+
             if ($device->getDevice()->id == $id) {
                 return $device;
             }
         }
 
-        throw new Exception('device not found on device list');
+        return null;
+    }
+
+    private function getDeviceList(): array
+    {
+        return [
+            LampMargulisDevice::class,
+        ];
     }
 }

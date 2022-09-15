@@ -7,9 +7,7 @@ use App\Infrastructure\YandexSmartHome\Schema\RelaySchema;
 
 class RelayDevice extends AbstractDevice implements DeviceInterface
 {
-    public function __construct(private mixed $state)
-    {
-    }
+    private ?string $state = null;
 
     public function getDevice(): DeviceDto
     {
@@ -17,7 +15,7 @@ class RelayDevice extends AbstractDevice implements DeviceInterface
         $device->id = $this->getId();
         $device->state = $this->state;
         $device->type = self::RELAY;
-        $device->schema = new RelaySchema($this->getId(), $this->getState());
+        $device->schema = new RelaySchema($this->getId());
 
         return $device;
     }
@@ -27,8 +25,13 @@ class RelayDevice extends AbstractDevice implements DeviceInterface
         return 'default';
     }
 
-    public function getState(): mixed
+    public function getState(): ?string
     {
         return $this->state;
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 }
