@@ -8,12 +8,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Psr\Log\LoggerInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
 final class SmartHomeApiController
 {
-    public function __construct(private SmartHomeService $service, private LoggerInterface $logger)
+    public function __construct(private SmartHomeService $service)
     {
+        // debug logger - deleted at where debugged smart home
+        $this->logger = new Logger('smart_home');
+        $this->logger->pushHandler(new StreamHandler(__DIR__.'/../../../../var/log/smart_home.log', Logger::DEBUG));
+        $this->logger->pushHandler(new FirePHPHandler());
     }
 
     // Проверка доступности Endpoint URL провайдера
@@ -29,6 +35,11 @@ final class SmartHomeApiController
     {
         $requestId = $this->service->getRequestId($request);
 
+        $this->logger->info('/alice_home/v1.0/user/devices/query', [
+            'json' => $request->getContent(),
+            'requestId' => $requestId,
+        ]);
+
         return new JsonResponse(['request_id' => $requestId]);
     }
 
@@ -37,6 +48,11 @@ final class SmartHomeApiController
     public function devices(Request $request): Response
     {
         $requestId = $this->service->getRequestId($request);
+
+        $this->logger->info('/alice_home/v1.0/user/devices/query', [
+            'json' => $request->getContent(),
+            'requestId' => $requestId,
+        ]);
 
         $result = [
             'request_id' => $requestId,
@@ -66,7 +82,14 @@ final class SmartHomeApiController
     public function query(Request $request): Response
     {
         $requestId = $this->service->getRequestId($request);
-        $devices = $this->service->devicesQuery($request->getContent());
+        $content = $request->getContent();
+
+        $this->logger->info('/alice_home/v1.0/user/devices/query', [
+            'json' => $content,
+            'requestId' => $requestId,
+        ]);
+
+        $devices = $this->service->devicesQuery($content);
 
         $presenter = new DeviceListQueryPresenter($devices, $requestId);
 
@@ -81,6 +104,7 @@ final class SmartHomeApiController
 
         $this->logger->info('/alice_home/v1.0/user/devices/action', [
             'json' => $content,
+            'requestId' => $this->service->getRequestId($request),
         ]);
 
         $query = json_decode($content);
