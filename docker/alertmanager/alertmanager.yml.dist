@@ -15,8 +15,8 @@ receivers:
         http_config:
           follow_redirects: true
         api_url: https://api.telegram.org
-        bot_token: '5124649562:AAGLlrczAo690u1LHuv3zSDDVrmiapDcZG0'
-        chat_id: -689509648
+        bot_token: '<TELEGRAM_BOT_TOKEN>'
+        chat_id: <TELEGRAM_CHAT_ID>
         disable_notifications: false
         message: '{{ template "telegram.text" . }}'
         parse_mode: 'HTML'

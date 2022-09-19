@@ -21,16 +21,17 @@
 - [x] Notification CRUD
 - [x] Telegram notification
 - [x] Email notification
-- [ ] Alice Smart Home CRUD
-- [ ] Alice Skill CRUD
-- [ ] Alice Notify Alerts System CRUD
 - [x] Constructor data pages CRUD
 - [x] Mqtt service validation - listen mqtt devices
-- [ ] Api service validation - validate devices with api interface
-- [ ] Http service validation - monitoring uptime
+
 
 ### Second stage
 
+- [ ] Api service validation - validate devices with api interface
+- [ ] Http service validation - monitoring uptime
+- [ ] Alice Smart Home CRUD
+- [ ] Alice Skill CRUD
+- [ ] Alice Notify Alerts System CRUD
 - [ ] Api service validation
 - [ ] Http service validation
 - [ ] Log application
@@ -40,7 +41,6 @@
 - [ ] CI
 - [ ] CD
 - [ ] Telegram bot
-- [ ] ...
 
 ----
 
@@ -49,6 +49,7 @@
 
 ----
 
+> Для prometheus alert manager надо скопировать alertmanager.yml.dist в alertmanager.yml и заменить <TELEGRAM_BOT_TOKEN> на токен вашего бота
 
 ## Services
 
