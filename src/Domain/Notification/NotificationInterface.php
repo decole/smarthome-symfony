@@ -7,5 +7,5 @@ interface NotificationInterface
 {
     public function getMessage(): string;
 
-    public function getTo(): int;
+    public function getTo();
 }

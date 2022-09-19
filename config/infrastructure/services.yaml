@@ -78,3 +78,9 @@ services:
   App\Infrastructure\YandexSmartHome\Service\SmartHomeService: ~
 
   App\Infrastructure\YandexSmartHome\Service\DeviceService: ~
+
+  App\Infrastructure\Quasar\Service\QuasarNotificationService:
+    arguments:
+      $cookies: '%env(ALICE_QUASAR_COOKIE)%'
+      $deviceId: '%env(ALICE_QUASAR_DEVICE)%'
+      $scenarioId: '%env(ALICE_QUASAR_SCENARIO_ID)%'

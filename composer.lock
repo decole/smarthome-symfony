@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a997144b59a79dcf91df2a96cd3cb564",
+    "content-hash": "30c2a70fb7f38134cb1e0c3f976029be",
     "packages": [
         {
             "name": "artprima/prometheus-metrics-bundle",
@@ -130,6 +130,59 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "decole/quasar-iot",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/decole/quasar-iot.git",
+                "reference": "2e9e3f7a5da763d7fc5e41acf466786fce1f904a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/decole/quasar-iot/zipball/2e9e3f7a5da763d7fc5e41acf466786fce1f904a",
+                "reference": "2e9e3f7a5da763d7fc5e41acf466786fce1f904a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.4||^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Decole\\Quasar\\Adapters\\Laravel\\QuasarServiceProvider"
+                    ],
+                    "aliases": {
+                        "YrNo": "Decole\\Quasar\\Adapters\\Laravel\\Facades\\QuasarFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Decole\\Quasar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Galochkin Sergey",
+                    "email": "decole2014@yandex.ru"
+                }
+            ],
+            "description": "Bundler for yandex quasar for Yandex Alice remote TTS",
+            "support": {
+                "issues": "https://github.com/decole/quasar-iot/issues",
+                "source": "https://github.com/decole/quasar-iot/tree/1.0.3"
+            },
+            "time": "2022-05-08T21:49:46+00:00"
         },
         {
             "name": "doctrine/annotations",
