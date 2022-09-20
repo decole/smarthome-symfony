@@ -85,3 +85,8 @@ services:
       $deviceId: '%env(ALICE_QUASAR_DEVICE)%'
       $scenarioId: '%env(ALICE_QUASAR_SCENARIO_ID)%'
       $logger: '@monolog.logger.quasar_service'
+
+  App\Infrastructure\Discord\Service\DiscordService:
+    arguments:
+      $webhookUri: '%env(DISCORD_WEBHOOK)%'
+      $logger: '@monolog.logger.discord_service'

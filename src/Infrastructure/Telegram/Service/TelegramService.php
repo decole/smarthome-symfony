@@ -27,7 +27,7 @@ final class TelegramService
         $this->telegram = new Api($apiToken);
     }
 
-    public function sendMessage(string $chatId, string $notify): void
+    public function send(string $chatId, string $notify): void
     {
         try {
             $this->telegram->sendMessage([

@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli\Handler;
 
-use App\Domain\Notification\AliceNotification;
+use App\Domain\Notification\AliceNotificationMessage;
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -13,7 +13,7 @@ class AliceSmartHomeNotificationHandler
     {
     }
 
-    public function __invoke(AliceNotification $message): void
+    public function __invoke(AliceNotificationMessage $message): void
     {
         $template = [
             '-',

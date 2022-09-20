@@ -9,7 +9,7 @@ use App\Domain\Doctrine\Relay\Entity\Relay;
 use App\Domain\Doctrine\Security\Entity\Security;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use App\Domain\Notification\Event\NotificationEvent;
-use App\Domain\Notification\TelegramNotification;
+use App\Domain\Notification\TelegramNotificationMessage;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class AlertService
@@ -20,7 +20,7 @@ final class AlertService
 
     public function userNotify(User $user, string $message): void
     {
-        $event = new NotificationEvent(new TelegramNotification($user->getTelegramId(), $message));
+        $event = new NotificationEvent(new TelegramNotificationMessage($user->getTelegramId(), $message));
         $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
     }
 

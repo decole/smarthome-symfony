@@ -5,6 +5,7 @@ monolog:
         - telegram_service
         - event_handler
         - quasar_service
+        - discord_service
 
 when@dev:
     monolog:
@@ -22,6 +23,7 @@ when@dev:
                     - telegram_service
                     - event_handler
                     - quasar_service
+                    - discord_service
                 verbosity_levels:
                     VERBOSITY_NORMAL: INFO
             mqtt_transport:
@@ -44,6 +46,11 @@ when@dev:
                 type: stream
                 path: '%kernel.logs_dir%/%kernel.environment%.quasar_service.log'
                 channels: [ quasar_service ]
+            discord_service:
+                level: debug
+                type: stream
+                path: '%kernel.logs_dir%/%kernel.environment%.discord_service.log'
+                channels: [ discord_service ]
 
 when@test:
     monolog:

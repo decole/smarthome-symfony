@@ -2,7 +2,8 @@
 
 namespace App\Application\Cli;
 
-use App\Domain\Notification\AliceNotification;
+use App\Domain\Notification\AliceNotificationMessage;
+use App\Domain\Notification\DiscordNotificationMessage;
 use App\Domain\Notification\Event\NotificationEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
@@ -22,7 +23,8 @@ class TestCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $message = 'тест сообщение';
-        $event = new NotificationEvent(new AliceNotification($message));
+//        $event = new NotificationEvent(new AliceNotificationMessage($message));
+        $event = new NotificationEvent(new DiscordNotificationMessage($message));
         $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
 
         return 0;

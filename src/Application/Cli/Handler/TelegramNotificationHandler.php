@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli\Handler;
 
-use App\Domain\Notification\TelegramNotification;
+use App\Domain\Notification\TelegramNotificationMessage;
 use App\Infrastructure\Telegram\Service\TelegramService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -13,8 +13,8 @@ class TelegramNotificationHandler
     {
     }
 
-    public function __invoke(TelegramNotification $message): void
+    public function __invoke(TelegramNotificationMessage $message): void
     {
-        $this->service->sendMessage($message->getTo(), $message->getMessage());
+        $this->service->send($message->getTo(), $message->getMessage());
     }
 }
