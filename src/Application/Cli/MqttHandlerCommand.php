@@ -2,7 +2,11 @@
 
 namespace App\Application\Cli;
 
+use App\Domain\Notification\AliceNotification;
+use App\Domain\Notification\Event\NotificationEvent;
+use App\Domain\Notification\TelegramNotification;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,7 +18,8 @@ final class MqttHandlerCommand extends Command
 
     public function __construct(
         private LoggerInterface $logger,
-        private MqttHandleService $handler
+        private MqttHandleService $handler,
+        private EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct();
     }
@@ -32,6 +37,8 @@ final class MqttHandlerCommand extends Command
             $this->logger->critical('Crash MQTT listener', [
                 'exception' => $exception->getMessage(),
             ]);
+            $event = new NotificationEvent(new AliceNotification('Не возможно соединиться с брокером сообщений'));
+            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
         }
 
         return 0;
