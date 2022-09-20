@@ -8,9 +8,9 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Application\Cli\:
-    resource: '%kernel.project_dir%/src/Application/Cli/**/*Command.php'
-
   App\Application\Cli\MqttHandlerCommand:
     arguments:
       $logger: '@monolog.logger.mqtt_transport'
+
+  App\Application\Cli\:
+    resource: '%kernel.project_dir%/src/Application/Cli/**/*Command.php'
