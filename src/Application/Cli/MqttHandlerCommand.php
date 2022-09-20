@@ -2,9 +2,9 @@
 
 namespace App\Application\Cli;
 
-use App\Domain\Notification\AliceNotification;
+use App\Domain\Notification\AliceNotificationMessage;
+use App\Domain\Notification\DiscordNotificationMessage;
 use App\Domain\Notification\Event\NotificationEvent;
-use App\Domain\Notification\TelegramNotification;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
@@ -37,7 +37,13 @@ final class MqttHandlerCommand extends Command
             $this->logger->critical('Crash MQTT listener', [
                 'exception' => $exception->getMessage(),
             ]);
-            $event = new NotificationEvent(new AliceNotification('Не возможно соединиться с брокером сообщений'));
+
+            $message = 'Не возможно соединиться с брокером сообщений';
+
+            $event = new NotificationEvent(new AliceNotificationMessage($message));
+            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
+
+            $event = new NotificationEvent(new DiscordNotificationMessage($message));
             $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
         }
 

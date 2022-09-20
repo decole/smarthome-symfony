@@ -19,7 +19,8 @@ framework:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             Symfony\Component\Notifier\Message\ChatMessage: async
             Symfony\Component\Notifier\Message\SmsMessage: async
-            App\Domain\Notification\TelegramNotification: async
-            App\Domain\Notification\AliceNotification: async
+            App\Domain\Notification\TelegramNotificationMessage: async
+            App\Domain\Notification\AliceNotificationMessage: async
+            App\Domain\Notification\DiscordNotificationMessage: async
             # Route your messages to the transports
             # 'App\Message\YourMessage': async

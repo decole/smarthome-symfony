@@ -2,7 +2,7 @@
 
 namespace App\Domain\Notification;
 
-final class TelegramNotification implements NotificationInterface
+final class TelegramNotificationMessage implements NotificationMessageInterface, NotificationUserInterface
 {
     public function __construct(private int $userId, private string $message)
     {

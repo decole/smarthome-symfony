@@ -3,9 +3,7 @@
 namespace App\Domain\Notification;
 
 
-interface NotificationInterface
+interface NotificationMessageInterface
 {
     public function getMessage(): string;
-
-    public function getTo();
 }
