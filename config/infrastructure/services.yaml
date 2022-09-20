@@ -71,7 +71,7 @@ services:
   App\Infrastructure\Telegram\Service\TelegramService:
     arguments:
       $apiToken: '%env(TELEGRAM_BOT_TOKEN)%'
-      $logger: "@monolog.logger.telegram_service"
+      $logger: '@monolog.logger.telegram_service'
 
   App\Infrastructure\AliceSkill\Service\AliceSkillService: ~
 
@@ -84,3 +84,4 @@ services:
       $cookies: '%env(ALICE_QUASAR_COOKIE)%'
       $deviceId: '%env(ALICE_QUASAR_DEVICE)%'
       $scenarioId: '%env(ALICE_QUASAR_SCENARIO_ID)%'
+      $logger: '@monolog.logger.quasar_service'

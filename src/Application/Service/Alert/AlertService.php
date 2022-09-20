@@ -21,7 +21,6 @@ final class AlertService
     public function userNotify(User $user, string $message): void
     {
         $event = new NotificationEvent(new TelegramNotification($user->getTelegramId(), $message));
-
         $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
     }
 
