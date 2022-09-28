@@ -8,3 +8,8 @@ services:
   App\Domain\Doctrine\SecureSystem\Service\LoginFormAuthenticator: ~
 
   App\Domain\Doctrine\Page\Service\PageGidratorService: ~
+
+  App\Domain\PeriodicHandleCriteria\:
+    resource: '%kernel.project_dir%/src/Domain/PeriodicHandleCriteria/**/*Criteria.php'
+    tags: [ 'periodic.criteria' ]
+    autowire: true

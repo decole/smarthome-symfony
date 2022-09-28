@@ -2,6 +2,7 @@ monolog:
     channels:
         - deprecation
         - mqtt_transport
+        - periodic_handler
         - telegram_service
         - event_handler
         - quasar_service
@@ -20,6 +21,7 @@ when@dev:
                 process_psr_3_messages: false
                 channels:
                     - mqtt_transport
+                    - periodic_handler
                     - telegram_service
                     - event_handler
                     - quasar_service
@@ -31,6 +33,11 @@ when@dev:
                 type: stream
                 path: '%kernel.logs_dir%/%kernel.environment%.mqtt_transport.log'
                 channels: [ mqtt_transport ]
+            periodic_handler:
+                level: debug
+                type: stream
+                path: '%kernel.logs_dir%/%kernel.environment%.periodic_handler.log'
+                channels: [ periodic_handler ]
             telegram_service:
                 level: debug
                 type: stream

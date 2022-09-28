@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\DependencyInjection\PeriodicHandleCriteriaCompiler;
 use App\DependencyInjection\RepositoryCompiler;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,5 +15,6 @@ class Kernel extends BaseKernel
     protected function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new RepositoryCompiler());
+        $container->addCompilerPass(new PeriodicHandleCriteriaCompiler());
     }
 }
