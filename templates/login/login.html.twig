@@ -22,7 +22,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="{{ path('home') }}" class="h1"><b>Admin</b>LTE</a>
+            <a href="{{ path('home') }}" class="h1"><b>{{ host }}</b></a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Авторизация</p>
@@ -66,12 +66,14 @@
             </form>
             <!-- /.social-auth-links -->
 
-            <p class="mb-1">
-                <a href="forgot-password.html">I forgot my password</a>
-            </p>
-            <p class="mb-0">
-                <a href="{{ path('app_signup') }}" class="text-center">Register a new membership</a>
-            </p>
+            {% if isEnableRegistration == 'true' %}
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="{{ path('app_signup') }}" class="text-center">Register a new membership</a>
+                </p>
+            {% endif %}
         </div>
         <!-- /.card-body -->
     </div>

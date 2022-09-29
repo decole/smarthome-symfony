@@ -17,13 +17,13 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ path('home') }}"><b>Admin</b>LTE</a>
+        <a href="{{ path('home') }}"><b>{{ host }}</b></a>
     </div>
 
     <div class="card">
         <div class="card-body register-card-body">
             <p class="login-box-msg">Регистрация нового пользователя</p>
-
+{% if isEnableRegistration == 'true' %}
             <form action="{{ path('app_register') }}" method="post">
                 <input type="hidden" name="csrf" value="{{ csrf }}">
 
@@ -84,7 +84,11 @@
                     <!-- /.col -->
                 </div>
             </form>
-
+{% else %}
+    <div class="text-center text-capitalize mb-3">
+        <h1>Регистрация закрыта</h1>
+    </div>
+{% endif %}
             <a href="{{ path('app_login') }}" class="text-center">Я уже зарегистрирован</a>
         </div>
         <!-- /.form-box -->
