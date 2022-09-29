@@ -19,6 +19,9 @@ class SignInController extends AbstractController
         return $this->render('login/login.html.twig', [
             'last_username' => $lastEmail,
             'error' => $error,
+            // see /config/services.yaml app.registration parameter
+            'isEnableRegistration' => $this->getParameter('app.registration'),
+            'host' => $this->getParameter('app.host'),
         ]);
     }
 }
