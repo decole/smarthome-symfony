@@ -34,7 +34,7 @@
 - [ ] Alice Notify Alerts System CRUD
 - [ ] Api service validation
 - [ ] Http service validation
-- [ ] Log application
+- [x] Log application
 - [ ] Log services
 - [ ] Grafana
 - [ ] Prometheus alerting by application and services
@@ -65,10 +65,18 @@
 - мониторинг - Prometheus
 - ~~CI/CD~~ - как только будет (MVP) Minimal version product, так сразу прикручу
 
+## Периодические задания:
+
+`php bin/console cli:cron` - команда для активации бесконечного цикла периодических задач
+нужно создавать критерии для таких задач в папке Domain/PeriodicHandleCriteria/Criteria, смотреть примеры там. 
+
+PeriodicHandleCriteriaCompiler - через dependency injection по сервис тегу регистрируются критерии 
+в CriteriaChainService.php  
+
 
 ## Queue:
 
-php bin/console messenger:consume async - async send emails, telegram message
+`php bin/console messenger:consume async` - async send emails, telegram, discord message
 
 работает через контейнер supervisor
 
@@ -93,3 +101,10 @@ Codeception Docs: https://codeception.com/docs/05-UnitTests
 ### Prometheus:
 
 https://github.com/artprima/prometheus-metrics-bundle
+
+metrics:
+ - node_filesystem_avail_bytes - свободное место на проде
+ - node_memory_MemFree_bytes - свободный объем оперативки
+ - node_procs_blocked - io delay
+
+
