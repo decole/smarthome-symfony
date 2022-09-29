@@ -21,6 +21,8 @@ class SignUpController extends AbstractController
             'name' => '',
             'email' => '',
             'errors' => null,
+            'isEnableRegistration' => $this->getParameter('app.registration'),
+            'host' => $this->getParameter('app.host'),
         ]);
     }
 }
