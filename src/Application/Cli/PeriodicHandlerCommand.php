@@ -2,12 +2,9 @@
 
 namespace App\Application\Cli;
 
+use App\Application\Service\Alert\AlertService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
 use App\Application\Service\PeriodicHandle\CriteriaChainService;
-use App\Domain\Notification\AliceNotificationMessage;
-use App\Domain\Notification\DiscordNotificationMessage;
-use App\Domain\Notification\Event\NotificationEvent;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,7 +19,7 @@ final class PeriodicHandlerCommand extends Command
 
     public function __construct(
         private CriteriaChainService $service,
-        private EventDispatcherInterface $eventDispatcher,
+        private AlertService $alertService,
         private LoggerInterface $logger
     ) {
         parent::__construct();
@@ -48,12 +45,8 @@ final class PeriodicHandlerCommand extends Command
             ]);
 
             $message = 'Сервис периодических заданий сломался ';
-
-            $event = new NotificationEvent(new AliceNotificationMessage($message));
-            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
-
-            $event = new NotificationEvent(new DiscordNotificationMessage($message . $exception->getMessage()));
-            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
+            $this->alertService->aliceNotify($message);
+            $this->alertService->messengerNotify($message . $exception->getMessage());
         }
 
         return 0;

@@ -2,11 +2,11 @@
 
 namespace App\Application\Service\DeviceData;
 
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
 use App\Domain\Doctrine\Relay\Entity\Relay;
 use App\Domain\Doctrine\Security\Entity\Security;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
-use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 use App\Application\Service\Alert\AlertService;
 use App\Domain\Payload\DevicePayload;
 
@@ -18,8 +18,7 @@ final class DataResolver
     public function __construct(
         private DataValidationService $validateService,
         private DeviceDataCacheService $cacheService,
-        private AlertService $alertService,
-        private UserRepository $repository
+        private AlertService $alertService
     ) {
     }
 
@@ -32,12 +31,29 @@ final class DataResolver
             /** @var Sensor|Relay|Security|FireSecurity $device */
             $device = $resultDto->getDevice();
             $deviceValue = $payload->getPayload();
-            $alertMessage = $this->alertService
-                ->prepareMessage($device, $deviceValue);
-
-            foreach ($this->repository->findAllWithTelegramId() as $user) {
-                $this->alertService->userNotify($user, $alertMessage);
-            }
+            $this->alertService->messengerNotify($this->prepareDeviceAlert($device, $deviceValue));
         }
+    }
+
+    /**
+     * @param EntityInterface $device
+     * @param string $payload
+     * @return string
+     */
+    public function prepareDeviceAlert(EntityInterface $device, string $payload): string
+    {
+        /** @var Sensor|Relay|Security|FireSecurity $device */
+        $deviceAlertMessage = $device?->getStatusMessage()?->getMessageWarn();
+
+        if ($deviceAlertMessage === null) {
+            return sprintf("Внимание! {$device->getName()} имеет состояние: %s", $payload);
+        }
+
+        $search = [
+            '{value}',
+            '%s'
+        ];
+
+        return str_replace($search, $payload, $deviceAlertMessage);
     }
 }
