@@ -8,19 +8,48 @@ use App\Domain\Doctrine\Identity\Entity\User;
 use App\Domain\Doctrine\Relay\Entity\Relay;
 use App\Domain\Doctrine\Security\Entity\Security;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Notification\AliceNotificationMessage;
+use App\Domain\Notification\DiscordNotificationMessage;
 use App\Domain\Notification\Event\NotificationEvent;
 use App\Domain\Notification\TelegramNotificationMessage;
+use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Сервис, через который происходит алертинг проекта
+ */
 final class AlertService
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private UserRepository $repository)
     {
     }
 
-    public function userNotify(User $user, string $message): void
+    /**
+     * Нотификация в телеграм и дискорд
+     *
+     * @param string $message
+     * @return void
+     */
+    public function messengerNotify(string $message): void
     {
-        $event = new NotificationEvent(new TelegramNotificationMessage($user->getTelegramId(), $message));
+        foreach ($this->repository->findAllWithTelegramId() as $user) {
+            $event = new NotificationEvent(new TelegramNotificationMessage($user->getTelegramId(), $message));
+            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
+        }
+
+        $event = new NotificationEvent(new DiscordNotificationMessage($message));
+        $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
+    }
+
+    /**
+     * Нотификация через колонку с Алисой по сервису Quasar IOT
+     *
+     * @param string $message
+     * @return void
+     */
+    public function aliceNotify(string $message): void
+    {
+        $event = new NotificationEvent(new AliceNotificationMessage($message));
         $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
     }
 
@@ -29,7 +58,7 @@ final class AlertService
      * @param string $payload
      * @return string
      */
-    public function prepareMessage(EntityInterface $device, string $payload): string
+    public function prepareDeviceAlert(EntityInterface $device, string $payload): string
     {
         /** @var Sensor|Relay|Security|FireSecurity $device */
         $deviceAlertMessage = $device?->getStatusMessage()?->getMessageWarn();
