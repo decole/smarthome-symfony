@@ -18,14 +18,14 @@ class PeriodicHandleCriteriaCompiler implements CompilerPassInterface
 
         $definition = $container->findDefinition(CriteriaChainService::class);
 
-        // find all service IDs with the app.mail_transport tag
+        // find all service IDs with the periodic.criteria tag
         $taggedServices = $container->findTaggedServiceIds('periodic.criteria');
 
         foreach ($taggedServices as $id => $tags) {
             /** @var PeriodicHandleCriteriaInterface $class */
             $class = $container->getDefinition($id)->getClass();
 
-            // add the transport service to the TransportChain service
+            // add criteria to the CriteriaChainService
             $definition->addMethodCall('addCriteria', [new Reference($id), $class::alias()]);
         }
     }
