@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -13,13 +15,12 @@ class DatetimeImmutable extends DateTimeImmutableType
         return 'datetime_immutable';
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value === null) {
             return null;
         }
 
-        /** @var $value \DateTimeInterface */
         if ($value instanceof \DatetimeImmutable) {
             return $this->convertDateTimeToUTC($value)->format($platform->getDateTimeTzFormatString());
         }
@@ -31,7 +32,7 @@ class DatetimeImmutable extends DateTimeImmutableType
         );
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
     {
         if ($value === null || $value instanceof \DateTimeImmutable) {
             return $value;

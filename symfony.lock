@@ -195,18 +195,6 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
-    "overblog/graphiql-bundle": {
-        "version": "0.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "0.1",
-            "ref": "96d185c63491cd15c1570f6243ec1808f4462970"
-        },
-        "files": [
-            "config/routes/dev/graphiql.yaml"
-        ]
-    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
