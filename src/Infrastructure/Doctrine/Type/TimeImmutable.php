@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Doctrine\Type;
 
 use DateTimeZone;
@@ -14,13 +16,12 @@ class TimeImmutable extends TimeImmutableType
         return 'time_immutable';
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value === null) {
             return null;
         }
 
-        /** @var  $value \DateTimeInterface */
         if ($value instanceof \DatetimeImmutable) {
             return $this->convertDateTimeToUTC($value)->format($platform->getTimeFormatString());
         }
@@ -32,7 +33,7 @@ class TimeImmutable extends TimeImmutableType
         );
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
     {
         if ($value === null || $value instanceof \DateTimeImmutable) {
             return $value;

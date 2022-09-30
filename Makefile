@@ -41,3 +41,9 @@ perm:
 	sudo chown -R ${USER}:${USER} var
 	sudo chown -R ${USER}:${USER} vendor
 	sudo chown -R ${USER}:${USER} tests
+
+pull:
+	docker-compose pull
+
+log:
+	docker-compose logs

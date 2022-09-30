@@ -47,7 +47,7 @@ class DateTimeMicroType extends Type
     }
 
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
         if ($value === null) {
             return null;
