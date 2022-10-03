@@ -1,0 +1,67 @@
+version: "3.4"
+services:
+  php-fpm:
+    build: ./docker/php
+    container_name: notify-symfony
+    environment:
+      - "PSQL_PORT=5432"
+      - "PSQL_HOST=postgres"
+      - "PHP_IDE_CONFIG=serverName=Docker"
+    volumes:
+      - ./:/var/www
+      - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
+    networks:
+      - notify-microservice
+
+  nginx:
+    image: nginx:alpine
+    container_name: notify-nginx
+    restart: always
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/config:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - "${WEB_PORT}:80"
+    networks:
+      - notify-microservice
+
+  postgres:
+    image: postgres:11.2-alpine
+    container_name: notify-postgres
+    volumes:
+      - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
+      - notify-postgres:/var/lib/postgresql/data
+    ports:
+      - "54333:5432"
+    environment:
+      - "POSTGRES_DB=notificator"
+      - "POSTGRES_USER=root"
+      - "POSTGRES_PASSWORD=root"
+    networks:
+      - notify-microservice
+
+  rabbitmq:
+    image: rabbitmq
+    container_name: notify-rabbitmq
+    volumes:
+      - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - notify-rabbitmq:/var/lib/rabbitmq
+    environment:
+      - "RABBITMQ_DEFAULT_USER=rabbit"
+      - "RABBITMQ_DEFAULT_PASS=rabbit"
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    networks:
+      - notify-microservice
+
+volumes:
+  notify-postgres:
+  notify-rabbitmq:
+
+networks:
+  notify-microservice:
+    driver: bridge

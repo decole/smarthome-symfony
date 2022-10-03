@@ -6,8 +6,6 @@ use App\Domain\Doctrine\Relay\Entity\Relay;
 
 interface RelayRepositoryInterface
 {
-    public function save(EntityInterface $sensor): EntityInterface;
-
     public function findAll(?int $status = null): array;
 
     public function findById(string $id): ?Relay;
