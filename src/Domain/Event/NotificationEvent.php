@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Notification\Event;
+namespace App\Domain\Event;
 
 use App\Domain\Notification\NotificationMessageInterface;
 use Symfony\Contracts\EventDispatcher\Event;

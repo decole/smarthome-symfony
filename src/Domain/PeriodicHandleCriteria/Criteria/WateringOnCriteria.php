@@ -2,12 +2,13 @@
 
 namespace App\Domain\PeriodicHandleCriteria\Criteria;
 
-use App\Application\Service\Alert\AlertService;
 use App\Application\Service\DeviceData\DeviceCacheService;
 use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
 use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Event\AlertNotificationEvent;
 use Cron\CronExpression;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Оповестить когда центральный клапан открыт
@@ -19,7 +20,7 @@ final class WateringOnCriteria implements PeriodicHandleCriteriaInterface
     public function __construct(
         private DeviceDataCacheService $service,
         private DeviceCacheService $cacheService,
-        private AlertService $alertService
+        private EventDispatcherInterface $eventDispatcher
     ) {
     }
 
@@ -50,15 +51,18 @@ final class WateringOnCriteria implements PeriodicHandleCriteriaInterface
         $payloadMap = $this->service->getPayloadByTopicList([self::TOPIC]);
 
         if ($payloadMap[self::TOPIC] === $payloadCheckOn) {
-            $this->notify();
+            $this->notification();
         }
     }
 
-    private function notify(): void
+    private function notification(): void
     {
         $message = 'Главный клапан автополива включен';
 
-        $this->alertService->messengerNotify($message);
-        $this->alertService->aliceNotify($message);
+        $event = new AlertNotificationEvent($message, [
+            AlertNotificationEvent::MESSENGER,
+            AlertNotificationEvent::ALICE
+        ]);
+        $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
     }
 }
