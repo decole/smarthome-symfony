@@ -1,0 +1,21 @@
+App\Domain\Doctrine\VisualNotification\Entity\VisualNotification:
+  table: 'visual_notify'
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    message:
+      type: string
+      length: 500
+    type:
+      type: smallint
+    isRead:
+      type: boolean
+    createdAt:
+      type: datetime_immutable
+      name: created_at
+    updatedAt:
+      type: datetime_immutable
+      name: updated_at
+      nullable: true

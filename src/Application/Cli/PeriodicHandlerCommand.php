@@ -2,9 +2,10 @@
 
 namespace App\Application\Cli;
 
-use App\Application\Service\Alert\AlertService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
 use App\Application\Service\PeriodicHandle\CriteriaChainService;
+use App\Domain\Event\AlertNotificationEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +20,7 @@ final class PeriodicHandlerCommand extends Command
 
     public function __construct(
         private CriteriaChainService $service,
-        private AlertService $alertService,
+        private EventDispatcherInterface $eventDispatcher,
         private LoggerInterface $logger
     ) {
         parent::__construct();
@@ -45,8 +46,12 @@ final class PeriodicHandlerCommand extends Command
             ]);
 
             $message = 'Сервис периодических заданий сломался ';
-            $this->alertService->aliceNotify($message);
-            $this->alertService->messengerNotify($message . $exception->getMessage());
+
+            $event = new AlertNotificationEvent($message, [
+                AlertNotificationEvent::MESSENGER,
+                AlertNotificationEvent::ALICE
+            ]);
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
 
         return 0;

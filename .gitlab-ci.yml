@@ -1,0 +1,84 @@
+stages:
+# подготовка, тесты, ssh с подтяжкой на прод новой версии кода
+# или
+# подготовка, тесты, сбор докер образов с кодом внутри, пушинг в гитлаб, ssh с подтяжкой на проде новой версии образа
+#  - manual-clean
+  - preparation
+#  - testing
+  - deploy
+
+variables:
+  SSH_COMMAND: $SSH_COMMAND
+
+composer:
+  stage: preparation
+  tags:
+    - uberserver
+  script:
+    - php -v
+    - ls -la
+    - cp -n docker-compose.yaml.dist docker-compose.yaml
+    - cp -n .env.local.example .env.local
+    - cp -n .env.local.example .env.test.local
+    - docker-compose -f docker-compose.ci.yaml down
+    - docker-compose -f docker-compose.ci.yaml up -d
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 week
+    when: always
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-composer
+    paths:
+      - vendor/
+
+#tests:
+#  stage: testing
+#  tags:
+#    - uberserver
+#  dependencies:
+#    - composer
+#  script:
+#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
+#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php vendor/codeception/codeception/codecept run
+#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php vendor/codeception/codeception/codecept clean
+#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
+
+#clean:
+#  stage: manual-clean
+#  tags:
+#    - uberserver
+#  script:
+#    - docker-compose -f docker-compose.ci.yaml up -d
+#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
+#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
+#  when: manual
+
+deploy_prod:
+  stage: deploy
+  tags:
+    - uberserver
+  script:
+    - df -h /
+    - |
+      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
+      cd uberserver/
+      git checkout master
+      git fetch --all
+      git reset --hard HEAD
+      git status
+      git pull
+      df -H /
+      make up
+      make composer-install
+      make migration
+#      docker-compose exec -T php-fpm php bin/console rabbitmq:setup-fabric
+      make restart
+      make ps
+      EOT
+  environment:
+    name: deploy
+  only:
+    - master

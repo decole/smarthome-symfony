@@ -47,3 +47,7 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\Doctrine\Page\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Page'
+            visual-notify:
+                type: yml
+                prefix: 'App\Domain\Doctrine\VisualNotification\Entity'
+                dir: '%kernel.project_dir%/config/mappings/VisualNotification'

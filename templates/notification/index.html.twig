@@ -1,0 +1,80 @@
+{% if type == 99 %}
+    {% set type_name = 'всех' %}
+{% elseif type == 0 %}
+    {% set type_name = 'нотификационных' %}
+{% elseif type == 1 %}
+    {% set type_name = 'аварийных' %}
+{% elseif type == 2 %}
+    {% set type_name = 'пожарных' %}
+{% elseif type == 3 %}
+    {% set type_name = 'охранных' %}
+{% else %}
+    {% set type_name = 'неизвестных' %}
+{% endif %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">{{ title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Список {{ type_name }} событий</span>
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <a href="{{ path('visual_notify_update_by_type', {type: type}) }}" class="btn btn-warning">Отметить как прочитанное</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>type</th>
+                                <th>Message</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for notify in notifies %}
+
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ notify.stringType|e }}</td>
+                                    <td>{{ notify.message|e }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

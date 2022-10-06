@@ -1,46 +1,14 @@
-# What is this
+# Что это такое
 
-> Pet project for my smart home infrastructure.
+> Pet project для моего домашнего умного дома, основанного на ESP8266 и MQTT протоколе
 
+Стадии проекта: [Stages](docs/project/STAGES.md)
 
-### First stage (MVP)
+SSL для локального проекта или reverse-proxy на production [custom SSL](docs/project/SSL.md)
 
-- [x] Добавить PostgreSQL в .env
-- [x] пофиксить .env
-- [x] пофиксить .env-local
-- [x] добавить PostgreSql в docker-compose.yaml
-- [x] sh script for pushing project docker images
-- [x] add adminlte3 distributive
-- [x] mqtt service
-- [x] auth system 
-- [x] abstract CRUD factory
-- [x] sensor CRUD
-- [x] relay CRUD
-- [x] Security CRUD
-- [x] Fire-secure CRUD
-- [x] Notification CRUD
-- [x] Telegram notification
-- [x] Email notification
-- [x] Constructor data pages CRUD
-- [x] Mqtt service validation - listen mqtt devices
+в папке /docs/ находится документация по умному дому и прошивки для контроллеров
 
-
-### Second stage
-
-- [ ] Api service validation - validate devices with api interface
-- [ ] Http service validation - monitoring uptime
-- [ ] Alice Smart Home CRUD
-- [ ] Alice Skill CRUD
-- [ ] Alice Notify Alerts System CRUD
-- [ ] Api service validation
-- [ ] Http service validation
-- [x] Log application
-- [ ] Log services
-- [ ] Grafana
-- [ ] Prometheus alerting by application and services
-- [ ] CI
-- [ ] CD
-- [ ] Telegram bot
+## Комментарии
 
 ----
 
@@ -57,13 +25,13 @@
 - php-fpm - app
 - php-cli - supervisor
 - postgresql
-- redis
-- redis-insight
+- redis - cache
+- redis-insight - check Redis Data
 - supervisor
-- rabbitMQ
+- rabbitMQ - reactive queue
 - логирование - логирование пока в файлики var/log проекта
 - мониторинг - Prometheus
-- ~~CI/CD~~ - как только будет (MVP) Minimal version product, так сразу прикручу
+- CI/CD
 
 ## Периодические задания:
 
@@ -74,14 +42,14 @@ PeriodicHandleCriteriaCompiler - через dependency injection по серви
 в CriteriaChainService.php  
 
 
-## Queue:
+## Очереди нотификаций:
 
 `php bin/console messenger:consume async` - async send emails, telegram, discord message
 
 работает через контейнер supervisor
 
 
-## History
+## История производства проекта на разных фреймворках
 
 Create project by: 
 - Yii2 (simple / advanced) [deprecated project]
@@ -108,3 +76,12 @@ metrics:
  - node_procs_blocked - io delay
 
 
+### Deployment 
+
+https://symfony.com/doc/5.4/deployment.html
+
+```shell
+composer install --no-dev --optimize-autoloader
+php bin/console cache:clear --env=prod --no-debug
+#APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+```

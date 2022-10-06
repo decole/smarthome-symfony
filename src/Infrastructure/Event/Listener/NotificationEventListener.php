@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Event\Listener;
 
-use App\Domain\Notification\Event\NotificationEvent;
+use App\Domain\Event\NotificationEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Messenger\MessageBusInterface;
 
