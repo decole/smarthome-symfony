@@ -22,7 +22,7 @@ final class DeviceClearOldDataCriteria implements PeriodicHandleCriteriaInterfac
 
     public function isDue(): bool
     {
-        return (new CronExpression('* * * * *'))->isDue();
+        return true;
     }
 
     public function execute(): void
