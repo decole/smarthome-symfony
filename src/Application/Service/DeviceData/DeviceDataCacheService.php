@@ -11,7 +11,7 @@ use App\Infrastructure\Cache\CacheService;
  */
 final class DeviceDataCacheService
 {
-    private const CACHE_LIMIT = 120;
+    private const CACHE_LIMIT = 180;
 
     private const LIST_KEY = 'list';
 
@@ -83,8 +83,7 @@ final class DeviceDataCacheService
         $this->cache->set(
             key: CacheKeyListEnum::DEVICE_TOPICS_LIST,
             value: $map,
-            tags: [CacheKeyListEnum::DEVICE_TOPICS_LIST],
-            lifetime: self::CACHE_LIMIT
+            tags: [CacheKeyListEnum::DEVICE_TOPICS_LIST]
         );
     }
 }
