@@ -11,7 +11,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class RelayValidationService implements ValidationInterface
+final class RelayCrudValidationService implements ValidationInterface
 {
     private CrudRelayDto $dto;
 

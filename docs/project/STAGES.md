@@ -1,4 +1,4 @@
-### First stage (MVP)
+### First stage (MVP) (0.0.1)
 
 - [x] Добавить PostgreSQL в .env
 - [x] пофиксить .env
@@ -20,12 +20,14 @@
 - [x] Mqtt service validation - listen mqtt devices
 
 
-### Second stage
+### Second stage (0.0.2)
 
 - [ ] Api service validation - validate devices with api interface
 - [ ] Http service validation - monitoring uptime
 - [ ] Alice Smart Home CRUD with refactoring service
-- [ ] Visual notifications by site
+- [ ] Widjet Secure system
+- [ ] Widjet FireSecure system
+- [x] Visual notifications by site
 - [x] Alice Skill
 - [x] Alice Notify Alerts System
 - [x] Log application
@@ -34,4 +36,8 @@
 - [ ] Prometheus alerting by application and services
 - [ ] CI
 - [ ] CD
+
+
+### Third stage (0.0.3)
+
 - [ ] Telegram bot

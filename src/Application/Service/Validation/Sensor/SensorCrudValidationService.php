@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Application\Service\Validation\FireSecurity;
+namespace App\Application\Service\Validation\Sensor;
 
-use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
+use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
-use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
+use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class FireSecurityValidationService implements ValidationInterface
+final class SensorCrudValidationService implements ValidationInterface
 {
-    private CrudFireSecurityDto $dto;
+    private CrudSensorDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private FireSecurityRepositoryInterface $repository)
+    public function __construct(private ValidatorInterface $validator, private RelayRepositoryInterface $repository)
     {
     }
 
-    public function validate(bool $isUpdate): ConstraintViolationListInterface
+    public function validate(bool $isUpdate = false): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
         assert($list instanceof ConstraintViolationList);
 
-        if (count($list) > 0) {
+        if ($this->dto->name === null || $this->dto->topic === null) {
             return $list;
         }
 
@@ -45,7 +45,7 @@ class FireSecurityValidationService implements ValidationInterface
     {
         if ($this->repository->findByName($this->dto->name)) {
             $list->add(new ConstraintViolation(
-                message: 'Fire security device name already exist.',
+                message: 'Sensor name already exist.',
                 messageTemplate: null,
                 parameters: [$this->dto->name],
                 root: 'name',
@@ -56,7 +56,7 @@ class FireSecurityValidationService implements ValidationInterface
 
         if ($this->repository->findByTopic($this->dto->topic)) {
             $list->add(new ConstraintViolation(
-                message: 'Fire security device topic already exist.',
+                message: 'Sensor topic already exist.',
                 messageTemplate: null,
                 parameters: [$this->dto->topic],
                 root: 'topic',

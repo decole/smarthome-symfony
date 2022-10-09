@@ -85,3 +85,5 @@ composer install --no-dev --optimize-autoloader
 php bin/console cache:clear --env=prod --no-debug
 #APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 ```
+
+http://localhost:84/adminlte3/pages/widgets.html - примеры страниц AdminLTE3
