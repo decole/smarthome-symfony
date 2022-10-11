@@ -4,9 +4,21 @@
 
 Стадии проекта: [Stages](docs/project/STAGES.md)
 
-SSL для локального проекта или reverse-proxy на production [custom SSL](docs/project/SSL.md)
+Умный дом:
+ - MQTT брокер
+ - контроллеры с MQTT транспортом
+ - серверное приложение (symfony)
+ - оповещение при выходе данных датчиков из придела нормы по каналам связи (телеграм/дискорд/колонка с голосовым 
+помощником Алиса)
 
 в папке /docs/ находится документация по умному дому и прошивки для контроллеров
+
+Датчики:
+ - Сенсоры температуры
+ - Сенсоры влажности
+ - Реле
+ - Датчики движения
+ - Датчик дыма аналоговый
 
 ## Комментарии
 
@@ -27,11 +39,11 @@ SSL для локального проекта или reverse-proxy на product
 - postgresql
 - redis - cache
 - redis-insight - check Redis Data
-- supervisor
-- rabbitMQ - reactive queue
+- supervisor - background process
+- rabbitMQ - reactive queue (not used by time)
 - логирование - логирование пока в файлики var/log проекта
 - мониторинг - Prometheus
-- CI/CD
+- CI/CD - Gitlab CI*
 
 ## Периодические задания:
 

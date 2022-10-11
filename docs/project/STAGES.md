@@ -22,22 +22,26 @@
 
 ### Second stage (0.0.2)
 
-- [ ] Api service validation - validate devices with api interface
-- [ ] Http service validation - monitoring uptime
 - [ ] Alice Smart Home CRUD with refactoring service
-- [ ] Widjet Secure system
-- [ ] Widjet FireSecure system
+- [x] Widget Secure system
+- [x] Widget FireSecure system
 - [x] Visual notifications by site
 - [x] Alice Skill
 - [x] Alice Notify Alerts System
 - [x] Log application
-- [ ] Log services
-- [ ] Grafana
+- [ ] CRUD tests
+- [ ] Http monitoring service - monitoring uptime application
 - [ ] Prometheus alerting by application and services
-- [ ] CI
-- [ ] CD
+- [ ] CI simple
+- [ ] CD simple
 
 
 ### Third stage (0.0.3)
 
+- [ ] Services tests
 - [ ] Telegram bot
+- [ ] Api service validation - validate devices with api interface
+- [ ] Log services
+- [ ] Grafana
+- [ ] CI good
+- [ ] CD good

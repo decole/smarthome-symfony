@@ -23,20 +23,21 @@ $(document).ready(function() {
             $this.map(function (key, value) {
                 relays.push($(value).data('swift-topic-check'));
             });
-
-            $.get("/api/device/topics?topics="+relays, function (data) {
-                $.each(data, function( index, value ) {
-                    let sensor = $("div[data-swift-topic-check='"+index+"']");
-                    $(sensor).find('button').map(function (keybtn, valuebtn) {
-                        if ($(valuebtn).data('swift-check') == value) {
-                            $(valuebtn).addClass('active');
-                        }
-                        else {
-                            $(valuebtn).removeClass('active');
-                        }
+            if ($(relays)[0] !== '') {
+                $.get("/api/device/topics?topics="+relays, function (data) {
+                    $.each(data, function( index, value ) {
+                        let sensor = $("div[data-swift-topic-check='"+index+"']");
+                        $(sensor).find('button').map(function (keybtn, valuebtn) {
+                            if ($(valuebtn).data('swift-check') == value) {
+                                $(valuebtn).addClass('active');
+                            }
+                            else {
+                                $(valuebtn).removeClass('active');
+                            }
+                        });
                     });
                 });
-            });
+            }
 
             setTimeout(swiftStateRefrash, 10000);
         }
