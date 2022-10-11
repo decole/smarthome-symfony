@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Application\Http\Api;
+namespace App\Application\Http\Api\YandexSmartHome;
 
-use App\Application\Presenter\Api\DeviceListQueryPresenter;
+use App\Application\Presenter\Api\YandexSmartHome\DeviceListQueryPresenter;
 use App\Infrastructure\YandexSmartHome\Service\SmartHomeService;
+use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\FirePHPHandler;
 
 final class SmartHomeApiController
 {

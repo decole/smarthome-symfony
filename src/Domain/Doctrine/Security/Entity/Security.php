@@ -154,9 +154,9 @@ final class Security implements EntityInterface
         $this->params = $params;
     }
 
-    public function isGuard(): bool
+    public function isGuarded(): bool
     {
-        return $this->getLastCommand() === self::GUARD_STATE;
+        return $this->lastCommand === self::GUARD_STATE;
     }
 
     public function setGuardState(string $state): void

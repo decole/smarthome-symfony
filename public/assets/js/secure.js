@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    function sensorsRefrash() {
+    function sensorsRefresh() {
         if($("div").is($(".secure-sensor-control"))) {
             let $this = $(".secure-sensor-control[data-secstate-topic]");
             let stateOn  = '<i class="fas fa-running"></i>';
@@ -8,24 +8,20 @@ $(document).ready(function() {
 
             $this.map(function (key, value) {
                 let topic = $(value).data('secstate-topic');
-                console.log(topic);
                 $.get("/api/secure/state?topic="+topic, function (data) {
                     console.log(data);
-                    /*
-                    if (data['trigger'] === true) {
+                    if (data['isTriggered'] === true) {
                         $(value).find('.secure-trigger-on').removeClass('active').addClass('active');
                         $(value).find('.secure-trigger-off').removeClass('active');
-                        // $(value).parent().parent().find('.secure-sensor-state-text').html('Взведен');
                     }
-                    if (data['trigger'] === false) {
+                    if (data['isTriggered'] === false) {
                         $(value).find('.secure-trigger-on').removeClass('active');
                         $(value).find('.secure-trigger-off').removeClass('active').addClass('active');
-                        // $(value).parent().parent().find('.secure-sensor-state-text').html('Не взведен');
                     }
-                    if (data['state'] == 0) {
+                    if (data['state'] == false) {
                         $(value).find('.secure-state-info').html(stateOff);
                     }
-                    if (data['state'] == 1) {
+                    if (data['state'] == true) {
                         $(value).find('.secure-state-info').html(stateOn).removeClass('active').addClass('active');
                         function run() {
                             if ($(value).find('.secure-state-info').hasClass('active')) {
@@ -39,36 +35,36 @@ $(document).ready(function() {
                         setTimeout(run,3000);setTimeout(run,3500);
                         setTimeout(run,4000);setTimeout(run,4500);
                     }
-                    */
                 });
             });
 
-
-
-            setTimeout(sensorsRefrash, 5000);
+            setTimeout(sensorsRefresh, 5000);
         }
     }
 
-    sensorsRefrash();
+    sensorsRefresh();
 
     if($("div").is($(".secure-sensor-control"))) {
         let $this = $(".secure-sensor-control[data-secstate-topic]");
         $this.map(function (key, value) {
             $(value).find('.secure-trigger-on').on('click', function () {
                 let $this = $(this).parent();
-                $.post("/api/secure-command", { topic: $this.data('secstate-topic'), trigger: "on" })
+                $.post("/api/secure/trigger", { topic: $this.data('secstate-topic'), trigger: true })
                     .done(function(data) {
-                        $(value).parent().parent().find('.secure-sensor-state-text').html('Запрос обрабатывается');
+                        console.log(data);
+                        $(value).find('.secure-trigger-on').removeClass('active').addClass('active');
+                        $(value).find('.secure-trigger-off').removeClass('active');
                     });
             });
             $(value).find('.secure-trigger-off').on('click', function () {
                 let $this = $(this).parent();
-                $.post("/api/secure-command", { topic: $this.data('secstate-topic'), trigger: "off" })
+                $.post("/api/secure/trigger", { topic: $this.data('secstate-topic'), trigger: false })
                     .done(function(data) {
-                        $(value).parent().parent().find('.secure-sensor-state-text').html('Запрос обрабатывается');
+                        console.log(data);
+                        $(value).find('.secure-trigger-on').removeClass('active');
+                        $(value).find('.secure-trigger-off').removeClass('active').addClass('active');
                     });
             });
         });
     }
-
 });

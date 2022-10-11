@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Application\Presenter\Api;
+namespace App\Application\Presenter\Api\YandexSmartHome;
 
+use App\Application\Presenter\Api\PresenterInterface;
 use App\Infrastructure\YandexSmartHome\Device\DeviceInterface;
 
-class DeviceListQueryPresenter
+final class DeviceListQueryPresenter implements PresenterInterface
 {
     /**
      * @var DeviceInterface[]
