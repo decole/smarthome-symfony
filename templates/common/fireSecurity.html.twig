@@ -1,9 +1,18 @@
-firesecure
-
-private string $name,
-private string $topic,
-private ?string $payload,
-
-private ?string $normalPayload,
-private ?string $alertPayload,
-private ?string $lastCommand,
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+        <span class="info-box-icon bg-yellow"><i class="fas fa-fire-extinguisher"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-text">{{ device.name }}</span>
+            <div class="btn-group fire-sensor-control"
+                 data-secstate-topic="{{ device.topic }}"
+                 data-state-normal="{{ device.normalPayload }}"
+                 data-state-alert="{{ device.alertPayload }}"
+                 data-swift-id="{{ device.id }}"
+            >
+                <button type="button" class="btn btn-outline-info active"><i class="fas fa-hockey-puck"></i> ( <i class="fas fa-microchip"></i> )</button>
+                <button type="button" class="btn btn-outline-success active"><i class="fas fa-check"></i></button>
+                <button type="button" class="btn btn-outline-danger active"><i class="fab fa-free-code-camp"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

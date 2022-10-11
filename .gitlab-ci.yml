@@ -5,7 +5,7 @@ stages:
 #  - manual-clean
   - preparation
 #  - testing
-  - deploy
+#  - deploy
 
 variables:
   SSH_COMMAND: $SSH_COMMAND
@@ -56,29 +56,29 @@ composer:
 #    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
 #  when: manual
 
-deploy_prod:
-  stage: deploy
-  tags:
-    - uberserver
-  script:
-    - df -h /
-    - |
-      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
-      cd uberserver/
-      git checkout master
-      git fetch --all
-      git reset --hard HEAD
-      git status
-      git pull
-      df -H /
-      make up
-      make composer-install
-      make migration
-#      docker-compose exec -T php-fpm php bin/console rabbitmq:setup-fabric
-      make restart
-      make ps
-      EOT
-  environment:
-    name: deploy
-  only:
-    - master
+#deploy_prod:
+#  stage: deploy
+#  tags:
+#    - uberserver
+#  script:
+#    - df -h /
+#    - |
+#      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
+#      cd uberserver/
+#      git checkout master
+#      git fetch --all
+#      git reset --hard HEAD
+#      git status
+#      git pull
+#      df -H /
+#      make up
+#      make composer-install
+#      make migration
+##      docker-compose exec -T php-fpm php bin/console rabbitmq:setup-fabric
+#      make restart
+#      make ps
+#      EOT
+#  environment:
+#    name: deploy
+#  only:
+#    - master

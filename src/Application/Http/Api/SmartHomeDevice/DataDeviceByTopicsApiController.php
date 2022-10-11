@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Http\Api;
+namespace App\Application\Http\Api\SmartHomeDevice;
 
 use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\SitePage\ApiUriTranscribeService;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class TopicsDeviceApiController
+final class DataDeviceByTopicsApiController
 {
     public function __construct(
         private ApiUriTranscribeService $service,

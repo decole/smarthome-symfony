@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   php-fpm:
-    build: ./docker/php
+    image: registry.gitlab.com/decole/uberserver-symfony:app
     container_name: notify-symfony
     environment:
       - "PSQL_PORT=5432"
@@ -24,7 +24,7 @@ services:
     depends_on:
       - php-fpm
     ports:
-      - "${WEB_PORT}:80"
+      - "${CI_WEB_PORT}:80"
     networks:
       - notify-microservice
 

@@ -3,7 +3,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: uberserver-web
-    restart: always
+#    restart: always
     volumes:
       - ./:/var/www
       - ./docker/nginx/config:/etc/nginx/conf.d
@@ -11,7 +11,7 @@ services:
     depends_on:
       - php-fpm
     ports:
-      - "84:80"
+      - "80:80"
     networks:
       - uberserver
 
@@ -39,7 +39,7 @@ services:
     volumes:
       - ./docker/supervisor/config:/etc/supervisor/conf.d
       - ./:/var/www
-    restart: always
+#    restart: always
     command: /usr/bin/supervisord
     depends_on:
       - postgres
@@ -83,16 +83,16 @@ services:
     networks:
       - uberserver
 
-  redisinsight:
-      image: redislabs/redisinsight:latest
-      container_name: uberserver-redisinsight
-      restart: always
-      ports:
-          - "8001:8001"
-      volumes:
-        - uberserver-redisinsight:/db
-      networks:
-          - uberserver
+#  redisinsight:
+#      image: redislabs/redisinsight:latest
+#      container_name: uberserver-redisinsight
+#      restart: always
+#      ports:
+#          - "8001:8001"
+#      volumes:
+#        - uberserver-redisinsight:/db
+#      networks:
+#          - uberserver
 
 # https://github.com/vegasbrianc/prometheus/blob/master/docker-compose.yml
   prometheus:

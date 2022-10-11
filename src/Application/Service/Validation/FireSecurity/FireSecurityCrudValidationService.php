@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Application\Service\Validation\Page;
+namespace App\Application\Service\Validation\FireSecurity;
 
-use App\Application\Http\Web\Page\Dto\CrudPageDto;
+use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
-use App\Domain\Contract\Repository\PageRepositoryInterface;
+use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class PageValidationService implements ValidationInterface
+class FireSecurityCrudValidationService implements ValidationInterface
 {
-    /**
-     * @var CrudPageDto
-     */
-    private ValidationDtoInterface $dto;
+    private CrudFireSecurityDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private PageRepositoryInterface $repository)
+    public function __construct(private ValidatorInterface $validator, private FireSecurityRepositoryInterface $repository)
     {
     }
 
@@ -28,7 +25,7 @@ final class PageValidationService implements ValidationInterface
 
         assert($list instanceof ConstraintViolationList);
 
-        if ($this->dto->name === null || $this->dto->config === null) {
+        if (count($list) > 0) {
             return $list;
         }
 
@@ -48,12 +45,23 @@ final class PageValidationService implements ValidationInterface
     {
         if ($this->repository->findByName($this->dto->name)) {
             $list->add(new ConstraintViolation(
-                message: 'Sensor name already exist.',
+                message: 'Fire security device name already exist.',
                 messageTemplate: null,
                 parameters: [$this->dto->name],
                 root: 'name',
                 propertyPath: 'name',
                 invalidValue: $this->dto->name
+            ));
+        }
+
+        if ($this->repository->findByTopic($this->dto->topic)) {
+            $list->add(new ConstraintViolation(
+                message: 'Fire security device topic already exist.',
+                messageTemplate: null,
+                parameters: [$this->dto->topic],
+                root: 'topic',
+                propertyPath: 'topic',
+                invalidValue: $this->dto->topic
             ));
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Http\Api;
+namespace App\Application\Http\Api\YandexSkill;
 
 use App\Infrastructure\AliceSkill\Service\AliceSkillService;
 use Symfony\Component\HttpFoundation\JsonResponse;
