@@ -12,7 +12,7 @@ final class FireSecurityDeviceDataValidator extends AbstractDeviceDataValidator 
     {
         assert($this->device instanceof FireSecurity);
 
-        $state = (string)$this->device->getAlertPayload() !== $this->payload->getPayload();
+        $state = (string)$this->device->getNormalPayload() === $this->payload->getPayload();
 
         return $this->createDto($state, $this->device);
     }
