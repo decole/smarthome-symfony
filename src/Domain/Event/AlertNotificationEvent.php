@@ -4,7 +4,7 @@ namespace App\Domain\Event;
 
 class AlertNotificationEvent
 {
-    public const NAME = 'notification.visual.send';
+    public const NAME = 'notification.alert.send';
 
     public const MESSENGER = 'messenger';
     public const ALICE = 'alice';

@@ -14,7 +14,7 @@ final class MqttHandleService
 {
     private bool $isConnect = false;
 
-    private Client $client;
+    private static ?Client $client = null;
 
     public function __construct(
         private DeviceCacheService $deviceCacheService,
@@ -23,7 +23,6 @@ final class MqttHandleService
         private string $broker,
         private string $port
     ) {
-        $this->client = new Client();
     }
 
     public function process(Message $message): void
@@ -42,9 +41,7 @@ final class MqttHandleService
 
     public function post(DevicePayload $message): void
     {
-        $this->connectClient();
-        $this->client->publish($message->getTopic(), $message->getPayload(), 1, 0);
-        $this->disconnect();
+        $this->getClient()->publish($message->getTopic(), $message->getPayload(), 1, 0);
     }
 
     public function listen(): void
@@ -54,34 +51,49 @@ final class MqttHandleService
         $this->registerClient();
 
         while (true) {
-            $this->client->loop(2);
+            $this->getClient()->loop(2);
         }
+    }
+
+    /**
+     * Сделано так - статичная переменная, чтобы был только один коннект в брокеру и быстро работала отправка сообщений
+     *
+     * @return Client
+     */
+    private function getClient(): Client
+    {
+        if (self::$client === null) {
+            self::$client = new Client();
+            $this->getClient()->connect($this->broker, $this->port, 5);
+        }
+
+        return self::$client;
     }
 
     public function disconnect(): void
     {
         if ($this->isConnect) {
-            $this->client->disconnect();
+            $this->getClient()->disconnect();
         }
     }
 
     private function connectClient(): void
     {
-        $this->client->connect($this->broker, $this->port, 5);
+        $this->getClient()->connect($this->broker, $this->port, 5);
     }
 
     private function registerClient(): void
     {
-        $this->client->onConnect(function ($rc) {
+        $this->getClient()->onConnect(function ($rc) {
             $this->isConnect = $rc === 0;
         });
 
-        $this->client->onDisconnect(function () {
+        $this->getClient()->onDisconnect(function () {
             $this->isConnect = false;
         });
 
-        $this->client->subscribe('#', 1);
-        $this->client->onMessage([$this, 'process']);
+        $this->getClient()->subscribe('#', 1);
+        $this->getClient()->onMessage([$this, 'process']);
 
         register_shutdown_function([$this, 'disconnect']);
     }
