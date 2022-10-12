@@ -4,10 +4,9 @@ namespace App\Domain\PeriodicHandleCriteria\Criteria;
 
 use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
-use Cron\CronExpression;
 
 /**
- * фоновый процесс, который раз в минуту перебирает хранящиеся данные датчиков и удаляет просроченные
+ * фоновый процесс, который периоджически перебирает хранящиеся данные датчиков и удаляет просроченные
  */
 final class DeviceClearOldDataCriteria implements PeriodicHandleCriteriaInterface
 {
@@ -17,7 +16,7 @@ final class DeviceClearOldDataCriteria implements PeriodicHandleCriteriaInterfac
 
     public static function alias(): string
     {
-        return 'clear device old data';
+        return 'clear old data by smart home device';
     }
 
     public function isDue(): bool

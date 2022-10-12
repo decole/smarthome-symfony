@@ -1,14 +1,10 @@
 <?php
 
-
 namespace App\Application\Service\DeviceData;
 
-
 use App\Application\Service\DeviceData\Dto\SecureDeviceStateDto;
-use App\Application\Service\Factory\DeviceDataValidationFactory;
 use App\Domain\Doctrine\Common\Transactions\TransactionInterface;
 use App\Domain\Doctrine\Security\Entity\Security;
-use App\Domain\Payload\DevicePayload;
 use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -50,10 +46,7 @@ class SecureDeviceDataService
 
         $payload = $this->dataCacheService->getPayloadByTopicList([$topic])[$device->getTopic()] ?? null;
 
-        $validator = (new DeviceDataValidationFactory($this->deviceService->getTopicMapByDeviceType()))
-            ->create(new DevicePayload($device->getTopic(), $payload));
-
-        $dto->standardisedState = $validator->validate()->isValid();
+        $dto->standardisedState = $payload === (string)$device->getDetectPayload();
         $dto->isGuarded = $device->isGuarded();
 
         return $dto;

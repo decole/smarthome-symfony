@@ -29,16 +29,16 @@
 - [x] Alice Skill
 - [x] Alice Notify Alerts System
 - [x] Log application
-- [ ] CRUD tests
 - [ ] Http monitoring service - monitoring uptime application
 - [ ] Prometheus alerting by application and services
-- [ ] CI simple
+- [ ] CRUD tests
+- [x] CI simple
 - [ ] CD simple
 
 
 ### Third stage (0.0.3)
 
-- [ ] Services tests
+- [ ] Service tests
 - [ ] Telegram bot
 - [ ] Api service validation - validate devices with api interface
 - [ ] Log services

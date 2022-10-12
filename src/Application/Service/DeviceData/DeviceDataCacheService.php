@@ -11,7 +11,7 @@ use App\Infrastructure\Cache\CacheService;
  */
 final class DeviceDataCacheService
 {
-    private const CACHE_LIMIT = 180;
+    private const CACHE_LIMIT = 320;
 
     private const LIST_KEY = 'list';
 

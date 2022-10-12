@@ -21,7 +21,7 @@ class TestCommand extends Command
     {
         $topic = 'secure/PIR01';
         $result = $this->service->getDeviceState($topic);
-        dump($result);
+        dd($result);
 
         $this->service->setTrigger($topic, false);
 
