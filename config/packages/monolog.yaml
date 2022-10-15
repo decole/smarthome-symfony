@@ -7,6 +7,7 @@ monolog:
         - event_handler
         - quasar_service
         - discord_service
+        - smart_home
 
 when@dev:
     monolog:
@@ -58,6 +59,11 @@ when@dev:
                 type: stream
                 path: '%kernel.logs_dir%/%kernel.environment%.discord_service.log'
                 channels: [ discord_service ]
+            smart_home:
+                level: debug
+                type: stream
+                path: '%kernel.logs_dir%/%kernel.environment%.smart_home.log'
+                channels: [ smart_home ]
 
 when@test:
     monolog:
