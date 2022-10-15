@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SmartHomeApiController
 {
-    public function __construct(private SmartHomeService $service, private LoggerInterface $logger)
+    public function __construct(private SmartHomeService $service, private LoggerInterface $smartHomeLogger)
     {
     }
 
@@ -32,9 +32,8 @@ final class SmartHomeApiController
     {
         $requestId = $this->service->getRequestId($request);
 
-        $this->logger->info('/alice_home/v1.0/user/devices/query', [
+        $this->smartHomeLogger->info('/alice_home/v1.0/user/unlink', [
             'json' => $request->getContent(),
-            'requestId' => $requestId,
         ]);
 
         return new JsonResponse(['request_id' => $requestId]);
@@ -46,9 +45,8 @@ final class SmartHomeApiController
     {
         $requestId = $this->service->getRequestId($request);
 
-        $this->logger->info('/alice_home/v1.0/user/devices/query', [
+        $this->smartHomeLogger->info('/alice_home/v1.0/user/devices', [
             'json' => $request->getContent(),
-            'requestId' => $requestId,
         ]);
 
         $result = [
@@ -81,9 +79,8 @@ final class SmartHomeApiController
         $requestId = $this->service->getRequestId($request);
         $content = $request->getContent();
 
-        $this->logger->info('/alice_home/v1.0/user/devices/query', [
+        $this->smartHomeLogger->info('/alice_home/v1.0/user/devices/query', [
             'json' => $content,
-            'requestId' => $requestId,
         ]);
 
         $devices = $this->service->devicesQuery($content);
@@ -99,12 +96,11 @@ final class SmartHomeApiController
     {
         $content = file_get_contents('php://input');
 
-        $this->logger->info('/alice_home/v1.0/user/devices/action', [
-            'json' => $content,
-            'requestId' => $this->service->getRequestId($request),
-        ]);
-
         $query = json_decode($content);
+
+        $this->smartHomeLogger->info('/alice_home/v1.0/user/devices/action', [
+            'json' => $content,
+        ]);
 
         $requestId = $this->service->getRequestId($request);
 

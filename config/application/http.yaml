@@ -4,8 +4,9 @@ services:
     autoconfigure: true
 
   App\Application\Http\Api\YandexSmartHome\SmartHomeApiController:
+    tags: [ 'controller.service_arguments' ]
     arguments:
-      $logger: '@monolog.logger.smart_home'
+      $smartHomeLogger: '@monolog.logger.smart_home'
 
   App\Application\Http\:
     resource: '%kernel.project_dir%/src/Application/Http/**/*Controller.php'
