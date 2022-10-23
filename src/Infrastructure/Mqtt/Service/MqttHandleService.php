@@ -90,6 +90,7 @@ final class MqttHandleService
 
         $this->getClient()->onDisconnect(function () {
             $this->isConnect = false;
+            sleep(60);
         });
 
         $this->getClient()->subscribe('#', 1);

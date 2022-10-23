@@ -10,7 +10,7 @@ class DeviceDataValidatedDto
     {
     }
 
-    public function isValid(): bool
+    public function isNormal(): bool
     {
         return $this->state;
     }
