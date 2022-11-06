@@ -5,7 +5,7 @@ namespace App\Application\Service\Validation\Sensor;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
-use App\Domain\Contract\Repository\RelayRepositoryInterface;
+use App\Domain\Contract\Repository\SensorRepositoryInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -15,7 +15,7 @@ final class SensorCrudValidationService implements ValidationInterface
 {
     private CrudSensorDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private RelayRepositoryInterface $repository)
+    public function __construct(private ValidatorInterface $validator, private SensorRepositoryInterface $repository)
     {
     }
 
