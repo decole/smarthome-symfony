@@ -214,161 +214,215 @@ class RelayCrudServiceCest
 
         $I->assertEquals(1, $i, 'FireSecure entity not found in repository');
     }
-//
-//    /**
-//     * @param FunctionalTester $I
-//     * @return void
-//     * @throws \Doctrine\ORM\Exception\ORMException
-//     * @throws \Doctrine\ORM\OptimisticLockException
-//     */
-//    public function update(FunctionalTester $I): void
-//    {
-//        $service = $this->getService($I);
-//
-//        $dto = new CrudRelayDto();
-//
-//        $dto->name = $name = $I->faker()->word;
-//        $dto->topic = $topic = $I->faker()->word;
-//        $dto->payload = $payload = $I->faker()->word;
-//        $dto->normalPayload = $normalPayload = $I->faker()->word;
-//        $dto->alertPayload = $alertPayload = $I->faker()->word;
-//        $dto->lastCommand = $lastCommand = $I->faker()->word;
-//        $dto->message_info = $messageInfo = $I->faker()->word;
-//        $dto->message_ok = $messageOk = $I->faker()->word;
-//        $dto->message_warn = $messageWarn = $I->faker()->word;
-//        $dto->status = 'on';
-//        $dto->notify = 'on';
-//
-//        /** @var Relay $entity */
-//        $entity = $service->create($dto);
-//
-//        $I->seeInRepository(Relay::class, [
-//            'id' => $entity->getId()->toString(),
-//            'name' => $name,
-//            'topic' => $topic,
-//            'payload' => $payload,
-//            'normalPayload' => $normalPayload,
-//            'alertPayload' => $alertPayload,
-//            'lastCommand' => $lastCommand,
-//            'statusMessage.message_info' => $messageInfo,
-//            'statusMessage.message_ok' => $messageOk,
-//            'statusMessage.message_warn' => $messageWarn,
-//            'status' => 1,
-//            'notify' => true,
-//        ]);
-//
-//        $dto->name = $name = $I->faker()->word;
-//        $dto->topic = $topic = $I->faker()->word;
-//        $dto->payload = $payload = $I->faker()->word;
-//        $dto->normalPayload = $normalPayload = $I->faker()->word;
-//        $dto->alertPayload = $alertPayload = $I->faker()->word;
-//        $dto->lastCommand = $lastCommand = $I->faker()->word;
-//        $dto->message_info = $messageInfo = $I->faker()->word;
-//        $dto->message_ok = $messageOk = $I->faker()->word;
-//        $dto->message_warn = $messageWarn = $I->faker()->word;
-//        $dto->status = 'off';
-//        $dto->notify = 'off';
-//
-//        $service->update($entity->getId()->toString(), $dto);
-//
-//        $I->seeInRepository(Relay::class, [
-//            'id' => $entity->getId()->toString(),
-//            'name' => $name,
-//            'topic' => $topic,
-//            'payload' => $payload,
-//            'normalPayload' => $normalPayload,
-//            'alertPayload' => $alertPayload,
-//            'lastCommand' => $lastCommand,
-//            'statusMessage.message_info' => $messageInfo,
-//            'statusMessage.message_ok' => $messageOk,
-//            'statusMessage.message_warn' => $messageWarn,
-//            'status' => 0,
-//            'notify' => false,
-//        ]);
-//    }
-//
-//    public function delete(FunctionalTester $I): void
-//    {
-//        $service = $this->getService($I);
-//
-//        $dto = new CrudRelayDto();
-//
-//        $dto->name = $name = $I->faker()->word;
-//        $dto->topic = $topic = $I->faker()->word;
-//        $dto->payload = $payload = $I->faker()->word;
-//        $dto->normalPayload = $normalPayload = $I->faker()->word;
-//        $dto->alertPayload = $alertPayload = $I->faker()->word;
-//        $dto->lastCommand = $lastCommand = $I->faker()->word;
-//        $dto->message_info = $messageInfo = $I->faker()->word;
-//        $dto->message_ok = $messageOk = $I->faker()->word;
-//        $dto->message_warn = $messageWarn = $I->faker()->word;
-//        $dto->status = 'on';
-//        $dto->notify = 'on';
-//
-//        /** @var Relay $entity */
-//        $entity = $service->create($dto);
-//
-//        $I->seeInRepository(Relay::class, [
-//            'id' => $entity->getId()->toString(),
-//            'name' => $name,
-//            'topic' => $topic,
-//            'payload' => $payload,
-//            'normalPayload' => $normalPayload,
-//            'alertPayload' => $alertPayload,
-//            'lastCommand' => $lastCommand,
-//            'statusMessage.message_info' => $messageInfo,
-//            'statusMessage.message_ok' => $messageOk,
-//            'statusMessage.message_warn' => $messageWarn,
-//            'status' => 1,
-//            'notify' => true,
-//        ]);
-//
-//        $service->delete($entity->getId()->toString());
-//
-//        $I->dontSeeInRepository(Relay::class, [
-//            'id' => $entity->getId()->toString(),
-//        ]);
-//    }
-//
-//    public function entityByDto(FunctionalTester $I): void
-//    {
-//        $service = $this->getService($I);
-//
-//        $dto = new CrudRelayDto();
-//
-//        $dto->name = $name = $I->faker()->word;
-//        $dto->topic = $topic = $I->faker()->word;
-//        $dto->payload = $payload = $I->faker()->word;
-//        $dto->normalPayload = $normalPayload = $I->faker()->word;
-//        $dto->alertPayload = $alertPayload = $I->faker()->word;
-//        $dto->lastCommand = $lastCommand = $I->faker()->word;
-//        $dto->message_info = $messageInfo = $I->faker()->word;
-//        $dto->message_ok = $messageOk = $I->faker()->word;
-//        $dto->message_warn = $messageWarn = $I->faker()->word;
-//        $dto->status = 'on';
-//        $dto->notify = 'on';
-//
-//        /** @var Relay $entity */
-//        $entity = $service->create($dto);
-//
-//        $I->seeInRepository(Relay::class, [
-//            'id' => $entity->getId()->toString(),
-//        ]);
-//
-//        $dtoSaved = $service->entityByDto($entity->getId()->toString());
-//
-//        $I->assertEquals($name, $dtoSaved->name);
-//        $I->assertEquals($topic, $dtoSaved->topic);
-//        $I->assertEquals($payload, $dtoSaved->payload);
-//        $I->assertEquals($normalPayload, $dtoSaved->normalPayload);
-//        $I->assertEquals($alertPayload, $dtoSaved->alertPayload);
-//        $I->assertEquals($lastCommand, $dtoSaved->lastCommand);
-//        $I->assertEquals($messageInfo, $dtoSaved->message_info);
-//        $I->assertEquals($messageOk, $dtoSaved->message_ok);
-//        $I->assertEquals($messageWarn, $dtoSaved->message_warn);
-//        $I->assertEquals('on', $dtoSaved->status);
-//        $I->assertEquals('on', $dtoSaved->notify);
-//    }
+
+    /**
+     * @param FunctionalTester $I
+     * @return void
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @param Example $example
+     * @example(status="on",statusRepo="1",type="relay")
+     * @example(status="on",statusRepo="1",type="swift")
+     * @example(status="off",statusRepo="0",type="relay")
+     * @example(status="off",statusRepo="0",type="swift")
+     */
+    public function update(FunctionalTester $I, Example $example): void
+    {
+        $service = $this->getService($I);
+
+        $dto = new CrudRelayDto();
+
+        $dto->type = $type = $example['type'];
+        $dto->name = $name = $I->faker()->word;
+        $dto->topic = $topic = $I->faker()->word;
+        $dto->payload = $payload = $I->faker()->word;
+        $dto->commandOn = $commandOn = $I->faker()->word;
+        $dto->commandOff = $commandOff = $I->faker()->word;
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->lastCommand = $lastCommand = $example['status'];
+        $dto->message_info = $messageInfo = $I->faker()->word;
+        $dto->message_ok = $messageOk = $I->faker()->word;
+        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->status = $example['status'];
+        $dto->notify = $example['status'];
+
+        $notify = $example['status'] === 'on';
+
+        /** @var Relay $entity */
+        $entity = $service->create($dto);
+
+        $I->seeInRepository(Relay::class, [
+            'id' => $entity->getId()->toString(),
+            'type' => $type,
+            'name' => $name,
+            'topic' => $topic,
+            'payload' => $payload,
+            'commandOn' => $commandOn,
+            'commandOff' => $commandOff,
+            'checkTopicPayloadOn' => $checkTopicPayloadOn,
+            'checkTopicPayloadOff' => $checkTopicPayloadOff,
+            'lastCommand' => $lastCommand,
+            'statusMessage.message_info' => $messageInfo,
+            'statusMessage.message_ok' => $messageOk,
+            'statusMessage.message_warn' => $messageWarn,
+            'status' => (int)$example['statusRepo'],
+        ]);
+
+        $dto->type = $type = $example['type'];
+        $dto->name = $name = $I->faker()->word;
+        $dto->topic = $topic = $I->faker()->word;
+        $dto->payload = $payload = $I->faker()->word;
+        $dto->commandOn = $commandOn = $I->faker()->word;
+        $dto->commandOff = $commandOff = $I->faker()->word;
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->lastCommand = $lastCommand = $example['status'];
+        $dto->message_info = $messageInfo = $I->faker()->word;
+        $dto->message_ok = $messageOk = $I->faker()->word;
+        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->status = 'off';
+        $dto->notify = 'off';
+
+        $service->update($entity->getId()->toString(), $dto);
+
+        $I->seeInRepository(Relay::class, [
+            'id' => $entity->getId()->toString(),
+            'type' => $type,
+            'name' => $name,
+            'topic' => $topic,
+            'payload' => $payload,
+            'commandOn' => $commandOn,
+            'commandOff' => $commandOff,
+            'checkTopicPayloadOn' => $checkTopicPayloadOn,
+            'checkTopicPayloadOff' => $checkTopicPayloadOff,
+            'lastCommand' => $lastCommand,
+            'statusMessage.message_info' => $messageInfo,
+            'statusMessage.message_ok' => $messageOk,
+            'statusMessage.message_warn' => $messageWarn,
+            'status' => 0,
+            'notify' => false,
+        ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
+     * @param Example $example
+     * @example(status="on",statusRepo="1",type="relay")
+     * @example(status="on",statusRepo="1",type="swift")
+     * @example(status="off",statusRepo="0",type="relay")
+     * @example(status="off",statusRepo="0",type="swift")
+     * @return void
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(FunctionalTester $I, Example $example): void
+    {
+        $service = $this->getService($I);
+
+        $dto = new CrudRelayDto();
+
+        $dto->type = $type = $example['type'];
+        $dto->name = $name = $I->faker()->word;
+        $dto->topic = $topic = $I->faker()->word;
+        $dto->payload = $payload = $I->faker()->word;
+        $dto->commandOn = $commandOn = $I->faker()->word;
+        $dto->commandOff = $commandOff = $I->faker()->word;
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->lastCommand = $lastCommand = $example['status'];
+        $dto->message_info = $messageInfo = $I->faker()->word;
+        $dto->message_ok = $messageOk = $I->faker()->word;
+        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->status = $example['status'];
+        $dto->notify = $example['status'];
+
+        $notify = $example['status'] === 'on';
+
+        /** @var Relay $entity */
+        $entity = $service->create($dto);
+
+        $I->seeInRepository(Relay::class, [
+            'id' => $entity->getId()->toString(),
+            'type' => $type,
+            'name' => $name,
+            'topic' => $topic,
+            'payload' => $payload,
+            'commandOn' => $commandOn,
+            'commandOff' => $commandOff,
+            'checkTopicPayloadOn' => $checkTopicPayloadOn,
+            'checkTopicPayloadOff' => $checkTopicPayloadOff,
+            'lastCommand' => $lastCommand,
+            'statusMessage.message_info' => $messageInfo,
+            'statusMessage.message_ok' => $messageOk,
+            'statusMessage.message_warn' => $messageWarn,
+            'status' => (int)$example['statusRepo'],
+        ]);
+
+        $service->delete($entity->getId()->toString());
+
+        $I->dontSeeInRepository(Relay::class, [
+            'id' => $entity->getId()->toString(),
+        ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
+     * @param Example $example
+     * @example(status="on",statusRepo="1",type="relay")
+     * @example(status="on",statusRepo="1",type="swift")
+     * @example(status="off",statusRepo="0",type="relay")
+     * @example(status="off",statusRepo="0",type="swift")
+     * @return void
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function entityByDto(FunctionalTester $I, Example $example): void
+    {
+        $service = $this->getService($I);
+
+        $dto = new CrudRelayDto();
+
+        $dto->type = $type = $example['type'];
+        $dto->name = $name = $I->faker()->word;
+        $dto->topic = $topic = $I->faker()->word;
+        $dto->payload = $payload = $I->faker()->word;
+        $dto->commandOn = $commandOn = $I->faker()->word;
+        $dto->commandOff = $commandOff = $I->faker()->word;
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->lastCommand = $lastCommand = $example['status'];
+        $dto->message_info = $messageInfo = $I->faker()->word;
+        $dto->message_ok = $messageOk = $I->faker()->word;
+        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->status = $example['status'];
+        $dto->notify = $example['status'];
+
+        $notify = $example['status'] === 'on';
+
+        /** @var Relay $entity */
+        $entity = $service->create($dto);
+
+        $I->seeInRepository(Relay::class, [
+            'id' => $entity->getId()->toString(),
+        ]);
+
+        $dtoSaved = $service->entityByDto($entity->getId()->toString());
+
+        $I->assertEquals($name, $dtoSaved->name);
+        $I->assertEquals($topic, $dtoSaved->topic);
+        $I->assertEquals($payload, $dtoSaved->payload);
+        $I->assertEquals($commandOn, $dtoSaved->commandOn);
+        $I->assertEquals($commandOff, $dtoSaved->commandOff);
+        $I->assertEquals($checkTopicPayloadOn, $dtoSaved->checkTopicPayloadOn);
+        $I->assertEquals($checkTopicPayloadOff, $dtoSaved->checkTopicPayloadOff);
+        $I->assertEquals($lastCommand, $dtoSaved->lastCommand);
+        $I->assertEquals($messageInfo, $dtoSaved->message_info);
+        $I->assertEquals($messageOk, $dtoSaved->message_ok);
+        $I->assertEquals($messageWarn, $dtoSaved->message_warn);
+        $I->assertEquals($example['statusRepo'], $entity->getStatus());
+        $I->assertEquals((bool)$example['statusRepo'], $entity->isNotify());
+    }
 
     /**
      * @param FunctionalTester $I

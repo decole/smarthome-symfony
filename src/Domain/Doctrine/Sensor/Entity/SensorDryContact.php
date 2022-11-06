@@ -16,8 +16,8 @@ class SensorDryContact extends Sensor
         private int $status,
         private bool $notify,
 
-        private ?string $payload_high = null,
-        private ?string $payload_low = null
+        private ?string $payloadHigh = null,
+        private ?string $payloadLow = null
     ) {
         parent::__construct(
             $this->name,
@@ -31,21 +31,21 @@ class SensorDryContact extends Sensor
 
     final public function getPayloadHigh(): ?string
     {
-        return $this->payload_high;
+        return $this->payloadHigh;
     }
 
     final public function setPayloadHigh(?string $payload): void
     {
-        $this->payload_high = $payload;
+        $this->payloadHigh = $payload;
     }
 
     final public function getPayloadLow(): ?string
     {
-        return $this->payload_low;
+        return $this->payloadLow;
     }
 
     final public function setPayloadLow(?string $payload): void
     {
-        $this->payload_low = $payload;
+        $this->payloadLow = $payload;
     }
 }

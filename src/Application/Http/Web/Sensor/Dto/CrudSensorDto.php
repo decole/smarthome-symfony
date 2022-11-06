@@ -23,12 +23,12 @@ class CrudSensorDto implements ValidationDtoInterface
 
     public ?string $payload = null;
 
-    public ?string $payload_min = null;
-    public ?string $payload_max = null;
-    public ?string $payload_dry = null;
-    public ?string $payload_wet = null;
-    public ?string $payload_high = null;
-    public ?string $payload_low = null;
+    public ?string $payloadMin = null;
+    public ?string $payloadMax = null;
+    public ?string $payloadDry = null;
+    public ?string $payloadWet = null;
+    public ?string $payloadHigh = null;
+    public ?string $payloadLow = null;
 
     public ?string $message_info = null;
     public ?string $message_ok = null;

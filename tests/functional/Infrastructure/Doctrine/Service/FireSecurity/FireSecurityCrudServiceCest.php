@@ -124,6 +124,7 @@ class FireSecurityCrudServiceCest
             'statusMessage.message_ok' => $messageOk,
             'statusMessage.message_warn' => $messageWarn,
             'status' => (int)$example['statusRepo'],
+            'notify' => $example['status'] === 'on',
         ]);
     }
 

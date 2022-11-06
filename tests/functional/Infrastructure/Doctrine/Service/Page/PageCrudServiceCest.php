@@ -246,78 +246,52 @@ class PageCrudServiceCest
         ]);
     }
 
-//    public function entityByDto(FunctionalTester $I): void
-//    {
-//        $service = $this->getService($I);
-//
-//        $dto = new CrudFireSecurityDto();
-//
-//        $dto->name = $name = $I->faker()->word;
-//        $dto->topic = $topic = $I->faker()->word;
-//        $dto->payload = $payload = $I->faker()->word;
-//        $dto->normalPayload = $normalPayload = $I->faker()->word;
-//        $dto->alertPayload = $alertPayload = $I->faker()->word;
-//        $dto->lastCommand = $lastCommand = $I->faker()->word;
-//        $dto->message_info = $messageInfo = $I->faker()->word;
-//        $dto->message_ok = $messageOk = $I->faker()->word;
-//        $dto->message_warn = $messageWarn = $I->faker()->word;
-//        $dto->status = 'on';
-//        $dto->notify = 'on';
-//
-//        /** @var FireSecurity $entity */
-//        $entity = $service->create($dto);
-//
-//        $I->seeInRepository(FireSecurity::class, [
-//            'id' => $entity->getId()->toString(),
-//        ]);
-//
-//        $dtoSaved = $service->entityByDto($entity->getId()->toString());
-//
-//        $I->assertEquals($name, $dtoSaved->name);
-//        $I->assertEquals($topic, $dtoSaved->topic);
-//        $I->assertEquals($payload, $dtoSaved->payload);
-//        $I->assertEquals($normalPayload, $dtoSaved->normalPayload);
-//        $I->assertEquals($alertPayload, $dtoSaved->alertPayload);
-//        $I->assertEquals($lastCommand, $dtoSaved->lastCommand);
-//        $I->assertEquals($messageInfo, $dtoSaved->message_info);
-//        $I->assertEquals($messageOk, $dtoSaved->message_ok);
-//        $I->assertEquals($messageWarn, $dtoSaved->message_warn);
-//        $I->assertEquals('on', $dtoSaved->status);
-//        $I->assertEquals('on', $dtoSaved->notify);
-//    }
-//
-//    public function getNewEntityByDto(FunctionalTester $I): void
-//    {
-//        $service = $this->getService($I);
-//
-//        $dto = new CrudFireSecurityDto();
-//
-//        $dto->name = $name = $I->faker()->word;
-//        $dto->topic = $topic = $I->faker()->word;
-//        $dto->payload = $payload = $I->faker()->word;
-//        $dto->normalPayload = $normalPayload = $I->faker()->word;
-//        $dto->alertPayload = $alertPayload = $I->faker()->word;
-//        $dto->lastCommand = $lastCommand = $I->faker()->word;
-//        $dto->message_info = $messageInfo = $I->faker()->word;
-//        $dto->message_ok = $messageOk = $I->faker()->word;
-//        $dto->message_warn = $messageWarn = $I->faker()->word;
-//        $dto->status = 'on';
-//        $dto->notify = 'on';
-//
-//        $entity = $service->getNewEntityByDto($dto);
-//
-//        $I->assertEquals($name, $entity->getName());
-//        $I->assertEquals($topic, $entity->getTopic());
-//        $I->assertEquals($payload, $entity->getPayload());
-//        $I->assertEquals($normalPayload, $entity->getNormalPayload());
-//        $I->assertEquals($alertPayload, $entity->getAlertPayload());
-//        $I->assertEquals($lastCommand, $entity->getLastCommand());
-//        $I->assertEquals($messageInfo, $entity->getStatusMessage()->getMessageInfo());
-//        $I->assertEquals($messageOk, $entity->getStatusMessage()->getMessageOk());
-//        $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarn());
-//        $I->assertEquals(1, $entity->getStatus());
-//        $I->assertEquals(true, $entity->isNotify());
-//    }
+    public function entityByDto(FunctionalTester $I): void
+    {
+        $service = $this->getService($I);
+
+        $dto = new CrudPageDto();
+
+        $dto->name = $name = $I->faker()->word;
+        $dto->config = [
+            'sensor' => [],
+            'relay' => [],
+            'security' => [],
+            'fireSecurity' => [],
+        ];
+
+        /** @var Page $entity */
+        $entity = $service->create($dto);
+
+        $I->seeInRepository(Page::class, [
+            'id' => $entity->getId()->toString(),
+        ]);
+
+        $dtoSaved = $service->entityByDto($entity->getId()->toString());
+
+        $I->assertEquals($name, $dtoSaved->name);
+        $I->assertEquals($dto->config, $dtoSaved->config);
+    }
+
+    public function getNewEntityByDto(FunctionalTester $I): void
+    {
+        $service = $this->getService($I);
+
+        $dto = new CrudPageDto();
+
+        $dto->name = $name = $I->faker()->word;
+        $dto->config = [
+            'sensor' => [],
+            'relay' => [],
+            'security' => [],
+            'fireSecurity' => [],
+        ];
+
+        $entity = $service->getNewEntityByDto($dto);
+
+        $I->assertEquals($name, $entity->getName());
+        $I->assertEquals($dto->config, $entity->getConfig());
+    }
 
     private function getService(FunctionalTester $I): PageCrudService
     {
@@ -354,8 +328,8 @@ class PageCrudServiceCest
         $dto->name = $I->faker()->word;
         $dto->topic = $I->faker()->word;
         $dto->payload = $I->faker()->word;
-        $dto->payload_min = 0;
-        $dto->payload_max = 100;
+        $dto->payloadMin = 0;
+        $dto->payloadMax = 100;
         $dto->message_info = $I->faker()->word;
         $dto->message_ok = $I->faker()->word;
         $dto->message_warn = $I->faker()->word;

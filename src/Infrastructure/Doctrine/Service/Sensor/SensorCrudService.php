@@ -68,16 +68,16 @@ final class SensorCrudService
         $this->setDtoToEntityCommonParams($entity, $dto);
 
         if ($rc->hasMethod('getPayloadMin')) {
-            $entity->setPayloadMin($dto->payload_min);
-            $entity->setPayloadMax($dto->payload_max);
+            $entity->setPayloadMin($dto->payloadMin);
+            $entity->setPayloadMax($dto->payloadMax);
         }
         if ($rc->hasMethod('getPayloadDry')) {
-            $entity->setPayloadDry($dto->payload_dry);
-            $entity->setPayloadWet($dto->payload_wet);
+            $entity->setPayloadDry($dto->payloadDry);
+            $entity->setPayloadWet($dto->payloadWet);
         }
         if ($rc->hasMethod('getPayloadHigh')) {
-            $entity->setPayloadHigh($dto->payload_high);
-            $entity->setPayloadLow($dto->payload_low);
+            $entity->setPayloadHigh($dto->payloadHigh);
+            $entity->setPayloadLow($dto->payloadLow);
         }
 
         $entity->setStatusMessage(new StatusMessage(
@@ -138,12 +138,12 @@ final class SensorCrudService
 
         $this->setEntityToDtoCommonParams($dto, $entity);
 
-        $dto->payload_min = $rc->hasMethod('getPayloadMin') ? $entity?->getPayloadMin() : null;
-        $dto->payload_max = $rc->hasMethod('getPayloadMax') ? $entity?->getPayloadMax() : null;
-        $dto->payload_dry = $rc->hasMethod('getPayloadDry') ? $entity?->getPayloadDry() : null;
-        $dto->payload_wet = $rc->hasMethod('getPayloadWet') ? $entity?->getPayloadWet() : null;
-        $dto->payload_high = $rc->hasMethod('getPayloadHigh') ? $entity?->getPayloadHigh() : null;
-        $dto->payload_low = $rc->hasMethod('getPayloadLow') ? $entity?->getPayloadLow() : null;
+        $dto->payloadMin = $rc->hasMethod('getPayloadMin') ? $entity?->getPayloadMin() : null;
+        $dto->payloadMax = $rc->hasMethod('getPayloadMax') ? $entity?->getPayloadMax() : null;
+        $dto->payloadDry = $rc->hasMethod('getPayloadDry') ? $entity?->getPayloadDry() : null;
+        $dto->payloadWet = $rc->hasMethod('getPayloadWet') ? $entity?->getPayloadWet() : null;
+        $dto->payloadHigh = $rc->hasMethod('getPayloadHigh') ? $entity?->getPayloadHigh() : null;
+        $dto->payloadLow = $rc->hasMethod('getPayloadLow') ? $entity?->getPayloadLow() : null;
 
         $this->setStatusMessage($dto, $entity);
 
@@ -187,16 +187,16 @@ final class SensorCrudService
     {
         return match ($dto->type) {
             SensorTemperature::TYPE, SensorHumidity::TYPE, SensorPressure::TYPE => [
-                $dto->payload_min,
-                $dto->payload_max,
+                $dto->payloadMin,
+                $dto->payloadMax,
             ],
             SensorLeakage::TYPE => [
-                $dto->payload_dry,
-                $dto->payload_wet,
+                $dto->payloadDry,
+                $dto->payloadWet,
             ],
             SensorDryContact::TYPE => [
-                $dto->payload_high,
-                $dto->payload_low,
+                $dto->payloadHigh,
+                $dto->payloadLow,
             ],
             default => AdvancedFieldsException::deviceTypeNotFound($dto->type),
         };

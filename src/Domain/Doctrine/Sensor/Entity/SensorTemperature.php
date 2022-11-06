@@ -16,8 +16,8 @@ class SensorTemperature extends Sensor
         private int $status,
         private bool $notify,
 
-        private ?string $payload_min = null,
-        private ?string $payload_max = null
+        private ?string $payloadMin = null,
+        private ?string $payloadMax = null
     ) {
         parent::__construct(
             $this->name,
@@ -31,21 +31,21 @@ class SensorTemperature extends Sensor
 
     final public function getPayloadMin(): ?string
     {
-        return $this->payload_min;
+        return $this->payloadMin;
     }
 
     final public function setPayloadMin(?string $payload): void
     {
-        $this->payload_min = $payload;
+        $this->payloadMin = $payload;
     }
 
     final public function getPayloadMax(): ?string
     {
-        return $this->payload_max;
+        return $this->payloadMax;
     }
 
     final public function setPayloadMax(?string $payload): void
     {
-        $this->payload_max = $payload;
+        $this->payloadMax = $payload;
     }
 }

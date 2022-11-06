@@ -32,6 +32,11 @@ class CrudSecurityDto implements ValidationDtoInterface
 
     public ?string $lastCommand = null;
 
+    /**
+     * For customisation
+     *
+     * @var array<string, string>
+     */
     public array $params = [];
 
     public ?string $message_info = null;
