@@ -20,6 +20,9 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class PageCrudService
 {
+    private const NAME_ALIAS = 'name';
+    private const DEFAULT_NAME = 'new page';
+
     public function __construct(
         private PageCrudFactory $crud,
         private SensorRepositoryInterface $sensorRepository,
@@ -81,28 +84,18 @@ final class PageCrudService
         }
     }
 
-    public function getTypes(): array
-    {
-        return Relay::RELAY_TYPES;
-    }
-
     public function createDto(?Request $request): CrudPageDto
     {
         $dto = new CrudPageDto();
 
-        if ($request === null) {
+        if ($request === null || $request->request->get(self::NAME_ALIAS) === null) {
+            $this->setDefault($dto);
+
             return $dto;
         }
 
-        $config = [
-            'sensor' => $this->getSanitizeRequest($request, 'sensor'),
-            'relay' => $this->getSanitizeRequest($request, 'relay'),
-            'security' => $this->getSanitizeRequest($request, 'security'),
-            'fireSecurity' => $this->getSanitizeRequest($request, 'fireSecurity'),
-        ];
-
-        $dto->name = $request->request->get('name') ?? 'new page';
-        $dto->config = $config;
+        $dto->name = $request->request->get(self::NAME_ALIAS);
+        $dto->config = $this->getConfigByRequest($request);
 
         return $dto;
     }
@@ -171,10 +164,10 @@ final class PageCrudService
         return in_array($deviceId, $devices ?? [], true);
     }
 
-    public function getSanitizeRequest(Request $request, string $name): array
+    public function getSanitizeRequest(?Request $request, string $name): array
     {
         $result = [];
-        $list = $request->request->get($name);
+        $list = $request?->request->get($name);
 
         if ($list === null) {
             return $result;
@@ -185,5 +178,25 @@ final class PageCrudService
         }
 
         return $result;
+    }
+
+    private function setDefault(CrudPageDto $dto): void
+    {
+        $dto->name = self::DEFAULT_NAME;
+        $dto->config = $this->getConfigByRequest(null);
+    }
+
+    /**
+     * @param Request|null $request
+     * @return array<string, array<string, string>>
+     */
+    private function getConfigByRequest(?Request $request): array
+    {
+        return [
+            'sensor' => $this->getSanitizeRequest($request, 'sensor'),
+            'relay' => $this->getSanitizeRequest($request, 'relay'),
+            'security' => $this->getSanitizeRequest($request, 'security'),
+            'fireSecurity' => $this->getSanitizeRequest($request, 'fireSecurity'),
+        ];
     }
 }

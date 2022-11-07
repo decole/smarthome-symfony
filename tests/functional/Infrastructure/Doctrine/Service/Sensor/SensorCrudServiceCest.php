@@ -672,16 +672,16 @@ class SensorCrudServiceCest
     private function getRequest(string $type, FunctionalTester $I): Request
     {
         $minMax = [
-            'payload_min' => $I->faker()->word,
-            'payload_max' => $I->faker()->word,
+            'payloadMin' => $I->faker()->word,
+            'payloadMax' => $I->faker()->word,
         ];
         $dryWet = [
-            'payload_dry' => $I->faker()->word,
-            'payload_wet' => $I->faker()->word,
+            'payloadDry' => $I->faker()->word,
+            'payloadWet' => $I->faker()->word,
         ];
         $lowHigh = [
-            'payload_high' => $I->faker()->word,
-            'payload_low' => $I->faker()->word,
+            'payloadHigh' => $I->faker()->word,
+            'payloadLow' => $I->faker()->word,
         ];
 
         $typeFields = match ($type) {

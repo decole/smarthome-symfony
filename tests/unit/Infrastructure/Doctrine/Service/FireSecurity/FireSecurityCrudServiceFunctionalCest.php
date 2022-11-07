@@ -7,7 +7,7 @@ use App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService;
 use App\Tests\UnitTester;
 use Symfony\Component\HttpFoundation\Request;
 
-class FireSecurityCrudServiceCest
+class FireSecurityCrudServiceFunctionalCest
 {
     public function getTypes(UnitTester $I): void
     {

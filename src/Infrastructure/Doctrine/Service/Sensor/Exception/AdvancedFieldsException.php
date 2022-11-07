@@ -8,6 +8,6 @@ class AdvancedFieldsException extends HandledException
 {
     public static function deviceTypeNotFound(string $type): self
     {
-        return new self("Advanced fields for device type'{$type}' not found.");
+        return new self("Advanced fields for device type '{$type}' not found.");
     }
 }
