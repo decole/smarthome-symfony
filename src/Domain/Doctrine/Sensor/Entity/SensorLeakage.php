@@ -16,8 +16,8 @@ class SensorLeakage extends Sensor
         private int $status,
         private bool $notify,
 
-        private ?string $payload_dry = null,
-        private ?string $payload_wet = null
+        private ?string $payloadDry = null,
+        private ?string $payloadWet = null
     ) {
         parent::__construct(
             $this->name,
@@ -31,21 +31,21 @@ class SensorLeakage extends Sensor
 
     final public function getPayloadDry(): ?string
     {
-        return $this->payload_dry;
+        return $this->payloadDry;
     }
 
     final public function setPayloadDry(?string $payload): void
     {
-        $this->payload_dry = $payload;
+        $this->payloadDry = $payload;
     }
 
     final public function getPayloadWet(): ?string
     {
-        return $this->payload_wet;
+        return $this->payloadWet;
     }
 
     final public function setPayloadWet(?string $payload): void
     {
-        $this->payload_wet = $payload;
+        $this->payloadWet = $payload;
     }
 }

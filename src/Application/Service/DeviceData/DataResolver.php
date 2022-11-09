@@ -28,11 +28,7 @@ final class DataResolver
     public function resolveDevicePayload(DevicePayload $payload): void
     {
         $this->cacheService->save($payload);
-        $resultDto = $this->validateService->validate($payload);
-
-        if (!$resultDto->isValid()) {
-            $this->notification($resultDto, $payload);
-        }
+        $this->canBeNotify($payload);
     }
 
     /**
@@ -69,5 +65,28 @@ final class DataResolver
 
         $event = new AlertNotificationEvent($message, [AlertNotificationEvent::MESSENGER]);
         $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+    }
+
+    /**
+     * @param DevicePayload $payload
+     * @return void
+     */
+    public function canBeNotify(DevicePayload $payload): void
+    {
+        $resultDto = $this->validateService->validate($payload);
+
+        /** @var Sensor|Relay|Security|FireSecurity $device */
+        $device = $resultDto->getDevice();
+
+        // охранный датчик в состоянии "движение" и он взеден и выставлен флаг оповещения через мессенджеры
+        if ($device instanceof Security && $device->isNotify() && $device->isGuarded()) {
+            $this->notification($resultDto, $payload);
+
+            return;
+        }
+
+        if (!$resultDto->isNormal() && $device->isNotify()) {
+            $this->notification($resultDto, $payload);
+        }
     }
 }

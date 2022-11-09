@@ -10,6 +10,9 @@ use Mosquitto\Message;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
+/**
+ * @see https://mosquitto-php.readthedocs.io/en/latest/client.html#Mosquitto\Client::onConnect
+ */
 final class MqttHandleService
 {
     private bool $isConnect = false;
@@ -90,6 +93,7 @@ final class MqttHandleService
 
         $this->getClient()->onDisconnect(function () {
             $this->isConnect = false;
+            sleep(60);
         });
 
         $this->getClient()->subscribe('#', 1);

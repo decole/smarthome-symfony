@@ -1,7 +1,26 @@
 framework:
     cache:
+        prefix_seed: uber_server
         app: cache.adapter.redis
         default_redis_provider: '%env(REDIS_DSN)%'
         pools:
             doctrine.result_cache_pool:
                 adapter: app.cache.adapter.redis
+
+#    Pool name
+#    ----------------------------------------
+#    app.cache.adapter.redis
+#    cache.app
+#    cache.system
+#    cache.validator
+#    cache.serializer
+#    cache.annotations
+#    cache.property_info
+#    cache.messenger.restart_workers_signal
+#    cache.rate_limiter
+#    doctrine.result_cache_pool
+#    cache.validator_expression_language
+#    cache.doctrine.orm.default.result
+#    cache.doctrine.orm.default.query
+#    cache.webpack_encore
+#    cache.security_expression_language

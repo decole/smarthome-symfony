@@ -73,37 +73,37 @@
                             {% if sensor.type == 'temperature' or sensor.type == 'humidity' or sensor.type == 'pressure' %}
                             <div class="form-group">
                                 <label>Значение минимальное</label>
-                                <input type="text" name="payload_min" value="{{ sensor.payload_min }}" class="form-control" placeholder="10" required>
+                                <input type="text" name="payloadMin" value="{{ sensor.payloadMin }}" class="form-control" placeholder="10" required>
                             </div>
                             {% endif %}
                             {% if sensor.type == 'temperature' or sensor.type == 'humidity' or sensor.type == 'pressure' %}
                             <div class="form-group">
                                 <label>Значение максимальное</label>
-                                <input type="text" name="payload_max" value="{{ sensor.payload_max }}" class="form-control" placeholder="40" required>
+                                <input type="text" name="payloadMax" value="{{ sensor.payloadMax }}" class="form-control" placeholder="40" required>
                             </div>
                             {% endif %}
                             {% if sensor.type == 'leakage' %}
                                 <div class="form-group">
                                     <label>Значение - сухо</label>
-                                    <input type="text" name="payload_dry" value="{{ sensor.payload_dry }}" class="form-control" placeholder="0" required>
+                                    <input type="text" name="payloadDry" value="{{ sensor.payloadDry }}" class="form-control" placeholder="0" required>
                                 </div>
                             {% endif %}
                             {% if sensor.type == 'leakage' %}
                                 <div class="form-group">
                                     <label>Значение - протечка</label>
-                                    <input type="text" name="payload_wet" value="{{ sensor.payload_wet }}" class="form-control" placeholder="1" required>
+                                    <input type="text" name="payloadWet" value="{{ sensor.payloadWet }}" class="form-control" placeholder="1" required>
                                 </div>
                             {% endif %}
                             {% if sensor.type == 'dryContact' %}
                                 <div class="form-group">
                                     <label>Значение - есть сигнал</label>
-                                    <input type="text" name="payload_high" value="{{ sensor.payload_high }}" class="form-control" placeholder="1" required>
+                                    <input type="text" name="payloadHigh" value="{{ sensor.payloadHigh }}" class="form-control" placeholder="1" required>
                                 </div>
                             {% endif %}
                             {% if sensor.type == 'dryContact' %}
                                 <div class="form-group">
                                     <label>Значение - нет сигнала</label>
-                                    <input type="text" name="payload_low" value="{{ sensor.payload_low }}" class="form-control" placeholder="0" required>
+                                    <input type="text" name="payloadLow" value="{{ sensor.payloadLow }}" class="form-control" placeholder="0" required>
                                 </div>
                             {% endif %}
 

@@ -48,7 +48,7 @@ final class PageCrudValidationService implements ValidationInterface
     {
         if ($this->repository->findByName($this->dto->name)) {
             $list->add(new ConstraintViolation(
-                message: 'Sensor name already exist.',
+                message: 'Page name already exist.',
                 messageTemplate: null,
                 parameters: [$this->dto->name],
                 root: 'name',

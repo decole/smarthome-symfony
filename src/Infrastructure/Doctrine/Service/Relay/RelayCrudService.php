@@ -161,7 +161,7 @@ final class RelayCrudService
             checkTopic: $dto->checkTopic,
             checkTopicPayloadOn: $dto->checkTopicPayloadOn,
             checkTopicPayloadOff: $dto->checkTopicPayloadOff,
-            lastCommand: null,
+            lastCommand: $dto->lastCommand,
             isFeedbackPayload: $dto->isFeedbackPayload === 'on',
             statusMessage: new StatusMessage(
                 $dto->message_info,

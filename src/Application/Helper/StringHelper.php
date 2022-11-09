@@ -5,8 +5,12 @@ namespace App\Application\Helper;
 
 class StringHelper
 {
-    public static function sanitize(?string $sanitizeString, ?string $default = null): ?string
+    public static function sanitize(mixed $sanitizeString, ?string $default = null): mixed
     {
+        if (is_array($sanitizeString)) {
+            return $sanitizeString;
+        }
+
         if ($sanitizeString === null || $sanitizeString === '') {
             return $default;
         }

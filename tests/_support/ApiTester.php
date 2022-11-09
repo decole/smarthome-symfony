@@ -1,6 +1,10 @@
 <?php
 namespace App\Tests;
 
+use Codeception\Scenario;
+use Faker\Factory;
+use Faker\Generator;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -20,7 +24,22 @@ class ApiTester extends \Codeception\Actor
 {
     use _generated\ApiTesterActions;
 
+    /** @var Generator */
+    static $faker;
+
     /**
      * Define custom actions here
      */
+
+    public function __construct(Scenario $scenario)
+    {
+        parent::__construct($scenario);
+
+        static::$faker = Factory::create();
+    }
+
+    public function faker()
+    {
+        return self::$faker;
+    }
 }

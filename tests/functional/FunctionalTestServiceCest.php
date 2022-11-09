@@ -2,11 +2,11 @@
 
 namespace App\Tests\functional;
 
-use App\Tests\UnitTester;
+use App\Tests\FunctionalTester;
 
 class FunctionalTestServiceCest
 {
-    public function withOnlyDateEnd(UnitTester $I): void
+    public function withOnlyDateEnd(FunctionalTester $I): void
     {
         $dateEnd = new \DateTimeImmutable();
 

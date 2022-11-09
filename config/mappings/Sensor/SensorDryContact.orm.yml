@@ -1,7 +1,9 @@
 App\Domain\Doctrine\Sensor\Entity\SensorDryContact:
   type: entity
   fields:
-    payload_high:
+    payloadHigh:
+      name: payload_high
       type: string
-    payload_low:
+    payloadLow:
+      name: payload_low
       type: string

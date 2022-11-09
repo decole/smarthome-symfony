@@ -105,10 +105,6 @@ void loop() {
   if (now - lastMsg1 > 1000) {
     int analogLine = analogRead(A0);
 
-    if (digitalRead(PIR01) == 1) {
-      client.publish("secure/PIR01", String(digitalRead(PIR01)).c_str(), true);
-    }
-
     if (DELIMETER > analogLine && state == 0) {
       relayDelayTime = relayDelayTime + 1;
       
@@ -124,27 +120,23 @@ void loop() {
       digitalWrite(RELAY, HIGH);
       relayDelayTime = 0;
       detectState = detectState + 1;
-      client.publish("firesecure/fire-sensor/detectState", String(detectState).c_str(), true);
-      client.publish("firesecure/fire-sensor/relay", String(digitalRead(RELAY)).c_str(), true);
     }
 
     if (detectState > 1)  {
       state = 1;
       digitalWrite(RELAY, LOW);
-      client.publish("firesecure/fire-sensor/state", String(state).c_str(), true);
-      client.publish("firesecure/fire-sensor/relay", String(digitalRead(RELAY)).c_str(), true);
     }
 
     lastMsg1 = now;
   }
 
-  if (now - lastMsg > 15000) {
+  if (now - lastMsg > 10000) {
     client.publish("firesecure/fire-sensor/state",           String(state).c_str(), true);
     client.publish("firesecure/fire-sensor/relay",           String(digitalRead(RELAY)).c_str(), true);
     client.publish("firesecure/fire-sensor/detectState",     String(detectState).c_str(), true);
     client.publish("firesecure/fire-sensor/analogLineValue", String(analogRead(A0)).c_str(), true);
     client.publish("secure/PIR01",                           String(digitalRead(PIR01)).c_str(), true);
-      
+
     lastMsg = now;
   }
 

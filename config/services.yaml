@@ -8,6 +8,10 @@ services:
         autowire: true
         autoconfigure: true
 
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@redis_client'
+
 parameters:
     app.registration: '%env(APP_REGISTRATION_ENABLE)%'
     app.host: '%env(APP_HOST)%'

@@ -12,11 +12,10 @@ final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator impl
     {
         assert($this->device instanceof Security);
 
-        $alertState = $this->payload->getPayload() === (string)$this->device->getDetectPayload() &&
-            $this->device->isGuarded() && $this->device->isNotify();
+        $isNormal = $this->payload->getPayload() === (string)$this->device->getHoldPayload();
 
         // true - нормальное состояние
-        // false - обнаружено движение и включено оповещение и взведено на охрану
-        return $this->createDto(!$alertState, $this->device);
+        // false - обнаружено движение
+        return $this->createDto($isNormal, $this->device);
     }
 }
