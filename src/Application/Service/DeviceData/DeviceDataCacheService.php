@@ -26,6 +26,7 @@ final class DeviceDataCacheService
         $map[self::LIST_KEY][$message->getTopic()] = [
             'payload' => $message->getPayload(),
             'createdAt' => time(),
+            'expiredAt' => time() + self::CACHE_LIMIT,
         ];
 
         $this->setCache($map);
@@ -65,7 +66,7 @@ final class DeviceDataCacheService
         $list = $this->getList();
 
         foreach ($list as $cachedTopic => $payload) {
-            if ($cachedTopic === $topic && !$this->isExpiredPayload($payload['createdAt'])) {
+            if ($cachedTopic === $topic) {
                 return $payload['payload'];
             }
         }
@@ -83,7 +84,8 @@ final class DeviceDataCacheService
         $this->cache->set(
             key: CacheKeyListEnum::DEVICE_TOPICS_LIST,
             value: $map,
-            tags: [CacheKeyListEnum::DEVICE_TOPICS_LIST]
+            tags: [CacheKeyListEnum::DEVICE_TOPICS_LIST],
+            lifetime: self::CACHE_LIMIT
         );
     }
 }
