@@ -1,10 +1,9 @@
 stages:
 # подготовка, тесты, ssh с подтяжкой на прод новой версии кода
-# или
-# подготовка, тесты, сбор докер образов с кодом внутри, пушинг в гитлаб, ssh с подтяжкой на проде новой версии образа
-#  - manual-clean
+# или подготовка, тесты, сбор докер образов с кодом внутри, пушинг в гитлаб, ssh с подтяжкой на проде новой версии образа
+  - manual-clean
   - preparation
-#  - testing
+  - testing
   - deploy
 
 variables:
@@ -51,41 +50,40 @@ tests:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php vendor/codeception/codeception/codecept clean
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
 
-#clean:
-#  stage: manual-clean
-#  tags:
-#    - uberserver
-#  script:
-#    - docker-compose -f docker-compose.ci.yaml up -d
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
-#  when: manual
+clean:
+  stage: manual-clean
+  tags:
+    - uberserver
+  script:
+    - docker-compose -f docker-compose.ci.yaml up -d
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
+  when: manual
 
-# completed configuration
-#deploy_prod:
-#  stage: deploy
-#  tags:
-#    - uberserver
-#  script:
-#    - df -h /
-#    - |
-#      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
-#      cd uberserver/
-#      git checkout master
-#      git fetch --all
-#      git reset --hard HEAD
-#      git status
-#      git pull
-#      df -H /
-#      make up
-#      make cache
-#      make composer-install
-#      make migration
-#      make restart
-#      make cache
-#      make ps
-#      EOT
-#  environment:
-#    name: deploy
-#  only:
-#    - master
+deploy_prod:
+  stage: deploy
+  tags:
+    - uberserver
+  script:
+    - df -h /
+    - |
+      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
+      cd uberserver/
+      git checkout master
+      git fetch --all
+      git reset --hard HEAD
+      git status
+      git pull
+      df -H /
+      make up
+      make cache
+      make composer-install
+      make migration
+      make restart
+      make cache
+      make ps
+      EOT
+  environment:
+    name: deploy
+  only:
+    - master
