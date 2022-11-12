@@ -2,7 +2,7 @@ version: "3.4"
 services:
   php-fpm:
     image: registry.gitlab.com/decole/uberserver-symfony:app
-    container_name: notify-symfony
+    container_name: ci-symfony
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
@@ -11,11 +11,11 @@ services:
       - ./:/var/www
       - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
     networks:
-      - notify-microservice
+      - uberserver-microservice
 
   nginx:
     image: nginx:alpine
-    container_name: notify-nginx
+    container_name: ci-nginx
     restart: always
     volumes:
       - ./:/var/www
@@ -26,29 +26,27 @@ services:
     ports:
       - "${CI_WEB_PORT}:80"
     networks:
-      - notify-microservice
+      - uberserver-microservice
 
   postgres:
     image: postgres:11.2-alpine
-    container_name: notify-postgres
+    container_name: ci-postgres
     volumes:
       - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
-      - notify-postgres:/var/lib/postgresql/data
     ports:
       - "54333:5432"
     environment:
-      - "POSTGRES_DB=notificator"
+      - "POSTGRES_DB=test"
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
     networks:
-      - notify-microservice
+      - uberserver-microservice
 
   rabbitmq:
     image: rabbitmq
-    container_name: notify-rabbitmq
+    container_name: ci-rabbitmq
     volumes:
       - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
-      - notify-rabbitmq:/var/lib/rabbitmq
     environment:
       - "RABBITMQ_DEFAULT_USER=rabbit"
       - "RABBITMQ_DEFAULT_PASS=rabbit"
@@ -56,12 +54,18 @@ services:
       - "5673:5672"
       - "15673:15672"
     networks:
-      - notify-microservice
+      - uberserver-microservice
+
+  redis:
+    image: redis:6.0
+    container_name: redis
+    networks:
+      - uberserver
 
 volumes:
   notify-postgres:
   notify-rabbitmq:
 
 networks:
-  notify-microservice:
+  uberserver-microservice:
     driver: bridge
