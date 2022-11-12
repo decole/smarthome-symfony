@@ -6,7 +6,7 @@ use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
 
 /**
- * фоновый процесс, который периоджически перебирает хранящиеся данные датчиков и удаляет просроченные
+ * Фоновый процесс, который периодически перебирает хранящиеся данные датчиков и удаляет просроченные
  */
 final class DeviceClearOldDataCriteria implements PeriodicHandleCriteriaInterface
 {

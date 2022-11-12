@@ -16,8 +16,6 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 final class DeviceCacheService
 {
-    private const CACHE_LIMIT = 120; // нужен будет для проверки тухлых данных
-
     public function __construct(
         private CacheService $cache,
         private SensorRepositoryInterface $sensorRepository,

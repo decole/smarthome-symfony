@@ -2,16 +2,14 @@
 
 namespace App\Infrastructure\Cache;
 
-use DateInterval;
 use Psr\Cache\CacheException;
-use Psr\Cache\CacheItemInterface;
 use Psr\Cache\InvalidArgumentException;
-use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\CacheItem;
 
-class CacheService
+final class CacheService
 {
-    public function __construct(private RedisTagAwareAdapter $cache)
+    public function __construct(private RedisAdapter $cache)
     {
     }
 
@@ -34,26 +32,14 @@ class CacheService
     /**
      * @throws CacheException|InvalidArgumentException
      */
-    public function set(string $key, mixed $value, ?array $tags = null, int $lifetime = 0): void
+    public function set(string $key, mixed $value, int $lifetime = 0): void
     {
-        $this->cache->delete($key);
-        $this->cache->get(
-            $key,
-            function (CacheItemInterface $item) use ($value, $tags, $lifetime)
-            {
-                $item->set($value);
+        /** @var CacheItem $item */
+        $item = $this->cache->getItem($key);
+        $item->set($value);
+        $item->expiresAfter($lifetime === 0 ? null : $lifetime);
 
-                if ($tags !== null) {
-                    $item->tag($tags);
-                }
-
-                if ($lifetime !== 0) {
-                    $item->expiresAfter(new DateInterval("PT{$lifetime}S"));
-                }
-
-                return $item->get();
-            }
-        );
+        $this->cache->save($item);
     }
 
     /**
@@ -64,15 +50,7 @@ class CacheService
         return $this->cache->deleteItems($key);
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
-    public function clearByTags(array $tags): void
-    {
-        $this->cache->invalidateTags($tags);
-    }
-
-    public function clearAll(): void
+    public function clear(): void
     {
         $this->cache->clear();
     }
