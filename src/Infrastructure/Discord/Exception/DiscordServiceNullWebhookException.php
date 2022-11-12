@@ -2,7 +2,9 @@
 
 namespace App\Infrastructure\Discord\Exception;
 
-class DiscordServiceNullWebhookException extends \Exception
+use Exception;
+
+class DiscordServiceNullWebhookException extends Exception
 {
     public static function nullWebhook(): self
     {

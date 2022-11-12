@@ -29,6 +29,8 @@ final class DeviceDataCacheService
             'expiredAt' => time() + self::CACHE_LIMIT,
         ];
 
+        $map = $this->clearOldPayload($map);
+
         $this->setCache($map);
     }
 
@@ -43,17 +45,15 @@ final class DeviceDataCacheService
         return $result;
     }
 
-    public function clearOldPayload(): void
+    public function clearOldPayload(array $map): array
     {
-        $map = $this->getList();
-
-        foreach ($map as $cachedTopic => $payload) {
+        foreach ($map[self::LIST_KEY] as $cachedTopic => $payload) {
             if ($this->isExpiredPayload($payload['createdAt'])) {
                 unset($map[$cachedTopic]);
             }
         }
 
-        $this->setCache($map);
+        return $map;
     }
 
     private function getList(): array

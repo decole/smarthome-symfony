@@ -2,8 +2,9 @@
 
 namespace App\Application\Exception;
 
+use Exception;
 
-abstract class HandledException extends \Exception
+abstract class HandledException extends Exception
 {
     public static function getType(): string
     {
