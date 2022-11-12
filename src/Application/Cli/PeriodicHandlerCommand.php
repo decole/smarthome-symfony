@@ -34,12 +34,10 @@ final class PeriodicHandlerCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            while (true) {
-                $delay = self::MINUTE - date('s');
-                $this->schedule();
+            $delay = self::MINUTE - date('s');
+            $this->schedule();
 
-                sleep($delay);
-            }
+            sleep($delay);
         } catch (Throwable $exception) {
             $this->logger->warning('crash periodic handler', [
                 'exception' => $exception->getMessage(),
