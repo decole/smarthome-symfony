@@ -60,7 +60,7 @@ services:
     image: redis:6.0
     container_name: redis
     networks:
-      - uberserver
+      - uberserver-microservice
 
 volumes:
   notify-postgres:
