@@ -28,7 +28,7 @@ final class DataResolver
     public function resolveDevicePayload(DevicePayload $payload): void
     {
         $this->cacheService->save($payload);
-        $this->canBeNotify($payload);
+        $this->execute($payload);
     }
 
     /**
@@ -71,7 +71,7 @@ final class DataResolver
      * @param DevicePayload $payload
      * @return void
      */
-    public function canBeNotify(DevicePayload $payload): void
+    public function execute(DevicePayload $payload): void
     {
         $resultDto = $this->validateService->validate($payload);
 

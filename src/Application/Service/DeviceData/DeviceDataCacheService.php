@@ -37,7 +37,7 @@ final class DeviceDataCacheService
         $result = [];
 
         foreach ($topics as $topic) {
-            $result[$topic] = $this->getTopicPayload($topic);
+            $result[$topic] = $this->getTopicPayload(cached: $this->getList(), topic: trim($topic));
         }
 
         return $result;
@@ -61,12 +61,10 @@ final class DeviceDataCacheService
         return $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST)[self::LIST_KEY] ?? [];
     }
 
-    private function getTopicPayload(mixed $topic): ?string
+    private function getTopicPayload(array $cached, mixed $topic): ?string
     {
-        $list = $this->getList();
-
-        foreach ($list as $cachedTopic => $payload) {
-            if ($cachedTopic === $topic) {
+        foreach ($cached as $cachedTopic => $payload) {
+            if (trim($cachedTopic) == trim($topic)) {
                 return $payload['payload'];
             }
         }
@@ -84,7 +82,6 @@ final class DeviceDataCacheService
         $this->cache->set(
             key: CacheKeyListEnum::DEVICE_TOPICS_LIST,
             value: $map,
-            tags: [CacheKeyListEnum::DEVICE_TOPICS_LIST],
             lifetime: self::CACHE_LIMIT
         );
     }

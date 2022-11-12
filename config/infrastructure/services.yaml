@@ -25,15 +25,21 @@ services:
     arguments:
       - '%env(REDIS_DSN)%'
 
-  redis_adapter:
+  redis_tag_adapter:
     class: Symfony\Component\Cache\Adapter\RedisTagAwareAdapter
+    arguments:
+      - '@redis_client'
+      - 'uberserver_app'
+
+  redis_simple_adapter:
+    class: Symfony\Component\Cache\Adapter\RedisAdapter
     arguments:
       - '@redis_client'
       - 'uberserver_app'
 
   App\Infrastructure\Cache\CacheService:
     arguments:
-      $cache: '@redis_adapter'
+      $cache: '@redis_simple_adapter'
 
   App\Infrastructure\Security\Auth\Service\EmailVerifyService: ~
 

@@ -64,7 +64,7 @@ final class VisualNotificationService
                 $fireSecureAlertsTime = $this->minimalTime($fireSecureAlertsTime, $notify->getCreatedAt());
             }
 
-            if ($notify->getType() === VisualNotification::MESSAGE_TYPE) {
+            if ($notify->getType() === VisualNotification::SECURITY_TYPE) {
                 $secureAlerts++;
                 $secureAlertsTime = $this->minimalTime($secureAlertsTime, $notify->getCreatedAt());
             }
@@ -137,6 +137,7 @@ final class VisualNotificationService
         return $this->cacheService->getOrSet(
             key: $cacheKey,
             callback: function (ItemInterface $item) use ($type) {
+                $item->expiresAfter(3600);
                 return $this->repository->findByTypeAndIsRead(type: $type, isRead: false);
             }
         );
