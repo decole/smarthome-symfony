@@ -58,7 +58,8 @@ clean:
   script:
     - docker-compose -f docker-compose.ci.yaml up -d
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf var/log var/cache vendor/
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf -R var/ vendor/
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local .env.test
   when: manual
 
 deploy_prod:
@@ -90,5 +91,3 @@ deploy_prod:
     name: deploy
   only:
     - master
-
-# подготовка, тесты, сбор докер образов с кодом внутри, пушинг в гитлаб, ssh с подтяжкой на проде новой версии образа
