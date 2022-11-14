@@ -28,6 +28,11 @@ migration:
 new-migration:
 	docker-compose exec php-fpm php bin/console make:migration
 
+cache:
+	docker-compose exec php-fpm chown -R root ./var/cache
+	docker-compose exec php-fpm rm -rf -R ./var/cache
+	docker-compose exec php-fpm php bin/console cache:clear
+
 fixture:
 	docker-compose exec php-fpm php bin/console d:f:l --no-interaction --purge-with-truncate
 
