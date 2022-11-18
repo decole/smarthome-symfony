@@ -2,6 +2,7 @@
 
 namespace App\Application\Service\DeviceData;
 
+use App\Application\Exception\DeviceDataException;
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Event\AlertNotificationEvent;
@@ -11,7 +12,9 @@ use App\Domain\Payload\DevicePayload;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
+use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Throwable;
 
 /**
  * Сервис работы с данными устройств (проверка состояния и вызов оповещения)
@@ -25,6 +28,9 @@ final class DataResolver
     ) {
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function resolveDevicePayload(DevicePayload $payload): void
     {
         $this->cacheService->save($payload);
@@ -67,11 +73,23 @@ final class DataResolver
         $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
     }
 
-    /**
-     * @param DevicePayload $payload
-     * @return void
-     */
     public function execute(DevicePayload $payload): void
+    {
+        try {
+            $this->validatePayload($payload);
+        } catch (Throwable $e) {
+            $event = new AlertNotificationEvent($e->getMessage(), [
+                AlertNotificationEvent::MESSENGER,
+            ]);
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+        }
+    }
+
+    /**
+     * @throws DeviceDataException
+     * @throws InvalidArgumentException
+     */
+    private function validatePayload(DevicePayload $payload): void
     {
         $resultDto = $this->validateService->validate($payload);
 

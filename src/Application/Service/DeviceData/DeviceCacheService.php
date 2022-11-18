@@ -12,6 +12,8 @@ use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Cache\CacheKeyListEnum;
 use App\Infrastructure\Cache\CacheService;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\ItemInterface;
 
 final class DeviceCacheService
@@ -25,6 +27,10 @@ final class DeviceCacheService
     ) {
     }
 
+    /**
+     * @throws CacheException
+     * @throws InvalidArgumentException
+     */
     public function create(): void
     {
         $this->cache->set(CacheKeyListEnum::DEVICE_MAP_CACHE, $this->getMap());
@@ -32,6 +38,10 @@ final class DeviceCacheService
         $this->getTopicMapByDeviceType();
     }
 
+    /**
+     * @return list<int, Sensor|Relay|FireSecurity|Security>
+     * @throws InvalidArgumentException
+     */
     public function getDeviceMap(): array
     {
         return $this->cache->getOrSet(
@@ -42,6 +52,10 @@ final class DeviceCacheService
         );
     }
 
+    /**
+     * @return list<int, Sensor|Relay|FireSecurity|Security>
+     * @throws InvalidArgumentException
+     */
     public function getTopicMapByDeviceType(): array
     {
         return $this->cache->getOrSet(
@@ -68,13 +82,16 @@ final class DeviceCacheService
         );
     }
 
+    /**
+     * @return list<int, Sensor|Relay|FireSecurity|Security>
+     */
     private function getMap(): array
     {
         return [
-            Sensor::alias() => $this->sensorRepository->findAll(Sensor::STATUS_ACTIVE),
-            Relay::alias() => $this->relayRepository->findAll(Relay::STATUS_ACTIVE),
-            Security::alias() => $this->securityRepository->findAll(Security::STATUS_ACTIVE),
-            FireSecurity::alias() => $this->fireSecurityRepository->findAll(FireSecurity::STATUS_ACTIVE),
+            Sensor::alias() => $this->sensorRepository->findAll(),
+            Relay::alias() => $this->relayRepository->findAll(),
+            Security::alias() => $this->securityRepository->findAll(),
+            FireSecurity::alias() => $this->fireSecurityRepository->findAll(),
         ];
     }
 }
