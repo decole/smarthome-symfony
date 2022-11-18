@@ -4,9 +4,9 @@ namespace App\Domain\Doctrine\Sensor\Entity;
 
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 
-class SensorTemperature extends Sensor
+class HumiditySensor extends Sensor
 {
-    public const TYPE = 'temperature';
+    public const TYPE = 'humidity';
 
     public function __construct(
         private string $name,
@@ -25,7 +25,7 @@ class SensorTemperature extends Sensor
             $this->payload,
             $this->statusMessage,
             $this->status,
-            $this->notify,
+            $this->notify
         );
     }
 

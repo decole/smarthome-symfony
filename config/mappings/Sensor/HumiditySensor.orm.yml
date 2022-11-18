@@ -1,5 +1,6 @@
-App\Domain\Doctrine\Sensor\Entity\SensorTemperature:
+App\Domain\Doctrine\Sensor\Entity\HumiditySensor:
   type: entity
+  table: sensor_humidity
   fields:
     payloadMin:
       name: payload_min

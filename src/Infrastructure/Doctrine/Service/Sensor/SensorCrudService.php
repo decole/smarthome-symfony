@@ -8,11 +8,11 @@ use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
-use App\Domain\Doctrine\Sensor\Entity\SensorDryContact;
-use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;
-use App\Domain\Doctrine\Sensor\Entity\SensorLeakage;
-use App\Domain\Doctrine\Sensor\Entity\SensorPressure;
-use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
+use App\Domain\Doctrine\Sensor\Entity\DryContactSensor;
+use App\Domain\Doctrine\Sensor\Entity\HumiditySensor;
+use App\Domain\Doctrine\Sensor\Entity\LeakageSensor;
+use App\Domain\Doctrine\Sensor\Entity\PressureSensor;
+use App\Domain\Doctrine\Sensor\Entity\TemperatureSensor;
 use App\Infrastructure\Doctrine\Service\Sensor\Exception\AdvancedFieldsException;
 use App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
@@ -61,7 +61,7 @@ final class SensorCrudService
      */
     public function update(string $id, CrudSensorDto $dto): EntityInterface
     {
-        /** @var SensorTemperature|SensorHumidity|SensorPressure|SensorDryContact|SensorLeakage $entity */
+        /** @var TemperatureSensor|HumiditySensor|PressureSensor|DryContactSensor|LeakageSensor $entity */
         $entity = $this->crud->getEntityById($id);
         $rc = new ReflectionClass($entity);
 
@@ -130,7 +130,7 @@ final class SensorCrudService
 
     public function entityByDto(string $id): CrudSensorDto
     {
-        /** @var SensorTemperature|SensorHumidity|SensorPressure|SensorDryContact|SensorLeakage $entity */
+        /** @var TemperatureSensor|HumiditySensor|PressureSensor|DryContactSensor|LeakageSensor $entity */
         $entity = $this->crud->getEntityById($id);
         $rc = new ReflectionClass($entity);
 
@@ -186,15 +186,15 @@ final class SensorCrudService
     private function getAdvancedFields(ValidationDtoInterface $dto): array
     {
         return match ($dto->type) {
-            SensorTemperature::TYPE, SensorHumidity::TYPE, SensorPressure::TYPE => [
+            TemperatureSensor::TYPE, HumiditySensor::TYPE, PressureSensor::TYPE => [
                 $dto->payloadMin,
                 $dto->payloadMax,
             ],
-            SensorLeakage::TYPE => [
+            LeakageSensor::TYPE => [
                 $dto->payloadDry,
                 $dto->payloadWet,
             ],
-            SensorDryContact::TYPE => [
+            DryContactSensor::TYPE => [
                 $dto->payloadHigh,
                 $dto->payloadLow,
             ],

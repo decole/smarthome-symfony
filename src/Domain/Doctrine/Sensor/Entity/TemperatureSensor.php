@@ -4,9 +4,9 @@ namespace App\Domain\Doctrine\Sensor\Entity;
 
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 
-class SensorDryContact extends Sensor
+class TemperatureSensor extends Sensor
 {
-    public const TYPE = 'dryContact';
+    public const TYPE = 'temperature';
 
     public function __construct(
         private string $name,
@@ -16,8 +16,8 @@ class SensorDryContact extends Sensor
         private int $status,
         private bool $notify,
 
-        private ?string $payloadHigh = null,
-        private ?string $payloadLow = null
+        private ?string $payloadMin = null,
+        private ?string $payloadMax = null
     ) {
         parent::__construct(
             $this->name,
@@ -25,27 +25,27 @@ class SensorDryContact extends Sensor
             $this->payload,
             $this->statusMessage,
             $this->status,
-            $this->notify
+            $this->notify,
         );
     }
 
-    final public function getPayloadHigh(): ?string
+    final public function getPayloadMin(): ?string
     {
-        return $this->payloadHigh;
+        return $this->payloadMin;
     }
 
-    final public function setPayloadHigh(?string $payload): void
+    final public function setPayloadMin(?string $payload): void
     {
-        $this->payloadHigh = $payload;
+        $this->payloadMin = $payload;
     }
 
-    final public function getPayloadLow(): ?string
+    final public function getPayloadMax(): ?string
     {
-        return $this->payloadLow;
+        return $this->payloadMax;
     }
 
-    final public function setPayloadLow(?string $payload): void
+    final public function setPayloadMax(?string $payload): void
     {
-        $this->payloadLow = $payload;
+        $this->payloadMax = $payload;
     }
 }

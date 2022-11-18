@@ -1,5 +1,6 @@
-App\Domain\Doctrine\Sensor\Entity\SensorDryContact:
+App\Domain\Doctrine\Sensor\Entity\DryContactSensor:
   type: entity
+  table: sensor_dry_contact
   fields:
     payloadHigh:
       name: payload_high

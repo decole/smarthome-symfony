@@ -6,11 +6,11 @@ App\Domain\Doctrine\Sensor\Entity\Sensor:
     name: sensor_type
     type: string
   discriminatorMap:
-    temperature: App\Domain\Doctrine\Sensor\Entity\SensorTemperature
-    humidity: App\Domain\Doctrine\Sensor\Entity\SensorHumidity
-    leakage: App\Domain\Doctrine\Sensor\Entity\SensorLeakage
-    pressure: App\Domain\Doctrine\Sensor\Entity\SensorPressure
-    dryContact: App\Domain\Doctrine\Sensor\Entity\SensorDryContact
+    temperature: App\Domain\Doctrine\Sensor\Entity\TemperatureSensor
+    humidity: App\Domain\Doctrine\Sensor\Entity\HumiditySensor
+    leakage: App\Domain\Doctrine\Sensor\Entity\LeakageSensor
+    pressure: App\Domain\Doctrine\Sensor\Entity\PressureSensor
+    dryContact: App\Domain\Doctrine\Sensor\Entity\DryContactSensor
   fields:
     id:
       id: true

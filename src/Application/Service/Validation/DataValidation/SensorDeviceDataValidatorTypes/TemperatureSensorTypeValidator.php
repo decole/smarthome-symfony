@@ -3,14 +3,14 @@
 namespace App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
 use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\SensorTypeValidatorInterface;
-use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;
-use App\Domain\Doctrine\Sensor\Entity\SensorPressure;
-use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
+use App\Domain\Doctrine\Sensor\Entity\HumiditySensor;
+use App\Domain\Doctrine\Sensor\Entity\PressureSensor;
+use App\Domain\Doctrine\Sensor\Entity\TemperatureSensor;
 use App\Domain\Payload\DevicePayload;
 
 class TemperatureSensorTypeValidator implements SensorTypeValidatorInterface
 {
-    public function __construct(private SensorTemperature|SensorHumidity|SensorPressure $device)
+    public function __construct(private TemperatureSensor|HumiditySensor|PressureSensor $device)
     {
     }
 

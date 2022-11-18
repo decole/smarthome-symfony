@@ -1,5 +1,6 @@
-App\Domain\Doctrine\Sensor\Entity\SensorPressure:
+App\Domain\Doctrine\Sensor\Entity\TemperatureSensor:
   type: entity
+  table: sensor_temperature
   fields:
     payloadMin:
       name: payload_min

@@ -4,9 +4,9 @@ namespace App\Domain\Doctrine\Sensor\Entity;
 
 use App\Domain\Doctrine\Common\Embedded\StatusMessage;
 
-class SensorLeakage extends Sensor
+class PressureSensor extends Sensor
 {
-    public const TYPE = 'leakage';
+    public const TYPE = 'pressure';
 
     public function __construct(
         private string $name,
@@ -16,8 +16,8 @@ class SensorLeakage extends Sensor
         private int $status,
         private bool $notify,
 
-        private ?string $payloadDry = null,
-        private ?string $payloadWet = null
+        private ?string $payloadMin = null,
+        private ?string $payloadMax = null
     ) {
         parent::__construct(
             $this->name,
@@ -29,23 +29,23 @@ class SensorLeakage extends Sensor
         );
     }
 
-    final public function getPayloadDry(): ?string
+    final public function getPayloadMin(): ?string
     {
-        return $this->payloadDry;
+        return $this->payloadMin;
     }
 
-    final public function setPayloadDry(?string $payload): void
+    final public function setPayloadMin(?string $payload): void
     {
-        $this->payloadDry = $payload;
+        $this->payloadMin = $payload;
     }
 
-    final public function getPayloadWet(): ?string
+    final public function getPayloadMax(): ?string
     {
-        return $this->payloadWet;
+        return $this->payloadMax;
     }
 
-    final public function setPayloadWet(?string $payload): void
+    final public function setPayloadMax(?string $payload): void
     {
-        $this->payloadWet = $payload;
+        $this->payloadMax = $payload;
     }
 }

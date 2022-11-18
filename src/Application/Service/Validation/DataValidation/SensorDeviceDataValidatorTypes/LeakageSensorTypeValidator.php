@@ -3,12 +3,12 @@
 namespace App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
 use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\SensorTypeValidatorInterface;
-use App\Domain\Doctrine\Sensor\Entity\SensorLeakage;
+use App\Domain\Doctrine\Sensor\Entity\LeakageSensor;
 use App\Domain\Payload\DevicePayload;
 
 final class LeakageSensorTypeValidator implements SensorTypeValidatorInterface
 {
-    public function __construct(private SensorLeakage $device)
+    public function __construct(private LeakageSensor $device)
     {
     }
 

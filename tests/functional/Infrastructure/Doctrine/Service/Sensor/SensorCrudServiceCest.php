@@ -4,11 +4,11 @@ namespace App\Tests\functional\Infrastructure\Doctrine\Service\Sensor;
 
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Doctrine\Sensor\Entity\Sensor;
-use App\Domain\Doctrine\Sensor\Entity\SensorDryContact;
-use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;
-use App\Domain\Doctrine\Sensor\Entity\SensorLeakage;
-use App\Domain\Doctrine\Sensor\Entity\SensorPressure;
-use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
+use App\Domain\Doctrine\Sensor\Entity\DryContactSensor;
+use App\Domain\Doctrine\Sensor\Entity\HumiditySensor;
+use App\Domain\Doctrine\Sensor\Entity\LeakageSensor;
+use App\Domain\Doctrine\Sensor\Entity\PressureSensor;
+use App\Domain\Doctrine\Sensor\Entity\TemperatureSensor;
 use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;
@@ -234,21 +234,21 @@ class SensorCrudServiceCest
                 $I->assertEquals(1, $entity->getStatus());
                 $I->assertEquals(true, $entity->isNotify());
 
-                if ($entity->getType() === SensorTemperature::TYPE ||
-                    $entity->getType() === SensorHumidity::TYPE ||
-                    $entity->getType() === SensorPressure::TYPE
+                if ($entity->getType() === TemperatureSensor::TYPE ||
+                    $entity->getType() === HumiditySensor::TYPE ||
+                    $entity->getType() === PressureSensor::TYPE
                 ) {
-                    /** @var SensorTemperature|SensorHumidity|SensorPressure $entity */
+                    /** @var TemperatureSensor|HumiditySensor|PressureSensor $entity */
                     $I->assertEquals($one,$entity->getPayloadMin());
                     $I->assertEquals($two,$entity->getPayloadMax());
                 }
-                if ($entity->getType() === SensorLeakage::TYPE) {
-                    /** @var SensorLeakage $entity */
+                if ($entity->getType() === LeakageSensor::TYPE) {
+                    /** @var LeakageSensor $entity */
                     $I->assertEquals($one,$entity->getPayloadDry());
                     $I->assertEquals($two,$entity->getPayloadWet());
                 }
-                if ($entity->getType() === SensorDryContact::TYPE) {
-                    /** @var SensorDryContact $entity */
+                if ($entity->getType() === DryContactSensor::TYPE) {
+                    /** @var DryContactSensor $entity */
                     $I->assertEquals($one,$entity->getPayloadLow());
                     $I->assertEquals($two,$entity->getPayloadHigh());
                 }
@@ -563,21 +563,21 @@ class SensorCrudServiceCest
         $I->assertEquals('on', $dtoSaved->status);
         $I->assertEquals('on', $dtoSaved->notify);
 
-        if ($entity->getType() === SensorTemperature::TYPE ||
-            $entity->getType() === SensorHumidity::TYPE ||
-            $entity->getType() === SensorPressure::TYPE
+        if ($entity->getType() === TemperatureSensor::TYPE ||
+            $entity->getType() === HumiditySensor::TYPE ||
+            $entity->getType() === PressureSensor::TYPE
         ) {
-            /** @var SensorTemperature|SensorHumidity|SensorPressure $entity */
+            /** @var TemperatureSensor|HumiditySensor|PressureSensor $entity */
             $I->assertEquals($one,$entity->getPayloadMin());
             $I->assertEquals($two,$entity->getPayloadMax());
         }
-        if ($entity->getType() === SensorLeakage::TYPE) {
-            /** @var SensorLeakage $entity */
+        if ($entity->getType() === LeakageSensor::TYPE) {
+            /** @var LeakageSensor $entity */
             $I->assertEquals($one,$entity->getPayloadDry());
             $I->assertEquals($two,$entity->getPayloadWet());
         }
-        if ($entity->getType() === SensorDryContact::TYPE) {
-            /** @var SensorDryContact $entity */
+        if ($entity->getType() === DryContactSensor::TYPE) {
+            /** @var DryContactSensor $entity */
             $I->assertEquals($one,$entity->getPayloadLow());
             $I->assertEquals($two,$entity->getPayloadHigh());
         }
@@ -639,21 +639,21 @@ class SensorCrudServiceCest
         $I->assertEquals(1, $entity->getStatus());
         $I->assertEquals(true, $entity->isNotify());
 
-        if ($entity->getType() === SensorTemperature::TYPE ||
-            $entity->getType() === SensorHumidity::TYPE ||
-            $entity->getType() === SensorPressure::TYPE
+        if ($entity->getType() === TemperatureSensor::TYPE ||
+            $entity->getType() === HumiditySensor::TYPE ||
+            $entity->getType() === PressureSensor::TYPE
         ) {
-            /** @var SensorTemperature|SensorHumidity|SensorPressure $entity */
+            /** @var TemperatureSensor|HumiditySensor|PressureSensor $entity */
             $I->assertEquals($one,$entity->getPayloadMin());
             $I->assertEquals($two,$entity->getPayloadMax());
         }
-        if ($entity->getType() === SensorLeakage::TYPE) {
-            /** @var SensorLeakage $entity */
+        if ($entity->getType() === LeakageSensor::TYPE) {
+            /** @var LeakageSensor $entity */
             $I->assertEquals($one,$entity->getPayloadDry());
             $I->assertEquals($two,$entity->getPayloadWet());
         }
-        if ($entity->getType() === SensorDryContact::TYPE) {
-            /** @var SensorDryContact $entity */
+        if ($entity->getType() === DryContactSensor::TYPE) {
+            /** @var DryContactSensor $entity */
             $I->assertEquals($one,$entity->getPayloadLow());
             $I->assertEquals($two,$entity->getPayloadHigh());
         }
@@ -715,11 +715,11 @@ class SensorCrudServiceCest
     private function getTargetClass(string $type): string
     {
         return match ($type) {
-            'temperature' => SensorTemperature::class,
-            'humidity' => SensorHumidity::class,
-            'pressure' => SensorPressure::class,
-            'leakage' => SensorLeakage::class,
-            'dryContact' => SensorDryContact::class,
+            'temperature' => TemperatureSensor::class,
+            'humidity' => HumiditySensor::class,
+            'pressure' => PressureSensor::class,
+            'leakage' => LeakageSensor::class,
+            'dryContact' => DryContactSensor::class,
         };
     }
 }

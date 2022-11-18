@@ -25,27 +25,27 @@ class Sensor implements EntityInterface
     ];
 
     public const DISCRIMINATOR_MAP = [
-        SensorTemperature::TYPE => SensorTemperature::class,
-        SensorHumidity::TYPE => SensorHumidity::class,
-        SensorLeakage::TYPE => SensorLeakage::class,
-        SensorPressure::TYPE => SensorPressure::class,
-        SensorDryContact::TYPE => SensorDryContact::class,
+        TemperatureSensor::TYPE => TemperatureSensor::class,
+        HumiditySensor::TYPE => HumiditySensor::class,
+        LeakageSensor::TYPE => LeakageSensor::class,
+        PressureSensor::TYPE => PressureSensor::class,
+        DryContactSensor::TYPE => DryContactSensor::class,
     ];
 
     public const SENSOR_TYPES = [
-        SensorTemperature::TYPE,
-        SensorHumidity::TYPE,
-        SensorLeakage::TYPE,
-        SensorPressure::TYPE,
-        SensorDryContact::TYPE,
+        TemperatureSensor::TYPE,
+        HumiditySensor::TYPE,
+        LeakageSensor::TYPE,
+        PressureSensor::TYPE,
+        DryContactSensor::TYPE,
     ];
 
     public const TYPE_TRANSCRIBES = [
-        SensorTemperature::TYPE => 'сенсор температуры',
-        SensorHumidity::TYPE => 'сенсор влажности',
-        SensorLeakage::TYPE => 'датчик протечки',
-        SensorPressure::TYPE => 'сенсор давления',
-        SensorDryContact::TYPE => 'датчик сухого контакта',
+        TemperatureSensor::TYPE => 'сенсор температуры',
+        HumiditySensor::TYPE => 'сенсор влажности',
+        LeakageSensor::TYPE => 'датчик протечки',
+        PressureSensor::TYPE => 'сенсор давления',
+        DryContactSensor::TYPE => 'датчик сухого контакта',
     ];
 
     use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
