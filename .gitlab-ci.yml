@@ -22,15 +22,7 @@ composer:
     - docker-compose -f docker-compose.ci.yaml up -d
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
-  artifacts:
-    paths:
-      - vendor/
-    expire_in: 1 week
-    when: always
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}-composer
-    paths:
-      - vendor/
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
 
 tests:
   stage: testing
