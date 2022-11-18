@@ -14,7 +14,7 @@ class PageCrudValidationServiceCest
     {
         $dto = new CrudPageDto();
 
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = $I->faker()->shuffleArray([
             'sensor' => [],
             'relay' => [],
@@ -36,7 +36,7 @@ class PageCrudValidationServiceCest
     {
         $dto = new CrudPageDto();
 
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = $I->faker()->shuffleArray([
             'sensor' => [],
             'relay' => [],
@@ -58,7 +58,7 @@ class PageCrudValidationServiceCest
     {
         $dto = new CrudPageDto();
 
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = $I->faker()->shuffleArray([
             'sensor' => [],
             'relay' => [],
@@ -83,7 +83,7 @@ class PageCrudValidationServiceCest
     {
         $dto = new CrudPageDto();
 
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = $I->faker()->shuffleArray([
             'sensor' => [],
             'relay' => [],

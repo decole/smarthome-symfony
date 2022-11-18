@@ -2,11 +2,12 @@
 
 namespace App\Domain\Doctrine\Identity\Entity;
 
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Doctrine\Common\Traits\Entity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class User implements UserInterface, PasswordAuthenticatedUserInterface
+final class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     use Entity;
 
@@ -30,6 +31,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = false;
     }
 
+    public function getLogin(): string
+    {
+        return $this->name;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -44,7 +50,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -52,7 +58,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -61,7 +67,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = self::ROLE_USER; // todo debug this
 
         return array_unique($roles);
     }
@@ -118,11 +123,6 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = true;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
     public function setName(?string $name): void
     {
         $this->name = $name;
@@ -136,5 +136,15 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelegramId(?int $telegramId): void
     {
         $this->telegramId = $telegramId;
+    }
+
+    public function getImageGravatar(): string
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '.jpg';
+    }
+
+    public static function alias(): string
+    {
+        return 'user';
     }
 }

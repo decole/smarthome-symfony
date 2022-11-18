@@ -27,16 +27,16 @@ class SensorCrudValidationServiceCest
         $dto = new CrudSensorDto();
 
         $dto->type = $example['type'];
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
         $dto->payloadMin = 0;
         $dto->payloadMax = 100;
         $dto->payloadDry = $dto->payloadLow = 0;
         $dto->payloadWet = $dto->payloadHigh = 1;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -66,16 +66,16 @@ class SensorCrudValidationServiceCest
         $dto = new CrudSensorDto();
 
         $dto->type = $example['type'];
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
         $dto->payloadMin = 0;
         $dto->payloadMax = 100;
         $dto->payloadDry = $dto->payloadLow = 0;
         $dto->payloadWet = $dto->payloadHigh = 1;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -105,16 +105,16 @@ class SensorCrudValidationServiceCest
         $dto = new CrudSensorDto();
 
         $dto->type = $example['type'];
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
         $dto->payloadMin = 0;
         $dto->payloadMax = 100;
         $dto->payloadDry = $dto->payloadLow = 0;
         $dto->payloadWet = $dto->payloadHigh = 1;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -148,16 +148,16 @@ class SensorCrudValidationServiceCest
         $dto = new CrudSensorDto();
 
         $dto->type = $example['type'];
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
         $dto->payloadMin = 0;
         $dto->payloadMax = 100;
         $dto->payloadDry = $dto->payloadLow = 0;
         $dto->payloadWet = $dto->payloadHigh = 1;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 

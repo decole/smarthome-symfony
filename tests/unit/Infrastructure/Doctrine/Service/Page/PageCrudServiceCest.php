@@ -23,7 +23,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $request = new Request([], [
-            'name' => $name = $I->faker()->word,
+            'name' => $name = $I->faker()->word(),
             'config' => $this->getDefaultConfig(),
         ]);
 

@@ -14,15 +14,15 @@ class FireSecurityCrudValidationServiceCest
     {
         $dto = new CrudFireSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->normalPayload = $I->faker()->word;
-        $dto->alertPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->normalPayload = $I->faker()->word();
+        $dto->alertPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -40,15 +40,15 @@ class FireSecurityCrudValidationServiceCest
     {
         $dto = new CrudFireSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->normalPayload = $I->faker()->word;
-        $dto->alertPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->normalPayload = $I->faker()->word();
+        $dto->alertPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -66,15 +66,15 @@ class FireSecurityCrudValidationServiceCest
     {
         $dto = new CrudFireSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->normalPayload = $I->faker()->word;
-        $dto->alertPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->normalPayload = $I->faker()->word();
+        $dto->alertPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -96,15 +96,15 @@ class FireSecurityCrudValidationServiceCest
     {
         $dto = new CrudFireSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->normalPayload = $I->faker()->word;
-        $dto->alertPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->normalPayload = $I->faker()->word();
+        $dto->alertPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 

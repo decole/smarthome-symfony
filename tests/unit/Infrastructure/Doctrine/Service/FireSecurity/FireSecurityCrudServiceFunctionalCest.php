@@ -40,17 +40,17 @@ class FireSecurityCrudServiceFunctionalCest
         $service = $this->getService($I);
 
         $request = new Request([], [
-            'name' => $name = $I->faker()->word,
-            'topic' => $topic = $I->faker()->word,
-            'payload' => $payload = $I->faker()->word,
-            'normalPayload' => $normalPayload = $I->faker()->word,
-            'alertPayload' => $alertPayload = $I->faker()->word,
-            'lastCommand' => $lastCommand = $I->faker()->word,
-            'message_info' => $messageInfo = $I->faker()->word,
-            'message_ok' => $messageOk = $I->faker()->word,
-            'message_warn' => $messageWarn = $I->faker()->word,
-            'status' => $status = $I->faker()->word,
-            'notify' => $notify = $I->faker()->word,
+            'name' => $name = $I->faker()->word(),
+            'topic' => $topic = $I->faker()->word(),
+            'payload' => $payload = $I->faker()->word(),
+            'normalPayload' => $normalPayload = $I->faker()->word(),
+            'alertPayload' => $alertPayload = $I->faker()->word(),
+            'lastCommand' => $lastCommand = $I->faker()->word(),
+            'message_info' => $messageInfo = $I->faker()->word(),
+            'message_ok' => $messageOk = $I->faker()->word(),
+            'message_warn' => $messageWarn = $I->faker()->word(),
+            'status' => $status = $I->faker()->word(),
+            'notify' => $notify = $I->faker()->word(),
         ]);
 
         $dto = $service->createFireSecurityDto($request);

@@ -14,6 +14,11 @@ trait Entity
         return $this->id;
     }
 
+    public function getIdToString(): string
+    {
+        return $this->id->toString();
+    }
+
     protected function identify(): void
     {
         $this->id = Uuid::uuid4();

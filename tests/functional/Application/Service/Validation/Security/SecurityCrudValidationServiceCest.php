@@ -14,15 +14,15 @@ class SecurityCrudValidationServiceCest
     {
         $dto = new CrudSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->detectPayload = $I->faker()->word;
-        $dto->holdPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->detectPayload = $I->faker()->word();
+        $dto->holdPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -40,15 +40,15 @@ class SecurityCrudValidationServiceCest
     {
         $dto = new CrudSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->detectPayload = $I->faker()->word;
-        $dto->holdPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->detectPayload = $I->faker()->word();
+        $dto->holdPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -66,15 +66,15 @@ class SecurityCrudValidationServiceCest
     {
         $dto = new CrudSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->detectPayload = $I->faker()->word;
-        $dto->holdPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->detectPayload = $I->faker()->word();
+        $dto->holdPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -96,15 +96,15 @@ class SecurityCrudValidationServiceCest
     {
         $dto = new CrudSecurityDto();
 
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->detectPayload = $I->faker()->word;
-        $dto->holdPayload = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->detectPayload = $I->faker()->word();
+        $dto->holdPayload = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 

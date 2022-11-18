@@ -22,12 +22,12 @@ abstract class BaseDoctrineRepository
     /**
      * @throws OptimisticLockException|ORMException
      */
-    final public function save(EntityInterface $sensor): EntityInterface
+    final public function save(EntityInterface $entity): EntityInterface
     {
-        $this->entityManager->persist($sensor);
-        $this->entityManager->flush($sensor);
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush($entity);
 
-        return $sensor;
+        return $entity;
     }
 
     /**

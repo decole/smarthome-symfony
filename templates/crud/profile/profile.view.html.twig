@@ -1,0 +1,75 @@
+{% set page_name = 'Настрока профиля' %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ha1>{{ page_name }}</ha1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Изменение данных профиля</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="POST" action="{{ path('profile_update') }}">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="login">Login</label>
+                            <input type="text" class="form-control" id="login" placeholder="Login" name="login" value="{{ user.login }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" value="{{ user.email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="telegram_id">Telegram Id</label>
+                            <input type="text" class="form-control" id="telegram_id" placeholder="Telegram Id" name="telegram_id" value="{{ user.telegramId }}">
+                        </div>
+                        <h5 class="mt-4 mb-2">Блок изменения пароля.</h5>
+                        <div class="form-check">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" name="is_change">
+                                <label for="customCheckbox1" class="custom-control-label">Изменить пароль</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+
+                            <label for="password">Password again</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password_agan">
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

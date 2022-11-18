@@ -39,6 +39,7 @@ abstract class AbstractCrudFactory
     final public function save(EntityInterface $entity): EntityInterface
     {
         $entity = $this->getRepository()->save($entity);
+
         $this->refreshDeviceCache();
 
         return $entity;
