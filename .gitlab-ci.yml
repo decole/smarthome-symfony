@@ -45,6 +45,8 @@ tests:
     - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
     - cat .env.test.local
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php php bin/console d:d:c
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept clean
