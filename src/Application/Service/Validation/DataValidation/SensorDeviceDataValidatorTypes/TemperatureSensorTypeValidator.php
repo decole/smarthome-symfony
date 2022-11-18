@@ -3,10 +3,10 @@
 namespace App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
 use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\SensorTypeValidatorInterface;
-use App\Domain\Doctrine\Sensor\Entity\HumiditySensor;
-use App\Domain\Doctrine\Sensor\Entity\PressureSensor;
-use App\Domain\Doctrine\Sensor\Entity\TemperatureSensor;
 use App\Domain\Payload\DevicePayload;
+use App\Domain\Sensor\Entity\HumiditySensor;
+use App\Domain\Sensor\Entity\PressureSensor;
+use App\Domain\Sensor\Entity\TemperatureSensor;
 
 class TemperatureSensorTypeValidator implements SensorTypeValidatorInterface
 {

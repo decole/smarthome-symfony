@@ -3,7 +3,7 @@
 namespace App\Tests\functional\Infrastructure\Doctrine\Service\Relay;
 
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
-use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;

@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\Profile;
 
 use App\Domain\Contract\Repository\ProfileRepositoryInterface;
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 

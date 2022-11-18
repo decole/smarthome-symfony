@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Sensor\Entity\Sensor:
+App\Domain\Sensor\Entity\Sensor:
   table: 'sensor'
   type: entity
   inheritanceType: JOINED
@@ -6,11 +6,11 @@ App\Domain\Doctrine\Sensor\Entity\Sensor:
     name: sensor_type
     type: string
   discriminatorMap:
-    temperature: App\Domain\Doctrine\Sensor\Entity\TemperatureSensor
-    humidity: App\Domain\Doctrine\Sensor\Entity\HumiditySensor
-    leakage: App\Domain\Doctrine\Sensor\Entity\LeakageSensor
-    pressure: App\Domain\Doctrine\Sensor\Entity\PressureSensor
-    dryContact: App\Domain\Doctrine\Sensor\Entity\DryContactSensor
+    temperature: App\Domain\Sensor\Entity\TemperatureSensor
+    humidity: App\Domain\Sensor\Entity\HumiditySensor
+    leakage: App\Domain\Sensor\Entity\LeakageSensor
+    pressure: App\Domain\Sensor\Entity\PressureSensor
+    dryContact: App\Domain\Sensor\Entity\DryContactSensor
   fields:
     id:
       id: true
@@ -37,5 +37,5 @@ App\Domain\Doctrine\Sensor\Entity\Sensor:
       nullable: true
   embedded:
     statusMessage:
-      class: App\Domain\Doctrine\Common\Embedded\StatusMessage
+      class: App\Domain\Common\Embedded\StatusMessage
       columnPrefix: false

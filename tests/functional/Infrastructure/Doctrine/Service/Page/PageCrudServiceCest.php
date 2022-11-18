@@ -5,15 +5,15 @@ namespace App\Tests\functional\Infrastructure\Doctrine\Service\Page;
 use App\Application\Http\Web\Page\Dto\CrudPageDto;
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
-use App\Domain\Doctrine\Page\Entity\Page;
-use App\Domain\Doctrine\Relay\Entity\Relay;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Page\Entity\Page;
+use App\Domain\Relay\Entity\Relay;
+use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Service\Page\PageCrudService;
 use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
 use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
+use App\Tests\FunctionalTester;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
-use App\Tests\FunctionalTester;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class PageCrudServiceCest

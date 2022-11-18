@@ -3,7 +3,7 @@
 namespace App\Tests\functional\Infrastructure\Doctrine\Service\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService;
 use App\Tests\FunctionalTester;
 use Exception;

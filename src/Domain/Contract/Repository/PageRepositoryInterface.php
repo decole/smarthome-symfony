@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\Doctrine\Page\Entity\Page;
+use App\Domain\Page\Entity\Page;
 
 interface PageRepositoryInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Relay\Entity\Relay;
 
 interface RelayRepositoryInterface
 {

@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Sensor\Entity\HumiditySensor:
+App\Domain\Sensor\Entity\HumiditySensor:
   type: entity
   table: sensor_humidity
   fields:

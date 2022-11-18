@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
+use App\Domain\FireSecurity\Entity\FireSecurity;
 
 interface FireSecurityRepositoryInterface
 {

@@ -8,11 +8,11 @@ use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorT
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\PressureSensorTypeValidator;
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\TemperatureSensorTypeValidator;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\Sensor\Entity\DryContactSensor;
-use App\Domain\Doctrine\Sensor\Entity\HumiditySensor;
-use App\Domain\Doctrine\Sensor\Entity\LeakageSensor;
-use App\Domain\Doctrine\Sensor\Entity\PressureSensor;
-use App\Domain\Doctrine\Sensor\Entity\TemperatureSensor;
+use App\Domain\Sensor\Entity\DryContactSensor;
+use App\Domain\Sensor\Entity\HumiditySensor;
+use App\Domain\Sensor\Entity\LeakageSensor;
+use App\Domain\Sensor\Entity\PressureSensor;
+use App\Domain\Sensor\Entity\TemperatureSensor;
 
 class SensorDeviceDataTypeValidatorFactory
 {

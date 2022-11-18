@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Sensor\Entity\LeakageSensor:
+App\Domain\Sensor\Entity\LeakageSensor:
   type: entity
   table: sensor_leakage
   fields:

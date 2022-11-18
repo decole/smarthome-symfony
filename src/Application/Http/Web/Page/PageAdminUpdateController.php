@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\Page;
 
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Page\PageCrudService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

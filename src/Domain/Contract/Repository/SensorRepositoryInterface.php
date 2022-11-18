@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Sensor\Entity\Sensor;
 
 interface SensorRepositoryInterface
 {

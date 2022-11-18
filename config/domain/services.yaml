@@ -3,11 +3,11 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Domain\Doctrine\SecureSystem\Service\RegistrationValidateService: ~
+  App\Domain\SecureSystem\Service\RegistrationValidateService: ~
 
-  App\Domain\Doctrine\SecureSystem\Service\LoginFormAuthenticator: ~
+  App\Domain\SecureSystem\Service\LoginFormAuthenticator: ~
 
-  App\Domain\Doctrine\Page\Service\PageGidratorService: ~
+  App\Domain\Page\Service\PageGidratorService: ~
 
   App\Domain\PeriodicHandleCriteria\:
     resource: '%kernel.project_dir%/src/Domain/PeriodicHandleCriteria/**/*Criteria.php'

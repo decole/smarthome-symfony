@@ -2,11 +2,11 @@
 
 namespace App\Tests\unit\Infrastructure\Doctrine\Service\Sensor;
 
-use App\Domain\Doctrine\Sensor\Entity\DryContactSensor;
-use App\Domain\Doctrine\Sensor\Entity\HumiditySensor;
-use App\Domain\Doctrine\Sensor\Entity\LeakageSensor;
-use App\Domain\Doctrine\Sensor\Entity\PressureSensor;
-use App\Domain\Doctrine\Sensor\Entity\TemperatureSensor;
+use App\Domain\Sensor\Entity\DryContactSensor;
+use App\Domain\Sensor\Entity\HumiditySensor;
+use App\Domain\Sensor\Entity\LeakageSensor;
+use App\Domain\Sensor\Entity\PressureSensor;
+use App\Domain\Sensor\Entity\TemperatureSensor;
 use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
 use App\Tests\UnitTester;
 use Codeception\Example;

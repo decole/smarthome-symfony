@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Sensor\Entity\PressureSensor:
+App\Domain\Sensor\Entity\PressureSensor:
   type: entity
   table: sensor_pressure
   fields:

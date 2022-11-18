@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\Auth;
 
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Security\Auth\Service\EmailVerifyService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -21,33 +21,33 @@ doctrine:
         mappings:
             user:
                 type: yml
-                prefix: 'App\Domain\Doctrine\Identity\Entity'
+                prefix: 'App\Domain\Identity\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Identity'
             embedded:
                 type: yml
-                prefix: 'App\Domain\Doctrine\Common\Embedded'
+                prefix: 'App\Domain\Common\Embedded'
                 dir: '%kernel.project_dir%/config/mappings/Embedded'
             sensor:
                 type: yml
-                prefix: 'App\Domain\Doctrine\Sensor\Entity'
+                prefix: 'App\Domain\Sensor\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Sensor'
             relay:
                 type: yml
-                prefix: 'App\Domain\Doctrine\Relay\Entity'
+                prefix: 'App\Domain\Relay\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Relay'
             security:
                 type: yml
-                prefix: 'App\Domain\Doctrine\Security\Entity'
+                prefix: 'App\Domain\Security\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Security'
             fire-security:
                 type: yml
-                prefix: 'App\Domain\Doctrine\FireSecurity\Entity'
+                prefix: 'App\Domain\FireSecurity\Entity'
                 dir: '%kernel.project_dir%/config/mappings/FireSecurity'
             site-page:
                 type: yml
-                prefix: 'App\Domain\Doctrine\Page\Entity'
+                prefix: 'App\Domain\Page\Entity'
                 dir: '%kernel.project_dir%/config/mappings/Page'
             visual-notify:
                 type: yml
-                prefix: 'App\Domain\Doctrine\VisualNotification\Entity'
+                prefix: 'App\Domain\VisualNotification\Entity'
                 dir: '%kernel.project_dir%/config/mappings/VisualNotification'

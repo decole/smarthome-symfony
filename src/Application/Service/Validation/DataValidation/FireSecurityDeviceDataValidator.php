@@ -4,7 +4,7 @@ namespace App\Application\Service\Validation\DataValidation;
 
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
-use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
+use App\Domain\FireSecurity\Entity\FireSecurity;
 
 final class FireSecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {

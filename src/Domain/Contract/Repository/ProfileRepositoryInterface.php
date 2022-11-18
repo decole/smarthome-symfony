@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 
 interface ProfileRepositoryInterface
 {

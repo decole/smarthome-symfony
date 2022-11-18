@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Common\Embedded\StatusMessage:
+App\Domain\Common\Embedded\StatusMessage:
   type: embeddable
   fields:
     message_info:

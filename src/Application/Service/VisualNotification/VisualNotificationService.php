@@ -3,9 +3,9 @@
 namespace App\Application\Service\VisualNotification;
 
 use App\Application\Service\VisualNotification\Dto\VisualNotificationDto;
+use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
-use App\Domain\Doctrine\Common\Transactions\TransactionInterface;
-use App\Domain\Doctrine\VisualNotification\Entity\VisualNotification;
+use App\Domain\VisualNotification\Entity\VisualNotification;
 use App\Infrastructure\Cache\CacheService;
 use DateTimeImmutable;
 use DateTimeZone;

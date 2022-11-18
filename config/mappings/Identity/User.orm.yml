@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Identity\Entity\User:
+App\Domain\Identity\Entity\User:
   table: '`user`'
   type: entity
   inheritanceType: JOINED

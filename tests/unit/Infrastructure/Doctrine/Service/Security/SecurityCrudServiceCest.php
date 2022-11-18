@@ -2,8 +2,7 @@
 
 namespace App\Tests\unit\Infrastructure\Doctrine\Service\Security;
 
-use App\Domain\Doctrine\Security\Entity\Security;
-use App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService;
+use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
 use App\Tests\UnitTester;
 use Codeception\Example;

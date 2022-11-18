@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Security\Entity\Security:
+App\Domain\Security\Entity\Security:
   table: 'security'
   type: entity
   fields:
@@ -43,5 +43,5 @@ App\Domain\Doctrine\Security\Entity\Security:
       nullable: true
   embedded:
     statusMessage:
-      class: App\Domain\Doctrine\Common\Embedded\StatusMessage
+      class: App\Domain\Common\Embedded\StatusMessage
       columnPrefix: false

@@ -3,8 +3,8 @@
 namespace App\Application\Service\DeviceData;
 
 use App\Application\Service\DeviceData\Dto\SecureDeviceStateDto;
-use App\Domain\Doctrine\Common\Transactions\TransactionInterface;
-use App\Domain\Doctrine\Security\Entity\Security;
+use App\Domain\Common\Transactions\TransactionInterface;
+use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 

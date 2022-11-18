@@ -4,8 +4,8 @@ namespace App\Infrastructure\Doctrine\Service\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\Identity\Entity\User;
 use App\Domain\Event\AlertNotificationEvent;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Profile\Factory\ProfileCrudFactory;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;

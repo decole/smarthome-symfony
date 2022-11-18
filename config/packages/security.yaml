@@ -10,7 +10,7 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Domain\Doctrine\Identity\Entity\User
+                class: App\Domain\Identity\Entity\User
                 property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
@@ -31,8 +31,8 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 #            anonymous: true
-            entry_point: App\Domain\Doctrine\SecureSystem\Service\LoginFormAuthenticator
-            custom_authenticator: App\Domain\Doctrine\SecureSystem\Service\LoginFormAuthenticator
+            entry_point: App\Domain\SecureSystem\Service\LoginFormAuthenticator
+            custom_authenticator: App\Domain\SecureSystem\Service\LoginFormAuthenticator
 
             logout:
                 path: app_logout

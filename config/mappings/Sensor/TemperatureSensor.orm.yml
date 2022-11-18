@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Sensor\Entity\TemperatureSensor:
+App\Domain\Sensor\Entity\TemperatureSensor:
   type: entity
   table: sensor_temperature
   fields:

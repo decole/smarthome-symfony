@@ -1,4 +1,4 @@
-App\Domain\Doctrine\FireSecurity\Entity\FireSecurity:
+App\Domain\FireSecurity\Entity\FireSecurity:
   table: 'fire_security'
   type: entity
   fields:
@@ -37,5 +37,5 @@ App\Domain\Doctrine\FireSecurity\Entity\FireSecurity:
       nullable: true
   embedded:
     statusMessage:
-      class: App\Domain\Doctrine\Common\Embedded\StatusMessage
+      class: App\Domain\Common\Embedded\StatusMessage
       columnPrefix: false

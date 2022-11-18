@@ -3,7 +3,7 @@
 namespace App\Tests\functional\Infrastructure\Doctrine\Service\FireSecurity;
 
 use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
-use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
+use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;

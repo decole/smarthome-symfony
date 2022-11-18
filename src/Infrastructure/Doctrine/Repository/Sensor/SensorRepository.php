@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\Sensor;
 
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Webmozart\Assert\Assert;

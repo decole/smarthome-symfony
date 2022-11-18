@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\Doctrine\VisualNotification\Entity\VisualNotification;
+use App\Domain\VisualNotification\Entity\VisualNotification;
 
 interface VisualNotificationRepositoryInterface
 {

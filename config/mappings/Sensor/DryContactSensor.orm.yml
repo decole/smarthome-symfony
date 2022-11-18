@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Sensor\Entity\DryContactSensor:
+App\Domain\Sensor\Entity\DryContactSensor:
   type: entity
   table: sensor_dry_contact
   fields:

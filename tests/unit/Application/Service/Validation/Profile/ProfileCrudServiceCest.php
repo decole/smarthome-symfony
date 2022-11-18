@@ -4,8 +4,8 @@ namespace App\Tests\unit\Application\Service\Validation\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
 use App\Application\Service\Alert\AlertService;
-use App\Domain\Doctrine\Identity\Entity\User;
 use App\Domain\Event\AlertNotificationEvent;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Profile\Factory\ProfileCrudFactory;
 use App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService;
 use App\Infrastructure\Event\Listener\AlertNotificationEventListener;

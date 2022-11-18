@@ -2,10 +2,10 @@
 
 namespace App\Infrastructure\Doctrine\Repository\Identity;
 
-use App\Domain\Doctrine\Identity\Entity\User;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Domain\Doctrine\Identity\Repository\UserRepositoryInterface;
+use App\Domain\Identity\Entity\User;
+use App\Domain\Identity\Repository\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;

@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\Security;
 
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
-use App\Domain\Doctrine\Security\Entity\Security;
+use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Webmozart\Assert\Assert;

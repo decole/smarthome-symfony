@@ -4,11 +4,11 @@ namespace App\Infrastructure\Doctrine\Service\Relay;
 
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
+use App\Domain\Common\Embedded\StatusMessage;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\Common\Embedded\StatusMessage;
-use App\Domain\Doctrine\Relay\Entity\Relay;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Relay\Entity\Relay;
+use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
