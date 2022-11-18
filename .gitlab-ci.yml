@@ -13,6 +13,8 @@ composer:
   tags:
     - uberserver
   script:
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
     - php -v
     - ls -la
     - cp -n docker-compose.yaml.dist docker-compose.yaml
