@@ -26,9 +26,6 @@
         </div>
         <div class="card-body">
             <p class="login-box-msg">Авторизация</p>
-            {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
             <form method="post">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -65,11 +62,11 @@
                 </div>
             </form>
             <!-- /.social-auth-links -->
+            <p class="mb-1">
+                <a href="#">I forgot my password</a>
+            </p>
 
             {% if isEnableRegistration == 'true' %}
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>
                 <p class="mb-0">
                     <a href="{{ path('app_signup') }}" class="text-center">Register a new membership</a>
                 </p>

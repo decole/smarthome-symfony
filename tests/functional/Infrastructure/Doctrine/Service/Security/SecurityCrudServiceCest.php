@@ -17,18 +17,18 @@ class SecurityCrudServiceCest
         $service = $this->getService($I);
 
         $request = new Request([], [
-            'name' => $I->faker()->word,
-            'topic' => $I->faker()->word,
-            'payload' => $I->faker()->word,
-            'detectPayload' => $I->faker()->word,
-            'holdPayload' => $I->faker()->word,
-            'lastCommand' => $I->faker()->word,
+            'name' => $I->faker()->word(),
+            'topic' => $I->faker()->word(),
+            'payload' => $I->faker()->word(),
+            'detectPayload' => $I->faker()->word(),
+            'holdPayload' => $I->faker()->word(),
+            'lastCommand' => $I->faker()->word(),
             'params' => [],
-            'message_info' => $I->faker()->word,
-            'message_ok' => $I->faker()->word,
-            'message_warn' => $I->faker()->word,
-            'status' => $I->faker()->word,
-            'notify' => $I->faker()->word,
+            'message_info' => $I->faker()->word(),
+            'message_ok' => $I->faker()->word(),
+            'message_warn' => $I->faker()->word(),
+            'status' => $I->faker()->word(),
+            'notify' => $I->faker()->word(),
         ]);
 
         $dto = $service->createSecurityDto($request);
@@ -97,15 +97,15 @@ class SecurityCrudServiceCest
         $dto = new CrudSecurityDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -150,15 +150,15 @@ class SecurityCrudServiceCest
         $dto = new CrudSecurityDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -215,15 +215,15 @@ class SecurityCrudServiceCest
         $dto = new CrudSecurityDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -248,15 +248,15 @@ class SecurityCrudServiceCest
             'notify' => $notify,
         ]);
 
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = 'off';
         $dto->notify = 'off';
 
@@ -296,15 +296,15 @@ class SecurityCrudServiceCest
         $dto = new CrudSecurityDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -354,15 +354,15 @@ class SecurityCrudServiceCest
         $dto = new CrudSecurityDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -405,15 +405,15 @@ class SecurityCrudServiceCest
         $dto = new CrudSecurityDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->detectPayload = $detectPayload = $I->faker()->word;
-        $dto->holdPayload = $holdPayload = $I->faker()->word;
-        $dto->lastCommand = $lastCommand = $I->faker()->word;
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->detectPayload = $detectPayload = $I->faker()->word();
+        $dto->holdPayload = $holdPayload = $I->faker()->word();
+        $dto->lastCommand = $lastCommand = $I->faker()->word();
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 

@@ -96,3 +96,7 @@ services:
     arguments:
       $webhookUri: '%env(DISCORD_WEBHOOK)%'
       $logger: '@monolog.logger.discord_service'
+
+  App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService: ~
+
+  App\Infrastructure\Doctrine\Service\Profile\Factory\ProfileCrudFactory: ~

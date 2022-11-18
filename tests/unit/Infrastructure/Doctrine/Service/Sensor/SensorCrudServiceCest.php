@@ -128,16 +128,16 @@ class SensorCrudServiceCest
     private function getRequest(string $type, UnitTester $I): Request
     {
         $minMax = [
-            'payloadMin' => $I->faker()->word,
-            'payloadMax' => $I->faker()->word,
+            'payloadMin' => $I->faker()->word(),
+            'payloadMax' => $I->faker()->word(),
         ];
         $dryWet = [
-            'payloadDry' => $I->faker()->word,
-            'payloadWet' => $I->faker()->word,
+            'payloadDry' => $I->faker()->word(),
+            'payloadWet' => $I->faker()->word(),
         ];
         $lowHigh = [
-            'payloadHigh' => $I->faker()->word,
-            'payloadLow' => $I->faker()->word,
+            'payloadHigh' => $I->faker()->word(),
+            'payloadLow' => $I->faker()->word(),
         ];
 
         $typeFields = match ($type) {
@@ -151,14 +151,14 @@ class SensorCrudServiceCest
             request: array_merge(
                 [
                     'type' => $type,
-                    'name' => $I->faker()->word,
-                    'topic' => $I->faker()->word,
-                    'payload' => $I->faker()->word,
-                    'message_info' => $I->faker()->word,
-                    'message_ok' => $I->faker()->word,
-                    'message_warn' => $I->faker()->word,
-                    'status' => $I->faker()->word,
-                    'notify' => $I->faker()->word,
+                    'name' => $I->faker()->word(),
+                    'topic' => $I->faker()->word(),
+                    'payload' => $I->faker()->word(),
+                    'message_info' => $I->faker()->word(),
+                    'message_ok' => $I->faker()->word(),
+                    'message_warn' => $I->faker()->word(),
+                    'status' => $I->faker()->word(),
+                    'notify' => $I->faker()->word(),
                 ],
                 $typeFields
             )

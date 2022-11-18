@@ -25,20 +25,20 @@ class RelayCrudServiceCest
 
         $request = new Request([], [
             'type' => $example['type'],
-            'name' => $I->faker()->word,
-            'topic' => $I->faker()->word,
-            'payload' => $I->faker()->word,
-            'commandOn' => $I->faker()->word,
-            'commandOff' => $I->faker()->word,
-            'checkTopic' => $I->faker()->word,
-            'checkTopicPayloadOn' => $I->faker()->word,
-            'checkTopicPayloadOff' => $I->faker()->word,
-            'lastCommand' => $I->faker()->word,
-            'message_info' => $I->faker()->word,
-            'message_ok' => $I->faker()->word,
-            'message_warn' => $I->faker()->word,
-            'status' => $I->faker()->word,
-            'notify' => $I->faker()->word,
+            'name' => $I->faker()->word(),
+            'topic' => $I->faker()->word(),
+            'payload' => $I->faker()->word(),
+            'commandOn' => $I->faker()->word(),
+            'commandOff' => $I->faker()->word(),
+            'checkTopic' => $I->faker()->word(),
+            'checkTopicPayloadOn' => $I->faker()->word(),
+            'checkTopicPayloadOff' => $I->faker()->word(),
+            'lastCommand' => $I->faker()->word(),
+            'message_info' => $I->faker()->word(),
+            'message_ok' => $I->faker()->word(),
+            'message_warn' => $I->faker()->word(),
+            'status' => $I->faker()->word(),
+            'notify' => $I->faker()->word(),
         ]);
 
         $dto = $service->createDto($request);
@@ -107,17 +107,17 @@ class RelayCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -164,17 +164,17 @@ class RelayCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -233,17 +233,17 @@ class RelayCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -270,17 +270,17 @@ class RelayCrudServiceCest
         ]);
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = 'off';
         $dto->notify = 'off';
 
@@ -323,17 +323,17 @@ class RelayCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -384,17 +384,17 @@ class RelayCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
@@ -440,17 +440,17 @@ class RelayCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = $type = $example['type'];
-        $dto->name = $name = $I->faker()->word;
-        $dto->topic = $topic = $I->faker()->word;
-        $dto->payload = $payload = $I->faker()->word;
-        $dto->commandOn = $commandOn = $I->faker()->word;
-        $dto->commandOff = $commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
+        $dto->topic = $topic = $I->faker()->word();
+        $dto->payload = $payload = $I->faker()->word();
+        $dto->commandOn = $commandOn = $I->faker()->word();
+        $dto->commandOff = $commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $checkTopicPayloadOff = $I->faker()->word();
         $dto->lastCommand = $lastCommand = $example['status'];
-        $dto->message_info = $messageInfo = $I->faker()->word;
-        $dto->message_ok = $messageOk = $I->faker()->word;
-        $dto->message_warn = $messageWarn = $I->faker()->word;
+        $dto->message_info = $messageInfo = $I->faker()->word();
+        $dto->message_ok = $messageOk = $I->faker()->word();
+        $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 

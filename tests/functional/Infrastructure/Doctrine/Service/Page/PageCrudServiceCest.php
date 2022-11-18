@@ -23,7 +23,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $request = new Request([], [
-            'name' => $I->faker()->word,
+            'name' => $I->faker()->word(),
             'config' => [
                 'sensor' => [],
                 'relay' => [],
@@ -61,7 +61,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $dto = new CrudPageDto();
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [],
@@ -85,7 +85,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $dto = new CrudPageDto();
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [
@@ -112,7 +112,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $dto = new CrudPageDto();
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = [
             'sensor' => [
                 (string)$sensor->getId(),
@@ -137,7 +137,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $dto = new CrudPageDto();
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [],
@@ -173,7 +173,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $dto = new CrudPageDto();
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [],
@@ -189,7 +189,7 @@ class PageCrudServiceCest
             'name' => $dto->name,
         ]);
 
-        $dto->name = $name = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
         $dto->config = [
             'sensor' => [
                 $sensor = Uuid::uuid4(),
@@ -223,7 +223,7 @@ class PageCrudServiceCest
         $service = $this->getService($I);
 
         $dto = new CrudPageDto();
-        $dto->name = $I->faker()->word;
+        $dto->name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [],
@@ -252,7 +252,7 @@ class PageCrudServiceCest
 
         $dto = new CrudPageDto();
 
-        $dto->name = $name = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [],
@@ -279,7 +279,7 @@ class PageCrudServiceCest
 
         $dto = new CrudPageDto();
 
-        $dto->name = $name = $I->faker()->word;
+        $dto->name = $name = $I->faker()->word();
         $dto->config = [
             'sensor' => [],
             'relay' => [],
@@ -303,17 +303,17 @@ class PageCrudServiceCest
         $dto = new CrudRelayDto();
 
         $dto->type = Relay::DRY_RELAY_TYPE;
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
-        $dto->commandOn = $I->faker()->word;
-        $dto->commandOff = $I->faker()->word;
-        $dto->checkTopicPayloadOn = $I->faker()->word;
-        $dto->checkTopicPayloadOff = $I->faker()->word;
-        $dto->lastCommand = $I->faker()->word;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
+        $dto->commandOn = $I->faker()->word();
+        $dto->commandOff = $I->faker()->word();
+        $dto->checkTopicPayloadOn = $I->faker()->word();
+        $dto->checkTopicPayloadOff = $I->faker()->word();
+        $dto->lastCommand = $I->faker()->word();
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
@@ -325,14 +325,14 @@ class PageCrudServiceCest
         $dto = new CrudSensorDto();
 
         $dto->type = 'temperature';
-        $dto->name = $I->faker()->word;
-        $dto->topic = $I->faker()->word;
-        $dto->payload = $I->faker()->word;
+        $dto->name = $I->faker()->word();
+        $dto->topic = $I->faker()->word();
+        $dto->payload = $I->faker()->word();
         $dto->payloadMin = 0;
         $dto->payloadMax = 100;
-        $dto->message_info = $I->faker()->word;
-        $dto->message_ok = $I->faker()->word;
-        $dto->message_warn = $I->faker()->word;
+        $dto->message_info = $I->faker()->word();
+        $dto->message_ok = $I->faker()->word();
+        $dto->message_warn = $I->faker()->word();
         $dto->status = 'on';
         $dto->notify = 'on';
 
