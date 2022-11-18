@@ -74,7 +74,7 @@ final class SaveDeviceStateCriteria implements PeriodicHandleCriteriaInterface
     private function handle(): void
     {
         $list = [];
-        $devices = $this->cacheService->getTopicMapByDeviceType();
+        $devices = $this->cacheService->getTopicMapByDeviceTopic();
 
         foreach ($devices as $device) {
             if ($device instanceof Relay && $device->getCheckTopic() !== null) {

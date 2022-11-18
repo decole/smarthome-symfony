@@ -37,6 +37,18 @@ final class DataResolver
         $this->execute($payload);
     }
 
+    public function execute(DevicePayload $payload): void
+    {
+        try {
+            $this->validatePayload($payload);
+        } catch (Throwable $e) {
+            $event = new AlertNotificationEvent($e->getMessage(), [
+                AlertNotificationEvent::MESSENGER,
+            ]);
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+        }
+    }
+
     /**
      * @param EntityInterface $device
      * @param string $payload
@@ -59,6 +71,31 @@ final class DataResolver
         return str_replace($search, $payload, $deviceAlertMessage);
     }
 
+    /**
+     * @throws DeviceDataException
+     * @throws InvalidArgumentException
+     */
+    private function validatePayload(DevicePayload $payload): void
+    {
+        $resultDto = $this->validateService->validate($payload);
+
+        /** @var Sensor|Relay|Security|FireSecurity $device */
+        $device = $resultDto->getDevice();
+
+        // todo плохо пахнет.
+        // охранный датчик в состоянии "движение" и он взеден и выставлен флаг оповещения через мессенджеры
+        if ($device::alias() === Security::alias() && $device->isNotify() && $device->isGuarded()) {
+            $this->notification($resultDto, $payload);
+
+            return;
+        }
+
+        if ($device::alias() !== Security::alias() && !$resultDto->isNormal() && $device->isNotify()) {
+
+            $this->notification($resultDto, $payload);
+        }
+    }
+
     private function notification(DeviceDataValidatedDto $resultDto, DevicePayload $payload): void
     {
         /** @var Sensor|Relay|Security|FireSecurity $device */
@@ -71,40 +108,5 @@ final class DataResolver
 
         $event = new AlertNotificationEvent($message, [AlertNotificationEvent::MESSENGER]);
         $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
-    }
-
-    public function execute(DevicePayload $payload): void
-    {
-        try {
-            $this->validatePayload($payload);
-        } catch (Throwable $e) {
-            $event = new AlertNotificationEvent($e->getMessage(), [
-                AlertNotificationEvent::MESSENGER,
-            ]);
-            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
-        }
-    }
-
-    /**
-     * @throws DeviceDataException
-     * @throws InvalidArgumentException
-     */
-    private function validatePayload(DevicePayload $payload): void
-    {
-        $resultDto = $this->validateService->validate($payload);
-
-        /** @var Sensor|Relay|Security|FireSecurity $device */
-        $device = $resultDto->getDevice();
-
-        // охранный датчик в состоянии "движение" и он взеден и выставлен флаг оповещения через мессенджеры
-        if ($device instanceof Security && $device->isNotify() && $device->isGuarded()) {
-            $this->notification($resultDto, $payload);
-
-            return;
-        }
-
-        if (!$resultDto->isNormal() && $device->isNotify()) {
-            $this->notification($resultDto, $payload);
-        }
     }
 }

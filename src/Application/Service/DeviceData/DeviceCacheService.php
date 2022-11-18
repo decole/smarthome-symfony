@@ -35,7 +35,7 @@ final class DeviceCacheService
     {
         $this->cache->set(CacheKeyListEnum::DEVICE_MAP_CACHE, $this->getMap());
         $this->cache->delete([CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE]);
-        $this->getTopicMapByDeviceType();
+        $this->getTopicMapByDeviceTopic();
     }
 
     /**
@@ -56,7 +56,7 @@ final class DeviceCacheService
      * @return list<int, Sensor|Relay|FireSecurity|Security>
      * @throws InvalidArgumentException
      */
-    public function getTopicMapByDeviceType(): array
+    public function getTopicMapByDeviceTopic(): array
     {
         return $this->cache->getOrSet(
             key: CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE,

@@ -75,7 +75,7 @@ class SecureDeviceDataService
             return;
         }
 
-        $device->setGuardState($trigger === true ? Security::GUARD_STATE : Security::HOLD_STATE);
+        $device->setLastCommand($trigger === true ? Security::GUARD_STATE : Security::HOLD_STATE);
 
         $this->transaction->transactional(
             function () use ($device) {
@@ -86,9 +86,10 @@ class SecureDeviceDataService
         try {
             $this->deviceService->create();
         } catch (Throwable $e) {
-            $event = new AlertNotificationEvent($e->getMessage(), [
-                AlertNotificationEvent::MESSENGER,
-            ]);
+            $event = new AlertNotificationEvent(
+                "При команде Взять на охрану через api выявлена ошибка: {$e->getMessage()}",
+                [AlertNotificationEvent::MESSENGER]
+            );
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
     }

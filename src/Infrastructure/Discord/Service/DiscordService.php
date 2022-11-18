@@ -2,8 +2,10 @@
 
 namespace App\Infrastructure\Discord\Service;
 
+use App\Domain\Event\AlertNotificationEvent;
 use App\Infrastructure\Discord\Exception\DiscordServiceNullWebhookException;
 use GuzzleHttp\Client;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -11,8 +13,11 @@ final class DiscordService
 {
     private Client $client;
 
-    public function __construct(private LoggerInterface $logger, private ?string $webhookUri = null)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        private EventDispatcherInterface $eventDispatcher,
+        private ?string $webhookUri = null
+    ) {
         if (!$webhookUri) {
             $this->logger->critical('Please configure discord webhook');
 
@@ -37,6 +42,11 @@ final class DiscordService
             $this->logger->critical('Can`t send discord message', [
                 'exception' => $exception->getMessage(),
             ]);
+            $event = new AlertNotificationEvent(
+                'Can`t send discord message ' . $exception->getMessage(),
+                [AlertNotificationEvent::MESSENGER]
+            );
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
     }
 }

@@ -20,7 +20,7 @@ final class DataValidationService
      */
     public function validate(DevicePayload $payload): DeviceDataValidatedDto
     {
-        $validator = (new DeviceDataValidationFactory($this->deviceCacheService->getTopicMapByDeviceType()))
+        $validator = (new DeviceDataValidationFactory($this->deviceCacheService->getTopicMapByDeviceTopic()))
             ->create($payload);
 
         return $validator->validate();

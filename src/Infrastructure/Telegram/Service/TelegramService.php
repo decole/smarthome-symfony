@@ -2,7 +2,9 @@
 
 namespace App\Infrastructure\Telegram\Service;
 
+use App\Domain\Event\AlertNotificationEvent;
 use App\Infrastructure\Telegram\Exception\TelegramServiceException;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -16,8 +18,11 @@ final class TelegramService
      * @throws TelegramServiceException
      * @throws TelegramSDKException
      */
-    public function __construct(private LoggerInterface $logger, private ?string $apiToken = null)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        private EventDispatcherInterface $eventDispatcher,
+        private ?string $apiToken = null
+    ) {
         if ($this->apiToken === null) {
             $this->logger->error('Telegram bot not configured, Api token is null');
 
@@ -40,6 +45,12 @@ final class TelegramService
                 'message' => $notify,
                 'chatId' => $chatId,
             ]);
+
+            $event = new AlertNotificationEvent(
+                'Can`t send telegram message ' . $exception->getMessage(),
+                [AlertNotificationEvent::MESSENGER]
+            );
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
     }
 }
