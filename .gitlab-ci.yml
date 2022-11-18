@@ -53,10 +53,11 @@ clean:
   tags:
     - uberserver
   script:
+    - docker-compose -f docker-compose.ci.yaml down
     - docker-compose -f docker-compose.ci.yaml up -d
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf -R var/ vendor/
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local .env.test
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
   when: manual
 
 deploy_prod:
