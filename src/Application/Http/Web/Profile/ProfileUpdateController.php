@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\Profile;
 
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;

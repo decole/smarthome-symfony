@@ -2,8 +2,8 @@
 
 namespace App\Application\Http\Web\Auth;
 
-use App\Domain\Doctrine\SecureSystem\Dto\RegisterDto;
-use App\Domain\Doctrine\SecureSystem\Service\RegistrationValidateService;
+use App\Domain\SecureSystem\Dto\RegisterDto;
+use App\Domain\SecureSystem\Service\RegistrationValidateService;
 use App\Infrastructure\Security\Auth\Service\CsrfService;
 use App\Infrastructure\Security\Register\Service\SignUpService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

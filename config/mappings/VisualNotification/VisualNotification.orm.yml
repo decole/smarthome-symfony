@@ -1,4 +1,4 @@
-App\Domain\Doctrine\VisualNotification\Entity\VisualNotification:
+App\Domain\VisualNotification\Entity\VisualNotification:
   table: 'visual_notify'
   type: entity
   fields:

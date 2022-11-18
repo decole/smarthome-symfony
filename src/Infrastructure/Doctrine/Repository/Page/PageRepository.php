@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\Page;
 
 use App\Domain\Contract\Repository\PageRepositoryInterface;
-use App\Domain\Doctrine\Page\Entity\Page;
+use App\Domain\Page\Entity\Page;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 

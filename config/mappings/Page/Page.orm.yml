@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Page\Entity\Page:
+App\Domain\Page\Entity\Page:
   table: 'page'
   type: entity
   fields:

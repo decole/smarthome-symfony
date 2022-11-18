@@ -4,13 +4,13 @@ namespace App\Application\Service\DeviceData;
 
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
-use App\Domain\Doctrine\Relay\Entity\Relay;
-use App\Domain\Doctrine\Security\Entity\Security;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Event\VisualNotificationEvent;
+use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Domain\Payload\DevicePayload;
+use App\Domain\Relay\Entity\Relay;
+use App\Domain\Security\Entity\Security;
+use App\Domain\Sensor\Entity\Sensor;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**

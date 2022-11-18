@@ -1,4 +1,4 @@
-App\Domain\Doctrine\Relay\Entity\Relay:
+App\Domain\Relay\Entity\Relay:
   table: 'relay'
   type: entity
   fields:
@@ -56,5 +56,5 @@ App\Domain\Doctrine\Relay\Entity\Relay:
       nullable: true
   embedded:
     statusMessage:
-      class: App\Domain\Doctrine\Common\Embedded\StatusMessage
+      class: App\Domain\Common\Embedded\StatusMessage
       columnPrefix: false

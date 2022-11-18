@@ -3,7 +3,7 @@
 namespace App\Tests\functional\Infrastructure\Doctrine\Service\Security;
 
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
-use App\Domain\Doctrine\Security\Entity\Security;
+use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;

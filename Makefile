@@ -37,7 +37,7 @@ fixture:
 	docker-compose exec php-fpm php bin/console d:f:l --no-interaction --purge-with-truncate
 
 test-clean-output:
-	docker-compose exec php-fpm php bin/codecept clean
+	docker-compose exec php-fpm php vendor/codeception/codeception/codecept clean
 
 ps:
 	docker-compose ps

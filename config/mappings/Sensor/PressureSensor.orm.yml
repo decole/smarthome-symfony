@@ -1,0 +1,10 @@
+App\Domain\Sensor\Entity\PressureSensor:
+  type: entity
+  table: sensor_pressure
+  fields:
+    payloadMin:
+      name: payload_min
+      type: string
+    payloadMax:
+      name: payload_max
+      type: string

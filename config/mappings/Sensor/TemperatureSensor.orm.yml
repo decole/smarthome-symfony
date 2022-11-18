@@ -1,0 +1,10 @@
+App\Domain\Sensor\Entity\TemperatureSensor:
+  type: entity
+  table: sensor_temperature
+  fields:
+    payloadMin:
+      name: payload_min
+      type: string
+    payloadMax:
+      name: payload_max
+      type: string

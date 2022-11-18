@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\Infrastructure\Doctrine\Service\Relay;
 
-use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
 use App\Tests\UnitTester;
 use Codeception\Example;

@@ -4,10 +4,10 @@ namespace App\Infrastructure\Doctrine\Service\Security;
 
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
+use App\Domain\Common\Embedded\StatusMessage;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\Common\Embedded\StatusMessage;
-use App\Domain\Doctrine\Security\Entity\Security;
+use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Service\Security\Factory\SecurityCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;

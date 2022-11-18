@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\Relay;
 
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
-use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Webmozart\Assert\Assert;

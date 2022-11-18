@@ -1,0 +1,10 @@
+App\Domain\Sensor\Entity\DryContactSensor:
+  type: entity
+  table: sensor_dry_contact
+  fields:
+    payloadHigh:
+      name: payload_high
+      type: string
+    payloadLow:
+      name: payload_low
+      type: string

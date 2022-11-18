@@ -1,9 +1,0 @@
-App\Domain\Doctrine\Sensor\Entity\SensorTemperature:
-  type: entity
-  fields:
-    payloadMin:
-      name: payload_min
-      type: string
-    payloadMax:
-      name: payload_max
-      type: string

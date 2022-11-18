@@ -2,7 +2,7 @@
 
 namespace App\Tests\functional\Infrastructure\Doctrine\Service\FireSecurity;
 
-use App\Domain\Doctrine\Security\Entity\Security;
+use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService;
 use App\Tests\UnitTester;
 use Symfony\Component\HttpFoundation\Request;

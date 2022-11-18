@@ -3,11 +3,11 @@
 namespace App\Domain\Event;
 
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
-use App\Domain\Doctrine\Relay\Entity\Relay;
-use App\Domain\Doctrine\Security\Entity\Security;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
-use App\Domain\Doctrine\VisualNotification\Entity\VisualNotification;
+use App\Domain\FireSecurity\Entity\FireSecurity;
+use App\Domain\Relay\Entity\Relay;
+use App\Domain\Security\Entity\Security;
+use App\Domain\Sensor\Entity\Sensor;
+use App\Domain\VisualNotification\Entity\VisualNotification;
 
 class VisualNotificationEvent
 {

@@ -1,0 +1,10 @@
+App\Domain\Sensor\Entity\LeakageSensor:
+  type: entity
+  table: sensor_leakage
+  fields:
+    payloadDry:
+      name: payload_dry
+      type: string
+    payloadWet:
+      name: payload_wet
+      type: string

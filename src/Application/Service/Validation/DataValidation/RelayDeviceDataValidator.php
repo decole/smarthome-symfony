@@ -4,7 +4,7 @@ namespace App\Application\Service\Validation\DataValidation;
 
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
-use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Relay\Entity\Relay;
 
 final class RelayDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {

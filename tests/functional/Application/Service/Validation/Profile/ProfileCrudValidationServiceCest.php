@@ -4,7 +4,7 @@ namespace App\Tests\functional\Application\Service\Validation\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
 use App\Application\Service\Validation\Profile\ProfileCrudValidationService;
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Tests\FunctionalTester;
 use Codeception\Example;
 use Exception;

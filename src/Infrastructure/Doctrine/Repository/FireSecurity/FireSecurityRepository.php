@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\FireSecurity;
 
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
-use App\Domain\Doctrine\FireSecurity\Entity\FireSecurity;
+use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Webmozart\Assert\Assert;

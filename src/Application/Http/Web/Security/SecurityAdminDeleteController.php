@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Web\Security;
 
-use App\Domain\Doctrine\Identity\Entity\User;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;

@@ -2,11 +2,11 @@
 
 namespace App\Tests\unit\Infrastructure\Doctrine\Service\Sensor;
 
-use App\Domain\Doctrine\Sensor\Entity\SensorDryContact;
-use App\Domain\Doctrine\Sensor\Entity\SensorHumidity;
-use App\Domain\Doctrine\Sensor\Entity\SensorLeakage;
-use App\Domain\Doctrine\Sensor\Entity\SensorPressure;
-use App\Domain\Doctrine\Sensor\Entity\SensorTemperature;
+use App\Domain\Sensor\Entity\DryContactSensor;
+use App\Domain\Sensor\Entity\HumiditySensor;
+use App\Domain\Sensor\Entity\LeakageSensor;
+use App\Domain\Sensor\Entity\PressureSensor;
+use App\Domain\Sensor\Entity\TemperatureSensor;
 use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
 use App\Tests\UnitTester;
 use Codeception\Example;
@@ -19,11 +19,11 @@ class SensorCrudServiceCest
         $service = $this->getService($I);
 
         $I->assertEquals([
-            SensorTemperature::TYPE,
-            SensorHumidity::TYPE,
-            SensorLeakage::TYPE,
-            SensorPressure::TYPE,
-            SensorDryContact::TYPE,
+            TemperatureSensor::TYPE,
+            HumiditySensor::TYPE,
+            LeakageSensor::TYPE,
+            PressureSensor::TYPE,
+            DryContactSensor::TYPE,
         ], $service->getTypes());
     }
 

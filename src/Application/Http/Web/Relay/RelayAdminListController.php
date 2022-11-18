@@ -2,8 +2,8 @@
 
 namespace App\Application\Http\Web\Relay;
 
-use App\Domain\Doctrine\Identity\Entity\User;
-use App\Domain\Doctrine\Relay\Entity\Relay;
+use App\Domain\Identity\Entity\User;
+use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

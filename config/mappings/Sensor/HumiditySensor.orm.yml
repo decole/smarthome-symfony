@@ -1,0 +1,10 @@
+App\Domain\Sensor\Entity\HumiditySensor:
+  type: entity
+  table: sensor_humidity
+  fields:
+    payloadMin:
+      name: payload_min
+      type: string
+    payloadMax:
+      name: payload_max
+      type: string

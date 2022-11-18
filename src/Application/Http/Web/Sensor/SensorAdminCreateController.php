@@ -2,8 +2,8 @@
 
 namespace App\Application\Http\Web\Sensor;
 
-use App\Domain\Doctrine\Identity\Entity\User;
-use App\Domain\Doctrine\Sensor\Entity\Sensor;
+use App\Domain\Identity\Entity\User;
+use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;

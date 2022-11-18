@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository\VisualNotification;
 
 use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
-use App\Domain\Doctrine\VisualNotification\Entity\VisualNotification;
+use App\Domain\VisualNotification\Entity\VisualNotification;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use DateTimeImmutable;
 use Webmozart\Assert\Assert;
