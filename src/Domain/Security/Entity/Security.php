@@ -159,13 +159,6 @@ final class Security implements EntityInterface
         return $this->lastCommand === self::GUARD_STATE;
     }
 
-    public function setGuardState(string $state): void
-    {
-        Assert::inArray($state, self::GUARD_STATE_MAP);
-
-        $this->lastCommand = $state;
-    }
-
     private function checkStatusType(int $status): void
     {
         Assert::inArray($status, self::STATUS_MAP, 'Security device status not defined');

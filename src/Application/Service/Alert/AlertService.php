@@ -32,7 +32,13 @@ final class AlertService
     public function messengerNotify(string $message): void
     {
         foreach ($this->repository->findAllWithTelegramId() as $user) {
-            $event = new NotificationEvent(new TelegramNotificationMessage($user->getTelegramId(), $message));
+            $id = $user->getTelegramId();
+
+            if ($id === '' || $id === null) {
+                return;
+            }
+
+            $event = new NotificationEvent(new TelegramNotificationMessage($message, $user->getTelegramId()));
             $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
         }
 

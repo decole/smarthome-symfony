@@ -4,9 +4,14 @@ namespace App\Application\Service\DeviceData;
 
 use App\Application\Service\DeviceData\Dto\SecureDeviceStateDto;
 use App\Domain\Common\Transactions\TransactionInterface;
+use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Throwable;
 
 class SecureDeviceDataService
 {
@@ -14,7 +19,8 @@ class SecureDeviceDataService
         private DeviceCacheService $deviceService,
         private DeviceDataCacheService $dataCacheService,
         private SecurityRepository $repository,
-        private TransactionInterface $transaction
+        private TransactionInterface $transaction,
+        private EventDispatcherInterface $eventDispatcher
     ) {
     }
 
@@ -26,6 +32,7 @@ class SecureDeviceDataService
      * (статус охранного датчика) - isTriggered:
      * true - взведен
      * false - не взведен
+     * @throws InvalidArgumentException
      */
     public function getDeviceState(string $topic): SecureDeviceStateDto
     {
@@ -68,7 +75,7 @@ class SecureDeviceDataService
             return;
         }
 
-        $device->setGuardState($trigger === true ? Security::GUARD_STATE : Security::HOLD_STATE);
+        $device->setLastCommand($trigger === true ? Security::GUARD_STATE : Security::HOLD_STATE);
 
         $this->transaction->transactional(
             function () use ($device) {
@@ -76,6 +83,14 @@ class SecureDeviceDataService
             }
         );
 
-        $this->deviceService->create();
+        try {
+            $this->deviceService->create();
+        } catch (Throwable $e) {
+            $event = new AlertNotificationEvent(
+                "При команде Взять на охрану через api выявлена ошибка: {$e->getMessage()}",
+                [AlertNotificationEvent::MESSENGER]
+            );
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+        }
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Infrastructure\Quasar\Service;
 
+use App\Domain\Event\AlertNotificationEvent;
 use Decole\Quasar\Exception\ApiException;
 use Decole\Quasar\Exception\RussianWordException;
 use Decole\Quasar\QuasarClient;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -17,8 +19,13 @@ final class QuasarNotificationService
     /**
      * @throws RussianWordException
      */
-    public function __construct(string $cookies, string $deviceId, string $scenarioId, private LoggerInterface $logger)
-    {
+    public function __construct(
+        string $cookies,
+        string $deviceId,
+        string $scenarioId,
+        private LoggerInterface $logger,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
         $this->simpleClient = new QuasarClient($cookies);
         $this->advancedClient = new QuasarClient($cookies, 'Голос', $deviceId, $scenarioId);
     }
@@ -35,6 +42,12 @@ final class QuasarNotificationService
             $this->logger->critical('Can`t send quasar notify message', [
                 'exception' => $exception->getMessage(),
             ]);
+
+            $event = new AlertNotificationEvent(
+                'Can`t send quasar notify message ' . $exception->getMessage(),
+                [AlertNotificationEvent::MESSENGER]
+            );
+            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
     }
 

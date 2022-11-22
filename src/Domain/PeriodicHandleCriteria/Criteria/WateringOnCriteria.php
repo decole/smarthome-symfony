@@ -40,7 +40,7 @@ final class WateringOnCriteria implements PeriodicHandleCriteriaInterface
     {
         $payloadCheckOn = 1;
 
-        $devices = $this->cacheService->getTopicMapByDeviceType();
+        $devices = $this->cacheService->getTopicMapByDeviceTopic();
 
         foreach ($devices as $device) {
             if ($device instanceof Relay && $device->getCheckTopic() === self::TOPIC) {

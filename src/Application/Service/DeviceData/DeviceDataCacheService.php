@@ -5,6 +5,8 @@ namespace App\Application\Service\DeviceData;
 use App\Domain\Payload\DevicePayload;
 use App\Infrastructure\Cache\CacheKeyListEnum;
 use App\Infrastructure\Cache\CacheService;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
 
 /**
  * Кэширует данные переданные устройствами
@@ -19,6 +21,9 @@ final class DeviceDataCacheService
     {
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function save(DevicePayload $message): void
     {
         $map = $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST) ?? [];
@@ -34,6 +39,11 @@ final class DeviceDataCacheService
         $this->setCache($map);
     }
 
+    /**
+     * @param list<string> $topics
+     * @return array<string, mixed>
+     * @throws InvalidArgumentException
+     */
     public function getPayloadByTopicList(array $topics): array
     {
         $result = [];
@@ -45,6 +55,10 @@ final class DeviceDataCacheService
         return $result;
     }
 
+    /**
+     * @param list<string, array<string, mixed>> $map
+     * @return array
+     */
     public function clearOldPayload(array $map): array
     {
         foreach ($map[self::LIST_KEY] as $cachedTopic => $payload) {
@@ -56,6 +70,10 @@ final class DeviceDataCacheService
         return $map;
     }
 
+    /**
+     * @return list<string, array<string, mixed>>
+     * @throws InvalidArgumentException
+     */
     private function getList(): array
     {
         return $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST)[self::LIST_KEY] ?? [];
@@ -77,6 +95,10 @@ final class DeviceDataCacheService
         return time() > $payloadTime + self::CACHE_LIMIT;
     }
 
+    /**
+     * @throws CacheException
+     * @throws InvalidArgumentException
+     */
     private function setCache(array $map): void
     {
         $this->cache->set(

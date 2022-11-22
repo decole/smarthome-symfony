@@ -24,6 +24,7 @@ class VisualNotificationEvent
 
     /**
      * Определяет тип визуальной нотификации по типу датчика
+     *
      * @return string
      */
     public function getNotifyType(): string
