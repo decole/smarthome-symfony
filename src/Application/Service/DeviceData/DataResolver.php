@@ -4,6 +4,7 @@ namespace App\Application\Service\DeviceData;
 
 use App\Application\Exception\DeviceDataException;
 use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
+use App\Application\Service\Factory\DeviceAlertFactory;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Event\VisualNotificationEvent;
@@ -50,28 +51,6 @@ final class DataResolver
     }
 
     /**
-     * @param EntityInterface $device
-     * @param string $payload
-     * @return string
-     */
-    private function prepareDeviceAlert(EntityInterface $device, string $payload): string
-    {
-        /** @var Sensor|Relay|Security|FireSecurity $device */
-        $deviceAlertMessage = $device?->getStatusMessage()?->getMessageWarn();
-
-        if ($deviceAlertMessage === null) {
-            return sprintf("Внимание! {$device->getName()} имеет состояние: %s", $payload);
-        }
-
-        $search = [
-            '{value}',
-            '%s'
-        ];
-
-        return str_replace($search, $payload, $deviceAlertMessage);
-    }
-
-    /**
      * @throws DeviceDataException
      * @throws InvalidArgumentException
      */
@@ -79,34 +58,14 @@ final class DataResolver
     {
         $resultDto = $this->validateService->validate($payload);
 
-        /** @var Sensor|Relay|Security|FireSecurity $device */
-        $device = $resultDto->getDevice();
+        if (!$resultDto->isNormal()) {
+            dump('is notify');
 
-        // todo плохо пахнет.
-        // охранный датчик в состоянии "движение" и он взеден и выставлен флаг оповещения через мессенджеры
-        if ($device::alias() === Security::alias() && $device->isNotify() && $device->isGuarded()) {
-            $this->notification($resultDto, $payload);
+            $criteria = (new DeviceAlertFactory($this->eventDispatcher))->create($resultDto->getDevice(), $payload);
 
-            return;
+            dump(get_class($criteria));
+
+            $criteria->notify();
         }
-
-        if ($device::alias() !== Security::alias() && !$resultDto->isNormal() && $device->isNotify()) {
-
-            $this->notification($resultDto, $payload);
-        }
-    }
-
-    private function notification(DeviceDataValidatedDto $resultDto, DevicePayload $payload): void
-    {
-        /** @var Sensor|Relay|Security|FireSecurity $device */
-        $device = $resultDto->getDevice();
-        $deviceValue = $payload->getPayload();
-        $message = $this->prepareDeviceAlert($device, $deviceValue);
-
-        $event = new VisualNotificationEvent($message, $device);
-        $this->eventDispatcher->dispatch($event, VisualNotificationEvent::NAME);
-
-        $event = new AlertNotificationEvent($message, [AlertNotificationEvent::MESSENGER]);
-        $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
     }
 }
