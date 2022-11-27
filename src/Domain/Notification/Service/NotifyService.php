@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Application\Service\Alert;
+namespace App\Domain\Notification\Service;
 
 use App\Application\Service\VisualNotification\Dto\VisualNotificationDto;
 use App\Application\Service\VisualNotification\VisualNotificationService;
 use App\Domain\Event\NotificationEvent;
-use App\Domain\Notification\AliceNotificationMessage;
-use App\Domain\Notification\DiscordNotificationMessage;
-use App\Domain\Notification\TelegramNotificationMessage;
+use App\Domain\Notification\Entity\AliceNotificationMessage;
+use App\Domain\Notification\Entity\DiscordNotificationMessage;
+use App\Domain\Notification\Entity\TelegramNotificationMessage;
 use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Сервис, через который происходит алертинг проекта
  */
-final class AlertService
+final class NotifyService
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,

@@ -3,11 +3,11 @@
 namespace App\Application\Presenter\Api\SmartHomeDevice;
 
 use App\Application\Presenter\Api\PresenterInterface;
-use App\Application\Service\DeviceData\Dto\SecureDeviceStateDto;
+use App\Domain\DeviceData\Entity\SecureDeviceDataState;
 
 final class SecureDeviceTopicPayloadPresenter implements PresenterInterface
 {
-    public function __construct(private SecureDeviceStateDto $dto)
+    public function __construct(private SecureDeviceDataState $dto)
     {
     }
 

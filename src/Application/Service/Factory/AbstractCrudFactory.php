@@ -2,9 +2,9 @@
 
 namespace App\Application\Service\Factory;
 
-use App\Application\Service\DeviceData\DeviceCacheService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\EntityInterface;
+use App\Domain\DeviceData\Service\DeviceCacheService;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;

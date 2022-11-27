@@ -1,18 +1,11 @@
 <?php
 
-namespace App\Application\Service\DeviceData;
+namespace App\Domain\DeviceData\Service;
 
 use App\Application\Exception\DeviceDataException;
-use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Application\Service\Factory\DeviceAlertFactory;
-use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Event\AlertNotificationEvent;
-use App\Domain\Event\VisualNotificationEvent;
-use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Domain\Payload\DevicePayload;
-use App\Domain\Relay\Entity\Relay;
-use App\Domain\Security\Entity\Security;
-use App\Domain\Sensor\Entity\Sensor;
+use App\Domain\Payload\Entity\DevicePayload;
 use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Throwable;
@@ -20,10 +13,10 @@ use Throwable;
 /**
  * Сервис работы с данными устройств (проверка состояния и вызов оповещения)
  */
-final class DataResolver
+final class DeviceDataResolver
 {
     public function __construct(
-        private DataValidationService $validateService,
+        private DeviceDataValidationService $validateService,
         private DeviceDataCacheService $cacheService,
         private EventDispatcherInterface $eventDispatcher
     ) {
@@ -59,13 +52,9 @@ final class DataResolver
         $resultDto = $this->validateService->validate($payload);
 
         if (!$resultDto->isNormal()) {
-            dump('is notify');
-
-            $criteria = (new DeviceAlertFactory($this->eventDispatcher))->create($resultDto->getDevice(), $payload);
-
-            dump(get_class($criteria));
-
-            $criteria->notify();
+            (new DeviceAlertFactory($this->eventDispatcher))
+                ->create($resultDto->getDevice(), $payload)
+                ->notify();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli\Handler;
 
-use App\Domain\Notification\TelegramNotificationMessage;
+use App\Domain\Notification\Entity\TelegramNotificationMessage;
 use App\Infrastructure\Telegram\Service\TelegramService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

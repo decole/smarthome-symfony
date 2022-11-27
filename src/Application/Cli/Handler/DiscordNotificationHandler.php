@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli\Handler;
 
-use App\Domain\Notification\DiscordNotificationMessage;
+use App\Domain\Notification\Entity\DiscordNotificationMessage;
 use App\Infrastructure\Discord\Service\DiscordService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

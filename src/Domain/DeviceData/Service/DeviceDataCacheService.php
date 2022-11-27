@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\Service\DeviceData;
+namespace App\Domain\DeviceData\Service;
 
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Cache\CacheKeyListEnum;
 use App\Infrastructure\Cache\CacheService;
 use Psr\Cache\CacheException;

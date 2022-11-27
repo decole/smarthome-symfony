@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Application\Service\DeviceData\Dto;
+namespace App\Domain\DeviceData\Entity;
 
-class SecureDeviceStateDto
+class SecureDeviceDataState
 {
     // true - задетектировано движение / false - состояние датчика не изменено
     public bool $standardisedState = false;
+
     // взведен ли ланный датчик на охрану системы
     public bool $isGuarded = false;
 }

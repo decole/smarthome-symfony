@@ -2,7 +2,7 @@
 
 namespace App\Domain\Contract\Device;
 
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Payload\Entity\DevicePayload;
 
 interface ValidationDeviceService
 {

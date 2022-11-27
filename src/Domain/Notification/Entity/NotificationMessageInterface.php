@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Notification;
+namespace App\Domain\Notification\Entity;
 
 
 interface NotificationMessageInterface

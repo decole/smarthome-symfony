@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Payload;
+namespace App\Domain\Payload\Entity;
 
 final class DevicePayload
 {

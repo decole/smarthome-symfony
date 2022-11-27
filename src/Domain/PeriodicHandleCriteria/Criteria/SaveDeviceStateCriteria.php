@@ -2,14 +2,14 @@
 
 namespace App\Domain\PeriodicHandleCriteria\Criteria;
 
-use App\Application\Service\DeviceData\DeviceCacheService;
-use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
 use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
+use App\Domain\DeviceData\Service\DeviceCacheService;
+use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Domain\PeriodicHandleCriteria\Exception\SaveDeviceStateException;

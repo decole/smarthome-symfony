@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Application\Service\Alert\Criteria;
+namespace App\Domain\Notification\Criteria;
 
-use App\Domain\Sensor\Entity\Sensor;
+use App\Domain\Security\Entity\Security;
 
-final class SensorCriteria extends AbstractCriteria
+final class SecurityCriteria extends AbstractCriteria
 {
     public function notify(): void
     {
-        /** @var Sensor $device */
+        /** @var Security $device */
         $device = $this->device;
 
-        if ($device->isNotify()) {
+        if ($device->isNotify() && $device->isGuarded()) {
             $this->sendByVisualNotify();
             $this->sendByMessengers();
         }
@@ -19,12 +19,12 @@ final class SensorCriteria extends AbstractCriteria
 
     public function prepareAlertMessage(): string
     {
-        /** @var Sensor $device */
+        /** @var Security $device */
         $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
 
         $name = $this->device?->getName() ?? $this->payload->getTopic();
 
         return $deviceAlertMessage ??
-            "Внимание! Сенсор {$name} имеет неопознанное состояние [{value}] !";
+            "Внимание! Охранный датчик {$name} сработал. Состояние [{value}] !";
     }
 }

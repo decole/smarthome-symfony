@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Api\SmartHomeDevice;
 
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

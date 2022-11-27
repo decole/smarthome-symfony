@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Application\Service\DeviceData;
+namespace App\Domain\DeviceData\Service;
 
 use App\Application\Exception\DeviceDataException;
-use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Application\Service\Factory\DeviceDataValidationFactory;
-use App\Domain\Payload\DevicePayload;
+use App\Domain\DeviceData\Entity\DeviceDataValidated;
+use App\Domain\Payload\Entity\DevicePayload;
 use Psr\Cache\InvalidArgumentException;
 
-final class DataValidationService
+final class DeviceDataValidationService
 {
     public function __construct(private DeviceCacheService $deviceCacheService)
     {
@@ -18,7 +18,7 @@ final class DataValidationService
      * @throws InvalidArgumentException
      * @throws DeviceDataException
      */
-    public function validate(DevicePayload $payload): DeviceDataValidatedDto
+    public function validate(DevicePayload $payload): DeviceDataValidated
     {
         $validator = (new DeviceDataValidationFactory($this->deviceCacheService->getTopicMapByDeviceTopic()))
             ->create($payload);

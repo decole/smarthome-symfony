@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli\Handler;
 
-use App\Domain\Notification\AliceNotificationMessage;
+use App\Domain\Notification\Entity\AliceNotificationMessage;
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

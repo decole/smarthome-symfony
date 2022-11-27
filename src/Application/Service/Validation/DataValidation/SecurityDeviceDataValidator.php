@@ -2,13 +2,13 @@
 
 namespace App\Application\Service\Validation\DataValidation;
 
-use App\Application\Service\DeviceData\Dto\DeviceDataValidatedDto;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
+use App\Domain\DeviceData\Entity\DeviceDataValidated;
 use App\Domain\Security\Entity\Security;
 
 final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    public function validate(): DeviceDataValidatedDto
+    public function validate(): DeviceDataValidated
     {
         assert($this->device instanceof Security);
 

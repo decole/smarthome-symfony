@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Application\Service\DeviceData;
+namespace App\Domain\DeviceData\Service;
 
-use App\Application\Service\DeviceData\Dto\SecureDeviceStateDto;
 use App\Domain\Common\Transactions\TransactionInterface;
+use App\Domain\DeviceData\Entity\SecureDeviceDataState;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Throwable;
@@ -34,9 +33,9 @@ class SecureDeviceDataService
      * false - не взведен
      * @throws InvalidArgumentException
      */
-    public function getDeviceState(string $topic): SecureDeviceStateDto
+    public function getDeviceState(string $topic): SecureDeviceDataState
     {
-        $dto = new SecureDeviceStateDto();
+        $dto = new SecureDeviceDataState();
         $targetDevice = null;
         $map = $this->deviceService->getDeviceMap()[Security::alias()];
 

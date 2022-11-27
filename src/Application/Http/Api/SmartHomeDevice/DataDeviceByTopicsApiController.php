@@ -2,8 +2,8 @@
 
 namespace App\Application\Http\Api\SmartHomeDevice;
 
-use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\SitePage\ApiUriTranscribeService;
+use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

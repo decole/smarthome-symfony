@@ -3,7 +3,7 @@
 namespace App\Application\Http\Api\SmartHomeDevice;
 
 use App\Application\Presenter\Api\SmartHomeDevice\SecureDeviceSetStateTriggerPresenter;
-use App\Application\Service\DeviceData\SecureDeviceDataService;
+use App\Domain\DeviceData\Service\SecureDeviceDataService;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

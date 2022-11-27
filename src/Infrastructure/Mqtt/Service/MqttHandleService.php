@@ -2,9 +2,9 @@
 
 namespace App\Infrastructure\Mqtt\Service;
 
-use App\Application\Service\DeviceData\DataResolver;
-use App\Application\Service\DeviceData\DeviceCacheService;
-use App\Domain\Payload\DevicePayload;
+use App\Domain\DeviceData\Service\DeviceCacheService;
+use App\Domain\DeviceData\Service\DeviceDataResolver;
+use App\Domain\Payload\Entity\DevicePayload;
 use Mosquitto\Client;
 use Mosquitto\Message;
 use Psr\Log\LoggerInterface;
@@ -21,7 +21,7 @@ final class MqttHandleService
 
     public function __construct(
         private DeviceCacheService $deviceCacheService,
-        private DataResolver $resolver,
+        private DeviceDataResolver $resolver,
         private LoggerInterface $logger,
         private string $broker,
         private string $port
@@ -52,10 +52,7 @@ final class MqttHandleService
         $this->deviceCacheService->create();
         $this->connectClient();
         $this->registerClient();
-
-        while (true) {
-            $this->getClient()->loop(2);
-        }
+        $this->demonize();
     }
 
     /**
@@ -105,5 +102,12 @@ final class MqttHandleService
     private function createPayload(Message $messageMqtt): DevicePayload
     {
         return (new DevicePayload(topic: $messageMqtt->topic, payload: $messageMqtt->payload));
+    }
+
+    public function demonize(): void
+    {
+        while (true) {
+            $this->getClient()->loop(2);
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Service\DeviceData;
+namespace App\Domain\DeviceData\Service;
 
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
@@ -39,7 +39,7 @@ final class DeviceCacheService
     }
 
     /**
-     * @return list<int, Sensor|Relay|FireSecurity|Security>
+     * @return Sensor
      * @throws InvalidArgumentException
      */
     public function getDeviceMap(): array
@@ -53,7 +53,7 @@ final class DeviceCacheService
     }
 
     /**
-     * @return list<int, Sensor|Relay|FireSecurity|Security>
+     * @return Sensor
      * @throws InvalidArgumentException
      */
     public function getTopicMapByDeviceTopic(): array
@@ -83,7 +83,7 @@ final class DeviceCacheService
     }
 
     /**
-     * @return list<int, Sensor|Relay|FireSecurity|Security>
+     * @return Sensor
      */
     private function getMap(): array
     {

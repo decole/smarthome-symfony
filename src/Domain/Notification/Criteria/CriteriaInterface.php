@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Service\Alert\Criteria;
+namespace App\Domain\Notification\Criteria;
 
 interface CriteriaInterface
 {

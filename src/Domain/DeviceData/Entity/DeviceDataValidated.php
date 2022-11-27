@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Service\DeviceData\Dto;
+namespace App\Domain\DeviceData\Entity;
 
 use App\Domain\Contract\Repository\EntityInterface;
 
-class DeviceDataValidatedDto
+class DeviceDataValidated
 {
     public function __construct(private bool $state, private EntityInterface $device)
     {

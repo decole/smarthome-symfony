@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\Service\Alert\Criteria;
+namespace App\Domain\Notification\Criteria;
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Event\VisualNotificationEvent;
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Payload\Entity\DevicePayload;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractCriteria implements CriteriaInterface

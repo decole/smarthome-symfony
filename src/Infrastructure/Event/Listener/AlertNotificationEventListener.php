@@ -2,14 +2,14 @@
 
 namespace App\Infrastructure\Event\Listener;
 
-use App\Application\Service\Alert\AlertService;
 use App\Domain\Event\AlertNotificationEvent;
+use App\Domain\Notification\Service\NotifyService;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: AlertNotificationEvent::NAME, method: 'onAlertSend')]
 class AlertNotificationEventListener
 {
-    public function __construct(private AlertService $alertService)
+    public function __construct(private NotifyService $alertService)
     {
     }
 

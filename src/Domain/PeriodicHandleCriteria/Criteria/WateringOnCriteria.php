@@ -2,9 +2,9 @@
 
 namespace App\Domain\PeriodicHandleCriteria\Criteria;
 
-use App\Application\Service\DeviceData\DeviceCacheService;
-use App\Application\Service\DeviceData\DeviceDataCacheService;
 use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
+use App\Domain\DeviceData\Service\DeviceCacheService;
+use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Relay\Entity\Relay;
 use Cron\CronExpression;

@@ -10,8 +10,6 @@ services:
   App\Application\Cli\Handler\:
     resource: '%kernel.project_dir%/src/Application/Cli/Handler/*Handler.php'
 
-  App\Application\Service\DeviceData\DataResolver: ~
-
   App\Application\Service\:
     resource: '%kernel.project_dir%/src/Application/Service/**/*Service.php'
     autowire: true
