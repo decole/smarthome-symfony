@@ -1,3 +1,0 @@
-FROM registry.gitlab.com/decole/uberserver-symfony:base
-
-MAINTAINER decole <decole2014@yandex.ru>
