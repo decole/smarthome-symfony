@@ -27,6 +27,8 @@ class MqttHandleServiceCest
 
     public function createDto(UnitTester $I): void
     {
+        BypassFinals::enable();
+
         $service = new MqttHandleService(
             instance: Stub::make(StubMqttClient::class),
             resolver: $I->grabService(DeviceDataResolver::class),
@@ -51,6 +53,8 @@ class MqttHandleServiceCest
 
     public function positiveListen(UnitTester $I): void
     {
+        BypassFinals::enable();
+
         $service = new MqttHandleService(
             instance: Stub::make(StubMqttClient::class, [
                 'connect' => \Codeception\Stub\Expected::once(),
@@ -59,7 +63,7 @@ class MqttHandleServiceCest
                 'loop' => \Codeception\Stub\Expected::once(),
             ]),
             resolver: $I->grabService(DeviceDataResolver::class),
-            deviceCacheService: Stub::makeEmpty(DeviceCacheService::class, ['create' => \Codeception\Stub\Expected::once()]),
+            deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
             logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
             broker: $I->faker()->ipv4(),
@@ -71,6 +75,8 @@ class MqttHandleServiceCest
 
     public function positivePost(UnitTester $I): void
     {
+        BypassFinals::enable();
+
         $service = new MqttHandleService(
             instance: Stub::make(StubMqttClient::class, [
                 'connect' => \Codeception\Stub\Expected::once(),
@@ -79,7 +85,7 @@ class MqttHandleServiceCest
                 'loop' => \Codeception\Stub\Expected::once(),
             ]),
             resolver: $I->grabService(DeviceDataResolver::class),
-            deviceCacheService: Stub::makeEmpty(DeviceCacheService::class, ['create' => \Codeception\Stub\Expected::once()]),
+            deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
             logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
             broker: $I->faker()->ipv4(),
@@ -91,6 +97,8 @@ class MqttHandleServiceCest
 
     public function negativePost(UnitTester $I): void
     {
+        BypassFinals::enable();
+
         $service = new MqttHandleService(
             instance: Stub::make(StubMqttClient::class, [
                 'connect' => \Codeception\Stub\Expected::once(),
@@ -99,7 +107,7 @@ class MqttHandleServiceCest
                 'loop' => \Codeception\Stub\Expected::once(),
             ]),
             resolver: $I->grabService(DeviceDataResolver::class),
-            deviceCacheService: Stub::makeEmpty(DeviceCacheService::class, ['create' => \Codeception\Stub\Expected::once()]),
+            deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
             logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
             broker: $I->faker()->ipv4(),
@@ -107,7 +115,6 @@ class MqttHandleServiceCest
         );
 
         $I->expectThrowable(\ArgumentCountError::class, fn () => $service->post());
-
     }
 
     private function createMessage(string $topic, mixed $payload): Message
