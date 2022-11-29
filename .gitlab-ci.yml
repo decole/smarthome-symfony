@@ -14,17 +14,10 @@ composer:
     - uberserver
   script:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
     - php -v
     - ls -la
-    - cp -n docker-compose.yaml.dist docker-compose.yaml
-    - cp -n .env.local.example .env.local
-    - cp -n .env.local.example .env.test.local
     - docker-compose -f docker-compose.ci.yaml down
     - docker-compose -f docker-compose.ci.yaml up -d
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
 
 tests:
   stage: testing
