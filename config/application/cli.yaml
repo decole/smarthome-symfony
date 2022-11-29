@@ -8,10 +8,6 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Application\Cli\MqttHandlerCommand:
-    arguments:
-      $logger: '@monolog.logger.mqtt_transport'
-
   App\Application\Cli\PeriodicHandlerCommand:
     arguments:
       $logger: '@monolog.logger.periodic_handler'

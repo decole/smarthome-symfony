@@ -31,6 +31,7 @@
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Listener\BypassFinalListener"/>
     </listeners>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->

@@ -16,5 +16,6 @@ class TelegramNotificationHandler
     public function __invoke(TelegramNotificationMessage $message): void
     {
         $this->service->send($message->getTo(), $message->getMessage());
+        sleep(0.5);
     }
 }

@@ -16,5 +16,6 @@ class DiscordNotificationHandler
     public function __invoke(DiscordNotificationMessage $message): void
     {
         $this->service->send($message->getMessage());
+        sleep(0.5);
     }
 }

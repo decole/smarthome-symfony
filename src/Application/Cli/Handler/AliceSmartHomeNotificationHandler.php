@@ -48,5 +48,7 @@ class AliceSmartHomeNotificationHandler
             $this->service->send($words);
             sleep(6);
         }
+
+        sleep(1);
     }
 }
