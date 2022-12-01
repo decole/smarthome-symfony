@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   php-fpm:
-    image: registry.gitlab.com/decole/uberserver-symfony:supervisor
+    image: registry.gitlab.com/decole/uberserver-symfony:base
     container_name: ci-symfony
     volumes:
       - ./docker/supervisor/config:/etc/supervisor/conf.d

@@ -8,7 +8,6 @@ use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
 use App\Tests\Stub\Infrastructure\StubMqttClient;
-use Mosquitto\Client;
 use Mosquitto\Message;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
@@ -16,21 +15,13 @@ use Throwable;
 
 final class MqttHandleService
 {
-    // для тестов тип mixed, ибо используется стабнутый инстанс MqttClientInterface со своим клиентом-заглушкой
-    private mixed $client;
-
     public function __construct(
-        private MqttClientInterface $instance,
+        private MqttClientInterface $client,
         private DeviceDataResolver $resolver,
         private DeviceCacheService $deviceCacheService,
         private EventDispatcherInterface $eventDispatcher,
-        private LoggerInterface $logger,
-        private string $broker,
-        private string $port
+        private LoggerInterface $logger
     ) {
-        /** @var MqttClientInterface $client*/
-        $this->client = $this->instance::getInstance();
-        $this->client->setCredentials($this->broker, $this->port);
     }
 
     public function process(Message $message): void
@@ -62,7 +53,7 @@ final class MqttHandleService
     public function post(DevicePayload $message): void
     {
         try {
-            $this->client->publish($message->getTopic(), $message->getPayload(), 1);
+            $this->client->publish($message->getTopic(), $message->getPayload());
         } catch (Throwable $exception) {
             $this->logger->critical('Crash api post command to mqtt protocol', [
                 'exception' => $exception->getMessage(),
@@ -117,7 +108,7 @@ final class MqttHandleService
 
     private function demonize(): void
     {
-        if ($this->instance instanceof StubMqttClient) {
+        if ($this->client instanceof StubMqttClient) {
             return;
         }
 

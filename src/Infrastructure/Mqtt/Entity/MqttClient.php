@@ -2,41 +2,22 @@
 
 namespace App\Infrastructure\Mqtt\Entity;
 
-use App\Domain\DeviceData\Service\DeviceCacheService;
-use App\Domain\DeviceData\Service\DeviceDataResolver;
 use Mosquitto\Client;
-use Psr\Log\LoggerInterface;
+use Mosquitto\Message;
 
 /**
  * @see https://mosquitto-php.readthedocs.io/en/latest/client.html#Mosquitto\Client::onConnect
  */
 final class MqttClient implements MqttClientInterface
 {
-    private const KEEPALIVE = 10;
+    private const KEEPALIVE = 60;
 
-    private static bool $isConnect = false;
-
-    private static ?MqttClient $instance = null;
+    private bool $isConnect = false;
 
     private ?Client $client = null;
 
-    private string $broker;
-
-    private int $port;
-
-    public static function getInstance(): MqttClientInterface
+    public function __construct(private string $broker, private string $port)
     {
-        if (null === self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    public function setCredentials(string $broker, int $port): void
-    {
-        $this->broker = $broker;
-        $this->port = $port;
     }
 
     public function getClient(): Client
@@ -50,38 +31,58 @@ final class MqttClient implements MqttClientInterface
 
     public function isConnect(): bool
     {
-        return !self::$isConnect && $this->client !== null;
+        return $this->isConnect;
     }
 
     public function setIsConnect(bool $state): void
     {
-        self::$isConnect = $state;
+        $this->isConnect = $state;
     }
 
     public function connect(): void
     {
-        if (!$this->isConnect()) {
-            $this->getClient()->connect($this->broker, $this->port, self::KEEPALIVE);
-            self::$isConnect = true;
-
-            $this->getClient()->onConnect(fn ($rc) => self::$isConnect = $rc === 0);
-            $this->getClient()->onDisconnect(function () {
-                self::$isConnect = false;
-                sleep(60);
-            });
+        if ($this->isConnect()) {
+            return;
         }
+
+        $this->getClient()->connect($this->broker, $this->port);
+        $this->getClient()->setReconnectDelay(self::KEEPALIVE);
+        $this->isConnect = true;
+
+        $this->getClient()->onConnect(fn ($rc) => $this->isConnect = $rc === 0);
+        $this->getClient()->onDisconnect(fn () => $this->isConnect = false);
     }
 
     public function disconnect(): void
     {
-        self::$isConnect = false;
+        $this->isConnect = false;
         $this->client?->disconnect();
     }
 
+    // https://github.com/mgdm/Mosquitto-PHP/blob/php8/tests/Client/publish.phpt
     public function publish(string $topic, string $payload, int $qos = 0, bool $retain = false): void
     {
-        $this->connect();
-        $this->getClient()->publish($topic, $payload, $qos, $retain);
+        $client = $this->getClient();
+        $this->isConnect = $looping = true;
+
+        $client->onConnect(function() use ($client, $topic, $payload) {
+            $client->publish($topic, $payload, 0);
+        });
+
+        $client->onMessage(function(Message $message) use ($client, &$looping) {
+            $client->disconnect();
+            $this->isConnect = $looping = false;
+        });
+
+        $client->connect($this->broker, $this->port, self::KEEPALIVE);
+
+        for ($i = 0; $i < 10; $i++) {
+            if (!$looping) {
+                $this->isConnect = false;
+                break;
+            }
+            $client->loop(50);
+        }
     }
 
     public function subscribe(string $topic, int $qos): void

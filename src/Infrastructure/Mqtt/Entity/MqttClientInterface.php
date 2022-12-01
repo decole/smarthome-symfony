@@ -4,10 +4,6 @@ namespace App\Infrastructure\Mqtt\Entity;
 
 interface MqttClientInterface
 {
-    public static function getInstance(): MqttClientInterface;
-
-    public function setCredentials(string $broker, int $port): void;
-
     public function getClient(): mixed;
 
     public function isConnect(): bool;

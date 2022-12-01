@@ -10,12 +10,13 @@ services:
 
   mqtt_client:
     class: App\Infrastructure\Mqtt\Entity\MqttClient
+    arguments:
+      $broker: '%env(MQTT_BROKER_URL)%'
+      $port: '%env(MQTT_PORT)%'
 
   App\Infrastructure\Mqtt\Service\MqttHandleService:
     arguments:
-      $instance: '@mqtt_client'
-      $broker: '%env(MQTT_BROKER_URL)%'
-      $port: '%env(MQTT_PORT)%'
+      $client: '@mqtt_client'
       $logger: '@monolog.logger.mqtt_transport'
 
   app.cache.adapter.redis:

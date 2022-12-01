@@ -4,6 +4,3 @@ services:
 
   Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher:
     public: true
-
-  mqtt_client:
-    class: App\Tests\Stub\Infrastructure\StubMqttClient
