@@ -8,21 +8,23 @@ use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use App\Tests\Stub\Infrastructure\StubMqttClient;
 use App\Tests\UnitTester;
+use ArgumentCountError;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use DG\BypassFinals;
-use Mosquitto\Client;
 use Mosquitto\Message;
 use Psr\Log\NullLogger;
-use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MqttHandleServiceCest
 {
-    public function setUp(UnitTester $I): void
+    public function finalClass(UnitTester $I): void
     {
         BypassFinals::enable();
+
+        $service = $I->grabService(DeviceDataResolver::class);
+        $I->assertInstanceOf(DeviceDataResolver::class, $service);
     }
 
     public function createDto(UnitTester $I): void
@@ -30,13 +32,11 @@ class MqttHandleServiceCest
         BypassFinals::enable();
 
         $service = new MqttHandleService(
-            instance: Stub::make(StubMqttClient::class),
+            client: Stub::make(StubMqttClient::class),
             resolver: $I->grabService(DeviceDataResolver::class),
             deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
-            logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
-            broker: $I->faker()->ipv4(),
-            port: random_int(80, 99999)
+            logger: Stub::makeEmpty(NullLogger::class, ['info' => Expected::never()])
         );
 
         $topic = $I->faker()->word();
@@ -56,18 +56,16 @@ class MqttHandleServiceCest
         BypassFinals::enable();
 
         $service = new MqttHandleService(
-            instance: Stub::make(StubMqttClient::class, [
-                'connect' => \Codeception\Stub\Expected::once(),
-                'subscribe' => \Codeception\Stub\Expected::once(),
-                'onMessage' => \Codeception\Stub\Expected::once(),
-                'loop' => \Codeception\Stub\Expected::once(),
+            client: Stub::make(StubMqttClient::class, [
+                'connect' => Expected::once(),
+                'subscribe' => Expected::once(),
+                'onMessage' => Expected::once(),
+                'loop' => Expected::once(),
             ]),
             resolver: $I->grabService(DeviceDataResolver::class),
             deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
-            logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
-            broker: $I->faker()->ipv4(),
-            port: random_int(80, 99999)
+            logger: Stub::makeEmpty(NullLogger::class, ['info' => Expected::never()])
         );
 
         $service->listen();
@@ -78,18 +76,16 @@ class MqttHandleServiceCest
         BypassFinals::enable();
 
         $service = new MqttHandleService(
-            instance: Stub::make(StubMqttClient::class, [
-                'connect' => \Codeception\Stub\Expected::once(),
-                'subscribe' => \Codeception\Stub\Expected::once(),
-                'onMessage' => \Codeception\Stub\Expected::once(),
-                'loop' => \Codeception\Stub\Expected::once(),
+            client: Stub::make(StubMqttClient::class, [
+                'connect' => Expected::once(),
+                'subscribe' => Expected::once(),
+                'onMessage' => Expected::once(),
+                'loop' => Expected::once(),
             ]),
             resolver: $I->grabService(DeviceDataResolver::class),
             deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
-            logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
-            broker: $I->faker()->ipv4(),
-            port: random_int(80, 99999)
+            logger: Stub::makeEmpty(NullLogger::class, ['info' => Expected::never()])
         );
 
         $service->post(new DevicePayload(topic: $I->faker()->word(), payload: $I->faker()->word()));
@@ -100,21 +96,19 @@ class MqttHandleServiceCest
         BypassFinals::enable();
 
         $service = new MqttHandleService(
-            instance: Stub::make(StubMqttClient::class, [
-                'connect' => \Codeception\Stub\Expected::once(),
-                'subscribe' => \Codeception\Stub\Expected::once(),
-                'onMessage' => \Codeception\Stub\Expected::once(),
-                'loop' => \Codeception\Stub\Expected::once(),
+            client: Stub::make(StubMqttClient::class, [
+                'connect' => Expected::once(),
+                'subscribe' => Expected::once(),
+                'onMessage' => Expected::once(),
+                'loop' => Expected::once(),
             ]),
             resolver: $I->grabService(DeviceDataResolver::class),
             deviceCacheService: $I->grabService(DeviceCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]),
-            logger: Stub::makeEmpty(NullLogger::class, ['info' => \Codeception\Stub\Expected::never()]),
-            broker: $I->faker()->ipv4(),
-            port: random_int(80, 99999)
+            logger: Stub::makeEmpty(NullLogger::class, ['info' => Expected::never()])
         );
 
-        $I->expectThrowable(\ArgumentCountError::class, fn () => $service->post());
+        $I->expectThrowable(ArgumentCountError::class, fn () => $service->post());
     }
 
     private function createMessage(string $topic, mixed $payload): Message
