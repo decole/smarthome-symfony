@@ -31,7 +31,7 @@ final class DeviceDataResolver
         $this->execute($payload);
     }
 
-    public function execute(DevicePayload $payload): void
+    private function execute(DevicePayload $payload): void
     {
         try {
             $this->validatePayload($payload);
