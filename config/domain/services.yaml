@@ -13,3 +13,9 @@ services:
     resource: '%kernel.project_dir%/src/Domain/PeriodicHandleCriteria/**/*Criteria.php'
     tags: [ 'periodic.criteria' ]
     autowire: true
+
+  App\Domain\DeviceData\Service\DeviceDataResolver: ~
+
+  App\Domain\:
+    resource: '%kernel.project_dir%/src/Domain/**/*Service.php'
+    autowire: true

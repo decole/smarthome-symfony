@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli;
 
-use App\Application\Service\DeviceData\SecureDeviceDataService;
+use App\Domain\DeviceData\Service\SecureDeviceDataService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

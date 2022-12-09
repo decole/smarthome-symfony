@@ -1,15 +1,20 @@
 version: "3.4"
+
 services:
   php-fpm:
-    image: registry.gitlab.com/decole/uberserver-symfony:app
+    image: registry.gitlab.com/decole/uberserver-symfony:base
     container_name: ci-symfony
+    volumes:
+      - ./:/var/www
+      - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
       - "PHP_IDE_CONFIG=serverName=Docker"
-    volumes:
-      - ./:/var/www
-      - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
     networks:
       - uberserver-microservice
 

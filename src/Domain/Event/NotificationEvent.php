@@ -2,7 +2,7 @@
 
 namespace App\Domain\Event;
 
-use App\Domain\Notification\NotificationMessageInterface;
+use App\Domain\Notification\Entity\NotificationMessageInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class NotificationEvent extends Event

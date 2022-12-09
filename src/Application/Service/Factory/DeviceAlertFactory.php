@@ -2,14 +2,14 @@
 
 namespace App\Application\Service\Factory;
 
-use App\Application\Service\Alert\Criteria\CriteriaInterface;
-use App\Application\Service\Alert\Criteria\FireSecureCriteria;
-use App\Application\Service\Alert\Criteria\RelayCriteria;
-use App\Application\Service\Alert\Criteria\SecurityCriteria;
-use App\Application\Service\Alert\Criteria\SensorCriteria;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Notification\Criteria\CriteriaInterface;
+use App\Domain\Notification\Criteria\FireSecureCriteria;
+use App\Domain\Notification\Criteria\RelayCriteria;
+use App\Domain\Notification\Criteria\SecurityCriteria;
+use App\Domain\Notification\Criteria\SensorCriteria;
+use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
