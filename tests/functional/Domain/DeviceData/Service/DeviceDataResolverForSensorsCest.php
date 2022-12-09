@@ -27,7 +27,7 @@ class DeviceDataResolverForSensorsCest
     public function _before(DeviceDataResolverStep $I)
     {
         if ($this->list === null) {
-            $this->list = $I->createAllTypeSensors($I);
+            $this->list = $I->createAllTypeSensors();
         }
 
         $this->resolver = $I->grabService(DeviceDataResolver::class);

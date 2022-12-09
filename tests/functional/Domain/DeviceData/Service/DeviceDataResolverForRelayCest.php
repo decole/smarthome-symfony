@@ -22,7 +22,7 @@ class DeviceDataResolverForRelayCest
     public function _before(DeviceDataResolverStep $I): void
     {
         if ($this->device === null) {
-            $this->device = $I->createDryRelayDevice($I);
+            $this->device = $I->createDryRelayDevice();
         }
 
         $this->resolver = $I->grabService(DeviceDataResolver::class);

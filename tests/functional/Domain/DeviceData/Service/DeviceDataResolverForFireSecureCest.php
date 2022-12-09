@@ -2,7 +2,6 @@
 
 namespace App\Tests\functional\Domain\DeviceData\Service;
 
-use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
@@ -23,7 +22,7 @@ class DeviceDataResolverForFireSecureCest
     public function _before(DeviceDataResolverStep $I)
     {
         if ($this->device === null) {
-            $this->device = $I->createFireSecureDevice($I);
+            $this->device = $I->createFireSecureDevice();
         }
 
         $this->resolver = $I->grabService(DeviceDataResolver::class);
