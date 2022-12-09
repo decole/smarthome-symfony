@@ -58,7 +58,7 @@ deploy_prod:
   tags:
     - uberserver
   script:
-    - df -h /
+    - df -H /
     - |
       ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
       cd uberserver/
@@ -70,8 +70,9 @@ deploy_prod:
       df -H /
       make up
       make cache
-      make composer-install
-      make migration
+      docker-compose stop php-fpm
+      docker-compose run -T php-fpm composer install --no-dev --optimize-autoloader
+      docker-compose run -T php-fpm php bin/console d:m:m --no-interaction
       make restart
       make cache
       make ps
