@@ -5,10 +5,8 @@ services:
     image: registry.gitlab.com/decole/uberserver-symfony:base
     container_name: ci-symfony
     volumes:
-      - ./docker/supervisor/config:/etc/supervisor/conf.d
       - ./:/var/www
       - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
-    command: /usr/bin/supervisord
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
