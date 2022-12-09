@@ -3,9 +3,9 @@
 namespace App\Tests\unit\Application\Service\Validation\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
-use App\Application\Service\Alert\AlertService;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Identity\Entity\User;
+use App\Domain\Notification\Service\NotifyService;
 use App\Infrastructure\Doctrine\Service\Profile\Factory\ProfileCrudFactory;
 use App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService;
 use App\Infrastructure\Event\Listener\AlertNotificationEventListener;
@@ -48,7 +48,7 @@ class ProfileCrudServiceCest
     {
         $dispatcher = new EventDispatcher();
 
-        $listener = new AlertNotificationEventListener($I->grabService(AlertService::class));
+        $listener = new AlertNotificationEventListener($I->grabService(NotifyService::class));
         $dispatcher->addListener('notification.alert.send', [$listener, 'onAlertSend']);
 
         $event = new AlertNotificationEvent(

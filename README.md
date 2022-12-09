@@ -99,3 +99,9 @@ php bin/console cache:clear --env=prod --no-debug
 ```
 
 http://localhost:84/adminlte3/pages/widgets.html - примеры страниц AdminLTE3
+
+https://tomasvotruba.com/blog/2019/03/28/how-to-mock-final-classes-in-phpunit/ - Для тестов - тестировать final classes
+
+https://medium.com/docler-engineering/how-to-make-phpunit-mocking-and-final-classes-cohabit-all-together-ec46c37c3368 - use lib in tests
+
+https://dev.to/daniel_werner/how-to-use-reflection-to-test-private-and-protected-methods-3339 - reflection

@@ -8,11 +8,16 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Infrastructure\Mqtt\Service\MqttHandleService:
+  mqtt_client:
+    class: App\Infrastructure\Mqtt\Entity\MqttClient
     arguments:
-      $logger: '@monolog.logger.mqtt_transport'
       $broker: '%env(MQTT_BROKER_URL)%'
       $port: '%env(MQTT_PORT)%'
+
+  App\Infrastructure\Mqtt\Service\MqttHandleService:
+    arguments:
+      $client: '@mqtt_client'
+      $logger: '@monolog.logger.mqtt_transport'
 
   app.cache.adapter.redis:
     parent: 'cache.adapter.redis'

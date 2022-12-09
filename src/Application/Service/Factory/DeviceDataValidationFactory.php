@@ -11,7 +11,7 @@ use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidator;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;

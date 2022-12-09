@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\YandexSmartHome\Service;
 
-use App\Domain\Payload\DevicePayload;
+use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use App\Infrastructure\YandexSmartHome\Device\DeviceInterface;
 use Exception;
