@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220821205610 extends AbstractMigration
+final class Version20221214221650 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -19,11 +19,14 @@ final class Version20220821205610 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE "user" ADD telegram_id INT DEFAULT NULL');
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE plc DROP topics');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE "user" DROP telegram_id');
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE SCHEMA public');
+        $this->addSql('ALTER TABLE plc ADD topics JSON NOT NULL');
     }
 }

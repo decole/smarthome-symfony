@@ -19,7 +19,6 @@ final class Version20220626092000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE security (id UUID NOT NULL, security_type VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, topic VARCHAR(255) NOT NULL, payload VARCHAR(255) DEFAULT NULL, detect_payload VARCHAR(255) NOT NULL, hold_payload VARCHAR(255) NOT NULL, last_command VARCHAR(255) DEFAULT NULL, params JSON NOT NULL, status SMALLINT NOT NULL, notify BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, message_info VARCHAR(255) DEFAULT NULL, message_ok VARCHAR(255) DEFAULT NULL, message_warn VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_C59BD5C15E237E06 ON security (name)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_C59BD5C19D40DE1B ON security (topic)');
@@ -30,8 +29,6 @@ final class Version20220626092000 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP TABLE security');
     }
 }
