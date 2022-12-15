@@ -14,8 +14,9 @@ final class SensorCrudFactory extends AbstractCrudFactory
     public function __construct(
         private SensorRepositoryInterface $repository,
         private SensorCrudValidationService $validation,
-        protected DeviceCacheService $cacheService
+        DeviceCacheService $cacheService
     ) {
+        $this->cacheService = $cacheService;
     }
 
     final public function getRepository(): BaseDoctrineRepository

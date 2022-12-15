@@ -6,7 +6,7 @@ use App\Application\Service\Factory\AbstractCrudFactory;
 use App\Application\Service\Validation\PLC\PlcCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\PlcRepositoryInterface;
-use App\Domain\DeviceData\Service\DeviceCacheService;
+use App\Domain\PLC\Service\PlcCacheService;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use App\Infrastructure\Doctrine\Repository\PLC\PlcRepository;
 
@@ -15,8 +15,9 @@ class PlcCrudFactory extends AbstractCrudFactory
     public function __construct(
         private PlcRepositoryInterface $repository,
         private PlcCrudValidationService $validation,
-        protected DeviceCacheService $cacheService
+        PlcCacheService $cacheService
     ) {
+        $this->cacheService = $cacheService;
     }
 
     /**

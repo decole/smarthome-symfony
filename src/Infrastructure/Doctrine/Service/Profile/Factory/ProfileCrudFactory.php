@@ -14,8 +14,9 @@ final class ProfileCrudFactory extends AbstractCrudFactory
     public function __construct(
         private ProfileRepositoryInterface $repository,
         private ProfileCrudValidationService $validation,
-        protected DeviceCacheService $cacheService
+        DeviceCacheService $cacheService
     ) {
+        $this->cacheService = $cacheService;
     }
 
     public function getRepository(): BaseDoctrineRepository
