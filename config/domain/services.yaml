@@ -19,3 +19,5 @@ services:
   App\Domain\:
     resource: '%kernel.project_dir%/src/Domain/**/*Service.php'
     autowire: true
+
+  App\Domain\PLC\Factory\PlcCrudFactory: ~

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class PlcAdminCreateController extends AbstractController
+final class PlcAdminUpdateController extends AbstractController
 {
     public function __construct(private PlcCrudService $crud)
     {
@@ -20,26 +20,31 @@ final class PlcAdminCreateController extends AbstractController
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/plc/admin/create', name: "plc_admin_create")]
-    public function create(Request $request): Response
+    #[Route('/plc/admin/update/{id}', name: "plc_admin_update_by_id")]
+    public function update(string $id, Request $request): Response
     {
+        $errors = [];
+
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
-        $dto = $this->crud->createDto($request);
+        $dto = $this->crud->entityByDto($id);
 
         if ($request->isMethod('post')) {
+            $dto = $this->crud->createDto($request);
+            $dto->savedId = $id;
 
-            $errors = $this->crud->validate($dto);
+            $errors = $this->crud->validate($dto, true);
 
             if (count($errors) === 0) {
-                $this->crud->create($dto);
+                $this->crud->update($id, $dto);
 
                 return $this->redirectToRoute('plc_admin');
             }
         }
 
         return $this->render('crud/plc/plc.save.entity.html.twig', [
-            'action' => 'create',
+            'action' => 'update',
+            'entityId' => $id,
             'plc' => $dto,
             'errors' => $errors ?? [],
         ]);

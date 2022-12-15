@@ -26,4 +26,5 @@ final class CrudPlcDto implements ValidationDtoInterface
 
     public ?string $status = null;
     public ?string $notify = null;
+    public ?string $savedId = null;
 }
