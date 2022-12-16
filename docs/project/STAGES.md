@@ -36,14 +36,15 @@
 
 ### Stage (0.0.3)
 
-- [ ] Application Exception alerts to Sentry or Discord
-- [ ] Service tests
+- [x] Application Exception alerts to Sentry or Discord
+- [x] Service tests
 - [ ] CRUD devices and monitoring online in mqtt
 - [ ] Prometheus alerting by application and services
 - [ ] Alice Smart Home CRUD with refactoring service
-- [ ] Api service validation - validate devices with api interface
-- [ ] CD simple
+- [x] Api service validation - validate devices with api interface (canceled - not used)
+- [x] CD simple
 - [ ] Log services
+- [ ] Localization
 
 
 ### Stage (0.1.0)
@@ -51,7 +52,7 @@
 - [ ] Add custom events (my personality build)
 - [ ] Telegram bot
 - [ ] Grafana (application and proxmox)
-- [ ] CI good
+- [x] CI good
 - [ ] CD good
 
 

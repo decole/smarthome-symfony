@@ -23,6 +23,7 @@
         "ramsey/uuid": "^4.3",
         "ramsey/uuid-doctrine": "^1.8",
         "sensio/framework-extra-bundle": "^6.1",
+        "sentry/sentry-symfony": "^4.5",
         "symfony/asset": "5.4.*",
         "symfony/cache": "5.4.*",
         "symfony/console": "5.4.*",
@@ -56,8 +57,7 @@
         "symfony/yaml": "5.4.*",
         "symfonycasts/verify-email-bundle": "^1.10",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "ext-mosquitto-php": "*"
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "allow-plugins": {
