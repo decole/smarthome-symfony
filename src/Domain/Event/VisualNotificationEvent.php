@@ -4,6 +4,7 @@ namespace App\Domain\Event;
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
+use App\Domain\PLC\Entity\PLC;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
@@ -31,9 +32,11 @@ class VisualNotificationEvent
     {
         return match ($this->device::alias()) {
             Sensor::alias(),
-            Relay::alias() => VisualNotification::ALERT_TYPE,
+            Relay::alias(),
+            PLC::alias() => VisualNotification::ALERT_TYPE,
             FireSecurity::alias() => VisualNotification::FIRE_SECURE_TYPE,
             Security::alias() => VisualNotification::SECURITY_TYPE,
+
         };
     }
 }

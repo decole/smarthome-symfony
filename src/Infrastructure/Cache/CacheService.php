@@ -21,6 +21,11 @@ final class CacheService
         return $this->cache->getItem($key)->get();
     }
 
+    public function getItem(string $key): CacheItem
+    {
+        return $this->cache->getItem($key);
+    }
+
     /**
      * @throws InvalidArgumentException
      */
