@@ -8,16 +8,16 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ path('home') }}" class="nav-link">Home</a>
+            <a href="{{ path('home') }}" class="nav-link">{% trans %}Home{% endtrans %}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
+            <a href="#" class="nav-link">{% trans %}Contact{% endtrans %}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Application Environment: {{ app.environment }}</a>
+            <a href="#" class="nav-link">{% trans %}Application Environment{% endtrans %}: {{ app.environment }}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ path('app_logout') }}" class="nav-link">Logout</a>
+            <a href="{{ path('app_logout') }}" class="nav-link">{% trans %}Logout{% endtrans %}</a>
         </li>
     </ul>
 
@@ -52,7 +52,7 @@
                     <span class="float-right text-muted text-sm">{{ notifications.notifications.securities.secureAlerts.difTime }}</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="{{ path('visual_notify', {type: 99}) }}" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <a href="{{ path('visual_notify', {type: 99}) }}" class="dropdown-item dropdown-footer">{% trans %}See All Notifications{% endtrans %}</a>
             </div>
         </li>
         <li class="nav-item">
@@ -73,7 +73,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ path('home') }}" class="brand-link">
-        <img src="/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="/assets/favicon.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">UberServer</span>
     </a>
 
@@ -96,7 +96,7 @@
                     <a href="{{ path('home') }}" class="nav-link {{ 'home' in route ? 'active' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Главная
+                            {% trans %}Home{% endtrans %}
                         </p>
                     </a>
                 </li>
@@ -104,7 +104,7 @@
                     <a href="{{ path('watering') }}" class="nav-link {{ 'security_page' in route ? 'active' }}">
                         <i class="nav-icon fas fa-tint"></i>
                         <p>
-                            Полив
+                            {% trans %}Watering{% endtrans %}
                         </p>
                     </a>
                 </li>
@@ -112,7 +112,7 @@
                     <a href="{{ path('fire_secure_page') }}" class="nav-link {{ 'fire_secure_page' in route ? 'active' }}">
                         <i class="nav-icon fab fa-free-code-camp fa-circle"></i>
                         <p>
-                            Пожарная система
+                            {% trans %}Fire secure{% endtrans %}
                             {% if notifications.notifications.securities.fireSecureAlerts.count > 0 %}
                                 <span class="right badge badge-danger">!</span>
                             {% endif %}
@@ -123,7 +123,7 @@
                     <a href="{{ path('security_page') }}" class="nav-link {{ 'security_page' in route ? 'active' }}">
                         <i class="nav-icon fas fa-user-lock"></i>
                         <p>
-                            Охранная система
+                            {% trans %}Perimeter secure{% endtrans %}
                             {% if notifications.notifications.securities.secureAlerts.count > 0 %}
                                 <span class="right badge badge-danger">!</span>
                             {% endif %}
@@ -134,7 +134,7 @@
                     <a href="{{ path('devices') }}" class="nav-link {{ 'devices' in route ? 'active' }}">
                         <i class="nav-icon fas fa-folder-open"></i>
                         <p>
-                            Все данные
+                            {% trans %}All device data{% endtrans %}
                         </p>
                     </a>
                 </li>
@@ -142,7 +142,7 @@
                     <a href="{{ path('outbuilding') }}" class="nav-link {{ 'outbuilding' in route ? 'active' }}">
                         <i class="nav-icon fas fa-border-style"></i>
                         <p>
-                            Пристройка
+                            {% trans %}Outbuilding{% endtrans %}
                         </p>
                     </a>
                 </li>
@@ -150,7 +150,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Настройки
+                            {% trans %}Settings{% endtrans %}
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -158,37 +158,37 @@
                         <li class="nav-item">
                             <a href="{{ path('sensors_admin') }}" class="nav-link {{ 'sensors_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Сенсоры</p>
+                                <p>{% trans %}Sensors{% endtrans %}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('relay_admin') }}" class="nav-link {{ 'relay_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Реле</p>
+                                <p>{% trans %}Relay{% endtrans %}<</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('security_admin') }}" class="nav-link {{ 'security_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Охранка</p>
+                                <p>{% trans %}Secure{% endtrans %}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('fire_secure_admin') }}" class="nav-link {{ 'fire_secure_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Пожарка</p>
+                                <p>{% trans %}FireSecure{% endtrans %}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('page_admin') }}" class="nav-link {{ 'page_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Страницы</p>
+                                <p>{% trans %}Pages{% endtrans %}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('plc_admin') }}" class="nav-link {{ 'plc_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Мониторинг PLC</p>
+                                <p>{% trans %}Monitoring PLC{% endtrans %}</p>
                             </a>
                         </li>
                     </ul>

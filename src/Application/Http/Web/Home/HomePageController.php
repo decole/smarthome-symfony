@@ -7,10 +7,11 @@ use App\Domain\Identity\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class HomePageController extends AbstractController
 {
-    public function __construct(private SitePageService $service)
+    public function __construct(private SitePageService $service, private TranslatorInterface $translator)
     {
     }
 
@@ -20,7 +21,7 @@ final class HomePageController extends AbstractController
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
         return $this->render('page/index.html.twig', [
-            'title' => 'Главная',
+            'title' => $this->translator->trans('Home'),
             'devices' => $this->service->getDeviceList(name: 'home')
         ]);
     }
