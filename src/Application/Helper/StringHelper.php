@@ -2,7 +2,6 @@
 
 namespace App\Application\Helper;
 
-
 class StringHelper
 {
     public static function sanitize(mixed $sanitizeString, ?string $default = null): mixed
