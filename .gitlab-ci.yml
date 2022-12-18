@@ -40,6 +40,17 @@ tests:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R 777 ./
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
+    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
+  after_script:
+    - >
+      if [ $CI_JOB_STATUS == 'success' ]; then
+        echo 'Success'
+      else
+        echo 'Droping build files'
+        docker-compose -f docker-compose.ci.yaml run -T php-fpm chmod -R 777 ./
+        docker-compose -f docker-compose.ci.yaml run -T php-fpm rm -rf ./var ./vendor .env.test.local
+        docker-compose -f docker-compose.ci.yaml down --remove-orphans
+      fi
 
 clean:
   stage: manual-clean
@@ -48,7 +59,7 @@ clean:
   script:
     - docker-compose -f docker-compose.ci.yaml down
     - docker-compose -f docker-compose.ci.yaml up -d
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R g+rw ./
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod -R 777 ./
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
   when: manual
@@ -69,12 +80,13 @@ deploy_prod:
       git pull
       df -H /
       make up
-      make cache
+      docker-compose exec -T php-fpm chmod -R 777 ./
+      docker-compose exec -T php-fpm rm -rf ./var/cache/prod/*
       docker-compose stop php-fpm
       docker-compose run -T php-fpm composer install --no-dev --optimize-autoloader
       docker-compose run -T php-fpm php bin/console d:m:m --no-interaction
+      docker-compose run -T php-fpm chmod -R 777 ./
       make restart
-      make cache
       make ps
       EOT
   dependencies:

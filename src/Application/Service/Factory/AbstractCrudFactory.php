@@ -4,7 +4,7 @@ namespace App\Application\Service\Factory;
 
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\DeviceData\Service\DeviceCacheService;
+use App\Domain\Contract\Service\CacheServiceInterface;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 abstract class AbstractCrudFactory
 {
-    protected DeviceCacheService $cacheService;
+    protected CacheServiceInterface $cacheService;
 
     abstract public function getRepository(): BaseDoctrineRepository;
 
@@ -59,7 +59,7 @@ abstract class AbstractCrudFactory
         $this->getCacheService()->create();
     }
 
-    final public function getCacheService(): DeviceCacheService
+    final public function getCacheService(): CacheServiceInterface
     {
         return $this->cacheService;
     }

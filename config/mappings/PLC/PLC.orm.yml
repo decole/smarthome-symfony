@@ -1,0 +1,30 @@
+App\Domain\PLC\Entity\PLC:
+  table: 'plc'
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    name:
+      type: string
+      unique: true
+    targetTopic:
+      type: string
+      unique: true
+    alarmSecondDelay:
+      type: integer
+    status:
+      type: smallint
+    notify:
+      type: boolean
+    createdAt:
+      type: datetime_immutable
+      name: created_at
+    updatedAt:
+      type: datetime_immutable
+      name: updated_at
+      nullable: true
+  embedded:
+    statusMessage:
+      class: App\Domain\Common\Embedded\StatusMessage
+      columnPrefix: false

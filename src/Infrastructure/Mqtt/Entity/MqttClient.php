@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Mqtt\Entity;
 
+use App\Infrastructure\Mqtt\Exception\MqttException;
 use Mosquitto\Client;
 use Mosquitto\Message;
 
@@ -24,6 +25,7 @@ final class MqttClient implements MqttClientInterface
     {
         if ($this->client === null) {
             $this->client = new Client();
+            register_shutdown_function([$this, 'disconnect']);
         }
 
         return $this->client;
@@ -50,13 +52,20 @@ final class MqttClient implements MqttClientInterface
         $this->isConnect = true;
 
         $this->getClient()->onConnect(fn ($rc) => $this->isConnect = $rc === 0);
-        $this->getClient()->onDisconnect(fn () => $this->isConnect = false);
+        $this->getClient()->onDisconnect(function() {
+            $this->isConnect = false;
+            $this->disconnect();
+        });
     }
 
+    /**
+     * @throws MqttException
+     */
     public function disconnect(): void
     {
         $this->isConnect = false;
         $this->client?->disconnect();
+        throw MqttException::disconnect();
     }
 
     // https://github.com/mgdm/Mosquitto-PHP/blob/php8/tests/Client/publish.phpt
@@ -97,6 +106,6 @@ final class MqttClient implements MqttClientInterface
 
     public function loop(): void
     {
-        $this->getClient()->loop();
+        $this->getClient()->loop(50);
     }
 }

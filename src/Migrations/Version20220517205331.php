@@ -19,7 +19,6 @@ final class Version20220517205331 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE sensor (id UUID NOT NULL, name VARCHAR(255) NOT NULL, topic VARCHAR(255) NOT NULL, payload_min INT NOT NULL, payload_max INT NOT NULL, payload VARCHAR(255) DEFAULT NULL, message_info VARCHAR(255) DEFAULT NULL, message_ok VARCHAR(255) DEFAULT NULL, message_warn VARCHAR(255) DEFAULT NULL, type SMALLINT NOT NULL, status SMALLINT NOT NULL, notify BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_BC8617B05E237E06 ON sensor (name)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_BC8617B09D40DE1B ON sensor (topic)');
@@ -42,8 +41,6 @@ final class Version20220517205331 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP TABLE sensor');
         $this->addSql('DROP TABLE messenger_messages');
     }

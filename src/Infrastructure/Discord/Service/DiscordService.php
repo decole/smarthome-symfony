@@ -57,11 +57,14 @@ final class DiscordService
             $this->logger->critical('Can`t send discord message', [
                 'exception' => $exception->getMessage(),
             ]);
-            $event = new AlertNotificationEvent(
-                'Can`t send discord message ' . $exception->getMessage(),
-                [AlertNotificationEvent::MESSENGER]
+
+            $this->eventDispatcher->dispatch(
+                new AlertNotificationEvent(
+                    $exception->getMessage(),
+                    [AlertNotificationEvent::MESSENGER]
+                ),
+                AlertNotificationEvent::NAME
             );
-            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
     }
 }
