@@ -71,13 +71,13 @@ class SensorCrudServiceCest
 
         $I->assertEquals(4, $violation->count());
         $I->assertInstanceOf(ConstraintViolationListInterface::class, $violation);
-        $I->assertEquals('This value should not be blank.', $validateOne->getMessage());
+        $I->assertEquals('Значение не должно быть пустым.', $validateOne->getMessage());
         $I->assertEquals('name', $validateOne->getPropertyPath());
-        $I->assertEquals('This value should not be null.', $validateTwo->getMessage());
+        $I->assertEquals('Значение не должно быть null.', $validateTwo->getMessage());
         $I->assertEquals('name', $validateTwo->getPropertyPath());
-        $I->assertEquals('This value should not be blank.', $validateThree->getMessage());
+        $I->assertEquals('Значение не должно быть пустым.', $validateThree->getMessage());
         $I->assertEquals('topic', $validateThree->getPropertyPath());
-        $I->assertEquals('This value should not be null.', $validateFore->getMessage());
+        $I->assertEquals('Значение не должно быть null.', $validateFore->getMessage());
         $I->assertEquals('topic', $validateFore->getPropertyPath());
     }
 

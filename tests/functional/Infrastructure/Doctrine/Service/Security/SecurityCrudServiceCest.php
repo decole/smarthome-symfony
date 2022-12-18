@@ -61,21 +61,21 @@ class SecurityCrudServiceCest
 
         $I->assertEquals(8, $violation->count());
         $I->assertInstanceOf(ConstraintViolationListInterface::class, $violation);
-        $I->assertEquals('This value should not be blank.', $validateOne->getMessage());
+        $I->assertEquals('Значение не должно быть пустым.', $validateOne->getMessage());
         $I->assertEquals('name', $validateOne->getPropertyPath());
-        $I->assertEquals('This value should not be null.', $validateTwo->getMessage());
+        $I->assertEquals('Значение не должно быть null.', $validateTwo->getMessage());
         $I->assertEquals('name', $validateTwo->getPropertyPath());
-        $I->assertEquals('This value should not be blank.', $validateThree->getMessage());
+        $I->assertEquals('Значение не должно быть пустым.', $validateThree->getMessage());
         $I->assertEquals('topic', $validateThree->getPropertyPath());
-        $I->assertEquals('This value should not be null.', $validateFore->getMessage());
+        $I->assertEquals('Значение не должно быть null.', $validateFore->getMessage());
         $I->assertEquals('topic', $validateFore->getPropertyPath());
-        $I->assertEquals('This value should not be blank.', $validateFive->getMessage());
+        $I->assertEquals('Значение не должно быть пустым.', $validateFive->getMessage());
         $I->assertEquals('detectPayload', $validateFive->getPropertyPath());
-        $I->assertEquals('This value should not be null.', $validateSix->getMessage());
+        $I->assertEquals('Значение не должно быть null.', $validateSix->getMessage());
         $I->assertEquals('detectPayload', $validateSix->getPropertyPath());
-        $I->assertEquals('This value should not be blank.', $validateSeven->getMessage());
+        $I->assertEquals('Значение не должно быть пустым.', $validateSeven->getMessage());
         $I->assertEquals('holdPayload', $validateSeven->getPropertyPath());
-        $I->assertEquals('This value should not be null.', $validateEight->getMessage());
+        $I->assertEquals('Значение не должно быть null.', $validateEight->getMessage());
         $I->assertEquals('holdPayload', $validateEight->getPropertyPath());
     }
 
