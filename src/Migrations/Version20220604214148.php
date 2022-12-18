@@ -26,7 +26,6 @@ final class Version20220604214148 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP INDEX UNIQ_8D93D6495E237E06');
         $this->addSql('ALTER TABLE "user" DROP is_verified');
         $this->addSql('ALTER TABLE "user" DROP name');

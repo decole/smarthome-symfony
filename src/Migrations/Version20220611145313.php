@@ -19,7 +19,6 @@ final class Version20220611145313 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE sensor_dry_contact (id UUID NOT NULL, payload_high VARCHAR(255) NOT NULL, payload_low VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN sensor_dry_contact.id IS \'(DC2Type:uuid)\'');
         $this->addSql('CREATE TABLE sensor_humidity (id UUID NOT NULL, payload_min VARCHAR(255) NOT NULL, payload_max VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
@@ -46,8 +45,6 @@ final class Version20220611145313 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP TABLE sensor_dry_contact');
         $this->addSql('DROP TABLE sensor_humidity');
         $this->addSql('DROP TABLE sensor_leakage');

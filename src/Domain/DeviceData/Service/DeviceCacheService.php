@@ -2,10 +2,12 @@
 
 namespace App\Domain\DeviceData\Service;
 
+use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
+use App\Domain\Contract\Service\CacheServiceInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
@@ -16,7 +18,7 @@ use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\ItemInterface;
 
-final class DeviceCacheService
+final class DeviceCacheService implements CacheServiceInterface
 {
     public function __construct(
         private CacheService $cache,
@@ -39,7 +41,7 @@ final class DeviceCacheService
     }
 
     /**
-     * @return Sensor
+     * @return array{"sensor":list<Sensor>, "relay":list<Relay>, "security":list<Security>, "fireSecurity":list<FireSecurity>}
      * @throws InvalidArgumentException
      */
     public function getDeviceMap(): array
@@ -53,7 +55,7 @@ final class DeviceCacheService
     }
 
     /**
-     * @return Sensor
+     * @return array<string, EntityInterface>
      * @throws InvalidArgumentException
      */
     public function getTopicMapByDeviceTopic(): array
@@ -83,7 +85,7 @@ final class DeviceCacheService
     }
 
     /**
-     * @return Sensor
+     * @return array{"sensor":list<Sensor>, "relay":list<Relay>, "security":list<Security>, "fireSecurity":list<FireSecurity>}
      */
     private function getMap(): array
     {
