@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Service\VisualNotification;
+namespace App\Domain\VisualNotification\Service;
 
-use App\Application\Service\VisualNotification\Dto\VisualNotificationDto;
 use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
+use App\Domain\VisualNotification\Dto\VisualNotificationDto;
 use App\Domain\VisualNotification\Entity\VisualNotification;
 use App\Infrastructure\Cache\CacheService;
 use DateTimeImmutable;
