@@ -2,6 +2,7 @@
 
 namespace App\Domain\SecureSystem\Service;
 
+use App\Domain\Contract\Repository\PageRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,17 +16,16 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
+final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
 
-    private UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator)
-    {
-        $this->urlGenerator = $urlGenerator;
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private PageRepositoryInterface $repository
+    ) {
     }
 
     public function authenticate(Request $request): Passport
@@ -45,15 +45,16 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
-
-         return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->generateStarterUri());
     }
 
-    protected function getLoginUrl(Request $request): string
+    public function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+    }
+
+    private function generateStarterUri(): string
+    {
+        return $this->repository->findAll()[0]?->getAliasUri() ?? $this->urlGenerator->generate('page_admin');
     }
 }

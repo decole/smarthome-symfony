@@ -43,6 +43,7 @@
 - [x] CD simple
 - [x] Localization
 - [x] Local Sentry (sentry.io) - https://github.com/getsentry/self-hosted
+- [x] Twig page CRUD
 - [ ] Alice Smart Home CRUD with refactoring service
 
 

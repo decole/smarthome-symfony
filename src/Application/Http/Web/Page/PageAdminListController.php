@@ -20,7 +20,7 @@ final class PageAdminListController extends AbstractController
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
         return $this->render('crud/page/page.list.html.twig', [
-            'pages' => $this->crud->list(),
+            'page_list' => $this->crud->list(),
         ]);
     }
 }

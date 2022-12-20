@@ -8,8 +8,15 @@ App\Domain\Page\Entity\Page:
     name:
       type: string
       unique: true
+    icon:
+      type: string
+    alias:
+      type: string
     config:
       type: json
+    groupId:
+      type: integer
+      name: group_id
     createdAt:
       type: datetime_immutable
       name: created_at
