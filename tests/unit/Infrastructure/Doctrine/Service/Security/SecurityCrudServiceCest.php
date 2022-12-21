@@ -2,6 +2,7 @@
 
 namespace App\Tests\unit\Infrastructure\Doctrine\Service\Security;
 
+use App\Application\Helper\StringHelper;
 use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
 use App\Tests\UnitTester;
@@ -30,7 +31,7 @@ class SecurityCrudServiceCest
         $I->assertEquals(null, $dto->detectPayload);
         $I->assertEquals(null, $dto->holdPayload);
         $I->assertEquals(null, $dto->lastCommand);
-        $I->assertEquals([], $dto->params);
+        $I->assertEquals(null, $dto->params);
         $I->assertEquals(null, $dto->message_info);
         $I->assertEquals(null, $dto->message_ok);
         $I->assertEquals(null, $dto->message_warn);
@@ -57,9 +58,12 @@ class SecurityCrudServiceCest
             'detectPayload' => $detectPayload = $I->faker()->word(),
             'holdPayload' => $holdPayload = $I->faker()->word(),
             'lastCommand' => $lastCommand = $I->faker()->word(),
-            'params' => $params = [
-                'some' => 'param'
-            ],
+            'params' => $params = '{
+    "mqtt": {
+        "publishTopic": "/warning/sound",
+        "payload": 1
+    }
+}',
             'message_info' => $messageInfo = $I->faker()->word(),
             'message_ok' => $messageOk = $I->faker()->word(),
             'message_warn' => $messageWarn = $I->faker()->word(),
@@ -76,7 +80,7 @@ class SecurityCrudServiceCest
         $I->assertEquals($detectPayload, $dto->detectPayload);
         $I->assertEquals($holdPayload, $dto->holdPayload);
         $I->assertEquals($lastCommand, $dto->lastCommand);
-        $I->assertEquals($params, $dto->params);
+        $I->assertEquals(StringHelper::sanitize($params), $dto->params);
         $I->assertEquals($messageInfo, $dto->message_info);
         $I->assertEquals($messageOk, $dto->message_ok);
         $I->assertEquals($messageWarn, $dto->message_warn);

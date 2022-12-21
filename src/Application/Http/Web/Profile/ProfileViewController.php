@@ -14,7 +14,7 @@ final class ProfileViewController extends AbstractController
     {
     }
 
-    #[Route('/profile', name: "profile_view")]
+    #[Route('/user/profile', name: "profile_view")]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

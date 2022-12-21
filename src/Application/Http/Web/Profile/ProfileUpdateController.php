@@ -22,7 +22,7 @@ final class ProfileUpdateController extends AbstractController
      * @throws OptimisticLockException
      * @throws ORMException
      */
-    #[Route('/profile/update', name: "profile_update",methods: ['POST'])]
+    #[Route('/user/profile/update', name: "profile_update",methods: ['POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

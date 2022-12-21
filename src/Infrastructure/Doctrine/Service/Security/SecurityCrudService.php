@@ -13,6 +13,7 @@ use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Webmozart\Assert\Assert;
@@ -33,7 +34,7 @@ final class SecurityCrudService
     }
 
     /**
-     * @throws OptimisticLockException|ORMException
+     * @throws OptimisticLockException|ORMException|JsonException
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
@@ -50,7 +51,7 @@ final class SecurityCrudService
     }
 
     /**
-     * @throws OptimisticLockException|ORMException
+     * @throws OptimisticLockException|ORMException|JsonException
      */
     public function update(string $id, CrudSecurityDto $dto): EntityInterface
     {
@@ -65,7 +66,11 @@ final class SecurityCrudService
         $entity->setDetectPayload($dto->detectPayload);
         $entity->setHoldPayload($dto->holdPayload);
         $entity->setLastCommand($dto->lastCommand);
-        $entity->setParams($dto->params);
+
+        $params = $dto->params === null ? [] :
+            json_decode(str_replace('&quot;', '"', $dto->params), true, 512, JSON_THROW_ON_ERROR) ?? [];
+
+        $entity->setParams($params);
 
         $entity->setStatusMessage(new StatusMessage(
             $dto->message_info,
@@ -114,6 +119,9 @@ final class SecurityCrudService
         return $dto;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function entityByDto(string $id): CrudSecurityDto
     {
         $entity = $this->crud->getEntityById($id);
@@ -128,7 +136,9 @@ final class SecurityCrudService
         $dto->holdPayload = $entity->getHoldPayload();
         $dto->lastCommand = $entity->getLastCommand();
 
-        $dto->params = $entity->getParams();
+        $params = $entity->getParams() === [] ? ['example' => 'empty'] : $entity->getParams();
+
+        $dto->params = json_encode($params, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         $this->setStatusMessage($dto, $entity);
 
@@ -140,6 +150,7 @@ final class SecurityCrudService
     /**
      * @param CrudSecurityDto $dto
      * @return Security
+     * @throws JsonException
      */
     public function getNewEntityByDto(CrudSecurityDto $dto): Security
     {
@@ -153,7 +164,8 @@ final class SecurityCrudService
             detectPayload: $dto->detectPayload,
             holdPayload: $dto->holdPayload,
             lastCommand: $dto->lastCommand,
-            params: $dto->params,
+            params: $dto->params === '' || $dto->params === null ? [] :
+                json_decode($dto->params, true, 512, JSON_THROW_ON_ERROR) ?? [],
             statusMessage: new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,

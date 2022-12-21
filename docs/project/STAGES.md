@@ -44,7 +44,7 @@
 - [x] Localization
 - [x] Local Sentry (sentry.io) - https://github.com/getsentry/self-hosted
 - [x] Twig page CRUD
-- [ ] Mqtt public mqtt payload by detect security event
+- [x] Mqtt public mqtt payload by detect security event
 
 
 ### Stage (0.1.0)

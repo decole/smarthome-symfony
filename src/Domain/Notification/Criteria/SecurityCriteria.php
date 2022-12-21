@@ -3,6 +3,7 @@
 namespace App\Domain\Notification\Criteria;
 
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Event\MqttSecurityAlertEvent;
 
 final class SecurityCriteria extends AbstractCriteria
 {
@@ -14,6 +15,11 @@ final class SecurityCriteria extends AbstractCriteria
         if ($device->isNotify() && $device->isGuarded()) {
             $this->sendByVisualNotify();
             $this->sendByMessengers();
+
+            $this->eventDispatcher->dispatch(
+                event: new MqttSecurityAlertEvent($device, $this->payload),
+                eventName: MqttSecurityAlertEvent::NAME
+            );
         }
     }
 
