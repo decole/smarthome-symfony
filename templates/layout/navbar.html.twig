@@ -1,5 +1,5 @@
 {% set route = app.request.get('_route') %}
-
+{% set pages = pages.map %}
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-dark">
     <!-- Left navbar links -->
@@ -92,44 +92,29 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    {% for page in pages %}
                 <li class="nav-item">
-                    <a href="{{ path('home') }}" class="nav-link {{ 'home' in route ? 'active' }}">
-                        <i class="nav-icon fas fa-home"></i>
+                    <a href="/{{ page.aliasUri }}" class="nav-link {{ page.aliasUri in route ? 'active' }}">
+                        <i class="nav-icon {{ page.icon }}"></i>
                         <p>
-                            {% trans %}Home{% endtrans %}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('watering') }}" class="nav-link {{ 'security_page' in route ? 'active' }}">
-                        <i class="nav-icon fas fa-tint"></i>
-                        <p>
-                            {% trans %}Watering{% endtrans %}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('fire_secure_page') }}" class="nav-link {{ 'fire_secure_page' in route ? 'active' }}">
-                        <i class="nav-icon fab fa-free-code-camp fa-circle"></i>
-                        <p>
-                            {% trans %}Fire secure{% endtrans %}
-                            {% if notifications.notifications.securities.fireSecureAlerts.count > 0 %}
-                                <span class="right badge badge-danger">!</span>
+                            {{ page.name|capitalize|trans }}
+
+                            {% if page.name == 'fire-security' %}
+                                {% if notifications.notifications.securities.fireSecureAlerts.count > 0 %}
+                                    <span class="right badge badge-danger">!</span>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if page.name == 'security' %}
+                                {% if notifications.notifications.securities.secureAlerts.count > 0 %}
+                                    <span class="right badge badge-danger">!</span>
+                                {% endif %}
                             {% endif %}
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ path('security_page') }}" class="nav-link {{ 'security_page' in route ? 'active' }}">
-                        <i class="nav-icon fas fa-user-lock"></i>
-                        <p>
-                            {% trans %}Perimeter secure{% endtrans %}
-                            {% if notifications.notifications.securities.secureAlerts.count > 0 %}
-                                <span class="right badge badge-danger">!</span>
-                            {% endif %}
-                        </p>
-                    </a>
-                </li>
+    {% endfor %}
+
                 <li class="nav-item">
                     <a href="{{ path('devices') }}" class="nav-link {{ 'devices' in route ? 'active' }}">
                         <i class="nav-icon fas fa-folder-open"></i>
@@ -138,14 +123,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ path('outbuilding') }}" class="nav-link {{ 'outbuilding' in route ? 'active' }}">
-                        <i class="nav-icon fas fa-border-style"></i>
-                        <p>
-                            {% trans %}Outbuilding{% endtrans %}
-                        </p>
-                    </a>
-                </li>
+
                 <li class="nav-item {{ 'admin' in route ? 'menu-is-opening menu-open' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -164,7 +142,7 @@
                         <li class="nav-item">
                             <a href="{{ path('relay_admin') }}" class="nav-link {{ 'relay_admin' in route ? 'active' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>{% trans %}Relay{% endtrans %}<</p>
+                                <p>{% trans %}Relay{% endtrans %}</p>
                             </a>
                         </li>
                         <li class="nav-item">

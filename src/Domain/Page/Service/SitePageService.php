@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Application\Service\SitePage;
+namespace App\Domain\Page\Service;
 
 use App\Application\Exception\DeviceDataException;
 use App\Domain\Contract\Repository\PageRepositoryInterface;
-use App\Domain\Page\Service\PageGidratorService;
 
 final class SitePageService
 {

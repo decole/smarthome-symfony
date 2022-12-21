@@ -1,8 +1,8 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
-        notifications: '@App\Application\Service\VisualNotification\VisualNotificationService'
-
+        notifications: '@App\Domain\VisualNotification\Service\VisualNotificationService'
+        pages: '@App\Domain\Page\Service\TwigPageService'
 when@test:
     twig:
         strict_variables: true

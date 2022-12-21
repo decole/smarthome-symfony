@@ -13,7 +13,10 @@ final class Page implements EntityInterface
 
     public function __construct(
         private string $name,
-        private array $config
+        private array $config,
+        private string $icon,
+        private string $alias,
+        private int $groupId
     ) {
         $this->identify();
         $this->onCreated();
@@ -42,5 +45,47 @@ final class Page implements EntityInterface
     public static function alias(): string
     {
         return 'page';
+    }
+
+    /**
+     * @return string
+     */
+    public function getAliasUri(): string
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @param string $alias
+     */
+    public function setAlias(string $alias): void
+    {
+        $this->alias = $alias;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon(): string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon(string $icon): void
+    {
+        $this->icon = $icon;
+    }
+
+    public function getGroupId(): int
+    {
+        return $this->groupId;
+    }
+
+    public function setGroupId(int $groupId): void
+    {
+        $this->groupId = $groupId;
     }
 }
