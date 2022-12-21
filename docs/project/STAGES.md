@@ -39,12 +39,12 @@
 - [x] Application Exception alerts to Sentry or Discord
 - [x] Service tests
 - [x] CRUD devices and monitoring online in mqtt
-- [ ] Prometheus alerting by application and services
-- [ ] Alice Smart Home CRUD with refactoring service
 - [x] Api service validation - validate devices with api interface (canceled - not used)
 - [x] CD simple
-- [ ] Log services
 - [x] Localization
+- [x] Local Sentry (sentry.io) - https://github.com/getsentry/self-hosted
+- [x] Twig page CRUD
+- [ ] Alice Smart Home CRUD with refactoring service
 
 
 ### Stage (0.1.0)
@@ -54,6 +54,10 @@
 - [ ] Grafana (application and proxmox)
 - [x] CI good
 - [ ] CD good
+- [ ] Prometheus alerting by application and services
+- [ ] Log services (Log aggregation)
+- [ ] Unit tests all
+- [ ] Functional tests all
 
 
 ### Stage (0.1.1)

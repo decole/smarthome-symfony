@@ -2,12 +2,12 @@
 
 namespace App\Domain\Notification\Service;
 
-use App\Application\Service\VisualNotification\Dto\VisualNotificationDto;
-use App\Application\Service\VisualNotification\VisualNotificationService;
 use App\Domain\Event\NotificationEvent;
 use App\Domain\Notification\Entity\AliceNotificationMessage;
 use App\Domain\Notification\Entity\DiscordNotificationMessage;
 use App\Domain\Notification\Entity\TelegramNotificationMessage;
+use App\Domain\VisualNotification\Dto\VisualNotificationDto;
+use App\Domain\VisualNotification\Service\VisualNotificationService;
 use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 

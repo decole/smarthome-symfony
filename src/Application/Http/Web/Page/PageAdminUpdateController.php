@@ -40,6 +40,9 @@ final class PageAdminUpdateController extends AbstractController
             'action' => 'update',
             'entityId' => $id,
             'pageName' => $dto->name,
+            'pageAlias' => $dto->alias,
+            'pageIcon' => $dto->icon,
+            'pageGroup' => $dto->groupId,
             'deviceList' => $this->crud->getSelectedDeviceList($dto),
             'errors' => $errors ?? [],
         ]);

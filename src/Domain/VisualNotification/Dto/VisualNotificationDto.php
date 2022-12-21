@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Service\VisualNotification\Dto;
+namespace App\Domain\VisualNotification\Dto;
 
 final class VisualNotificationDto
 {

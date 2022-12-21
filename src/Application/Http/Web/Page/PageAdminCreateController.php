@@ -41,6 +41,9 @@ final class PageAdminCreateController extends AbstractController
         return $this->render('crud/page/page.save.entity.html.twig', [
             'action' => 'create',
             'pageName' => $dto->name,
+            'pageAlias' => $dto->alias,
+            'pageIcon' => $dto->icon,
+            'pageGroup' => $dto->groupId,
             'deviceList' => $this->crud->getSelectedDeviceList($dto),
             'errors' => $errors ?? [],
         ]);

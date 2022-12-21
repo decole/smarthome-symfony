@@ -19,8 +19,11 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class PageCrudService
 {
-    private const NAME_ALIAS = 'name';
     private const DEFAULT_NAME = 'new page';
+    private const NAME_ALIAS = 'name';
+    private const ALIAS_FIELD_ALIAS = 'alias';
+    private const ICON_ALIAS = 'icon';
+    private const GROUP_ALIAS = 'groupId';
 
     public function __construct(
         private PageCrudFactory $crud,
@@ -66,6 +69,9 @@ final class PageCrudService
 
         $entity->setName($dto->name);
         $entity->setConfig($dto->config);
+        $entity->setAlias($dto->alias);
+        $entity->setIcon($dto->icon);
+        $entity->setGroupId($dto->groupId);
         $entity->onUpdated();
 
         return $this->crud->save($entity);
@@ -95,6 +101,9 @@ final class PageCrudService
 
         $dto->name = $request->request->get(self::NAME_ALIAS);
         $dto->config = $this->getConfigByRequest($request);
+        $dto->alias = $request->request->get(self::ALIAS_FIELD_ALIAS);
+        $dto->icon = $request->request->get(self::ICON_ALIAS);
+        $dto->groupId = $request->request->get(self::GROUP_ALIAS);
 
         return $dto;
     }
@@ -109,6 +118,9 @@ final class PageCrudService
 
         $dto->name = $entity->getName();
         $dto->config = $entity->getConfig();
+        $dto->alias = $entity->getAliasUri();
+        $dto->icon = $entity->getIcon();
+        $dto->groupId = $entity->getGroupId();
 
         return $dto;
     }
@@ -121,7 +133,10 @@ final class PageCrudService
     {
         return new Page(
             name: $dto->name,
-            config: $dto->config
+            config: $dto->config,
+            icon: $dto->icon,
+            alias: $dto->alias,
+            groupId: $dto->groupId
         );
     }
 
@@ -183,6 +198,9 @@ final class PageCrudService
     {
         $dto->name = self::DEFAULT_NAME;
         $dto->config = $this->getConfigByRequest(null);
+        $dto->groupId = 0;
+        $dto->icon = 'fas fa-home';
+        $dto->alias = 'example';
     }
 
     /**

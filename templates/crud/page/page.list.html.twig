@@ -41,15 +41,16 @@
                             <thead>
                             <tr>
                                 <th>№</th>
+                                <th>Group ID</th>
                                 <th>Name</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for page in pages %}
+                            {% for page in page_list %}
 
                                 <tr>
-                                    <td>{{ loop.index }}</td>
+                                    <td>{{ page.groupId }}</td>
                                     <td>{{ page.name|e }}</td>
                                     <td>
                                         <a href="{{ path('page_admin_update_by_id', {id: page.id}) }}" class="btn btn-warning">Изменить</a>

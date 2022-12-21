@@ -16,7 +16,7 @@ final class PageRepository extends BaseDoctrineRepository implements PageReposit
         $qb
             ->select('p')
             ->from(Page::class, 'p')
-            ->orderBy('p.name', 'DESC');
+            ->orderBy('p.groupId', 'ASC');
 
         return $qb->getQuery()->getResult();
     }
