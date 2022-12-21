@@ -44,11 +44,12 @@
 - [x] Localization
 - [x] Local Sentry (sentry.io) - https://github.com/getsentry/self-hosted
 - [x] Twig page CRUD
-- [ ] Alice Smart Home CRUD with refactoring service
+- [ ] Mqtt public mqtt payload by detect security event
 
 
 ### Stage (0.1.0)
 
+- [ ] Alice Smart Home CRUD with refactoring service
 - [ ] Add custom events (my personality build)
 - [ ] Telegram bot
 - [ ] Grafana (application and proxmox)
