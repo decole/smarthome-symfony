@@ -225,6 +225,9 @@ class PageCrudServiceCest
                 $fireSecurity = Uuid::uuid4(),
             ],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $updatedEntity */
         $updatedEntity = $service->update($entity->getId()->toString(), $dto);
