@@ -30,6 +30,9 @@ class PageCrudServiceCest
                 'security' => [],
                 'fireSecurity' => [],
             ],
+            'alias' => $I->faker()->word(),
+            'icon' => $I->faker()->word(),
+            'groupId' => random_int(0, 99),
         ]);
 
         $dto = $service->createDto($request);
@@ -47,6 +50,9 @@ class PageCrudServiceCest
         $request = new Request([
             'name' => null,
             'config' => [],
+            'alias' => $I->faker()->word(),
+            'icon' => $I->faker()->word(),
+            'groupId' => random_int(0, 99),
         ], []);
 
         $dto = $service->createDto($request);
@@ -68,6 +74,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entity = $service->create($dto);
@@ -94,6 +103,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entity = $service->create($dto);
@@ -121,6 +133,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entity = $service->create($dto);
@@ -144,6 +159,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entitySaved = $service->create($dto);
@@ -180,6 +198,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entity = $service->create($dto);
@@ -230,6 +251,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entity = $service->create($dto);
@@ -259,6 +283,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         /** @var Page $entity */
         $entity = $service->create($dto);
@@ -286,6 +313,9 @@ class PageCrudServiceCest
             'security' => [],
             'fireSecurity' => [],
         ];
+        $dto->alias = $I->faker()->word();
+        $dto->icon = $I->faker()->word();
+        $dto->groupId = random_int(0, 99);
 
         $entity = $service->getNewEntityByDto($dto);
 
