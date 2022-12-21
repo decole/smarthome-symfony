@@ -25,6 +25,9 @@ class PageCrudServiceCest
         $request = new Request([], [
             'name' => $name = $I->faker()->word(),
             'config' => $this->getDefaultConfig(),
+            'alias' => $I->faker()->word(),
+            'icon' => $I->faker()->word(),
+            'groupId' => random_int(0, 99),
         ]);
 
         $dto = $service->createDto($request);
