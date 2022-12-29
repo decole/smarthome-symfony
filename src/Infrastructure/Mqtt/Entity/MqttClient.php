@@ -58,14 +58,10 @@ final class MqttClient implements MqttClientInterface
         });
     }
 
-    /**
-     * @throws MqttException
-     */
     public function disconnect(): void
     {
         $this->isConnect = false;
         $this->client?->disconnect();
-        throw MqttException::disconnect();
     }
 
     // https://github.com/mgdm/Mosquitto-PHP/blob/php8/tests/Client/publish.phpt

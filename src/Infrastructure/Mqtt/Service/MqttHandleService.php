@@ -7,6 +7,7 @@ use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
+use App\Infrastructure\Mqtt\Exception\MqttException;
 use App\Tests\Stub\Infrastructure\StubMqttClient;
 use Mosquitto\Message;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -47,6 +48,10 @@ final class MqttHandleService
                 [AlertNotificationEvent::MESSENGER]
             );
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+
+            $this->client->disconnect();
+
+            throw MqttException::disconnect();
         }
     }
 
@@ -64,6 +69,10 @@ final class MqttHandleService
                 AlertNotificationEvent::ALICE
             ]);
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+
+            $this->client->disconnect();
+
+            throw MqttException::disconnect();
         }
     }
 

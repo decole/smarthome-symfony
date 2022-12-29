@@ -106,6 +106,30 @@
                                 <input type="text" name="message_warn" value="{{ security.message_warn }}" class="form-control" placeholder="Внимание, ошибка в работе ОШС1">
                             </div>
 
+                            <hr>
+                            <div class="form-group">
+                                <label>Spec Config</label>
+                                <textarea name="params" class="form-control" rows="10">{{ security.params }}</textarea>
+                            </div>
+                            <hr>
+<p>Example for "Spec Config" input:</p>
+<pre class="table-info">
+{
+    "mqtt": {
+        "publishTopic": "/warning/sound",
+        "payload": 1
+    },
+    "api": {
+        "entrypoint": "http://192.168.1.2:8999/sounder/",
+        "method": "get", // get / post
+        "body": {        // sent body params
+            "alert": true,
+            "type": "example"
+        }
+    }
+}
+</pre>
+
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch1" {% if security.status == 'on' %} checked {% endif %}>
                                 <label class="custom-control-label" for="statusSwitch1">Статус охранного датчика</label>
