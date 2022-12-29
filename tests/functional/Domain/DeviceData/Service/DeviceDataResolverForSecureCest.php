@@ -67,7 +67,7 @@ class DeviceDataResolverForSecureCest
         $payload = $device->getDetectPayload();
 
         $event = Stub::makeEmpty(EventDispatcherInterface::class, [
-            'dispatch' => Expected::exactly(2, fn () => (object)[])
+            'dispatch' => Expected::exactly(3, fn () => (object)[])
         ]);
         $this->getResolver($event)->resolveDevicePayload(new DevicePayload($device->getTopic(), $payload));
         $cachedPayloadList = $this->cacheService->getPayloadByTopicList([$device->getTopic()]);

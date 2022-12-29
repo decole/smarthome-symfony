@@ -4,4 +4,7 @@ services:
     autoconfigure: true
 
   App\Infrastructure\Event\:
-    resource: '%kernel.project_dir%/src/Infrastructure/Event/**/*tListener.php'
+    resource: '%kernel.project_dir%/src/Infrastructure/Event/**/*Listener.php'
+
+  App\Domain\:
+    resource: '%kernel.project_dir%/src/Domain/**/*Listener.php'

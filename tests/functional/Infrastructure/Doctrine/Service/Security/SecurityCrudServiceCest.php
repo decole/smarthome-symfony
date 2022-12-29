@@ -23,7 +23,7 @@ class SecurityCrudServiceCest
             'detectPayload' => $I->faker()->word(),
             'holdPayload' => $I->faker()->word(),
             'lastCommand' => $I->faker()->word(),
-            'params' => [],
+            'params' => '',
             'message_info' => $I->faker()->word(),
             'message_ok' => $I->faker()->word(),
             'message_warn' => $I->faker()->word(),
@@ -224,6 +224,7 @@ class SecurityCrudServiceCest
         $dto->message_info = $messageInfo = $I->faker()->word();
         $dto->message_ok = $messageOk = $I->faker()->word();
         $dto->message_warn = $messageWarn = $I->faker()->word();
+        $dto->params = null;
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 

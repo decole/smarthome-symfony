@@ -9,8 +9,9 @@ use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Domain\VisualNotification\Entity\VisualNotification;
+use Symfony\Contracts\EventDispatcher\Event;
 
-class VisualNotificationEvent
+class VisualNotificationEvent extends Event
 {
     public const NAME = 'notification.visual.send';
 
@@ -36,7 +37,6 @@ class VisualNotificationEvent
             PLC::alias() => VisualNotification::ALERT_TYPE,
             FireSecurity::alias() => VisualNotification::FIRE_SECURE_TYPE,
             Security::alias() => VisualNotification::SECURITY_TYPE,
-
         };
     }
 }
