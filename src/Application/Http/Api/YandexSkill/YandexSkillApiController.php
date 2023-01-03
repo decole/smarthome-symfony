@@ -13,7 +13,7 @@ final class YandexSkillApiController
     {
     }
 
-    #[Route('/alice_skill')]
+    #[Route('/alice')]
     public function index(): Response
     {
         $content = file_get_contents('php://input');
