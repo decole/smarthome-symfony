@@ -74,7 +74,7 @@ final class DeviceDataCacheService
      * @return list<string, array<string, mixed>>
      * @throws InvalidArgumentException
      */
-    private function getList(): array
+    public function getList(): array
     {
         return $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST)[self::LIST_KEY] ?? [];
     }
