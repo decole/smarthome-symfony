@@ -6,6 +6,9 @@ use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterf
 
 final class CriteriaChainService
 {
+    /**
+     * @var array<string, PeriodicHandleCriteriaInterface>
+     */
     private array $criteria;
 
     public function __construct()

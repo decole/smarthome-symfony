@@ -18,7 +18,7 @@ class CalendarCriteria implements PeriodicHandleCriteriaInterface
     public function isDue(): bool
     {
         // https://github.com/dragonmantank/cron-expression
-        return (new CronExpression('* * * * *'))->isDue();
+        return (new CronExpression('@hourly'))->isDue();
     }
 
     public function execute(): void

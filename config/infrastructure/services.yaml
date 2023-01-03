@@ -75,7 +75,10 @@ services:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
       $subject: '%env(EMAIL_REGISTRATION_EMAIL_SUBJECT)%'
 
-  App\Infrastructure\Prometheus\Metric\MyMetricsCollector:
+  App\Infrastructure\Prometheus\Metric\MqttPayloadMetricsCollector:
+    tags:
+      - { name: prometheus_metrics_bundle.metrics_generator }
+  App\Infrastructure\Prometheus\Metric\DataBaseMetricsCollector:
     tags:
       - { name: prometheus_metrics_bundle.metrics_generator }
 
