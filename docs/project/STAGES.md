@@ -49,16 +49,16 @@
 
 ### Stage (0.1.0)
 
-- [ ] Alice Smart Home CRUD with refactoring service
-- [ ] Add custom events (my personality build)
+- [x] ~~Alice Smart Home CRUD with refactoring service~~ (not used)
+- [x] Add custom events (my personality build)
 - [ ] Telegram bot
-- [ ] Grafana (application and proxmox)
+- [x] Grafana (application and proxmox)
 - [x] CI good
-- [ ] CD good
-- [ ] Prometheus alerting by application and services
+- [x] CD good
+- [x] Prometheus alerting by application and services
 - [ ] Log services (Log aggregation)
-- [ ] Unit tests all
-- [ ] Functional tests all
+- [ ] Unit tests all (without Alice skill)
+- [ ] Functional tests all (without Alice skill)
 
 
 ### Stage (0.1.1)
