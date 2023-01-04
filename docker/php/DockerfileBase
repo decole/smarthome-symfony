@@ -1,9 +1,10 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 
 MAINTAINER decole <decole2014@yandex.ru>
 
-RUN apt-get update -q -y \
-    && apt-get install -q -y --no-install-recommends \
+RUN apt update -q -y \
+    && apt upgrade -y \
+    && apt install -q -y --no-install-recommends \
     zlib1g-dev \
     curl \
     libpq-dev \
@@ -17,8 +18,8 @@ RUN apt-get update -q -y \
     sudo \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update -q -y \
-    && apt-get install -q -y --no-install-recommends \
+RUN apt update -q -y \
+    && apt install -q -y --no-install-recommends \
     libzip-dev \
     zip \
     psmisc
@@ -46,10 +47,10 @@ RUN apt install libmosquitto-dev gcc -y \
     && make install
 
 RUN echo -e "\n\n====================== Remove unised ======================\n" \
-    && apt-get autoremove gcc -y \
-    && apt-get clean all \
+    && apt autoremove gcc -y \
+    && apt clean all \
     && rm -rvf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && dpkg -la | awk '{print $2}' | grep '\-dev' | xargs apt-get remove -y \
+    && dpkg -la | awk '{print $2}' | grep '\-dev' | xargs apt remove -y \
     && rm -rf /tmp/*
 
 WORKDIR /var/www
