@@ -3,6 +3,7 @@
 namespace App\Infrastructure\AliceSkill\Dialog;
 
 use App\Infrastructure\AliceSkill\Dto\AliceDialogDto;
+use App\Infrastructure\AliceSkill\Dto\AliceSkillRequestDto;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillResponseDto;
 
 class PingDialog extends AbstractDialog implements AliceDialogInterface
@@ -13,6 +14,11 @@ class PingDialog extends AbstractDialog implements AliceDialogInterface
             'ping',
             'пинг',
         ];
+    }
+
+    public static function getInstance(AliceSkillRequestDto $dto): self
+    {
+        return new self($dto);
     }
 
     public function getAnswer(): AliceSkillResponseDto

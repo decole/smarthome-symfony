@@ -2,12 +2,13 @@
 
 namespace App\Infrastructure\YandexSmartHome\Schema;
 
-class RelaySchema implements SchemaInterface
+final class RelaySchema implements SchemaInterface
 {
     private ?string $state = null;
 
-    public function __construct(private string $id)
-    {
+    public function __construct(
+        private readonly string $id,
+    ) {
     }
 
     public function getSchema(): array

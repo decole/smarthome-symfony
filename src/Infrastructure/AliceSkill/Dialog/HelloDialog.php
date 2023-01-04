@@ -3,6 +3,7 @@
 namespace App\Infrastructure\AliceSkill\Dialog;
 
 use App\Infrastructure\AliceSkill\Dto\AliceDialogDto;
+use App\Infrastructure\AliceSkill\Dto\AliceSkillRequestDto;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillResponseDto;
 
 class HelloDialog extends AbstractDialog implements AliceDialogInterface
@@ -14,6 +15,11 @@ class HelloDialog extends AbstractDialog implements AliceDialogInterface
             'приветики',
             'hello',
         ];
+    }
+
+    public static function getInstance(AliceSkillRequestDto $dto): self
+    {
+        return new self($dto);
     }
 
     public function getAnswer(): AliceSkillResponseDto

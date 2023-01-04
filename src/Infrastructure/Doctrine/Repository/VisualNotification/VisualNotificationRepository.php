@@ -6,7 +6,9 @@ use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
 use App\Domain\VisualNotification\Entity\VisualNotification;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use DateTimeImmutable;
+use DateTimeZone;
 use Webmozart\Assert\Assert;
+use Doctrine\DBAL\Types\Types;
 
 final class VisualNotificationRepository extends BaseDoctrineRepository implements VisualNotificationRepositoryInterface
 {
@@ -22,7 +24,7 @@ final class VisualNotificationRepository extends BaseDoctrineRepository implemen
             )
             ->setParameter('isRead', false)
             ->setParameter('updateIsRead', true)
-            ->setParameter('updatedAt', new DateTimeImmutable('now', new \DateTimeZone('utc')));
+            ->setParameter('updatedAt', new DateTimeImmutable('now', new DateTimeZone('UTC')), Types::DATE_IMMUTABLE);
 
         if ($type !== null) {
             Assert::inArray($type, VisualNotification::TYPE);
