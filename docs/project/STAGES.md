@@ -46,12 +46,20 @@
 - [x] Twig page CRUD
 - [x] Mqtt public mqtt payload by detect security event
 
+### Stage (0.0.4)
+
+- [ ] php 8.1
+- [ ] minimal refactoring by DDD
+- [x] update libs
+- [ ] bugfix
+- [ ] prepare to release 0.1.x
+
 
 ### Stage (0.1.0)
 
 - [x] ~~Alice Smart Home CRUD with refactoring service~~ (not used)
 - [x] Add custom events (my personality build)
-- [ ] Telegram bot
+- [ ] Telegram bot at php 8.1
 - [x] Grafana (application and proxmox)
 - [x] CI good
 - [x] CD good
