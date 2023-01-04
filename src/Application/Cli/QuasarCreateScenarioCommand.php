@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class QuasarCreateScenarioCommand extends Command
+final class QuasarCreateScenarioCommand extends Command
 {
     protected static $defaultName = 'cli:quasar:create-scenario';
 

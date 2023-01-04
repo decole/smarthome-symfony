@@ -2,15 +2,20 @@
 
 namespace App\Application\Cli\Handler;
 
+use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Notification\Entity\AliceNotificationMessage;
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Throwable;
 
 #[AsMessageHandler]
-class AliceSmartHomeNotificationHandler
+final class AliceSmartHomeNotificationHandler
 {
-    public function __construct(private QuasarNotificationService $service)
-    {
+    public function __construct(
+        private QuasarNotificationService $service,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     public function __invoke(AliceNotificationMessage $message): void
@@ -44,9 +49,16 @@ class AliceSmartHomeNotificationHandler
             }
         }
 
-        foreach ($chunks as $words) {
-            $this->service->send($words);
-            sleep(6);
+        try {
+            foreach ($chunks as $words) {
+                $this->service->send($words);
+                sleep(7);
+            }
+        } catch (Throwable $exception) {
+            $this->eventDispatcher->dispatch(
+                new AlertNotificationEvent($exception->getMessage(), [AlertNotificationEvent::MESSENGER]),
+                AlertNotificationEvent::NAME
+            );
         }
 
         sleep(1);

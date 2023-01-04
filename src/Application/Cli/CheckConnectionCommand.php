@@ -6,8 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
-class CheckConnectionCommand extends Command
+final class CheckConnectionCommand extends Command
 {
     protected static $defaultName = 'deploy:check-connection';
 
@@ -22,7 +23,7 @@ class CheckConnectionCommand extends Command
 
         try {
             $connection->connect();
-        } catch (\Throwable) {
+        } catch (Throwable) {
             $output->write('error');
 
             return 1;

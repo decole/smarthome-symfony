@@ -7,7 +7,7 @@ use App\Infrastructure\Telegram\Service\TelegramService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class TelegramNotificationHandler
+final class TelegramNotificationHandler
 {
     public function __construct(private TelegramService $service)
     {
@@ -16,6 +16,7 @@ class TelegramNotificationHandler
     public function __invoke(TelegramNotificationMessage $message): void
     {
         $this->service->send($message->getTo(), $message->getMessage());
+
         sleep(0.5);
     }
 }
