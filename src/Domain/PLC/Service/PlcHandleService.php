@@ -4,6 +4,7 @@ namespace App\Domain\PLC\Service;
 
 use App\Application\Helper\StringHelper;
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Event\VisualNotificationEvent;
@@ -143,7 +144,7 @@ final class PlcHandleService
                     targetTopic: 'dummy',
                     alarmSecondDelay: 0,
                     statusMessage: new StatusMessage(),
-                    status: PLC::STATUS_ACTIVE,
+                    status: EntityStatusEnum::STATUS_ACTIVE->value,
                     notify: true
                 )
             ),

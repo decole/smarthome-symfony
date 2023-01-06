@@ -2,12 +2,12 @@
 
 namespace App\Infrastructure\Doctrine\Repository\PLC;
 
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\PlcRepositoryInterface;
 use App\Domain\PLC\Entity\PLC;
-use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Webmozart\Assert\Assert;
 
 final class PlcRepository extends BaseDoctrineRepository implements PlcRepositoryInterface
 {
@@ -21,7 +21,9 @@ final class PlcRepository extends BaseDoctrineRepository implements PlcRepositor
             ->orderBy('d.createdAt', 'DESC');
 
         if ($status !== null) {
-            Assert::inArray($status, PLC::STATUS_MAP);
+            if (EntityStatusEnum::tryFrom($status) === null) {
+                throw UnresolvableArgumentException::argumentIsNotSet('PLC status');
+            }
 
             $qb
                 ->where(

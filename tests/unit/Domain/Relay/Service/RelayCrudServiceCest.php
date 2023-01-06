@@ -2,7 +2,7 @@
 
 namespace App\Tests\unit\Domain\Relay\Service;
 
-use App\Domain\Relay\Entity\Relay;
+use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Relay\Service\RelayCrudService;
 use App\Tests\UnitTester;
 use Codeception\Example;
@@ -14,7 +14,7 @@ class RelayCrudServiceCest
     {
         $service = $this->getService($I);
 
-        $I->assertEquals(Relay::RELAY_TYPES, $service->getTypes());
+        $I->assertEquals(RelayTypeEnum::cases(), $service->getTypes());
     }
 
     public function createEmptyDto(UnitTester $I): void
@@ -23,7 +23,7 @@ class RelayCrudServiceCest
 
         $dto = $service->createDto(null);
 
-        $I->assertEquals(Relay::DRY_RELAY_TYPE, $dto->type);
+        $I->assertEquals(RelayTypeEnum::DRY_RELAY_TYPE->value, $dto->type);
         $I->assertEquals(null, $dto->name);
         $I->assertEquals(null, $dto->topic);
         $I->assertEquals(null, $dto->payload);

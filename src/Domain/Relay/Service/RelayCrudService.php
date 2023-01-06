@@ -5,9 +5,12 @@ namespace App\Domain\Relay\Service;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Relay\Entity\Relay;
+use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Relay\Factory\RelayCrudFactory;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
@@ -76,7 +79,8 @@ final class RelayCrudService
             $dto->message_warn
         ));
 
-        $entity->setStatus($dto->status === 'on' ? Relay::STATUS_ACTIVE : Relay::STATUS_DEACTIVATE);
+        $entity->setStatus($dto->status === 'on' ?
+            EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
         $entity->setNotify($dto->notify === 'on');
         $entity->onUpdated();
 
@@ -95,9 +99,12 @@ final class RelayCrudService
         }
     }
 
+    /**
+     * @return RelayTypeEnum[]
+     */
     public function getTypes(): array
     {
-        return Relay::RELAY_TYPES;
+        return RelayTypeEnum::cases();
     }
 
     public function createDto(?Request $request): CrudRelayDto
@@ -138,7 +145,7 @@ final class RelayCrudService
 
         $this->setStatusMessage($dto, $entity);
 
-        $dto->status = $entity->getStatus() === Sensor::STATUS_ACTIVE ? 'on' : null;
+        $dto->status = $entity->getStatus() === EntityStatusEnum::STATUS_ACTIVE->value ? 'on' : null;
 
         return $dto;
     }
@@ -146,10 +153,13 @@ final class RelayCrudService
     /**
      * @param CrudRelayDto $dto
      * @return Relay
+     * @throws UnresolvableArgumentException
      */
     public function getNewEntityByDto(CrudRelayDto $dto): Relay
     {
-        Assert::inArray($dto->type, $this->getTypes());
+        if (RelayTypeEnum::tryFrom($dto->type) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Relay device type');
+        }
 
         return new Relay(
             type: $dto->type,
@@ -168,7 +178,8 @@ final class RelayCrudService
                 $dto->message_ok,
                 $dto->message_warn
             ),
-            status: $dto->status === 'on' ? Sensor::STATUS_ACTIVE : Sensor::STATUS_DEACTIVATE,
+            status: $dto->status === 'on' ?
+                EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
             notify: $dto->notify === 'on',
         );
     }

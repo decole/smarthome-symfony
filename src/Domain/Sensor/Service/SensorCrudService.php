@@ -5,6 +5,7 @@ namespace App\Domain\Sensor\Service;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Sensor\Entity\DryContactSensor;
@@ -86,7 +87,8 @@ final class SensorCrudService
             $dto->message_warn
         ));
 
-        $entity->setStatus($dto->status === 'on' ? Sensor::STATUS_ACTIVE : Sensor::STATUS_DEACTIVATE);
+        $entity->setStatus($dto->status === 'on' ?
+            EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
         $entity->setNotify($dto->notify === 'on');
         $entity->onUpdated();
 
@@ -147,7 +149,7 @@ final class SensorCrudService
 
         $this->setStatusMessage($dto, $entity);
 
-        $dto->status = $entity->getStatus() === Sensor::STATUS_ACTIVE ? 'on' : null;
+        $dto->status = $entity->getStatus() === EntityStatusEnum::STATUS_ACTIVE->value ? 'on' : null;
 
         return $dto;
     }
@@ -171,7 +173,8 @@ final class SensorCrudService
                 $dto->message_ok,
                 $dto->message_warn
             ),
-            $dto->status === 'on' ? Sensor::STATUS_ACTIVE : Sensor::STATUS_DEACTIVATE,
+            $dto->status === 'on' ?
+                EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
             $dto->notify === 'on',
             ...$this->getAdvancedFields($dto)
         );

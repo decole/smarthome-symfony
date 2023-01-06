@@ -3,26 +3,17 @@
 namespace App\Domain\Sensor\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\CrudCommonFields;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
-use Webmozart\Assert\Assert;
 
 class Sensor implements EntityInterface
 {
     public const TYPE = 'sensor';
-
-    public const STATUS_WARNING = 2;
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_DEACTIVATE = 0;
-
-    public const STATUS_MAP = [
-        self::STATUS_ACTIVE,
-        self::STATUS_DEACTIVATE,
-        self::STATUS_WARNING,
-    ];
 
     public const DISCRIMINATOR_MAP = [
         TemperatureSensor::TYPE => TemperatureSensor::class,
@@ -104,8 +95,13 @@ class Sensor implements EntityInterface
         $this->notify = $isNotify;
     }
 
+    /**
+     * @throws UnresolvableArgumentException
+     */
     private function checkStatusType(int $status): void
     {
-        Assert::inArray($status, self::STATUS_MAP, 'Sensor status not defined');
+        if (EntityStatusEnum::tryFrom($status) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
+        }
     }
 }

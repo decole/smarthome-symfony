@@ -8,6 +8,7 @@ use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Page\Entity\Page;
 use App\Domain\Page\Service\PageCrudService;
 use App\Domain\Relay\Entity\Relay;
+use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Relay\Service\RelayCrudService;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Domain\Sensor\Service\SensorCrudService;
@@ -335,7 +336,7 @@ class PageCrudServiceCest
     {
         $dto = new CrudRelayDto();
 
-        $dto->type = Relay::DRY_RELAY_TYPE;
+        $dto->type = RelayTypeEnum::DRY_RELAY_TYPE->value;
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();

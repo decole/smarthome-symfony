@@ -2,11 +2,12 @@
 
 namespace App\Infrastructure\Doctrine\Repository\Sensor;
 
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Webmozart\Assert\Assert;
 
 final class SensorRepository extends BaseDoctrineRepository implements SensorRepositoryInterface
 {
@@ -20,7 +21,9 @@ final class SensorRepository extends BaseDoctrineRepository implements SensorRep
             ->orderBy('s.createdAt', 'DESC');
 
         if ($status !== null) {
-            Assert::inArray($status, Sensor::STATUS_MAP);
+            if (EntityStatusEnum::tryFrom($status) === null) {
+                throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
+            }
 
             $qb
                 ->where(

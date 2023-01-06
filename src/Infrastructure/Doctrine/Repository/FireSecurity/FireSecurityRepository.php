@@ -2,14 +2,18 @@
 
 namespace App\Infrastructure\Doctrine\Repository\FireSecurity;
 
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Webmozart\Assert\Assert;
 
 final class FireSecurityRepository extends BaseDoctrineRepository implements FireSecurityRepositoryInterface
 {
+    /**
+     * @throws UnresolvableArgumentException
+     */
     public function findAll(?int $status = null): array
     {
         $qb = $this->entityManager->createQueryBuilder();
@@ -20,7 +24,9 @@ final class FireSecurityRepository extends BaseDoctrineRepository implements Fir
             ->orderBy('f.createdAt', 'DESC');
 
         if ($status !== null) {
-            Assert::inArray($status, FireSecurity::STATUS_MAP);
+            if (EntityStatusEnum::tryFrom($status) === null) {
+                throw UnresolvableArgumentException::argumentIsNotSet('Fire security device status');
+            }
 
             $qb
                 ->where(
