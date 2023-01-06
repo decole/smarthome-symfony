@@ -25,8 +25,6 @@ final class MqttPlcHandlerCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-//        sleep(self::DELAY);
-
         $this->handler->execute();
 
         return 0;

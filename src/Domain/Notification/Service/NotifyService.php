@@ -24,13 +24,15 @@ final class NotifyService
     }
 
     /**
-     * Нотификация в телеграм и дискорд
+     * Нотификация в телеграм (и в дискорд, если телеграм сообщений нет)
      *
      * @param string $message
      * @return void
      */
     public function messengerNotify(string $message): void
     {
+        $count = 0;
+
         foreach ($this->repository->findAllWithTelegramId() as $user) {
             $id = $user->getTelegramId();
 
@@ -40,8 +42,24 @@ final class NotifyService
 
             $event = new NotificationEvent(new TelegramNotificationMessage($message, $user->getTelegramId()));
             $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
+
+            $count++;
         }
 
+        if ($count === 0) {
+            $event = new NotificationEvent(new DiscordNotificationMessage($message));
+            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
+        }
+    }
+
+    /**
+     * Нотификация в дискорд
+     *
+     * @param string $message
+     * @return void
+     */
+    public function discordNotify(string $message): void
+    {
         $event = new NotificationEvent(new DiscordNotificationMessage($message));
         $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
     }
