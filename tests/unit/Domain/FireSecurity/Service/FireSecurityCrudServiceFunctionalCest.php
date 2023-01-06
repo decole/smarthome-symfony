@@ -9,13 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FireSecurityCrudServiceFunctionalCest
 {
-    public function getTypes(UnitTester $I): void
-    {
-        $service = $this->getService($I);
-
-        $I->assertEquals(Security::SECURITY_TYPES, $service->getTypes());
-    }
-
     public function createEmptyFireSecurityDto(UnitTester $I): void
     {
         $service = $this->getService($I);

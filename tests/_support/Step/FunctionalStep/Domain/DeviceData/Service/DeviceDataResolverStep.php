@@ -12,6 +12,7 @@ use App\Domain\FireSecurity\Service\FireSecurityCrudService;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Relay\Service\RelayCrudService;
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Enum\SecurityStateEnum;
 use App\Domain\Security\Service\SecurityCrudService;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Domain\Sensor\Service\SensorCrudService;
@@ -113,7 +114,7 @@ class DeviceDataResolverStep extends FunctionalTester
         $dto->payload = $this->faker()->word();
         $dto->detectPayload = $this->faker()->word();
         $dto->holdPayload = $this->faker()->word();
-        $dto->lastCommand = Security::HOLD_STATE;
+        $dto->lastCommand = SecurityStateEnum::HOLD_STATE->value;
         $dto->message_info = $this->faker()->word();
         $dto->message_ok = $this->faker()->word();
         $dto->message_warn = $this->faker()->word();

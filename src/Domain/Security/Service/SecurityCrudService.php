@@ -5,9 +5,13 @@ namespace App\Domain\Security\Service;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
+use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Enum\SecurityTypeEnum;
 use App\Domain\Security\Factory\SecurityCrudFactory;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
@@ -16,7 +20,6 @@ use Doctrine\ORM\OptimisticLockException;
 use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Webmozart\Assert\Assert;
 
 final class SecurityCrudService
 {
@@ -68,7 +71,7 @@ final class SecurityCrudService
         $entity->setLastCommand($dto->lastCommand);
 
         $params = $dto->params === null ? [] :
-            json_decode(str_replace('&quot;', '"', $dto->params), true, 512, JSON_THROW_ON_ERROR) ?? [];
+            json_decode($this->prepareToJson($dto->params), true, 512, JSON_THROW_ON_ERROR) ?? [];
 
         $entity->setParams($params);
 
@@ -78,7 +81,8 @@ final class SecurityCrudService
             $dto->message_warn
         ));
 
-        $entity->setStatus($dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE);
+        $entity->setStatus($dto->status === 'on' ?
+            EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
         $entity->setNotify($dto->notify === 'on');
         $entity->onUpdated();
 
@@ -97,9 +101,12 @@ final class SecurityCrudService
         }
     }
 
+    /**
+     * @return SecurityTypeEnum[]
+     */
     public function getTypes(): array
     {
-        return Security::SECURITY_TYPES;
+        return SecurityTypeEnum::cases();
     }
 
     public function createSecurityDto(?Request $request): CrudSecurityDto
@@ -142,7 +149,7 @@ final class SecurityCrudService
 
         $this->setStatusMessage($dto, $entity);
 
-        $dto->status = $entity->getStatus() === Security::STATUS_ACTIVE ? 'on' : null;
+        $dto->status = $entity->getStatus() === EntityStatusEnum::STATUS_ACTIVE->value ? 'on' : null;
 
         return $dto;
     }
@@ -150,11 +157,13 @@ final class SecurityCrudService
     /**
      * @param CrudSecurityDto $dto
      * @return Security
-     * @throws JsonException
+     * @throws JsonException|UnresolvableArgumentException
      */
     public function getNewEntityByDto(CrudSecurityDto $dto): Security
     {
-        Assert::inArray($dto->type, $this->getTypes());
+        if (SecurityTypeEnum::tryFrom($dto->type) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Security device type');
+        }
 
         return new Security(
             securityType: $dto->type,
@@ -165,14 +174,20 @@ final class SecurityCrudService
             holdPayload: $dto->holdPayload,
             lastCommand: $dto->lastCommand,
             params: $dto->params === '' || $dto->params === null ? [] :
-                json_decode($dto->params, true, 512, JSON_THROW_ON_ERROR) ?? [],
+                json_decode($this->prepareToJson($dto->params), true, 512, JSON_THROW_ON_ERROR) ?? [],
             statusMessage: new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,
                 $dto->message_warn
             ),
-            status: $dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE,
+            status: $dto->status === 'on' ?
+                EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
             notify: $dto->notify === 'on',
         );
+    }
+
+    private function prepareToJson(string $value): string
+    {
+        return str_replace('&quot;', '"', $value);
     }
 }

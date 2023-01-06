@@ -4,6 +4,7 @@ namespace App\Tests\unit\Domain\Security\Service;
 
 use App\Application\Helper\StringHelper;
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Enum\SecurityTypeEnum;
 use App\Domain\Security\Service\SecurityCrudService;
 use App\Tests\UnitTester;
 use Codeception\Example;
@@ -15,7 +16,7 @@ class SecurityCrudServiceCest
     {
         $service = $this->getService($I);
 
-        $I->assertEquals(Security::SECURITY_TYPES, $service->getTypes());
+        $I->assertEquals(SecurityTypeEnum::cases(), $service->getTypes());
     }
 
     public function createEmptyDto(UnitTester $I): void
@@ -24,7 +25,7 @@ class SecurityCrudServiceCest
 
         $dto = $service->createSecurityDto(null);
 
-        $I->assertEquals(Security::MQTT_TYPE, $dto->type);
+        $I->assertEquals(SecurityTypeEnum::MQTT_TYPE->value, $dto->type);
         $I->assertEquals(null, $dto->name);
         $I->assertEquals(null, $dto->topic);
         $I->assertEquals(null, $dto->payload);

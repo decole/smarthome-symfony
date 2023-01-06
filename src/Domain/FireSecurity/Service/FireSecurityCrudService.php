@@ -5,6 +5,7 @@ namespace App\Domain\FireSecurity\Service;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
@@ -70,7 +71,8 @@ final class FireSecurityCrudService
             $dto->message_warn
         ));
 
-        $entity->setStatus($dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE);
+        $entity->setStatus($dto->status === 'on' ?
+            EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
         $entity->setNotify($dto->notify === 'on');
         $entity->onUpdated();
 
@@ -87,11 +89,6 @@ final class FireSecurityCrudService
         if ($entity) {
             $this->crud->delete($entity);
         }
-    }
-
-    public function getTypes(): array
-    {
-        return Security::SECURITY_TYPES;
     }
 
     public function createFireSecurityDto(?Request $request): CrudFireSecurityDto
@@ -127,7 +124,7 @@ final class FireSecurityCrudService
 
         $this->setStatusMessage($dto, $entity);
 
-        $dto->status = $entity->getStatus() === Security::STATUS_ACTIVE ? 'on' : null;
+        $dto->status = $entity->getStatus() === EntityStatusEnum::STATUS_ACTIVE->value ? 'on' : null;
 
         return $dto;
     }
@@ -146,7 +143,8 @@ final class FireSecurityCrudService
                 $dto->message_ok,
                 $dto->message_warn
             ),
-            status: $dto->status === 'on' ? Security::STATUS_ACTIVE : Security::STATUS_DEACTIVATE,
+            status: $dto->status === 'on' ?
+                EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
             notify: $dto->notify === 'on',
         );
     }

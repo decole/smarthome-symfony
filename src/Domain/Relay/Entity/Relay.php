@@ -11,7 +11,6 @@ use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Relay\Enum\RelayTypeEnum;
-use Webmozart\Assert\Assert;
 
 final class Relay implements EntityInterface
 {

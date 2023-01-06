@@ -2,6 +2,8 @@
 
 namespace App\Infrastructure\Doctrine\Repository\Security;
 
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
@@ -20,7 +22,9 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
             ->orderBy('s.createdAt', 'DESC');
 
         if ($status !== null) {
-            Assert::inArray($status, Security::STATUS_MAP);
+            if (EntityStatusEnum::tryFrom($status) === null) {
+                throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
+            }
 
             $qb
                 ->where(

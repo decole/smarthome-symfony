@@ -7,6 +7,7 @@ use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Enum\SecurityStateEnum;
 use App\Tests\_support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
@@ -29,7 +30,7 @@ class DeviceDataResolverForSecureCest
     {
         $device = $I->createSecurityDevice();
         $dto = $I->crudSecurityService()->entityByDto($device->getIdToString());
-        $dto->lastCommand = Security::HOLD_STATE;
+        $dto->lastCommand = SecurityStateEnum::HOLD_STATE->value;
         $device = $I->crudSecurityService()->update($device->getIdToString(), $dto);
 
         $payload = $device->getHoldPayload();
@@ -45,7 +46,7 @@ class DeviceDataResolverForSecureCest
     {
         $device = $I->createSecurityDevice();
         $dto = $I->crudSecurityService()->entityByDto($device->getIdToString());
-        $dto->lastCommand = Security::HOLD_STATE;
+        $dto->lastCommand = SecurityStateEnum::HOLD_STATE->value;
         $device = $I->crudSecurityService()->update($device->getIdToString(), $dto);
 
         $payload = $device->getDetectPayload();
@@ -61,7 +62,7 @@ class DeviceDataResolverForSecureCest
     {
         $device = $I->createSecurityDevice();
         $dto = $I->crudSecurityService()->entityByDto($device->getIdToString());
-        $dto->lastCommand = Security::GUARD_STATE;
+        $dto->lastCommand = SecurityStateEnum::GUARD_STATE->value;
         $device = $I->crudSecurityService()->update($device->getIdToString(), $dto);
 
         $payload = $device->getDetectPayload();
@@ -79,7 +80,7 @@ class DeviceDataResolverForSecureCest
     {
         $device = $I->createSecurityDevice();
         $dto = $I->crudSecurityService()->entityByDto($device->getIdToString());
-        $dto->lastCommand = Security::GUARD_STATE;
+        $dto->lastCommand = SecurityStateEnum::GUARD_STATE->value;
         $device = $I->crudSecurityService()->update($device->getIdToString(), $dto);
 
         $payload = $device->getHoldPayload();
