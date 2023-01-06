@@ -4,7 +4,7 @@ namespace App\Tests\functional\Application\Service\Validation\Page;
 
 use App\Application\Http\Web\Page\Dto\CrudPageDto;
 use App\Application\Service\Validation\Page\PageCrudValidationService;
-use App\Infrastructure\Doctrine\Service\Page\PageCrudService;
+use App\Domain\Page\Service\PageCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;
 use Symfony\Component\Validator\ConstraintViolationList;

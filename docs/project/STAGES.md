@@ -48,11 +48,11 @@
 
 ### Stage (0.0.4)
 
-- [ ] php 8.1
-- [ ] minimal refactoring by DDD
+- [x] php 8.1
+- [x] minimal refactoring by DDD
 - [x] update libs
-- [ ] bugfix
-- [ ] prepare to release 0.1.x
+- [x] bugfix
+- [x] prepare to release 0.1.x
 
 
 ### Stage (0.1.0)

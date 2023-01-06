@@ -2,6 +2,7 @@
 
 namespace App\Domain\PLC\Service;
 
+use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Contract\Repository\PlcRepositoryInterface;
 use App\Domain\Contract\Service\CacheServiceInterface;
 use App\Domain\PLC\Entity\PLC;
@@ -24,7 +25,7 @@ final class PlcCacheService implements CacheServiceInterface
     {
         $result = [];
 
-        foreach ($this->repository->findAll(PLC::STATUS_ACTIVE) as $plc) {
+        foreach ($this->repository->findAll(EntityStatusEnum::STATUS_ACTIVE->value) as $plc) {
             $result[$plc->getTargetTopic()] = $this->hydration($plc);
         }
 

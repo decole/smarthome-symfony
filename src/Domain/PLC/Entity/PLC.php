@@ -3,6 +3,8 @@
 namespace App\Domain\PLC\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
@@ -11,16 +13,6 @@ use App\Domain\Contract\Repository\EntityInterface;
 class PLC implements EntityInterface
 {
     use Entity, CreatedAt, UpdatedAt;
-
-    public const STATUS_WARNING = 2;
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_DEACTIVATE = 0;
-
-    public const STATUS_MAP = [
-        self::STATUS_ACTIVE,
-        self::STATUS_DEACTIVATE,
-        self::STATUS_WARNING,
-    ];
 
     public function __construct(
         private string $name,
@@ -33,6 +25,8 @@ class PLC implements EntityInterface
     ) {
         $this->identify();
         $this->onCreated();
+
+        $this->checkStatusType($status);
     }
 
     public static function alias(): string
@@ -87,6 +81,8 @@ class PLC implements EntityInterface
 
     public function setStatus(int $status): void
     {
+        $this->checkStatusType($status);
+
         $this->status = $status;
     }
 
@@ -98,5 +94,15 @@ class PLC implements EntityInterface
     public function setNotify(bool $notify): void
     {
         $this->notify = $notify;
+    }
+
+    /**
+     * @throws UnresolvableArgumentException
+     */
+    private function checkStatusType(?int $status): void
+    {
+        if (EntityStatusEnum::tryFrom($status) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('PLC status');
+        }
     }
 }

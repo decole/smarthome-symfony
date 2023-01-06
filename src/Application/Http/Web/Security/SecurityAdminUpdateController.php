@@ -4,7 +4,7 @@ namespace App\Application\Http\Web\Security;
 
 use App\Domain\Identity\Entity\User;
 use App\Domain\Security\Entity\Security;
-use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
+use App\Domain\Security\Service\SecurityCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -2,11 +2,12 @@
 
 namespace App\Infrastructure\Doctrine\Repository\Relay;
 
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Webmozart\Assert\Assert;
 
 final class RelayRepository extends BaseDoctrineRepository implements RelayRepositoryInterface
 {
@@ -20,7 +21,9 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
             ->orderBy('r.createdAt', 'DESC');
 
         if ($status !== null) {
-            Assert::inArray($status, Relay::STATUS_MAP);
+            if (EntityStatusEnum::tryFrom($status) === null) {
+                throw UnresolvableArgumentException::argumentIsNotSet('Relay device status');
+            }
 
             $qb
                 ->where(

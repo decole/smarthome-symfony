@@ -4,7 +4,7 @@ namespace App\Tests\functional\Application\Service\Validation\Security;
 
 use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\Security\SecurityCrudValidationService;
-use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
+use App\Domain\Security\Service\SecurityCrudService;
 use App\Tests\FunctionalTester;
 use Symfony\Component\Validator\ConstraintViolationList;
 

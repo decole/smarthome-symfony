@@ -4,7 +4,7 @@ namespace App\Tests\functional\Application\Service\Validation\Sensor;
 
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\Sensor\SensorCrudValidationService;
-use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
+use App\Domain\Sensor\Service\SensorCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;
 use Symfony\Component\Validator\ConstraintViolationList;

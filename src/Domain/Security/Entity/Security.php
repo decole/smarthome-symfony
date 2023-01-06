@@ -3,46 +3,23 @@
 namespace App\Domain\Security\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\CrudCommonFields;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
-use Webmozart\Assert\Assert;
+use App\Domain\Security\Enum\SecurityStateEnum;
+use App\Domain\Security\Enum\SecurityTypeEnum;
 
 final class Security implements EntityInterface
 {
     use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
 
-    public const STATUS_WARNING = 2;
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_DEACTIVATE = 0;
-
-    public const STATUS_MAP = [
-        self::STATUS_ACTIVE,
-        self::STATUS_DEACTIVATE,
-        self::STATUS_WARNING,
-    ];
-
-    public const MQTT_TYPE = 'mqtt_security_device';
-    public const API_TYPE = 'api_security_device';
-
-    public const SECURITY_TYPES = [
-        self::MQTT_TYPE,
-        self::API_TYPE,
-    ];
-
     public const TYPE_TRANSCRIBES = [
-        self::MQTT_TYPE => 'mqtt датчик',
-        self::API_TYPE => 'api датчик',
-    ];
-
-    public const GUARD_STATE = 'guard';
-    public const HOLD_STATE = 'hold';
-
-    public const GUARD_STATE_MAP = [
-        self::GUARD_STATE,
-        self::HOLD_STATE,
+        'mqtt_security_device' => 'mqtt датчик',
+        'api_security_device' => 'api датчик',
     ];
 
     public function __construct(
@@ -156,16 +133,20 @@ final class Security implements EntityInterface
 
     public function isGuarded(): bool
     {
-        return $this->lastCommand === self::GUARD_STATE;
+        return $this->lastCommand === SecurityStateEnum::GUARD_STATE->value;
     }
 
     private function checkStatusType(int $status): void
     {
-        Assert::inArray($status, self::STATUS_MAP, 'Security device status not defined');
+        if (EntityStatusEnum::tryFrom($status) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
+        }
     }
 
     private function checkSecurityType(string $type): void
     {
-        Assert::inArray($type, self::SECURITY_TYPES);
+        if (SecurityTypeEnum::tryFrom($type) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Security device type');
+        }
     }
 }

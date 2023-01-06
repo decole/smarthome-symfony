@@ -3,36 +3,23 @@
 namespace App\Domain\Relay\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\CrudCommonFields;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
-use Webmozart\Assert\Assert;
+use App\Domain\Relay\Enum\RelayTypeEnum;
 
 final class Relay implements EntityInterface
 {
-    public const STATUS_WARNING = 2;
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_DEACTIVATE = 0;
-
-    public const STATUS_MAP = [
-        self::STATUS_ACTIVE,
-        self::STATUS_DEACTIVATE,
-        self::STATUS_WARNING,
-    ];
-
-    public const DRY_RELAY_TYPE = 'relay';
-    public const WATERING_SWIFT_TYPE = 'swift';
-
-    public const RELAY_TYPES = [
-        self::DRY_RELAY_TYPE,
-        self::WATERING_SWIFT_TYPE,
-    ];
-
+    /**
+     * @see App\Domain\Relay\Enum\RelayTypeEnum
+     */
     public const TYPE_TRANSCRIBES = [
-        self::DRY_RELAY_TYPE => 'реле',
-        self::WATERING_SWIFT_TYPE => 'клапан автополива',
+        'relay' => 'реле',
+        'swift' => 'клапан автополива',
     ];
 
     use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
@@ -178,11 +165,15 @@ final class Relay implements EntityInterface
 
     private function checkStatusType(int $status): void
     {
-        Assert::inArray($status, self::STATUS_MAP, 'Sensor status not defined');
+        if (EntityStatusEnum::tryFrom($status) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Relay device status');
+        }
     }
 
     private function checkRelayType(string $type): void
     {
-        Assert::inArray($type, self::RELAY_TYPES);
+        if (RelayTypeEnum::tryFrom($type) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Relay device type');
+        }
     }
 }

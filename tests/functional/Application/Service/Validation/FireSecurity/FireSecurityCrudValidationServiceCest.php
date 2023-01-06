@@ -4,7 +4,7 @@ namespace App\Tests\functional\Application\Service\Validation\FireSecurity;
 
 use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
 use App\Application\Service\Validation\FireSecurity\FireSecurityCrudValidationService;
-use App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService;
+use App\Domain\FireSecurity\Service\FireSecurityCrudService;
 use App\Tests\FunctionalTester;
 use Symfony\Component\Validator\ConstraintViolationList;
 

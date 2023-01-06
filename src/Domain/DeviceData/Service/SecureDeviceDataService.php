@@ -6,6 +6,7 @@ use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\DeviceData\Entity\SecureDeviceDataState;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Enum\SecurityStateEnum;
 use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Psr\Cache\InvalidArgumentException;
@@ -74,7 +75,8 @@ class SecureDeviceDataService
             return;
         }
 
-        $device->setLastCommand($trigger === true ? Security::GUARD_STATE : Security::HOLD_STATE);
+        $device->setLastCommand($trigger === true ?
+            SecurityStateEnum::GUARD_STATE->value : SecurityStateEnum::HOLD_STATE->value);
 
         $this->transaction->transactional(
             function () use ($device) {

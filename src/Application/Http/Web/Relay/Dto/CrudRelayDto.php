@@ -3,15 +3,16 @@
 namespace App\Application\Http\Web\Relay\Dto;
 
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
-use App\Domain\Relay\Entity\Relay;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CrudRelayDto implements ValidationDtoInterface
 {
+    /**
+     * @see App\Domain\Relay\Enum\RelayTypeEnum
+     */
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Choice(choices: Relay::RELAY_TYPES)]
-    public ?string $type = Relay::DRY_RELAY_TYPE;
+    public ?string $type = 'relay';
 
     #[Assert\NotBlank]
     #[Assert\NotNull]

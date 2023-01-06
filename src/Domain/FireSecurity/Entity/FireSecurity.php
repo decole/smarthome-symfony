@@ -3,26 +3,17 @@
 namespace App\Domain\FireSecurity\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
+use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\CrudCommonFields;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
-use Webmozart\Assert\Assert;
 
 final class FireSecurity implements EntityInterface
 {
     use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
-
-    public const STATUS_WARNING = 2;
-    public const STATUS_ACTIVE = 1;
-    public const STATUS_DEACTIVATE = 0;
-
-    public const STATUS_MAP = [
-        self::STATUS_ACTIVE,
-        self::STATUS_DEACTIVATE,
-        self::STATUS_WARNING,
-    ];
 
     public function __construct(
         private string $name,
@@ -109,8 +100,13 @@ final class FireSecurity implements EntityInterface
         $this->statusMessage = $statusMessage;
     }
 
-    private function checkStatusType(int $status): void
+    /**
+     * @throws UnresolvableArgumentException
+     */
+    private function checkStatusType(?int $status): void
     {
-        Assert::inArray($status, self::STATUS_MAP, 'Fire security device status not defined');
+        if (EntityStatusEnum::tryFrom($status) === null) {
+            throw UnresolvableArgumentException::argumentIsNotSet('Fire security device status');
+        }
     }
 }

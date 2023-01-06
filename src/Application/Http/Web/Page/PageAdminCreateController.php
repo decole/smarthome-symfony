@@ -3,7 +3,7 @@
 namespace App\Application\Http\Web\Page;
 
 use App\Domain\Identity\Entity\User;
-use App\Infrastructure\Doctrine\Service\Page\PageCrudService;
+use App\Domain\Page\Service\PageCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

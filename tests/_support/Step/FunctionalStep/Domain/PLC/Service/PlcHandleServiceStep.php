@@ -7,8 +7,7 @@ use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\PLC\Entity\PLC;
 use App\Domain\PLC\Service\PlcCrudService;
-use App\Domain\Sensor\Entity\Sensor;
-use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
+use App\Domain\Sensor\Service\SensorCrudService;
 use App\Tests\FunctionalTester;
 
 class PlcHandleServiceStep extends FunctionalTester

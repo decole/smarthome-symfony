@@ -5,6 +5,7 @@ namespace App\Domain\PLC\Service;
 use App\Application\Helper\StringHelper;
 use App\Application\Http\Web\Plc\Dto\CrudPlcDto;
 use App\Domain\Common\Embedded\StatusMessage;
+use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\PLC\Entity\PLC;
@@ -66,7 +67,8 @@ final class PlcCrudService
             $dto->message_warn
         ));
 
-        $entity->setStatus($dto->status === 'on' ? PLC::STATUS_ACTIVE : PLC::STATUS_DEACTIVATE);
+        $entity->setStatus($dto->status === 'on' ?
+            EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
         $entity->setNotify($dto->notify === 'on');
         $entity->onUpdated();
 
@@ -117,7 +119,7 @@ final class PlcCrudService
         $this->setStatusMessage($dto, $entity);
 
         $dto->notify = $entity->isNotify() === true ? 'on' : null;
-        $dto->status = $entity->getStatus() === PLC::STATUS_ACTIVE ? 'on' : null;
+        $dto->status = $entity->getStatus() === EntityStatusEnum::STATUS_ACTIVE->value ? 'on' : null;
 
         return $dto;
     }
@@ -137,7 +139,8 @@ final class PlcCrudService
                 $dto->message_ok,
                 $dto->message_warn
             ),
-            status: $dto->status === 'on' ? PLC::STATUS_ACTIVE : PLC::STATUS_DEACTIVATE,
+            status: $dto->status === 'on' ?
+                EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
             notify: $dto->notify === 'on',
         );
     }

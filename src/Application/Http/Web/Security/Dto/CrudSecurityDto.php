@@ -8,10 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CrudSecurityDto implements ValidationDtoInterface
 {
+    /**
+     * @see App\Domain\Security\Enum\SecurityTypeEnum
+     */
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Choice(choices: Security::SECURITY_TYPES)]
-    public ?string $type = Security::MQTT_TYPE;
+    public ?string $type = 'mqtt_security_device';
 
     #[Assert\NotBlank]
     #[Assert\NotNull]

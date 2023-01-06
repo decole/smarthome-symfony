@@ -4,7 +4,7 @@ namespace App\Application\Http\Web\Sensor;
 
 use App\Domain\Identity\Entity\User;
 use App\Domain\Sensor\Entity\Sensor;
-use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
+use App\Domain\Sensor\Service\SensorCrudService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
