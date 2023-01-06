@@ -47,6 +47,7 @@ final class PeriodicHandlerCommand extends Command
 
             $event = new AlertNotificationEvent($message, [
                 AlertNotificationEvent::MESSENGER,
+                AlertNotificationEvent::DISCORD,
                 AlertNotificationEvent::ALICE
             ]);
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);

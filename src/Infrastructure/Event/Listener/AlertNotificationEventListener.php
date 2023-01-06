@@ -7,9 +7,9 @@ use App\Domain\Notification\Service\NotifyService;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: AlertNotificationEvent::NAME, method: 'onAlertSend')]
-class AlertNotificationEventListener
+final class AlertNotificationEventListener
 {
-    public function __construct(private NotifyService $alertService)
+    public function __construct(private readonly NotifyService $alertService)
     {
     }
 
@@ -18,6 +18,7 @@ class AlertNotificationEventListener
         foreach ($event->getTypes() as $type) {
             match ($type) {
                 $event::MESSENGER => $this->alertService->messengerNotify($event->getMessage()),
+                $event::DISCORD => $this->alertService->discordNotify($event->getMessage()),
                 $event::ALICE => $this->alertService->aliceNotify($event->getMessage()),
             };
         }

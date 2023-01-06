@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MqttPlcHandlerCommand extends Command
+final class MqttPlcHandlerCommand extends Command
 {
     private const DELAY = 60;
     protected static $defaultName = 'cli:plc';
@@ -25,8 +25,6 @@ class MqttPlcHandlerCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-//        sleep(self::DELAY);
-
         $this->handler->execute();
 
         return 0;

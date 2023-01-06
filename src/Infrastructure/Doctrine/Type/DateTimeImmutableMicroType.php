@@ -12,9 +12,9 @@ use Doctrine\DBAL\Types\Type;
 
 class DateTimeImmutableMicroType extends Type
 {
-    public const TYPE_NAME = 'datetime_immutable_microseconds';
+    final public const TYPE_NAME = 'datetime_immutable_microseconds';
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return 'TIMESTAMP(6) WITHOUT TIME ZONE';
     }

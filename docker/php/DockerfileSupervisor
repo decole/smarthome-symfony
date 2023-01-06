@@ -4,6 +4,11 @@ MAINTAINER decole <decole2014@yandex.ru>
 
 # Install supervisor
 RUN apt-get update \
- && apt-get install -y --no-install-recommends supervisor
+  &&  touch /var/run/supervisor.sock \
+  && chmod 777 /var/run/supervisor.sock \
+  && chown root:root /var/run/supervisor.sock \
+  && apt-get install -y --no-install-recommends supervisor
 
 COPY docker/supervisor/supervisord.conf /etc/supervisor
+
+CMD ["/usr/bin/supervisord"]

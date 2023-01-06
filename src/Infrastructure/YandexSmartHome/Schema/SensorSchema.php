@@ -2,12 +2,12 @@
 
 namespace App\Infrastructure\YandexSmartHome\Schema;
 
-class SensorSchema implements SchemaInterface
+final class SensorSchema implements SchemaInterface
 {
-    public function __construct(int $id, ?string $state)
-    {
-        $this->id = $id;
-        $this->state = $state;
+    public function __construct(
+        private readonly int $id,
+        private ?string $state
+    ) {
     }
 
     public function getSchema(): array
@@ -28,5 +28,10 @@ class SensorSchema implements SchemaInterface
                 ]
             ],
         ];
+    }
+
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 }

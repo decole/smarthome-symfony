@@ -44,10 +44,7 @@ final class QuasarNotificationService
             ]);
 
             $this->eventDispatcher->dispatch(
-                new AlertNotificationEvent(
-                    $exception->getMessage(),
-                    [AlertNotificationEvent::MESSENGER]
-                ),
+                new AlertNotificationEvent($exception->getMessage(), [AlertNotificationEvent::MESSENGER]),
                 AlertNotificationEvent::NAME
             );
         }
