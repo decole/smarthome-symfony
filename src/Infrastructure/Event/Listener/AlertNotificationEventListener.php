@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(event: AlertNotificationEvent::NAME, method: 'onAlertSend')]
 class AlertNotificationEventListener
 {
-    public function __construct(private NotifyService $alertService)
+    public function __construct(private readonly NotifyService $alertService)
     {
     }
 

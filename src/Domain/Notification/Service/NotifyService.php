@@ -17,9 +17,9 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 final class NotifyService
 {
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        private VisualNotificationService $service,
-        private UserRepository $repository
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly VisualNotificationService $service,
+        private readonly UserRepository $repository
     ) {
     }
 
