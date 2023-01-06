@@ -3,7 +3,7 @@
 namespace App\Application\Http\Web\Relay;
 
 use App\Domain\Identity\Entity\User;
-use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
+use App\Domain\Relay\Service\RelayCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

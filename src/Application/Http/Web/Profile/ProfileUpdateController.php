@@ -3,7 +3,7 @@
 namespace App\Application\Http\Web\Profile;
 
 use App\Domain\Identity\Entity\User;
-use App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService;
+use App\Domain\Profile\Service\ProfileCrudService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -3,7 +3,7 @@
 namespace App\Application\Http\Web\Page;
 
 use App\Domain\Identity\Entity\User;
-use App\Infrastructure\Doctrine\Service\Page\PageCrudService;
+use App\Domain\Page\Service\PageCrudService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -50,26 +50,6 @@ services:
 
   App\Infrastructure\Security\Auth\Service\CsrfService: ~
 
-  App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService: ~
-
-  App\Infrastructure\Doctrine\Service\Sensor\Factory\SensorCrudFactory: ~
-
-  App\Infrastructure\Doctrine\Service\Relay\RelayCrudService: ~
-
-  App\Infrastructure\Doctrine\Service\Relay\Factory\RelayCrudFactory: ~
-
-  App\Infrastructure\Doctrine\Service\Security\SecurityCrudService: ~
-
-  App\Infrastructure\Doctrine\Service\Security\Factory\SecurityCrudFactory: ~
-
-  App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService: ~
-
-  App\Infrastructure\Doctrine\Service\FireSecurity\Factory\FireSecurityCrudFactory: ~
-
-  App\Infrastructure\Doctrine\Service\Page\PageCrudService: ~
-
-  App\Infrastructure\Doctrine\Service\Page\Factory\PageCrudFactory: ~
-
   App\Infrastructure\Security\Register\Service\SignUpService:
     arguments:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
@@ -104,7 +84,3 @@ services:
     arguments:
       $webhookUri: '%env(DISCORD_WEBHOOK)%'
       $logger: '@monolog.logger.discord_service'
-
-  App\Infrastructure\Doctrine\Service\Profile\ProfileCrudService: ~
-
-  App\Infrastructure\Doctrine\Service\Profile\Factory\ProfileCrudFactory: ~

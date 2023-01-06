@@ -4,7 +4,7 @@ namespace App\Application\Http\Web\Relay;
 
 use App\Domain\Identity\Entity\User;
 use App\Domain\Relay\Entity\Relay;
-use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
+use App\Domain\Relay\Service\RelayCrudService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

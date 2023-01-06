@@ -8,13 +8,13 @@ use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
+use App\Domain\FireSecurity\Service\FireSecurityCrudService;
 use App\Domain\Relay\Entity\Relay;
+use App\Domain\Relay\Service\RelayCrudService;
 use App\Domain\Security\Entity\Security;
+use App\Domain\Security\Service\SecurityCrudService;
 use App\Domain\Sensor\Entity\Sensor;
-use App\Infrastructure\Doctrine\Service\FireSecurity\FireSecurityCrudService;
-use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
-use App\Infrastructure\Doctrine\Service\Security\SecurityCrudService;
-use App\Infrastructure\Doctrine\Service\Sensor\SensorCrudService;
+use App\Domain\Sensor\Service\SensorCrudService;
 use App\Tests\FunctionalTester;
 
 class DeviceDataResolverStep extends FunctionalTester

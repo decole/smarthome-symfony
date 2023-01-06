@@ -4,7 +4,7 @@ namespace App\Tests\functional\Application\Service\Validation\Relay;
 
 use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Application\Service\Validation\Relay\RelayCrudValidationService;
-use App\Infrastructure\Doctrine\Service\Relay\RelayCrudService;
+use App\Domain\Relay\Service\RelayCrudService;
 use App\Tests\FunctionalTester;
 use Codeception\Example;
 use Symfony\Component\Validator\ConstraintViolationList;
