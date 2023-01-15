@@ -35,6 +35,15 @@ $(document).ready(function() {
                                 $(valuebtn).removeClass('active');
                             }
                         });
+
+                        if (value === null) {
+                            console.log(
+
+                            )
+                            sensor.parent().parent().addClass('warrios')
+                        } else {
+                            sensor.parent().parent().removeClass('warrios')
+                        }
                     });
                 });
             }

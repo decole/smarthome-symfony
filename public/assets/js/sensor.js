@@ -11,8 +11,12 @@ $(document).ready(function() {
             $.get("/api/device/topics?topics="+sensors, function (data) {
                 $.each(data, function( index, value ) {
                     if (value === null) {
+                        $("span[data-sensor-value='"+index+"']").parent().parent().parent().addClass('warrios');
                         value = '--';
+                    } else {
+                        $("span[data-sensor-value='"+index+"']").parent().parent().parent().removeClass('warrios');
                     }
+
                     $("span[data-sensor-value='"+index+"']").text(value);
                 });
             });

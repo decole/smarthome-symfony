@@ -27,7 +27,10 @@ final class MqttHandlerCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->handler->listen();
+        while (true) {
+            sleep(60);
+        }
+//        $this->handler->listen();
 
         return 0;
     }
