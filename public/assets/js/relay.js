@@ -28,6 +28,12 @@ $(document).ready(function() {
                     $.each(data, function( index, value ) {
                         let sensor = $("div[data-swift-topic-check='"+index+"']");
                         $(sensor).find('button').map(function (keybtn, valuebtn) {
+                            if (value === null) {
+                                $(".relay-control").parent().parent().addClass('warrios');
+                            } else {
+                                $(".relay-control").parent().parent().removeClass('warrios');
+                            }
+
                             if ($(valuebtn).data('swift-check') == value) {
                                 $(valuebtn).addClass('active');
                             }
@@ -35,16 +41,13 @@ $(document).ready(function() {
                                 $(valuebtn).removeClass('active');
                             }
                         });
-
-                        if (value === null) {
-                            console.log(
-
-                            )
-                            sensor.parent().parent().addClass('warrios')
-                        } else {
-                            sensor.parent().parent().removeClass('warrios')
-                        }
                     });
+                })
+                .done(function() {
+                    $(".relay-control").parent().parent().removeClass('connection-alert');
+                })
+                .fail(function() {
+                    $(".relay-control").parent().parent().addClass('connection-alert');
                 });
             }
 

@@ -16,8 +16,8 @@ final class PlcCacheService implements CacheServiceInterface
     private const CACHE_MAP_KEY = 'plc_cache_map';
 
     public function __construct(
-        private PlcRepositoryInterface $repository,
-        private CacheService $cache,
+        private readonly PlcRepositoryInterface $repository,
+        private readonly CacheService $cache,
     ) {
     }
 

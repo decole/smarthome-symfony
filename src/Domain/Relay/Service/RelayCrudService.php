@@ -12,7 +12,6 @@ use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Relay\Factory\RelayCrudFactory;
-use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
@@ -24,7 +23,7 @@ final class RelayCrudService
 {
     use StatusMessageTrait, CommonCrudFieldTraits;
 
-    public function __construct(private RelayCrudFactory $crud)
+    public function __construct(private readonly RelayCrudFactory $crud)
     {
     }
 
@@ -36,7 +35,7 @@ final class RelayCrudService
     }
 
     /**
-     * @throws OptimisticLockException|ORMException
+     * @throws OptimisticLockException|ORMException|UnresolvableArgumentException
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {

@@ -9,7 +9,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 
-class DateTimeMicroType extends Type
+final class DateTimeMicroType extends Type
 {
     public const TYPE_NAME = 'datetime_microseconds';
 

@@ -22,10 +22,10 @@ final class PlcHandleService
     private const DELAY_DAY = 86400;
 
     public function __construct(
-        private PlcCacheService $plcCache,
-        private DeviceDataCacheService $dataCacheService,
-        private EventDispatcherInterface $eventDispatcher,
-        private LoggerInterface $logger
+        private readonly PlcCacheService $plcCache,
+        private readonly DeviceDataCacheService $dataCacheService,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly LoggerInterface $logger
     ) {
     }
 

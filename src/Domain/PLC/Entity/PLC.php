@@ -10,7 +10,7 @@ use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
 
-class PLC implements EntityInterface
+final class PLC implements EntityInterface
 {
     use Entity, CreatedAt, UpdatedAt;
 

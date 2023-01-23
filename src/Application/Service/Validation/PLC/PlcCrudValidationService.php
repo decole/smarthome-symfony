@@ -11,12 +11,14 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class PlcCrudValidationService implements ValidationInterface
+final class PlcCrudValidationService implements ValidationInterface
 {
     private CrudPlcDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private PlcRepositoryInterface $repository)
-    {
+    public function __construct(
+        private readonly ValidatorInterface $validator,
+        private readonly PlcRepositoryInterface $repository
+    ) {
     }
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface

@@ -6,22 +6,20 @@ use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Throwable;
 
-class DoctrineTransaction implements TransactionInterface
+final class DoctrineTransaction implements TransactionInterface
 {
     private Connection $connection;
 
-    public function __construct(private EntityManager $manager, private string $env)
+    public function __construct(private readonly EntityManager $manager, private readonly string $env)
     {
         $this->connection = $manager->getConnection();
     }
 
-    /** @inheritdoc */
     public function flush($entity = null): void
     {
         $this->manager->flush($entity);
     }
 
-    /** @inheritdoc */
     public function transactional(callable $scope, ?callable $failOver = null)
     {
         $this->connection->beginTransaction();

@@ -4,7 +4,7 @@ namespace App\Domain\Notification\Entity;
 
 final class DiscordNotificationMessage implements NotificationMessageInterface
 {
-    public function __construct(private string $message)
+    public function __construct(private readonly string $message)
     {
     }
 

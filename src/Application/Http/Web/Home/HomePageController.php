@@ -11,8 +11,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class HomePageController extends AbstractController
 {
-    public function __construct(private SitePageService $service, private TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly SitePageService $service,
+        private readonly TranslatorInterface $translator
+    ) {
     }
 
     #[Route('/', name: "home")]

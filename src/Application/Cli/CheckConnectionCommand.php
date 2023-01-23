@@ -12,7 +12,7 @@ final class CheckConnectionCommand extends Command
 {
     protected static $defaultName = 'deploy:check-connection';
 
-    public function __construct(private EntityManagerInterface $manager)
+    public function __construct(private readonly EntityManagerInterface $manager)
     {
         parent::__construct();
     }

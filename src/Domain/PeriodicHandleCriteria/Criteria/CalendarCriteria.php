@@ -8,7 +8,7 @@ use Cron\CronExpression;
 /**
  * Оповестить о начале текущего события по календарю через алису и дискорд
  */
-class CalendarCriteria implements PeriodicHandleCriteriaInterface
+final class CalendarCriteria implements PeriodicHandleCriteriaInterface
 {
     public static function alias(): string
     {

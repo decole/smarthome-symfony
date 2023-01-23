@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 final class MqttSecurityAlertEventListener
 {
     public function __construct(
-        private MqttHandleService $service,
+        private readonly MqttHandleService $service,
     ) {
     }
 

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class YandexSkillApiController
 {
-    public function __construct(private AliceSkillService $service)
+    public function __construct(private readonly AliceSkillService $service)
     {
     }
 

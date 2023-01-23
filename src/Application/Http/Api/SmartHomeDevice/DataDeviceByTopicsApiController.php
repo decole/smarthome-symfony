@@ -12,8 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 final class DataDeviceByTopicsApiController
 {
     public function __construct(
-        private ApiUriTranscribeService $service,
-        private DeviceDataCacheService $deviceDataCacheService
+        private readonly ApiUriTranscribeService $service,
+        private readonly DeviceDataCacheService $deviceDataCacheService
     ) {
     }
 

@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PlcAdminListController extends AbstractController
 {
-    public function __construct(private PlcCrudService $crud)
+    public function __construct(private readonly PlcCrudService $crud)
     {
     }
 

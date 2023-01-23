@@ -9,7 +9,7 @@ use Symfony\Component\Cache\CacheItem;
 
 final class CacheService
 {
-    public function __construct(private RedisAdapter $cache)
+    public function __construct(private readonly RedisAdapter $cache)
     {
     }
 

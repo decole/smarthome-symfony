@@ -6,7 +6,7 @@ use App\Infrastructure\AliceSkill\Dto\AliceDialogDto;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillRequestDto;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillResponseDto;
 
-class PingDialog extends AbstractDialog implements AliceDialogInterface
+final class PingDialog extends AbstractDialog implements AliceDialogInterface
 {
     public static function getCommandVerbList(): array
     {

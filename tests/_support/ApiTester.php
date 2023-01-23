@@ -42,4 +42,29 @@ class ApiTester extends \Codeception\Actor
     {
         return self::$faker;
     }
+
+    public function seeResponseIsSuccessful(int $code = 200)
+    {
+        $this->seeResponseCodeIs($code);
+        $this->seeResponseIsJson();
+    }
+
+    public function seeResponseIsValidationError(int $code = 422)
+    {
+        $this->seeResponseCodeIs($code);
+        $this->seeResponseIsJson();
+    }
+
+    public function seeResponseIsForbidden(int $code = 403)
+    {
+        $this->seeResponseCodeIs($code);
+        $this->seeResponseIsJson();
+    }
+
+
+    public function seeResponseIsException(int $code = 400)
+    {
+        $this->seeResponseCodeIs($code);
+        $this->seeResponseIsJson();
+    }
 }

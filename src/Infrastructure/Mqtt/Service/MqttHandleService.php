@@ -17,11 +17,11 @@ use Throwable;
 final class MqttHandleService
 {
     public function __construct(
-        private MqttClientInterface $client,
-        private DeviceDataResolver $resolver,
-        private DeviceCacheService $deviceCacheService,
-        private EventDispatcherInterface $eventDispatcher,
-        private LoggerInterface $logger
+        private readonly MqttClientInterface $client,
+        private readonly DeviceDataResolver $resolver,
+        private readonly DeviceCacheService $deviceCacheService,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly LoggerInterface $logger
     ) {
     }
 

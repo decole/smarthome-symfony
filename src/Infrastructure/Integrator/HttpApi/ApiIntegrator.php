@@ -5,7 +5,7 @@ namespace App\Infrastructure\Integrator\HttpApi;
 use GuzzleHttp\Client;
 use Throwable;
 
-class ApiIntegrator
+final class ApiIntegrator
 {
     private Client $client;
 

@@ -15,8 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SmartHomeApiController
 {
-    public function __construct(private SmartHomeService $service, private LoggerInterface $smartHomeLogger)
-    {
+    public function __construct(
+        private readonly SmartHomeService $service,
+        private readonly LoggerInterface $smartHomeLogger
+    ) {
     }
 
     // Проверка доступности Endpoint URL провайдера

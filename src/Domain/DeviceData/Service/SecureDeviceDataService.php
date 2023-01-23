@@ -13,14 +13,14 @@ use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Throwable;
 
-class SecureDeviceDataService
+final class SecureDeviceDataService
 {
     public function __construct(
-        private DeviceCacheService $deviceService,
-        private DeviceDataCacheService $dataCacheService,
-        private SecurityRepository $repository,
-        private TransactionInterface $transaction,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly DeviceCacheService $deviceService,
+        private readonly DeviceDataCacheService $dataCacheService,
+        private readonly SecurityRepository $repository,
+        private readonly TransactionInterface $transaction,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

@@ -17,12 +17,12 @@ final class DeviceDataCacheService
 
     private const LIST_KEY = 'list';
 
-    public function __construct(private CacheService $cache)
+    public function __construct(private readonly CacheService $cache)
     {
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException|CacheException
      */
     public function save(DevicePayload $message): void
     {

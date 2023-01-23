@@ -16,10 +16,10 @@ final class DiscordService
     private Client $client;
 
     public function __construct(
-        private CacheService $cache,
-        private LoggerInterface $logger,
-        private EventDispatcherInterface $eventDispatcher,
-        private ?string $webhookUri = null
+        private readonly CacheService $cache,
+        private readonly LoggerInterface $logger,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ?string $webhookUri = null
     ) {
         if (!$webhookUri) {
             $this->logger->critical('Please configure discord webhook');

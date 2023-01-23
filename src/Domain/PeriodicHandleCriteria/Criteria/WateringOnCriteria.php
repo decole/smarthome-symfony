@@ -18,9 +18,9 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 final class WateringOnCriteria implements PeriodicHandleCriteriaInterface
 {
     public function __construct(
-        private DeviceDataCacheService $service,
-        private DeviceCacheService $cacheService,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly DeviceDataCacheService $service,
+        private readonly DeviceCacheService $cacheService,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

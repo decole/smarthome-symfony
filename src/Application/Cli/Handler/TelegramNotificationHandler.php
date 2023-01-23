@@ -9,7 +9,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class TelegramNotificationHandler
 {
-    public function __construct(private TelegramService $service)
+    public function __construct(private readonly TelegramService $service)
     {
     }
 

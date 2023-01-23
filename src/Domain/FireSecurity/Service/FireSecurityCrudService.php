@@ -22,7 +22,7 @@ final class FireSecurityCrudService
 {
     use StatusMessageTrait, CommonCrudFieldTraits;
 
-    public function __construct(private FireSecurityCrudFactory $crud)
+    public function __construct(private readonly FireSecurityCrudFactory $crud)
     {
     }
 

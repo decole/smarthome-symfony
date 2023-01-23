@@ -12,8 +12,8 @@ use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 final class RelayCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
-        private RelayRepositoryInterface $repository,
-        private RelayCrudValidationService $validation,
+        private readonly RelayRepositoryInterface $repository,
+        private readonly RelayCrudValidationService $validation,
         DeviceCacheService $cacheService
     ) {
         $this->cacheService = $cacheService;

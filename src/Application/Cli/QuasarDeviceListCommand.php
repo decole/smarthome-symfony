@@ -11,7 +11,7 @@ final class QuasarDeviceListCommand extends Command
 {
     protected static $defaultName = 'cli:quasar:device-list';
 
-    public function __construct(private QuasarNotificationService $service)
+    public function __construct(private readonly QuasarNotificationService $service)
     {
         parent::__construct();
     }

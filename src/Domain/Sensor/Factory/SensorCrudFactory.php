@@ -12,8 +12,8 @@ use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 final class SensorCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
-        private SensorRepositoryInterface $repository,
-        private SensorCrudValidationService $validation,
+        private readonly SensorRepositoryInterface $repository,
+        private readonly SensorCrudValidationService $validation,
         DeviceCacheService $cacheService
     ) {
         $this->cacheService = $cacheService;

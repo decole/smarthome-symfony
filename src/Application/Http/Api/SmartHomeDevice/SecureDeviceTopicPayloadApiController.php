@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SecureDeviceTopicPayloadApiController
+final class SecureDeviceTopicPayloadApiController
 {
-    public function __construct(private SecureDeviceDataService $service)
+    public function __construct(private readonly SecureDeviceDataService $service)
     {
     }
 

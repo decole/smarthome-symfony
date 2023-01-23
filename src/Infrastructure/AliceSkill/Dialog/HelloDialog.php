@@ -6,7 +6,7 @@ use App\Infrastructure\AliceSkill\Dto\AliceDialogDto;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillRequestDto;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillResponseDto;
 
-class HelloDialog extends AbstractDialog implements AliceDialogInterface
+final class HelloDialog extends AbstractDialog implements AliceDialogInterface
 {
     public static function getCommandVerbList(): array
     {

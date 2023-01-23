@@ -11,19 +11,19 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class SignUpService
+final class SignUpService
 {
     public function __construct(
-        private TransactionInterface $transaction,
-        private UserRepository $userRepository,
-        private EmailVerifyService $emailVerifier,
-        private UserPasswordHasherInterface $passwordHasher,
-        private string $email,
-        private string $subject
+        private readonly TransactionInterface $transaction,
+        private readonly UserRepository $userRepository,
+        private readonly EmailVerifyService $emailVerifier,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly string $email,
+        private readonly string $subject
     ) {
     }
 
-    final public function signUp(RegisterDto $dto): User
+    public function signUp(RegisterDto $dto): User
     {
         $user = new User();
         $user->setName($dto->getName());

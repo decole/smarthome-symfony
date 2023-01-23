@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PageAdminCreateController extends AbstractController
 {
-    public function __construct(private PageCrudService $crud)
+    public function __construct(private readonly PageCrudService $crud)
     {
     }
 

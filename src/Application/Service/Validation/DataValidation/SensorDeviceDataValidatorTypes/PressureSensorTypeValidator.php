@@ -2,6 +2,6 @@
 
 namespace App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
-class PressureSensorTypeValidator extends TemperatureSensorTypeValidator
+final class PressureSensorTypeValidator extends TemperatureSensorTypeValidator
 {
 }

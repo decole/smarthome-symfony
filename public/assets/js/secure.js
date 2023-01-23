@@ -9,7 +9,6 @@ $(document).ready(function() {
             $this.map(function (key, value) {
                 let topic = $(value).data('secstate-topic');
                 $.get("/api/secure/state?topic="+topic, function (data) {
-                    console.log(data);
                     if (data['isTriggered'] === true) {
                         $(value).find('.secure-trigger-on').removeClass('active').addClass('active');
                         $(value).find('.secure-trigger-off').removeClass('active');
@@ -35,6 +34,12 @@ $(document).ready(function() {
                         setTimeout(run,3000);setTimeout(run,3500);
                         setTimeout(run,4000);setTimeout(run,4500);
                     }
+                })
+                .done(function() {
+                    $(".secure-sensor-control").parent().parent().removeClass('connection-alert');
+                })
+                .fail(function() {
+                    $(".secure-sensor-control").parent().parent().addClass('connection-alert');
                 });
             });
 
@@ -51,7 +56,6 @@ $(document).ready(function() {
                 let $this = $(this).parent();
                 $.post("/api/secure/trigger", { topic: $this.data('secstate-topic'), trigger: true })
                     .done(function(data) {
-                        console.log(data);
                         $(value).find('.secure-trigger-on').removeClass('active').addClass('active');
                         $(value).find('.secure-trigger-off').removeClass('active');
                     });
@@ -60,7 +64,6 @@ $(document).ready(function() {
                 let $this = $(this).parent();
                 $.post("/api/secure/trigger", { topic: $this.data('secstate-topic'), trigger: false })
                     .done(function(data) {
-                        console.log(data);
                         $(value).find('.secure-trigger-on').removeClass('active');
                         $(value).find('.secure-trigger-off').removeClass('active').addClass('active');
                     });

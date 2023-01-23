@@ -12,8 +12,8 @@ use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 final class PageCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
-        private PageRepositoryInterface $repository,
-        private PageCrudValidationService $validation,
+        private readonly PageRepositoryInterface $repository,
+        private readonly PageCrudValidationService $validation,
         DeviceCacheService $cacheService
     ) {
         $this->cacheService = $cacheService;

@@ -25,7 +25,7 @@ final class SecurityCrudService
 {
     use StatusMessageTrait, CommonCrudFieldTraits;
 
-    public function __construct(private SecurityCrudFactory $crud)
+    public function __construct(private readonly SecurityCrudFactory $crud)
     {
     }
 
