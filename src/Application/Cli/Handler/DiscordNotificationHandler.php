@@ -9,7 +9,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class DiscordNotificationHandler
 {
-    public function __construct(private DiscordService $service)
+    public function __construct(private readonly DiscordService $service)
     {
     }
 

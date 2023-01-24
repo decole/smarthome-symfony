@@ -163,6 +163,9 @@ final class Relay implements EntityInterface
         $this->notify = $notify;
     }
 
+    /**
+     * @throws UnresolvableArgumentException
+     */
     private function checkStatusType(int $status): void
     {
         if (EntityStatusEnum::tryFrom($status) === null) {
@@ -170,6 +173,9 @@ final class Relay implements EntityInterface
         }
     }
 
+    /**
+     * @throws UnresolvableArgumentException
+     */
     private function checkRelayType(string $type): void
     {
         if (RelayTypeEnum::tryFrom($type) === null) {

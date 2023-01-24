@@ -29,9 +29,9 @@ final class VisualNotificationService
     ];
 
     public function __construct(
-        private TransactionInterface $transaction,
-        private VisualNotificationRepositoryInterface $repository,
-        private CacheService $cacheService
+        private readonly TransactionInterface $transaction,
+        private readonly VisualNotificationRepositoryInterface $repository,
+        private readonly CacheService $cacheService
     ) {
     }
 

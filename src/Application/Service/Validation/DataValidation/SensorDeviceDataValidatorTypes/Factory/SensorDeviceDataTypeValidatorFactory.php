@@ -14,7 +14,7 @@ use App\Domain\Sensor\Entity\LeakageSensor;
 use App\Domain\Sensor\Entity\PressureSensor;
 use App\Domain\Sensor\Entity\TemperatureSensor;
 
-class SensorDeviceDataTypeValidatorFactory
+final class SensorDeviceDataTypeValidatorFactory
 {
     public function create(EntityInterface $device)
     {

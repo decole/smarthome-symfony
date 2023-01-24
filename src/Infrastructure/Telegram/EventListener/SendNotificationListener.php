@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Telegram\EventListener;
 
-class SendNotificationListener
+final class SendNotificationListener
 {
 
 }

@@ -5,8 +5,8 @@ namespace App\Domain\VisualNotification\Dto;
 final class VisualNotificationDto
 {
     public function __construct(
-        private int $type,
-        private string $message
+        private readonly int $type,
+        private readonly string $message
     ) {
     }
 

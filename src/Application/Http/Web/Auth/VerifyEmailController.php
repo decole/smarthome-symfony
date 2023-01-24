@@ -13,9 +13,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Webmozart\Assert\InvalidArgumentException;
 
-class VerifyEmailController extends AbstractController
+final class VerifyEmailController extends AbstractController
 {
-    public function __construct(private EmailVerifyService $emailVerifier)
+    public function __construct(private readonly EmailVerifyService $emailVerifier)
     {
     }
 

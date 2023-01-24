@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class RelayAdminListController extends AbstractController
 {
-    public function __construct(private RelayCrudService $crud)
+    public function __construct(private readonly RelayCrudService $crud)
     {
     }
 

@@ -5,11 +5,11 @@ namespace App\Infrastructure\Security\Auth\Service;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CsrfService
+final class CsrfService
 {
     private const KEY = '_csrf';
 
-    public function __construct(private SessionInterface $session)
+    public function __construct(private readonly SessionInterface $session)
     {
     }
 

@@ -10,7 +10,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 
-class DateTimeImmutableMicroType extends Type
+final class DateTimeImmutableMicroType extends Type
 {
     final public const TYPE_NAME = 'datetime_immutable_microseconds';
 

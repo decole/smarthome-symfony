@@ -15,6 +15,18 @@ $(document).ready(function() {
                         $this.find('.btn-outline-danger').addClass('active').show();
                         $this.find('.btn-outline-success').removeClass('active').hide();
                     }
+
+                    if (data[topic] === null) {
+                        $(".fire-sensor-control").parent().parent().addClass('warrios');
+                    } else {
+                        $(".fire-sensor-control").parent().parent().removeClass('warrios');
+                    }
+                })
+                .done(function() {
+                    $(".fire-sensor-control").parent().parent().removeClass('connection-alert');
+                })
+                .fail(function() {
+                    $(".fire-sensor-control").parent().parent().addClass('connection-alert');
                 });
             });
 

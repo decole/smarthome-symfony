@@ -2,7 +2,7 @@
 
 namespace App\Domain\Event;
 
-class AlertNotificationEvent
+final class AlertNotificationEvent
 {
     public const NAME = 'notification.alert.send';
 
@@ -10,7 +10,7 @@ class AlertNotificationEvent
     public const DISCORD = 'discord';
     public const ALICE = 'alice';
 
-    public function __construct(private string $message, private array $types)
+    public function __construct(private readonly string $message, private readonly array $types)
     {
     }
 

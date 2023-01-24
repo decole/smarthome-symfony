@@ -29,7 +29,7 @@ final class SensorCrudService
 {
     use StatusMessageTrait, CommonCrudFieldTraits;
 
-    public function __construct(private SensorCrudFactory $crud)
+    public function __construct(private readonly SensorCrudFactory $crud)
     {
     }
 

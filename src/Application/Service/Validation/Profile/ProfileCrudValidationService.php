@@ -11,15 +11,17 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ProfileCrudValidationService implements ValidationInterface
+final class ProfileCrudValidationService implements ValidationInterface
 {
     /**
      * @var CrudProfileDto
      */
     private ValidationDtoInterface $dto;
 
-    public function __construct(private ValidatorInterface $validator, private ProfileRepositoryInterface $repository)
-    {
+    public function __construct(
+        private readonly ValidatorInterface $validator,
+        private readonly ProfileRepositoryInterface $repository
+    ) {
     }
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface

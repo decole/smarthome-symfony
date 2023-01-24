@@ -15,13 +15,13 @@ use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
 
-final class PageGidratorService
+final class PageHydrateService
 {
     public function __construct(
-        private SensorRepositoryInterface $sensorRepository,
-        private RelayRepositoryInterface $relayRepository,
-        private SecurityRepositoryInterface $securityRepository,
-        private FireSecurityRepositoryInterface $fireSecurityRepository
+        private readonly SensorRepositoryInterface $sensorRepository,
+        private readonly RelayRepositoryInterface $relayRepository,
+        private readonly SecurityRepositoryInterface $securityRepository,
+        private readonly FireSecurityRepositoryInterface $fireSecurityRepository
     ) {
     }
 
@@ -44,6 +44,7 @@ final class PageGidratorService
 
     public function createAllEntityMap(): array
     {
+        // todo вызвать событие и забрать все данные с каждых сущностей
         $result = [];
 
         foreach ($this->sensorRepository->findAll() as $sensor) {
@@ -71,6 +72,7 @@ final class PageGidratorService
     private function findEntity(string $type, string $id): EntityInterface
     {
         return match ($type) {
+            // todo вызвать событие и забрать все данные с каждых сущностей
             Sensor::alias() => $this->sensorRepository->findById($id),
             Relay::alias() => $this->relayRepository->findById($id),
             Security::alias() => $this->securityRepository->findById($id),

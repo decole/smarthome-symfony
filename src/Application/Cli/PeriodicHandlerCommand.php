@@ -19,9 +19,9 @@ final class PeriodicHandlerCommand extends Command
     protected static $defaultName = 'cli:cron';
 
     public function __construct(
-        private CriteriaChainService $service,
-        private EventDispatcherInterface $eventDispatcher,
-        private LoggerInterface $logger
+        private readonly CriteriaChainService $service,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly LoggerInterface $logger
     ) {
         parent::__construct();
     }

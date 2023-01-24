@@ -8,8 +8,8 @@ use App\Domain\Contract\Repository\PageRepositoryInterface;
 final class SitePageService
 {
     public function __construct(
-        private PageRepositoryInterface $repository,
-        private PageGidratorService $service
+        private readonly PageRepositoryInterface $repository,
+        private readonly PageHydrateService $service
     ) {
     }
 

@@ -15,8 +15,8 @@ class TestCommand extends Command
     protected static $defaultName = 'cli:test';
 
     public function __construct(
-        private SecurityRepositoryInterface $repository,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly SecurityRepositoryInterface $repository,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct();
     }

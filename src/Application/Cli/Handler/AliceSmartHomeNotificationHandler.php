@@ -13,8 +13,8 @@ use Throwable;
 final class AliceSmartHomeNotificationHandler
 {
     public function __construct(
-        private QuasarNotificationService $service,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly QuasarNotificationService $service,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

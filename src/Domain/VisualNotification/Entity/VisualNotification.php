@@ -7,7 +7,7 @@ use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
 
-class VisualNotification implements EntityInterface
+final class VisualNotification implements EntityInterface
 {
     private bool $isRead = false;
 
@@ -32,7 +32,7 @@ class VisualNotification implements EntityInterface
 
     use Entity, CreatedAt, UpdatedAt;
 
-    public function __construct(private int $type, private string $message)
+    public function __construct(private readonly int $type, private string $message)
     {
         $this->identify();
         $this->onCreated();

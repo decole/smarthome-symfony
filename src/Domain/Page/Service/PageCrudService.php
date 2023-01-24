@@ -26,11 +26,11 @@ final class PageCrudService
     private const GROUP_ALIAS = 'groupId';
 
     public function __construct(
-        private PageCrudFactory $crud,
-        private SensorRepositoryInterface $sensorRepository,
-        private RelayRepositoryInterface $relayRepository,
-        private SecurityRepositoryInterface $securityRepository,
-        private FireSecurityRepositoryInterface $fireSecurityRepository
+        private readonly PageCrudFactory $crud,
+        private readonly SensorRepositoryInterface $sensorRepository,
+        private readonly RelayRepositoryInterface $relayRepository,
+        private readonly SecurityRepositoryInterface $securityRepository,
+        private readonly FireSecurityRepositoryInterface $fireSecurityRepository
     ) {
     }
 

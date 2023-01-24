@@ -3,12 +3,12 @@
 namespace App\Domain\Common\Embedded;
 
 
-class StatusMessage
+final class StatusMessage
 {
     public function __construct(
-        private ?string $message_info = null,
-        private ?string $message_ok = null,
-        private ?string $message_warn = null
+        private readonly ?string $message_info = null,
+        private readonly ?string $message_ok = null,
+        private readonly ?string $message_warn = null
     ) {
     }
 

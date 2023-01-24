@@ -12,8 +12,8 @@ use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 final class FireSecurityCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
-        private FireSecurityRepositoryInterface $repository,
-        private FireSecurityCrudValidationService $validation,
+        private readonly FireSecurityRepositoryInterface $repository,
+        private readonly FireSecurityCrudValidationService $validation,
         DeviceCacheService $cacheService
     ) {
         $this->cacheService = $cacheService;

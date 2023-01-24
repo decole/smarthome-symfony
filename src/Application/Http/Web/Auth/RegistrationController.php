@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RegistrationController extends AbstractController
+final class RegistrationController extends AbstractController
 {
     public function __construct(
-        private CsrfService $csrf,
-        private RegistrationValidateService $validation,
-        private SignUpService $service
+        private readonly CsrfService $csrf,
+        private readonly RegistrationValidateService $validation,
+        private readonly SignUpService $service
     ) {
     }
 

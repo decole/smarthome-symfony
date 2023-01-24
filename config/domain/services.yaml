@@ -7,7 +7,7 @@ services:
 
   App\Domain\SecureSystem\Service\LoginFormAuthenticator: ~
 
-  App\Domain\Page\Service\PageGidratorService: ~
+  App\Domain\Page\Service\PageHydrateService: ~
 
   App\Domain\PeriodicHandleCriteria\:
     resource: '%kernel.project_dir%/src/Domain/PeriodicHandleCriteria/**/*Criteria.php'

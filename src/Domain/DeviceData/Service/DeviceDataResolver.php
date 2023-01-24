@@ -16,9 +16,9 @@ use Throwable;
 final class DeviceDataResolver
 {
     public function __construct(
-        private DeviceDataValidationService $validateService,
-        private DeviceDataCacheService $cacheService,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly DeviceDataValidationService $validateService,
+        private readonly DeviceDataCacheService $cacheService,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

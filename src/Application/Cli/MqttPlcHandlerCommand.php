@@ -13,7 +13,7 @@ final class MqttPlcHandlerCommand extends Command
     protected static $defaultName = 'cli:plc';
 
     public function __construct(
-        private PlcHandleService $handler
+        private readonly PlcHandleService $handler
     ) {
         parent::__construct();
     }

@@ -4,7 +4,7 @@ namespace App\Domain\Payload\Entity;
 
 final class DevicePayload
 {
-    public function __construct(private ?string $topic, private ?string $payload)
+    public function __construct(private readonly ?string $topic, private readonly ?string $payload)
     {
     }
 

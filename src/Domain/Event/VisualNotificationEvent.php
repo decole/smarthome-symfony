@@ -15,7 +15,7 @@ class VisualNotificationEvent extends Event
 {
     public const NAME = 'notification.visual.send';
 
-    public function __construct(private string $message, private EntityInterface $device)
+    public function __construct(private readonly string $message, private readonly EntityInterface $device)
     {
     }
 

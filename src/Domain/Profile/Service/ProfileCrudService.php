@@ -23,9 +23,9 @@ final class ProfileCrudService
     private const PASSWORD_AGAN_ALIAS = 'password_agan';
 
     public function __construct(
-        private ProfileCrudFactory $crud,
-        private UserPasswordHasherInterface $passwordHasher,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly ProfileCrudFactory $crud,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

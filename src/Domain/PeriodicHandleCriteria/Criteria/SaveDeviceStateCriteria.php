@@ -32,14 +32,14 @@ final class SaveDeviceStateCriteria implements PeriodicHandleCriteriaInterface
     private const FIRE_SECURE = 'f';
 
     public function __construct(
-        private DeviceDataCacheService $service,
-        private DeviceCacheService $cacheService,
-        private SensorRepositoryInterface $sensorRepository,
-        private RelayRepositoryInterface $relayRepository,
-        private SecurityRepositoryInterface $securityRepository,
-        private FireSecurityRepositoryInterface $fireSecurityRepository,
-        private TransactionInterface $transaction,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly DeviceDataCacheService $service,
+        private readonly DeviceCacheService $cacheService,
+        private readonly SensorRepositoryInterface $sensorRepository,
+        private readonly RelayRepositoryInterface $relayRepository,
+        private readonly SecurityRepositoryInterface $securityRepository,
+        private readonly FireSecurityRepositoryInterface $fireSecurityRepository,
+        private readonly TransactionInterface $transaction,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
 

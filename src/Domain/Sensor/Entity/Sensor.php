@@ -101,7 +101,7 @@ class Sensor implements EntityInterface
     private function checkStatusType(int $status): void
     {
         if (EntityStatusEnum::tryFrom($status) === null) {
-            throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
+            throw UnresolvableArgumentException::argumentIsNotSet('Status');
         }
     }
 }

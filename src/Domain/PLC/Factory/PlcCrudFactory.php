@@ -10,11 +10,11 @@ use App\Domain\PLC\Service\PlcCacheService;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 use App\Infrastructure\Doctrine\Repository\PLC\PlcRepository;
 
-class PlcCrudFactory extends AbstractCrudFactory
+final class PlcCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
-        private PlcRepositoryInterface $repository,
-        private PlcCrudValidationService $validation,
+        private readonly PlcRepositoryInterface $repository,
+        private readonly PlcCrudValidationService $validation,
         PlcCacheService $cacheService
     ) {
         $this->cacheService = $cacheService;
@@ -23,7 +23,7 @@ class PlcCrudFactory extends AbstractCrudFactory
     /**
      * @return PlcRepository
      */
-    final public function getRepository(): BaseDoctrineRepository
+    public function getRepository(): BaseDoctrineRepository
     {
         return $this->repository;
     }
@@ -31,7 +31,7 @@ class PlcCrudFactory extends AbstractCrudFactory
     /**
      * @return PlcCrudValidationService
      */
-    final public function getValidationService(): ValidationInterface
+    public function getValidationService(): ValidationInterface
     {
         return $this->validation;
     }

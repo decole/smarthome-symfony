@@ -4,9 +4,9 @@ namespace App\Domain\DeviceData\Entity;
 
 use App\Domain\Contract\Repository\EntityInterface;
 
-class DeviceDataValidated
+final class DeviceDataValidated
 {
-    public function __construct(private bool $state, private EntityInterface $device)
+    public function __construct(private readonly bool $state, private readonly EntityInterface $device)
     {
     }
 

@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PageViewController extends AbstractController
+final class PageViewController extends AbstractController
 {
-    public function __construct(private PageRepositoryInterface $repository, private SitePageService $service)
+    public function __construct(private readonly SitePageService $service)
     {
     }
 

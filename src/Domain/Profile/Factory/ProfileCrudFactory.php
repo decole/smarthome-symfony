@@ -12,8 +12,8 @@ use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 final class ProfileCrudFactory extends AbstractCrudFactory
 {
     public function __construct(
-        private ProfileRepositoryInterface $repository,
-        private ProfileCrudValidationService $validation,
+        private readonly ProfileRepositoryInterface $repository,
+        private readonly ProfileCrudValidationService $validation,
         DeviceCacheService $cacheService
     ) {
         $this->cacheService = $cacheService;

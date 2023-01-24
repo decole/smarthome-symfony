@@ -20,7 +20,7 @@ final class PlcCrudService
 {
     use StatusMessageTrait;
 
-    public function __construct(private PlcCrudFactory $crud)
+    public function __construct(private readonly PlcCrudFactory $crud)
     {
     }
 

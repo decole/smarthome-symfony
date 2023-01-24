@@ -11,7 +11,7 @@ final class QuasarCreateScenarioCommand extends Command
 {
     protected static $defaultName = 'cli:quasar:create-scenario';
 
-    public function __construct(private QuasarNotificationService $service)
+    public function __construct(private readonly QuasarNotificationService $service)
     {
         parent::__construct();
     }

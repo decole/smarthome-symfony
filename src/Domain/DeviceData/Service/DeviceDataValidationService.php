@@ -10,7 +10,7 @@ use Psr\Cache\InvalidArgumentException;
 
 final class DeviceDataValidationService
 {
-    public function __construct(private DeviceCacheService $deviceCacheService)
+    public function __construct(private readonly DeviceCacheService $deviceCacheService)
     {
     }
 

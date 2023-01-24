@@ -18,6 +18,15 @@ composer:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
+  after_script:
+    - >
+      if [ $CI_JOB_STATUS == 'success' ]; then
+        echo 'Success'
+      else
+        echo 'Droping files'
+        docker-compose -f docker-compose.ci.yaml run -T php-fpm chmod 777 -R ./
+        docker-compose -f docker-compose.ci.yaml run -T php-fpm rm -rf ./var ./vendor .env.test.local
+      fi
 
 tests:
   stage: testing

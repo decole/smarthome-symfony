@@ -9,7 +9,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\TimeImmutableType;
 
-class TimeImmutable extends TimeImmutableType
+final class TimeImmutable extends TimeImmutableType
 {
     public function getName(): string
     {

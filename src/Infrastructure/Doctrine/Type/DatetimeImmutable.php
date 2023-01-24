@@ -8,7 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
 
-class DatetimeImmutable extends DateTimeImmutableType
+final class DatetimeImmutable extends DateTimeImmutableType
 {
     public static function getTypeName(): string
     {

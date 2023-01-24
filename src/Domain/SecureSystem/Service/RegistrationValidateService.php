@@ -4,14 +4,13 @@ namespace App\Domain\SecureSystem\Service;
 
 use App\Domain\Identity\Repository\UserRepositoryInterface;
 use App\Domain\SecureSystem\Dto\RegisterDto;
-use function App\Domain\Doctrine\SecureSystem\Service\mb_strlen;
 
-class RegistrationValidateService
+final class RegistrationValidateService
 {
     private bool $valid = true;
     private array $errors = [];
 
-    public function __construct(private UserRepositoryInterface $repository)
+    public function __construct(private readonly UserRepositoryInterface $repository)
     {
     }
 

@@ -11,7 +11,7 @@ use Cron\CronExpression;
  */
 final class AliceVoiceTestCriteria implements PeriodicHandleCriteriaInterface
 {
-    public function __construct(private QuasarNotificationService $service)
+    public function __construct(private readonly QuasarNotificationService $service)
     {
     }
 

@@ -2,10 +2,7 @@
 
 namespace App\Application\Cli;
 
-use App\Domain\Event\AlertNotificationEvent;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +12,7 @@ final class MqttHandlerCommand extends Command
     protected static $defaultName = 'cli:mqtt';
 
     public function __construct(
-        private MqttHandleService $handler,
+        private readonly MqttHandleService $handler,
     ) {
         parent::__construct();
     }

@@ -21,11 +21,11 @@ use Symfony\Contracts\Cache\ItemInterface;
 final class DeviceCacheService implements CacheServiceInterface
 {
     public function __construct(
-        private CacheService $cache,
-        private SensorRepositoryInterface $sensorRepository,
-        private RelayRepositoryInterface $relayRepository,
-        private SecurityRepositoryInterface $securityRepository,
-        private FireSecurityRepositoryInterface $fireSecurityRepository
+        private readonly CacheService $cache,
+        private readonly SensorRepositoryInterface $sensorRepository,
+        private readonly RelayRepositoryInterface $relayRepository,
+        private readonly SecurityRepositoryInterface $securityRepository,
+        private readonly FireSecurityRepositoryInterface $fireSecurityRepository
     ) {
     }
 

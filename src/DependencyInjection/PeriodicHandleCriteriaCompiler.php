@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class PeriodicHandleCriteriaCompiler implements CompilerPassInterface
+final class PeriodicHandleCriteriaCompiler implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

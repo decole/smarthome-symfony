@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SecureDeviceSetStateTriggerApiController
+final class SecureDeviceSetStateTriggerApiController
 {
-    public function __construct(private SecureDeviceDataService $service)
+    public function __construct(private readonly SecureDeviceDataService $service)
     {
     }
 
