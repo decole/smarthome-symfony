@@ -36,14 +36,14 @@ final class DiscordService
     public function send(string $message): void
     {
         try {
-            $sentMessage = $this->cache->get(key: CacheKeyListEnum::DISCORD_SENT_MESSAGE_TRIGGER);
+            $sentMessage = $this->cache->get(key: CacheKeyListEnum::DISCORD_SENT_MESSAGE_TRIGGER->value);
 
             if ($sentMessage === $message) {
                 return;
             }
 
             $this->cache->set(
-                key: CacheKeyListEnum::DISCORD_SENT_MESSAGE_TRIGGER,
+                key: CacheKeyListEnum::DISCORD_SENT_MESSAGE_TRIGGER->value,
                 value: $message,
                 lifetime: 60
             );

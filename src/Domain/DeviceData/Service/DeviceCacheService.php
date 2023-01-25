@@ -35,8 +35,8 @@ final class DeviceCacheService implements CacheServiceInterface
      */
     public function create(): void
     {
-        $this->cache->set(CacheKeyListEnum::DEVICE_MAP_CACHE, $this->getMap());
-        $this->cache->delete([CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE]);
+        $this->cache->set(CacheKeyListEnum::DEVICE_MAP_CACHE->value, $this->getMap());
+        $this->cache->delete([CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE->value]);
         $this->getTopicMapByDeviceTopic();
     }
 
@@ -47,7 +47,7 @@ final class DeviceCacheService implements CacheServiceInterface
     public function getDeviceMap(): array
     {
         return $this->cache->getOrSet(
-            key: CacheKeyListEnum::DEVICE_MAP_CACHE,
+            key: CacheKeyListEnum::DEVICE_MAP_CACHE->value,
             callback: function (ItemInterface $item) {
                 return $this->getMap();
             }
@@ -61,7 +61,7 @@ final class DeviceCacheService implements CacheServiceInterface
     public function getTopicMapByDeviceTopic(): array
     {
         return $this->cache->getOrSet(
-            key: CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE,
+            key: CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE->value,
             callback: function (ItemInterface $item) {
                 $topicList = [];
                 $map = $this->getDeviceMap();
