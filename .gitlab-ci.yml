@@ -90,14 +90,13 @@ deploy_prod:
       git pull
       df -H /
       make pull
-      docker-compose exec -T php-fpm chown -R root:root ./
       docker-compose exec -T php-fpm composer install --no-dev --optimize-autoloader
-      docker-compose exec -T php-fpm chmod 777 -R ./
       docker-compose exec -T php-fpm php bin/console d:m:m --no-interaction
       docker-compose exec -T php-fpm php bin/console cache:clear
-      docker-compose exec -T php-fpm chmod 777 -R ./
+      docker-compose exec -T php-fpm chmod 777 -R ./var
       make restart
       make ps
+      docker-compose exec -T php-fpm chmod 777 -R ./var
       EOT
   dependencies:
     - tests

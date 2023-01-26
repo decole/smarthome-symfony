@@ -21,7 +21,7 @@ class TestCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $event = new NotificationEvent(new TelegramNotificationMessage('test message bi cli:test', 1198443517));
+        $event = new NotificationEvent(new TelegramNotificationMessage('test message bi cli:test', 99999999999));
         $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
 
         return 0;
