@@ -38,16 +38,15 @@
 ## Services
 
 - nginx
-- php-fpm - app
-- php-cli - supervisor
+- php-fpm - app + supervisor
 - postgresql
 - redis - cache
 - redis-insight - check Redis Data
 - supervisor - background process
-- rabbitMQ - reactive queue (not used by time)
-- логирование - логирование пока в файлики var/log проекта
+- rabbitMQ - reactive queue (mqtt, notification)
+- логирование - логирование пока в файлики var/log проекта, планирую Loki
 - мониторинг - Prometheus
-- CI/CD - Gitlab CI*
+- CI/CD - Gitlab CI
 
 ## Периодические задания:
 
@@ -57,6 +56,9 @@
 PeriodicHandleCriteriaCompiler - через dependency injection по сервис тегу регистрируются критерии 
 в CriteriaChainService.php  
 
+`bin/console cli:mqtt` - подключено к mqtt и отправка в очередь кролика 
+`php bin/console rabbitmq:consumer mqtt_receive_payloads` - слушатель колик по mqtt сообщениям брокера
+`php bin/console rabbitmq:consumer mqtt_transfer_payloads` - отправка в mqtt сообщений
 
 ## Очереди нотификаций:
 

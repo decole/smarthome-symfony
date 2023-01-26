@@ -90,21 +90,14 @@ deploy_prod:
       git pull
       df -H /
       make pull
-      make restart
-      docker-compose run -T php-fpm chown -R root:root ./
-      docker-compose run -T php-fpm composer install --no-dev --optimize-autoloader
+      docker-compose exec -T php-fpm chown -R root:root ./
+      docker-compose exec -T php-fpm composer install --no-dev --optimize-autoloader
       docker-compose exec -T php-fpm chmod 777 -R ./
-      docker-compose stop php-fpm
-      docker-compose run -T php-fpm php bin/console d:m:m --no-interaction
-      docker-compose run -T php-fpm rm -rf ./var/cache/
-      docker-compose run -T php-fpm chmod 777 -R ./
-      make restart
-      make ps
-      docker-compose exec -T php-fpm chmod 777 -R ./
+      docker-compose exec -T php-fpm php bin/console d:m:m --no-interaction
       docker-compose exec -T php-fpm php bin/console cache:clear
       docker-compose exec -T php-fpm chmod 777 -R ./
-      docker-compose exec -T php-fpm chown -R root:root ./
       make restart
+      make ps
       EOT
   dependencies:
     - tests

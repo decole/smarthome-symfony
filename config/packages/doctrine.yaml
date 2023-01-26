@@ -7,6 +7,7 @@ doctrine_migrations:
 
 doctrine:
     dbal:
+        schema_filter: '~^(?!messenger_messages)~'
         url: '%env(resolve:DATABASE_URL)%'
         types:
             uuid: Ramsey\Uuid\Doctrine\UuidType

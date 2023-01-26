@@ -8,6 +8,7 @@ monolog:
         - quasar_service
         - discord_service
         - smart_home
+        - rabbit_consumers
 
     handlers:
         console:
@@ -56,6 +57,11 @@ monolog:
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.smart_home.log'
             channels: [ smart_home ]
+            level: debug
+        rabbit_consumers:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.rabbit_consumers.log'
+            channels: [ rabbit_consumers ]
             level: debug
         main:
             type: stream

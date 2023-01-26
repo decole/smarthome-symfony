@@ -2,10 +2,10 @@
 
 namespace App\Infrastructure\Cache;
 
-class CacheKeyListEnum
+enum CacheKeyListEnum: string
 {
-    public const DEVICE_TOPICS_LIST = 'topicList'; // массив топиков с их значением и последней датой обновления
-    public const DEVICE_TOPIC_BY_TYPE = 'topicsByType';
-    public const DEVICE_MAP_CACHE = 'deviceMap';
-    public const DISCORD_SENT_MESSAGE_TRIGGER = 'discordMessage';
+    case DEVICE_TOPICS_LIST = 'topicList'; // массив топиков с их значением и последней датой обновления
+    case DEVICE_TOPIC_BY_TYPE = 'topicsByType';
+    case DEVICE_MAP_CACHE = 'deviceMap';
+    case DISCORD_SENT_MESSAGE_TRIGGER = 'discordMessage';
 }

@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Domain\:
+    resource: '%kernel.project_dir%/src/Domain/**/EventListener/*Listener.php'

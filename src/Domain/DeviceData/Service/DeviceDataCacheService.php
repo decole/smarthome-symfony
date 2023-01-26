@@ -26,7 +26,7 @@ final class DeviceDataCacheService
      */
     public function save(DevicePayload $message): void
     {
-        $map = $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST) ?? [];
+        $map = $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST->value) ?? [];
 
         $map[self::LIST_KEY][$message->getTopic()] = [
             'payload' => $message->getPayload(),
@@ -76,7 +76,7 @@ final class DeviceDataCacheService
      */
     public function getList(): array
     {
-        return $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST)[self::LIST_KEY] ?? [];
+        return $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST->value)[self::LIST_KEY] ?? [];
     }
 
     private function getTopicPayload(array $cached, mixed $topic): ?string
@@ -102,7 +102,7 @@ final class DeviceDataCacheService
     private function setCache(array $map): void
     {
         $this->cache->set(
-            key: CacheKeyListEnum::DEVICE_TOPICS_LIST,
+            key: CacheKeyListEnum::DEVICE_TOPICS_LIST->value,
             value: $map,
             lifetime: self::CACHE_LIMIT
         );
