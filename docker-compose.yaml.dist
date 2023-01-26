@@ -72,7 +72,6 @@ services:
       - "RABBITMQ_DEFAULT_USER=rabbit"
       - "RABBITMQ_DEFAULT_PASS=rabbit"
     ports:
-      - "5673:5672"
       - "15673:15672"
     networks:
       - uberserver
@@ -93,51 +92,6 @@ services:
 #        - uberserver-redisinsight:/db
 #      networks:
 #          - uberserver
-
-# https://github.com/vegasbrianc/prometheus/blob/master/docker-compose.yml
-  prometheus:
-    image: prom/prometheus:v2.36.2
-    volumes:
-      - ./docker/prometheus/:/etc/prometheus/
-      - uberserver-prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-    ports:
-      - "9090:9090"
-    links:
-      - nginx:nginx
-#      - cadvisor:cadvisor
-#      - alertmanager:alertmanager
-    #      - pushgateway:pushgateway
-    networks:
-      - uberserver
-    restart: always
-
-  alertmanager:
-    image: prom/alertmanager:v0.24.0
-    networks:
-      - uberserver
-    volumes:
-      - alertmanager:/alertmanager
-      - ./docker/alertmanager/:/etc/alertmanager/
-    hostname: alertmanager
-    ports:
-      - "9093:9093"
-    command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
-      - '--storage.path=/alertmanager'
-
-  node-exporter:
-    image: prom/node-exporter:v1.3.1
-    networks:
-      - uberserver
-    command:
-      - '--path.rootfs=/host'
-    volumes:
-      - '/:/host:ro,rslave'
 
 volumes:
   uberserver-postgres: {}

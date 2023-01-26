@@ -1,3 +1,6 @@
+imports:
+  - { resource: 'events.yaml' }
+
 services:
   _defaults:
     autowire: true

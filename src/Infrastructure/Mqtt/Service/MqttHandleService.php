@@ -3,24 +3,27 @@
 namespace App\Infrastructure\Mqtt\Service;
 
 use App\Domain\DeviceData\Service\DeviceCacheService;
-use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
 use App\Infrastructure\Mqtt\Exception\MqttException;
 use App\Tests\Stub\Infrastructure\StubMqttClient;
 use Mosquitto\Message;
+use OldSound\RabbitMqBundle\RabbitMq\Producer;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
 final class MqttHandleService
 {
     public function __construct(
         private readonly MqttClientInterface $client,
-        private readonly DeviceDataResolver $resolver,
         private readonly DeviceCacheService $deviceCacheService,
         private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly SerializerInterface $serializer,
+        private readonly Producer $receiveProducer,
+        private readonly Producer $transferProducer,
         private readonly LoggerInterface $logger
     ) {
     }
@@ -28,24 +31,20 @@ final class MqttHandleService
     public function process(Message $message): void
     {
         try {
-            $payload = $this->createPayload($message);
-            $this->resolver->resolveDevicePayload($payload);
+            $json = $this->serializer->serialize($this->createPayload($message), 'json');
+            $this->receiveProducer->publish($json);
         } catch (Throwable $exception) {
-            $this->logger->info('Error mqtt listen process', [
+            $text = 'Error mqtt listen process';
+
+            $this->logger->info($text, [
                 'topic' => $message->topic,
                 'payload' => $message->payload,
                 'exception' => $exception->getMessage(),
             ]);
 
-            $event = new AlertNotificationEvent('Ошибка в распознавании данных из брокера сообщений', [
-                AlertNotificationEvent::MESSENGER,
-                AlertNotificationEvent::ALICE
-            ]);
-            $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
-
             $event = new AlertNotificationEvent(
-                "topic: [{$message->topic}], payload: [{$message->payload}] | {$exception->getMessage()}",
-                [AlertNotificationEvent::MESSENGER]
+                message: $text . " {$exception->getMessage()}",
+                types: [AlertNotificationEvent::MESSENGER]
             );
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
 
@@ -58,21 +57,17 @@ final class MqttHandleService
     public function post(DevicePayload $message): void
     {
         try {
-            $this->client->publish($message->getTopic(), $message->getPayload());
+            $json = $this->serializer->serialize($message, 'json');
+            $this->transferProducer->publish($json);
         } catch (Throwable $exception) {
-            $this->logger->critical('Crash api post command to mqtt protocol', [
+            $text = 'Crash send to queue transfer payload from mqtt protocol';
+
+            $this->logger->critical($text, [
                 'exception' => $exception->getMessage(),
             ]);
 
-            $event = new AlertNotificationEvent('Не возможно отправить api команду брокеру сообщений', [
-                AlertNotificationEvent::MESSENGER,
-                AlertNotificationEvent::ALICE
-            ]);
+            $event = new AlertNotificationEvent($text, [AlertNotificationEvent::MESSENGER]);
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
-
-            $this->client->disconnect();
-
-            throw MqttException::disconnect();
         }
     }
 
@@ -123,6 +118,10 @@ final class MqttHandleService
 
         while (true) {
             $this->client->loop();
+
+            if (!$this->client->isConnect()) {
+                throw MqttException::disconnect();
+            }
         }
     }
 }

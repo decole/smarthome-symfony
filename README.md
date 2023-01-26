@@ -57,6 +57,9 @@
 PeriodicHandleCriteriaCompiler - через dependency injection по сервис тегу регистрируются критерии 
 в CriteriaChainService.php  
 
+`bin/console cli:mqtt` - подключено к mqtt и отправка в очередь кролика 
+`php bin/console rabbitmq:consumer mqtt_receive_payloads` - слушатель колик по mqtt сообщениям брокера
+`php bin/console rabbitmq:consumer mqtt_transfer_payloads` - отправка в mqtt сообщений
 
 ## Очереди нотификаций:
 

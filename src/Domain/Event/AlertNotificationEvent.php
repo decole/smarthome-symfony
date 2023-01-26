@@ -2,7 +2,9 @@
 
 namespace App\Domain\Event;
 
-final class AlertNotificationEvent
+use Symfony\Contracts\EventDispatcher\Event;
+
+final class AlertNotificationEvent extends Event
 {
     public const NAME = 'notification.alert.send';
 
