@@ -22,7 +22,9 @@ RUN apt update -q -y \
     && apt install -q -y --no-install-recommends \
     libzip-dev \
     zip \
-    psmisc
+    psmisc \
+    librabbitmq-dev \
+    libssh-dev
 
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pgsql pdo_pgsql \
@@ -30,7 +32,9 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install zip \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && docker-php-ext-install sockets
+    && docker-php-ext-install sockets \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
 
 COPY docker/php/php-fpm.ini /usr/local/etc/php/php.ini
 

@@ -38,16 +38,15 @@
 ## Services
 
 - nginx
-- php-fpm - app
-- php-cli - supervisor
+- php-fpm - app + supervisor
 - postgresql
 - redis - cache
 - redis-insight - check Redis Data
 - supervisor - background process
-- rabbitMQ - reactive queue (not used by time)
-- логирование - логирование пока в файлики var/log проекта
+- rabbitMQ - reactive queue (mqtt, notification)
+- логирование - логирование пока в файлики var/log проекта, планирую Loki
 - мониторинг - Prometheus
-- CI/CD - Gitlab CI*
+- CI/CD - Gitlab CI
 
 ## Периодические задания:
 
