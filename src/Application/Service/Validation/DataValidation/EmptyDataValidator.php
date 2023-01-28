@@ -3,13 +3,17 @@
 namespace App\Application\Service\Validation\DataValidation;
 
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
-use App\Domain\DeviceData\Entity\DeviceDataValidated;
+use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
 use App\Domain\EmptyDevice\Entity\EmptyDevice;
 
 final class EmptyDataValidator implements DeviceDataValidatorInterface
 {
-    public function validate(): DeviceDataValidated
+    public function handle(): DeviceDataValidatedDto
     {
-        return new DeviceDataValidated(true, new EmptyDevice());
+        return new DeviceDataValidatedDto(
+            state: null,
+            device: new EmptyDevice(),
+            isAlerting: false
+        );
     }
 }

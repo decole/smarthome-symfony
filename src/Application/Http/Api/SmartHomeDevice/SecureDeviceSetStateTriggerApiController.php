@@ -31,10 +31,10 @@ final class SecureDeviceSetStateTriggerApiController
             ], 400);
         }
 
-        $state = $trigger === 'true';
+        $isTriggered = $trigger === 'true';
 
-        $this->service->setTrigger($topic, $state);
+        $this->service->setTrigger($topic, $isTriggered);
 
-        return new JsonResponse((new SecureDeviceSetStateTriggerPresenter($topic, $state))->present());
+        return new JsonResponse((new SecureDeviceSetStateTriggerPresenter($topic, $isTriggered))->present());
     }
 }

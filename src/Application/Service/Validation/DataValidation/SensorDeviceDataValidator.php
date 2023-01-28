@@ -2,20 +2,36 @@
 
 namespace App\Application\Service\Validation\DataValidation;
 
-use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes\Factory\SensorDeviceDataTypeValidatorFactory;
+use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidateTypes\Factory\SensorDataValidateFactory;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
-use App\Domain\DeviceData\Entity\DeviceDataValidated;
+use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
+use App\Domain\Sensor\Entity\Sensor;
 
 final class SensorDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    public function validate(): DeviceDataValidated
+    /**
+     * @var Sensor $device
+     */
+
+    /**
+     * @return DeviceDataValidatedDto
+     */
+    public function handle(): DeviceDataValidatedDto
     {
         if (!$this->device->isNotify()) {
-            return $this->createDto(true, $this->device);
+            return $this->createDto(
+                state: true,
+                device: $this->device,
+                isAlert: false
+            );
         }
 
-        $state = ((new SensorDeviceDataTypeValidatorFactory())->create($this->device))->validate($this->payload);
+        $validator = (new SensorDataValidateFactory())->create($this->device, $this->payload);
 
-        return $this->createDto($state, $this->device);
+        return $this->createDto(
+            state: $validator->validate(),
+            device: $this->device,
+            isAlert: $validator->isAlert()
+        );
     }
 }

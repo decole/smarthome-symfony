@@ -2,9 +2,19 @@
 
 namespace App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValidatorTypes;
 
-use App\Domain\Payload\Entity\DevicePayload;
-
 interface SensorTypeValidatorInterface
 {
-    public function validate(DevicePayload $payload): bool;
+    /**
+     * Проверка на адекватность пришедших значений.
+     *
+     * @return bool
+     */
+    public function validate(): bool;
+
+    /**
+     * Сработка по условию типа датчика. Выход за приделы нормы
+     *
+     * @return bool
+     */
+    public function isAlert(): bool;
 }

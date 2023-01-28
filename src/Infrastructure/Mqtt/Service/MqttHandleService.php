@@ -23,7 +23,6 @@ final class MqttHandleService
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly SerializerInterface $serializer,
         private readonly Producer $receiveProducer,
-        private readonly Producer $transferProducer,
         private readonly LoggerInterface $logger
     ) {
     }

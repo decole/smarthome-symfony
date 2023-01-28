@@ -6,6 +6,7 @@ use App\Application\Exception\DeviceDataException;
 use App\Application\Service\Factory\DeviceAlertFactory;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Payload\Entity\DevicePayload;
+use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Throwable;
@@ -23,7 +24,7 @@ final class DeviceDataResolver
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException|CacheException
      */
     public function resolveDevicePayload(DevicePayload $payload): void
     {
@@ -49,11 +50,11 @@ final class DeviceDataResolver
      */
     private function validatePayload(DevicePayload $payload): void
     {
-        $resultDto = $this->validateService->validate($payload);
+        $resultDto = $this->validateService->execute($payload);
 
-        if (!$resultDto->isNormal()) {
+        if ($resultDto->isAlerting) {
             (new DeviceAlertFactory($this->eventDispatcher))
-                ->create($resultDto->getDevice(), $payload)
+                ->create($resultDto->device, $payload)
                 ->notify();
         }
     }

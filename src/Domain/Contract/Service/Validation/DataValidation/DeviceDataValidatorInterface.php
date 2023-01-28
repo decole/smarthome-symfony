@@ -2,9 +2,9 @@
 
 namespace App\Domain\Contract\Service\Validation\DataValidation;
 
-use App\Domain\DeviceData\Entity\DeviceDataValidated;
+use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
 
 interface DeviceDataValidatorInterface
 {
-    public function validate(): DeviceDataValidated;
+    public function handle(): DeviceDataValidatedDto;
 }
