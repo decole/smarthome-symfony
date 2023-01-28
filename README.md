@@ -44,27 +44,30 @@
 - redis-insight - check Redis Data
 - supervisor - background process
 - rabbitMQ - reactive queue (mqtt, notification)
-- логирование - логирование пока в файлики var/log проекта, планирую Loki
-- мониторинг - Prometheus
 - CI/CD - Gitlab CI
 
 ## Периодические задания:
 
-`php bin/console cli:cron` - команда для активации бесконечного цикла периодических задач
+`php bin/console cli:cron` - команда для активации периодических задач - работает через supervisor, активируется каждую минуту 
 нужно создавать критерии для таких задач в папке Domain/PeriodicHandleCriteria/Criteria, смотреть примеры там. 
 
+(фоновые таски будут переписываться)
 PeriodicHandleCriteriaCompiler - через dependency injection по сервис тегу регистрируются критерии 
 в CriteriaChainService.php  
 
+
+> Запланирован переход на go сервис, который будет шлюзом между mqtt и rabbitMQ очереди
+
+Работа с mqtt - переведено на очередь RabbitMQ
 `bin/console cli:mqtt` - подключено к mqtt и отправка в очередь кролика 
 `php bin/console rabbitmq:consumer mqtt_receive_payloads` - слушатель колик по mqtt сообщениям брокера
-`php bin/console rabbitmq:consumer mqtt_transfer_payloads` - отправка в mqtt сообщений
+~~`php bin/console rabbitmq:consumer mqtt_transfer_payloads` - отправка в mqtt сообщений~~
 
 ## Очереди нотификаций:
 
-`php bin/console messenger:consume async` - async send emails, telegram, discord message
+(переведено на очередь RabbitMQ)
 
-работает через контейнер supervisor
+`php bin/console messenger:consume async` - async send emails, telegram, discord message
 
 
 ## История производства проекта на разных фреймворках

@@ -7,7 +7,3 @@ services:
     resource: '%kernel.project_dir%/src/Application/Consumer/**/*Consumer.php'
     arguments:
       $logger: '@monolog.logger.rabbit_consumers'
-
-  App\Application\Consumer\MqttPublishConsumer:
-    arguments:
-      $client: '@mqtt_client'

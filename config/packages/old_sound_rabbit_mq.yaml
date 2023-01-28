@@ -13,19 +13,10 @@ old_sound_rabbit_mq:
         mqtt_receive_payloads:
             connection: default
             exchange_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%', type: direct }
-        mqtt_transfer_payloads:
-            connection: default
-            exchange_options: { name: '%env(MQTT_PAYLOADS_TRANSFER_QUEUE)%', type: direct }
     consumers:
         mqtt_receive_payloads:
             connection:       default
             exchange_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%', type: direct }
             queue_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%' }
             callback: App\Application\Consumer\MqttListenConsumer
-            qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }
-        mqtt_transfer_payloads:
-            connection:       default
-            exchange_options: { name: '%env(MQTT_PAYLOADS_TRANSFER_QUEUE)%', type: direct }
-            queue_options: { name: '%env(MQTT_PAYLOADS_TRANSFER_QUEUE)%' }
-            callback: App\Application\Consumer\MqttPublishConsumer
             qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }

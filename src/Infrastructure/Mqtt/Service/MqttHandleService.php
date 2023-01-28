@@ -57,10 +57,9 @@ final class MqttHandleService
     public function post(DevicePayload $message): void
     {
         try {
-            $json = $this->serializer->serialize($message, 'json');
-            $this->transferProducer->publish($json);
+            $this->client->publish($message->getTopic(), $message->getPayload());
         } catch (Throwable $exception) {
-            $text = 'Crash send to queue transfer payload from mqtt protocol';
+            $text = 'Crash public payload from mqtt protocol';
 
             $this->logger->critical($text, [
                 'exception' => $exception->getMessage(),
