@@ -51,9 +51,10 @@ final class SecureDeviceDataService
             return $dto;
         }
 
-        $payload = $this->dataCacheService->getPayloadByTopicList([$topic])[$device->getTopic()] ?? null;
+        $payload = $this->dataCacheService->getPayloadByTopicList([$topic])[$topic] ?? null;
 
         $dto->standardisedState = $payload === (string)$device->getDetectPayload();
+
         $dto->isGuarded = $device->isGuarded();
 
         return $dto;
