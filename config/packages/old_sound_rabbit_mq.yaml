@@ -9,14 +9,10 @@ old_sound_rabbit_mq:
             keepalive: true
             heartbeat: 0
             use_socket: true # default false
-    producers:
-        mqtt_receive_payloads:
-            connection: default
-            exchange_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%', type: direct }
     consumers:
         mqtt_receive_payloads:
             connection:       default
             exchange_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%', type: direct }
-            queue_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%' }
+            queue_options: { name: '%env(MQTT_PAYLOADS_RECEIVE_QUEUE)%', arguments: {'x-message-ttl': ['I', 60000]}}
             callback: App\Application\Consumer\MqttListenConsumer
             qos_options: { prefetch_size: 0, prefetch_count: 1, global: false }

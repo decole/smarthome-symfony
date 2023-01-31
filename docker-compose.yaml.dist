@@ -93,6 +93,17 @@ services:
 #      networks:
 #          - uberserver
 
+  mqtt-bridge:
+    build: ./docker/mqtt_rabbitMQ_bridge
+    container_name: uberserver-mqtt-bridge
+    volumes:
+      - .env.local:/mqttToRabbit/.env
+#    restart: always
+    depends_on:
+      - rabbitmq
+    networks:
+      - uberserver
+
 volumes:
   uberserver-postgres: {}
   uberserver-redisinsight: {}

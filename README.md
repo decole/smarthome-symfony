@@ -2,8 +2,6 @@
 
 > Pet project умного дома, основанного на ESP8266 и MQTT протоколе
 
-Стадии проекта: [Stages](docs/project/STAGES.md)
-
 Умный дом:
  - MQTT брокер
  - контроллеры с MQTT транспортом
@@ -31,19 +29,15 @@
 > **Пометка**: пока только датчики из mqtt с передачей детекции дижения всегда, даже кода это деатектировано. 
 > Сам сервис понимает в каком он состоянии и как реагировать на сигнал датчиков.
 
-----
-
-> Для prometheus alert manager надо скопировать alertmanager.yml.dist в alertmanager.yml и заменить <TELEGRAM_BOT_TOKEN> на токен вашего бота и свой id чата TELEGRAM_CHAT_ID
-
 ## Services
 
 - nginx
-- php-fpm - app + supervisor
+- php-fpm
 - postgresql
-- redis - cache
-- redis-insight - check Redis Data
-- supervisor - background process
-- rabbitMQ - reactive queue (mqtt, notification)
+- redis
+- redis-insight
+- supervisor
+- rabbitMQ
 - CI/CD - Gitlab CI
 
 ## Периодические задания:
@@ -59,7 +53,7 @@ PeriodicHandleCriteriaCompiler - через dependency injection по серви
 > Запланирован переход на go сервис, который будет шлюзом между mqtt и rabbitMQ очереди
 
 Работа с mqtt - переведено на очередь RabbitMQ
-`bin/console cli:mqtt` - подключено к mqtt и отправка в очередь кролика 
+`bin/console cli:mqtt` - подключено к mqtt и отправка в очередь кролика - перевод на go lang сервис
 `php bin/console rabbitmq:consumer mqtt_receive_payloads` - слушатель колик по mqtt сообщениям брокера
 
 ## Очереди нотификаций:
@@ -84,16 +78,6 @@ AdminLte3: https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
 Symfony Docs: https://symfony.com/doc/5.4/routing.html
 
 Codeception Docs: https://codeception.com/docs/05-UnitTests
-
-
-### Prometheus:
-
-https://github.com/artprima/prometheus-metrics-bundle
-
-metrics:
- - node_filesystem_avail_bytes - свободное место на проде
- - node_memory_MemFree_bytes - свободный объем оперативки
- - node_procs_blocked - io delay
 
 
 ### Deployment 

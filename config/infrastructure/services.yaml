@@ -17,7 +17,6 @@ services:
   App\Infrastructure\Mqtt\Service\MqttHandleService:
     arguments:
       $client: '@mqtt_client'
-      $receiveProducer: '@old_sound_rabbit_mq.mqtt_receive_payloads_producer'
       $logger: '@monolog.logger.mqtt_transport'
 
   app.cache.adapter.redis:
