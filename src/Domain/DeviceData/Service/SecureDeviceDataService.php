@@ -25,13 +25,14 @@ final class SecureDeviceDataService
     }
 
     /**
-     * статус датчика - state
+     * Статус датчика - state
      * true - движение/сработка
      * false - нет движения
      *
      * (статус охранного датчика) - isTriggered:
      * true - взведен
      * false - не взведен
+     *
      * @throws InvalidArgumentException
      */
     public function getDeviceState(string $topic): SecureDeviceDataState
@@ -53,9 +54,8 @@ final class SecureDeviceDataService
 
         $payload = $this->dataCacheService->getPayloadByTopicList([$topic])[$topic] ?? null;
 
-        $dto->standardisedState = $payload === (string)$device->getDetectPayload();
-
-        $dto->isGuarded = $device->isGuarded();
+        $dto->standardisedState = $payload === (string)$targetDevice->getDetectPayload();
+        $dto->isGuarded = $targetDevice->isGuarded();
 
         return $dto;
     }
