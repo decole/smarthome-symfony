@@ -19,7 +19,7 @@ class DeviceDataResolverForFireSecureCest
     private DeviceDataValidationService $validateService;
     private DeviceDataCacheService $cacheService;
 
-    public function _before(DeviceDataResolverStep $I)
+    public function _before(DeviceDataResolverStep $I): void
     {
         if ($this->device === null) {
             $this->device = $I->createFireSecureDevice();

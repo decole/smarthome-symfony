@@ -12,21 +12,12 @@ class TestCommand extends Command
     protected static $defaultName = 'cli:test';
 
     public function __construct(
-        private readonly SecureDeviceDataService $service
     ) {
         parent::__construct();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $topic= 'hallway/check/door2';
-
-        $this->service->setTrigger($topic, true);
-
-        $t = $this->service->getDeviceState($topic);
-
-        dd($t);
-
         return 0;
     }
 }

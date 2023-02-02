@@ -6,7 +6,7 @@ use App\Tests\ApiTester;
 
 class DeviceDataStep extends ApiTester
 {
-    public function deviceTopicsList(mixed $deviceTopicList)
+    public function deviceTopicsList(mixed $deviceTopicList): void
     {
         $this->sendGet('/device/topics', [
             'topics' => $deviceTopicList,
