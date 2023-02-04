@@ -24,7 +24,7 @@ class DeviceDataResolverForSensorsCest
     private DeviceDataValidationService $validateService;
     private DeviceDataCacheService $cacheService;
 
-    public function _before(DeviceDataResolverStep $I)
+    public function _before(DeviceDataResolverStep $I): void
     {
         if ($this->list === null) {
             $this->list = $I->createAllTypeSensors();

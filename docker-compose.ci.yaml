@@ -2,7 +2,9 @@ version: "3.4"
 
 services:
   php-fpm:
-    image: registry.gitlab.com/decole/uberserver-symfony:base
+    build:
+      context: .
+      dockerfile: ./docker/php/DockerfileCI
     container_name: ci-symfony
     volumes:
       - ./:/var/www
@@ -48,7 +50,7 @@ services:
       - uberserver-microservice
 
   rabbitmq:
-    image: rabbitmq
+    image: bitnami/rabbitmq:latest
     container_name: ci-rabbitmq
     volumes:
       - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins

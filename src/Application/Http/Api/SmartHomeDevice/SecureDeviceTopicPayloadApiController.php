@@ -4,6 +4,7 @@ namespace App\Application\Http\Api\SmartHomeDevice;
 
 use App\Application\Presenter\Api\SmartHomeDevice\SecureDeviceTopicPayloadPresenter;
 use App\Domain\DeviceData\Service\SecureDeviceDataService;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,15 @@ final class SecureDeviceTopicPayloadApiController
     {
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     #[Route('/secure/state')]
     public function secureTopicState(Request $request): Response
     {
         $topic = $request->get('topic');
 
-        if ($topic === null) {
+        if (mb_strlen($topic) == 0) {
             return new JsonResponse([
                 'error' => 'empty topics'
             ], 400);

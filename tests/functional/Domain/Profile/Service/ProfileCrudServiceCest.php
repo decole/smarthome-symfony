@@ -4,9 +4,14 @@ namespace App\Tests\functional\Domain\Profile\Service;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
 use App\Domain\Identity\Entity\User;
+use App\Domain\Profile\Factory\ProfileCrudFactory;
 use App\Domain\Profile\Service\ProfileCrudService;
 use App\Tests\FunctionalTester;
+use Codeception\Stub;
+use Codeception\Stub\Expected;
 use Exception;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfileCrudServiceCest
 {
@@ -17,6 +22,11 @@ class ProfileCrudServiceCest
      */
     public function update(FunctionalTester $I): void
     {
+        $eventDispatcher = Stub::makeEmpty(
+            EventDispatcherInterface::class,
+            ['dispatch' => Expected::never()]
+        );
+
         $dto = new CrudProfileDto();
 
         $login = $dto->login = $I->faker()->word();
@@ -25,7 +35,7 @@ class ProfileCrudServiceCest
 
         $user = $this->getUser($I);
 
-        $this->getService($I)->update($user, $dto);
+        $this->getService($I, $eventDispatcher)->update($user, $dto);
 
         $I->seeInRepository(User::class, [
             'id' => $user->getIdToString(),
@@ -42,6 +52,11 @@ class ProfileCrudServiceCest
      */
     public function updateWithPassword(FunctionalTester $I): void
     {
+        $eventDispatcher = Stub::makeEmpty(
+            EventDispatcherInterface::class,
+            ['dispatch' => Expected::exactly(1, fn () => (object)[])]
+        );
+
         $dto = new CrudProfileDto();
 
         $login = $dto->login = $I->faker()->word();
@@ -54,7 +69,7 @@ class ProfileCrudServiceCest
 
         $oldPassword = $user->getPassword();
 
-        $this->getService($I)->update($user, $dto);
+        $this->getService($I, $eventDispatcher)->update($user, $dto);
 
         $I->seeInRepository(User::class, [
             'id' => $user->getIdToString(),
@@ -69,9 +84,13 @@ class ProfileCrudServiceCest
         ]);
     }
 
-    private function getService(FunctionalTester $I): ProfileCrudService
+    private function getService(FunctionalTester $I, EventDispatcherInterface $eventDispatcher): ProfileCrudService
     {
-        return $I->grabService(ProfileCrudService::class);
+        return new ProfileCrudService(
+            crud: $I->grabService(ProfileCrudFactory::class),
+            passwordHasher: $I->grabService(UserPasswordHasherInterface::class),
+            eventDispatcher: $eventDispatcher
+        );
     }
 
     private function getUser(FunctionalTester $I): User

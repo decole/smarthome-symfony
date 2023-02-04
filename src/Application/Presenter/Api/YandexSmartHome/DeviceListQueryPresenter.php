@@ -25,9 +25,9 @@ final class DeviceListQueryPresenter implements PresenterInterface
         $devices = $this->getDeviceList();
 
         return [
-            "request_id" => $this->requestId,
-            "payload" => [
-                "devices" => $devices
+            'request_id' => $this->requestId,
+            'payload' => [
+                'devices' => $devices
             ]
         ];
     }

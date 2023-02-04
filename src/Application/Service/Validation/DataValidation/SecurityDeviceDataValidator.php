@@ -3,19 +3,35 @@
 namespace App\Application\Service\Validation\DataValidation;
 
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
-use App\Domain\DeviceData\Entity\DeviceDataValidated;
+use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
 use App\Domain\Security\Entity\Security;
 
 final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    public function validate(): DeviceDataValidated
+    /**
+     * @var Security $device
+     */
+
+    /**
+     * null - состояние неопределено
+     * true - нормальное состояние
+     * false - обнаружено движение
+     *
+     * @return DeviceDataValidatedDto
+     */
+    public function handle(): DeviceDataValidatedDto
     {
-        assert($this->device instanceof Security);
+        $state = match ($this->payload->getPayload()) {
+            $this->device->getHoldPayload() => true,
+            $this->device->getDetectPayload() => false,
 
-        $isNormal = $this->payload->getPayload() === (string)$this->device->getHoldPayload();
+            default => null,
+        };
 
-        // true - нормальное состояние
-        // false - обнаружено движение
-        return $this->createDto($isNormal, $this->device);
+        return $this->createDto(
+            state: $state,
+            device: $this->device,
+            isAlert: $this->payload->getPayload() === $this->device->getDetectPayload()
+        );
     }
 }

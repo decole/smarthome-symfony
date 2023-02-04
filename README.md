@@ -1,73 +1,72 @@
-# Что это такое
+# What it is
 
-> Pet project умного дома, основанного на ESP8266 и MQTT протоколе
+> Pet project of a smart home based on ESP8266 and MQTT protocol
 
-Стадии проекта: [Stages](docs/project/STAGES.md)
+Smart Home:
+ - MQTT broker
+ - controllers with MQTT transport
+ - backend application (symfony), frontend - twig + jquery
+ - notification when the sensor data goes out of the aisle of the norm via communication channels (telegram / discord / column with the voice assistant Alice)
 
-Умный дом:
- - MQTT брокер
- - контроллеры с MQTT транспортом
- - серверное приложение (symfony)
- - оповещение при выходе данных датчиков из придела нормы по каналам связи (телеграм/дискорд/колонка с голосовым 
-помощником Алиса)
+Folder `/docs/` contains documentation on smart home and firmware for controllers
 
-в папке /docs/ находится документация по умному дому и прошивки для контроллеров
+Devices:
+ - Temperature sensors
+ - Humidity sensors
+ - Relay
+ - Motion sensors
+ - Analog smoke detector
+ - Dry contact sensor
+ - Leakage sensors
 
-Датчики:
- - Сенсоры температуры
- - Сенсоры влажности
- - Реле
- - Датчики движения
- - Датчик дыма аналоговый
 
-## Комментарии
+## Description
 
 ---
 
-[ТЗ по сервису мониторинга доступности контроллеров умного дома](docs/project/DEVICE_CONTROLLER_MONITORING.md)
+[Terms of reference for the service for monitoring the availability of smart home controllers](docs/project/DEVICE_CONTROLLER_MONITORING.md)
 
 ----
 
-> **Пометка**: пока только датчики из mqtt с передачей детекции дижения всегда, даже кода это деатектировано. 
-> Сам сервис понимает в каком он состоянии и как реагировать на сигнал датчиков.
+> **Tag**: so far only sensors from mqtt with movement detection transmission always, even the code is de-detected. 
+> The service itself understands what state it is in and how to respond to the sensor signal.
 
-----
-
-> Для prometheus alert manager надо скопировать alertmanager.yml.dist в alertmanager.yml и заменить <TELEGRAM_BOT_TOKEN> на токен вашего бота и свой id чата TELEGRAM_CHAT_ID
 
 ## Services
 
 - nginx
-- php-fpm - app + supervisor
+- php-fpm
 - postgresql
-- redis - cache
-- redis-insight - check Redis Data
-- supervisor - background process
-- rabbitMQ - reactive queue (mqtt, notification)
-- логирование - логирование пока в файлики var/log проекта, планирую Loki
-- мониторинг - Prometheus
+- redis
+- redis-insight
+- supervisor
+- rabbitMQ
 - CI/CD - Gitlab CI
 
-## Периодические задания:
 
-`php bin/console cli:cron` - команда для активации бесконечного цикла периодических задач
+## Периодические задания
+
+`php bin/console cli:cron` - команда для активации периодических задач - работает через supervisor, активируется каждую минуту 
 нужно создавать критерии для таких задач в папке Domain/PeriodicHandleCriteria/Criteria, смотреть примеры там. 
 
+(фоновые таски будут переписываться)
 PeriodicHandleCriteriaCompiler - через dependency injection по сервис тегу регистрируются критерии 
 в CriteriaChainService.php  
 
-`bin/console cli:mqtt` - подключено к mqtt и отправка в очередь кролика 
-`php bin/console rabbitmq:consumer mqtt_receive_payloads` - слушатель колик по mqtt сообщениям брокера
-`php bin/console rabbitmq:consumer mqtt_transfer_payloads` - отправка в mqtt сообщений
 
-## Очереди нотификаций:
+## MQTT
 
-`php bin/console messenger:consume async` - async send emails, telegram, discord message
-
-работает через контейнер supervisor
+Working with mqtt - translated to RabbitMQ queue
+Connection to mqtt happens through a separate go lang service, it creates messages in the rabbit task queue
+`php bin/console rabbitmq:consumer mqtt_receive_payloads` - listener by mqtt messages broker
 
 
-## История производства проекта на разных фреймворках
+## Notification queues
+
+`php bin/console messenger:consume async` - async send emails, telegram, discord message by RabbitMQ
+
+
+## History of project production on different frameworks
 
 Create project by: 
 - Yii2 (simple / advanced) [deprecated project]
@@ -82,27 +81,6 @@ AdminLte3: https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
 Symfony Docs: https://symfony.com/doc/5.4/routing.html
 
 Codeception Docs: https://codeception.com/docs/05-UnitTests
-
-
-### Prometheus:
-
-https://github.com/artprima/prometheus-metrics-bundle
-
-metrics:
- - node_filesystem_avail_bytes - свободное место на проде
- - node_memory_MemFree_bytes - свободный объем оперативки
- - node_procs_blocked - io delay
-
-
-### Deployment 
-
-https://symfony.com/doc/5.4/deployment.html
-
-```shell
-composer install --no-dev --optimize-autoloader
-php bin/console cache:clear --env=prod --no-debug
-#APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
-```
 
 http://localhost:84/adminlte3/pages/widgets.html - примеры страниц AdminLTE3
 

@@ -23,7 +23,7 @@ class PlcHandleServiceCest
     private DeviceDataCacheService $dataCacheService;
     private CacheService $cache;
 
-    public function _before(PlcHandleServiceStep $I)
+    public function _before(PlcHandleServiceStep $I): void
     {
         if ($this->device === null) {
             $this->device = $I->createSensor();
@@ -277,6 +277,6 @@ class PlcHandleServiceCest
 
     private function dataCacheEmpty(): void
     {
-        $this->cache->set(CacheKeyListEnum::DEVICE_TOPICS_LIST, [], 30);
+        $this->cache->set(CacheKeyListEnum::DEVICE_TOPICS_LIST->value, [], 30);
     }
 }

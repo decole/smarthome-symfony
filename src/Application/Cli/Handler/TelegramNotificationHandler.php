@@ -17,6 +17,6 @@ final class TelegramNotificationHandler
     {
         $this->service->send($message->getTo(), $message->getMessage());
 
-        sleep(0.5);
+        sleep(1);
     }
 }

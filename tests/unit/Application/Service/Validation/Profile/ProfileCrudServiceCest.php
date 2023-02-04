@@ -8,6 +8,8 @@ use App\Domain\Identity\Entity\User;
 use App\Domain\Notification\Service\NotifyService;
 use App\Domain\Profile\Factory\ProfileCrudFactory;
 use App\Domain\Profile\Service\ProfileCrudService;
+use App\Domain\VisualNotification\Service\VisualNotificationService;
+use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 use App\Infrastructure\Event\Listener\AlertNotificationEventListener;
 use App\Tests\UnitTester;
 use Codeception\Stub;
@@ -46,9 +48,20 @@ class ProfileCrudServiceCest
 
     public function checkEventListener(UnitTester $I): void
     {
+        $eventDispatcher = Stub::makeEmpty(
+            EventDispatcherInterface::class,
+            ['dispatch' => Expected::exactly(1, fn () => (object)[])]
+        );
+
+        $service = new NotifyService(
+            eventDispatcher: $eventDispatcher,
+            service: $I->grabService(VisualNotificationService::class),
+            repository: $I->grabService(UserRepository::class)
+        );
+
         $dispatcher = new EventDispatcher();
 
-        $listener = new AlertNotificationEventListener($I->grabService(NotifyService::class));
+        $listener = new AlertNotificationEventListener($service);
         $dispatcher->addListener('notification.alert.send', [$listener, 'onAlertSend']);
 
         $event = new AlertNotificationEvent(

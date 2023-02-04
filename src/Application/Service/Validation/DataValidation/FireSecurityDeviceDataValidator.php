@@ -3,17 +3,22 @@
 namespace App\Application\Service\Validation\DataValidation;
 
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
-use App\Domain\DeviceData\Entity\DeviceDataValidated;
+use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 
 final class FireSecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    public function validate(): DeviceDataValidated
+    /**
+     * @var FireSecurity $device
+     */
+
+    /**
+     * @return DeviceDataValidatedDto
+     */
+    public function handle(): DeviceDataValidatedDto
     {
-        assert($this->device instanceof FireSecurity);
+        $stateNormal = $this->device->getNormalPayload() === $this->payload->getPayload();
 
-        $state = (string)$this->device->getNormalPayload() === $this->payload->getPayload();
-
-        return $this->createDto($state, $this->device);
+        return $this->createDto($stateNormal, $this->device, !$stateNormal);
     }
 }

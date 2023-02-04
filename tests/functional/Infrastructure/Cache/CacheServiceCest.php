@@ -10,7 +10,7 @@ class CacheServiceCest
 {
     private CacheService $cache;
 
-    public function _before(FunctionalTester $I)
+    public function _before(FunctionalTester $I): void
     {
         $this->cache = $I->grabService(CacheService::class);
     }

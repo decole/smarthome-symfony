@@ -26,7 +26,7 @@ class MqttListenConsumer implements ConsumerInterface
     {
         try {
             /** @var DevicePayload $mqttMessageInput */
-            $payload = $this->serializer->deserialize($msg->getBody(), type: DevicePayload::class, format: 'json');
+            $payload = $this->getDto($msg);
 
             $this->resolver->resolveDevicePayload($payload);
         } catch (Throwable $exception) {
@@ -38,5 +38,10 @@ class MqttListenConsumer implements ConsumerInterface
             $event = new AlertNotificationEvent($text, [AlertNotificationEvent::MESSENGER]);
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
+    }
+
+    private function getDto(AMQPMessage $msg): DevicePayload
+    {
+        return $this->serializer->deserialize($msg->getBody(), type: DevicePayload::class, format: 'json');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Tests\Stub\Infrastructure;
 
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
 
-final class StubMqttClient implements MqttClientInterface
+class StubMqttClient implements MqttClientInterface
 {
     private bool $isConnect = false;
 
