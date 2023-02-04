@@ -50,7 +50,7 @@ services:
       - uberserver-microservice
 
   rabbitmq:
-    image: rabbitmq
+    image: bitnami/rabbitmq:latest
     container_name: ci-rabbitmq
     volumes:
       - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
