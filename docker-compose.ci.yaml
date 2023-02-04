@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   php-fpm:
-    image: registry.gitlab.com/decole/uberserver-symfony:base
+    build: ./docker/php/DockerfileCI
     container_name: ci-symfony
     volumes:
       - ./:/var/www

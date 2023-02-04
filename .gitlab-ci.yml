@@ -14,6 +14,7 @@ composer:
     - uberserver
   script:
     - docker-compose -f docker-compose.ci.yaml down
+    - docker-compose -f docker-compose.ci.yaml pull
     - docker-compose -f docker-compose.ci.yaml up -d
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
