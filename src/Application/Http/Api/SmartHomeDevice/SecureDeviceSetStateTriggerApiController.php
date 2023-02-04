@@ -25,9 +25,9 @@ final class SecureDeviceSetStateTriggerApiController
         $trigger = $request->get('trigger');
         $topic = $request->get('topic');
 
-        if ($trigger === null) {
+        if (mb_strlen($trigger) == 0 || mb_strlen($topic) == 0) {
             return new JsonResponse([
-                'error' => 'empty topics'
+                'error' => 'empty topic or trigger state'
             ], 400);
         }
 

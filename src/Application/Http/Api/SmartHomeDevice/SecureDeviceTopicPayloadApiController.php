@@ -24,7 +24,7 @@ final class SecureDeviceTopicPayloadApiController
     {
         $topic = $request->get('topic');
 
-        if ($topic === null) {
+        if (mb_strlen($topic) == 0) {
             return new JsonResponse([
                 'error' => 'empty topics'
             ], 400);
