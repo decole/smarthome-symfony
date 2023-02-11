@@ -32,9 +32,7 @@ final class SignUpService
         $user->setPassword($this->passwordHasher->hashPassword($user, $dto->getPassword()));
 
         $this->transaction->transactional(
-            function () use ($user) {
-                $this->userRepository->add($user, true);
-            }
+            fn () => $this->userRepository->add($user, true)
         );
 
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,

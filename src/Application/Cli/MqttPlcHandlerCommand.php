@@ -27,6 +27,6 @@ final class MqttPlcHandlerCommand extends Command
     {
         $this->handler->execute();
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

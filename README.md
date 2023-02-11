@@ -43,15 +43,25 @@ Devices:
 - rabbitMQ
 - CI/CD - Gitlab CI
 
+## Changing the TimeZone for your
 
-## Периодические задания
+See in `/docker/php/php-fpm.ini` parameter `date.timezone`
 
-`php bin/console cli:cron` - команда для активации периодических задач - работает через supervisor, активируется каждую минуту 
-нужно создавать критерии для таких задач в папке Domain/PeriodicHandleCriteria/Criteria, смотреть примеры там. 
+## Periodic tasks
 
-(фоновые таски будут переписываться)
-PeriodicHandleCriteriaCompiler - через dependency injection по сервис тегу регистрируются критерии 
-в CriteriaChainService.php  
+An external cron will call the `make cron` command once a minute, which will pull the `cli:schedule:run` command
+inside the same way, the internal dispatcher from the database will call periodic jobs. For example, you can make a 
+command, which goes to your calendar once an hour and if you have something written down soon, it will send a message 
+to telegram.
+
+The command below can be called from an external cron, or added to add to the database as a task that runs every minute
+and call `make cron` 
+
+`php bin/console cli:cron` - command to activate periodic tasks - works through supervisor, is activated every
+minute you need to create criteria for such tasks in the `Domain/PeriodicHandleCriteria/Criteria` see examples in folder.
+
+PeriodicHandleCriteriaCompiler - criteria are registered through dependency injection by service tag 
+in CriteriaChainService.php
 
 
 ## MQTT
@@ -59,6 +69,9 @@ PeriodicHandleCriteriaCompiler - через dependency injection по серви
 Working with mqtt - translated to RabbitMQ queue
 Connection to mqtt happens through a separate go lang service, it creates messages in the rabbit task queue
 `php bin/console rabbitmq:consumer mqtt_receive_payloads` - listener by mqtt messages broker
+
+[ ! ] do not forget in **.env.local** file in development environment and on your production server to have
+different **CLIENT_ID** - otherwise there will be an error connecting to the mqtt broker.
 
 
 ## Notification queues
@@ -82,10 +95,10 @@ Symfony Docs: https://symfony.com/doc/5.4/routing.html
 
 Codeception Docs: https://codeception.com/docs/05-UnitTests
 
-http://localhost:84/adminlte3/pages/widgets.html - примеры страниц AdminLTE3
+Example pages at AdminLTE3: http://localhost:84/adminlte3/pages/widgets.html
 
-https://tomasvotruba.com/blog/2019/03/28/how-to-mock-final-classes-in-phpunit/ - Для тестов - тестировать final classes
+Tests by final classes: https://tomasvotruba.com/blog/2019/03/28/how-to-mock-final-classes-in-phpunit/
 
-https://medium.com/docler-engineering/how-to-make-phpunit-mocking-and-final-classes-cohabit-all-together-ec46c37c3368 - use lib in tests
+Use lib in tests by final classes: https://medium.com/docler-engineering/how-to-make-phpunit-mocking-and-final-classes-cohabit-all-together-ec46c37c3368
 
-https://dev.to/daniel_werner/how-to-use-reflection-to-test-private-and-protected-methods-3339 - reflection
+Reflection: https://dev.to/daniel_werner/how-to-use-reflection-to-test-private-and-protected-methods-3339

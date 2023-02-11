@@ -30,3 +30,7 @@ services:
   App\Domain\:
     resource: '%kernel.project_dir%/src/Domain/**/*Service.php'
     autowire: true
+
+  App\Domain\ScheduleTask\ScheduleTaskService:
+    arguments:
+      $logger: '@monolog.logger.schedule_service'

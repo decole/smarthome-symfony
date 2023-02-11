@@ -27,6 +27,6 @@ final class QuasarCreateScenarioCommand extends Command
 
         dump($this->service->setScenario());
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -27,6 +27,6 @@ final class QuasarDeleteScenarioCommand extends Command
 
         dump($this->service->deleteScenario());
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

@@ -14,8 +14,6 @@ use Throwable;
 
 final class PeriodicHandlerCommand extends Command
 {
-    private const MINUTE = 60;
-
     protected static $defaultName = 'cli:cron';
 
     public function __construct(
@@ -34,16 +32,13 @@ final class PeriodicHandlerCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $delay = self::MINUTE - date('s');
             $this->schedule();
-
-            sleep($delay);
         } catch (Throwable $exception) {
             $this->logger->warning('crash periodic handler', [
                 'exception' => $exception->getMessage(),
             ]);
 
-            $message = 'Сервис периодических заданий сломался ';
+            $message = 'Сервис периодических заданий сломался!';
 
             $event = new AlertNotificationEvent($message, [
                 AlertNotificationEvent::MESSENGER,
@@ -53,7 +48,7 @@ final class PeriodicHandlerCommand extends Command
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function schedule(): void
