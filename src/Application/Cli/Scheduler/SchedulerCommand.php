@@ -2,7 +2,7 @@
 
 namespace App\Application\Cli\Scheduler;
 
-use App\Domain\ScheduleTask\ScheduleTaskService;
+use App\Domain\ScheduleTask\Service\ScheduleTaskService;
 use PHPUnit\Util\Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

@@ -11,6 +11,4 @@ modules:
     - Doctrine2:
         depends: Symfony
         cleanup: true
-#    - \App\Tests\_support\Modules\DataBuilderModule:
-#        depends: Doctrine2
     - \App\Tests\Helper\Api

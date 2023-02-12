@@ -26,54 +26,54 @@ monolog:
             verbosity_levels:
                 VERBOSITY_NORMAL: INFO
         mqtt_transport:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.mqtt_transport.log'
             channels: [ mqtt_transport ]
-            level: debug
         periodic_handler:
-            type: stream
+            level: debug
+            type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.periodic_handler.log'
             channels: [ periodic_handler ]
-            level: debug
         telegram_service:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.telegram_sender_service.log'
             channels: [ telegram_service ]
-            level: debug
         event_handler:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.event_handler.log'
             channels: [ event_handler ]
-            level: debug
         quasar_service:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.quasar_service.log'
             channels: [ quasar_service ]
-            level: debug
         discord_service:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.discord_service.log'
             channels: [ discord_service ]
-            level: debug
         smart_home:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.smart_home.log'
             channels: [ smart_home ]
-            level: debug
         rabbit_consumers:
-            type: stream
+            level: debug
+            type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.rabbit_consumers.log'
             channels: [ rabbit_consumers ]
-            level: debug
         schedule_service:
+            level: debug
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.schedule_service.log'
             channels: [ schedule_service ]
-            level: debug
         main:
+            level: debug
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
             channels: [ '!event', '!smart_home', '!discord_service', '!telegram_service', '!quasar_service', '!mqtt_transport', '!periodic_handler', '!schedule_service', '!rabbit_consumers']
 
 when@test:

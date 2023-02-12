@@ -7,23 +7,19 @@ use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Domain\Payload\Entity\DevicePayload;
-use App\Infrastructure\Mqtt\Service\MqttHandleService;
-use App\Tests\Stub\Infrastructure\StubMqttClient;
 use PhpAmqpLib\Message\AMQPMessage;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Codeception\Stub;
 use App\Tests\FunctionalTester;
-use App\Tests\UnitTester;
 use Codeception\Stub\Expected;
 use DG\BypassFinals;
 use Psr\Log\NullLogger;
 use ReflectionMethod;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class MqttListenConsumerCest
 {
-    public function finalClass(UnitTester $I): void
+    public function finalClass(FunctionalTester $I): void
     {
         BypassFinals::enable();
 

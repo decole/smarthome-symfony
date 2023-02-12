@@ -3,7 +3,7 @@
 namespace App\Application\Cli\Scheduler;
 
 use App\Domain\Contract\Repository\ScheduleTaskRepositoryInterface;
-use App\Domain\ScheduleTask\ScheduleTaskService;
+use App\Domain\ScheduleTask\Service\ScheduleTaskService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

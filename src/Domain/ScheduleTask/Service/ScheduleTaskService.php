@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\ScheduleTask;
+namespace App\Domain\ScheduleTask\Service;
 
 use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\Contract\Repository\ScheduleTaskRepositoryInterface;
@@ -39,6 +39,7 @@ final class ScheduleTaskService
             $this->logger->info('Catch stab handle command', [
                 'command' => $task->getCommand(),
             ]);
+
             return;
         }
 
@@ -92,8 +93,12 @@ final class ScheduleTaskService
         );
     }
 
-    public function getNextDate(string $interval): ?DateTimeImmutable
+    public function getNextDate(?string $interval): ?DateTimeImmutable
     {
+        if ($interval === null || $interval === '') {
+            return null;
+        }
+
         $date = match (str_contains($interval, '*') ||
             str_contains($interval, '@') ||
             str_contains($interval, '/')
@@ -122,11 +127,12 @@ final class ScheduleTaskService
 
         $interval = $task->getInterval();
 
-        if ($interval !== null && $interval !== '') {
-            $date = $this->getNextDate($interval);
+        $date = match ($interval) {
+            null, '' => null,
+            default => $this->getNextDate($interval),
+        };
 
-            $task->setNextRun($date);
-        }
+        $task->setNextRun($date);
 
         $this->save($task);
     }

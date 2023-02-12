@@ -3,7 +3,7 @@
 namespace App\Application\Cli\Scheduler;
 
 use App\Domain\ScheduleTask\Input\ScheduleTaskInputDto;
-use App\Domain\ScheduleTask\ScheduleTaskService;
+use App\Domain\ScheduleTask\Service\ScheduleTaskService;
 use DateTimeImmutable;
 use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
