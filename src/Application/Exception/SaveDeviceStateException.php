@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\PeriodicHandleCriteria\Exception;
+namespace App\Application\Exception;
 
 use Exception;
 

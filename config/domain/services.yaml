@@ -12,11 +12,6 @@ services:
 
   App\Domain\Page\Service\PageHydrateService: ~
 
-  App\Domain\PeriodicHandleCriteria\:
-    resource: '%kernel.project_dir%/src/Domain/PeriodicHandleCriteria/**/*Criteria.php'
-    tags: [ 'periodic.criteria' ]
-    autowire: true
-
   App\Domain\DeviceData\Service\DeviceDataResolver: ~
 
   App\Domain\PLC\Factory\PlcCrudFactory: ~

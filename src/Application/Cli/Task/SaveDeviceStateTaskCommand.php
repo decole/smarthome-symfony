@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\PeriodicHandleCriteria\Criteria;
+namespace App\Application\Cli\Task;
 
-use App\Application\Service\PeriodicHandle\Criteria\PeriodicHandleCriteriaInterface;
+use App\Application\Exception\SaveDeviceStateException;
 use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
@@ -12,19 +12,22 @@ use App\Domain\DeviceData\Service\DeviceCacheService;
 use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Domain\PeriodicHandleCriteria\Exception\SaveDeviceStateException;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
-use Cron\CronExpression;
+use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Throwable;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Периодически сохраняет данные датчиков в базу данных.
  */
-final class SaveDeviceStateCriteria implements PeriodicHandleCriteriaInterface
+#[AsCommand(name: 'cli:task:save-device-state', description: 'Periodic save device state in DB')]
+class SaveDeviceStateTaskCommand extends Command
 {
     private const RELAY = 'r';
     private const SENSOR = 's';
@@ -41,35 +44,23 @@ final class SaveDeviceStateCriteria implements PeriodicHandleCriteriaInterface
         private readonly TransactionInterface $transaction,
         private readonly EventDispatcherInterface $eventDispatcher
     ) {
+        parent::__construct();
     }
 
-    public static function alias(): string
-    {
-        return 'deviceStateSaver';
-    }
-
-    /**
-     * Запускать каждые 5 минут
-     *
-     * @return bool
-     */
-    public function isDue(): bool
-    {
-        return (new CronExpression('*/5 * * * *'))->isDue();
-    }
-
-    public function execute(): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->handle();
         } catch (Throwable $exception) {
             $this->alert($exception->getMessage());
         }
+
+        return Command::SUCCESS;
     }
 
     /**
      * @return void
-     * @throws SaveDeviceStateException
+     * @throws SaveDeviceStateException|InvalidArgumentException
      */
     private function handle(): void
     {
@@ -149,6 +140,7 @@ final class SaveDeviceStateCriteria implements PeriodicHandleCriteriaInterface
         $event = new AlertNotificationEvent($message, [
             AlertNotificationEvent::MESSENGER,
         ]);
+
         $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
     }
 }

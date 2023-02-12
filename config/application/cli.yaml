@@ -8,9 +8,5 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Application\Cli\PeriodicHandlerCommand:
-    arguments:
-      $logger: '@monolog.logger.periodic_handler'
-
   App\Application\Cli\:
     resource: '%kernel.project_dir%/src/Application/Cli/**/*Command.php'

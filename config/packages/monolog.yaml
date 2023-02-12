@@ -2,7 +2,6 @@ monolog:
     channels:
         - deprecation
         - mqtt_transport
-        - periodic_handler
         - telegram_service
         - event_handler
         - quasar_service
@@ -17,7 +16,6 @@ monolog:
             process_psr_3_messages: false
             channels:
                 - mqtt_transport
-                - periodic_handler
                 - telegram_service
                 - event_handler
                 - quasar_service
@@ -30,11 +28,6 @@ monolog:
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.mqtt_transport.log'
             channels: [ mqtt_transport ]
-        periodic_handler:
-            level: debug
-            type: rotating_file
-            path: '%kernel.logs_dir%/%kernel.environment%.periodic_handler.log'
-            channels: [ periodic_handler ]
         telegram_service:
             level: debug
             type: stream
@@ -74,7 +67,7 @@ monolog:
             level: debug
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
-            channels: [ '!event', '!smart_home', '!discord_service', '!telegram_service', '!quasar_service', '!mqtt_transport', '!periodic_handler', '!schedule_service', '!rabbit_consumers']
+            channels: [ '!event', '!smart_home', '!discord_service', '!telegram_service', '!quasar_service', '!mqtt_transport', '!schedule_service', '!rabbit_consumers']
 
 when@test:
     monolog:

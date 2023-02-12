@@ -57,11 +57,7 @@ to telegram.
 The command below can be called from an external cron, or added to add to the database as a task that runs every minute
 and call `make cron` 
 
-`php bin/console cli:cron` - command to activate periodic tasks - works through supervisor, is activated every
-minute you need to create criteria for such tasks in the `Domain/PeriodicHandleCriteria/Criteria` see examples in folder.
-
-PeriodicHandleCriteriaCompiler - criteria are registered through dependency injection by service tag 
-in CriteriaChainService.php
+`php bin/console cli:cron` - command to activate periodic tasks - works through supervisor.
 
 
 ## MQTT
