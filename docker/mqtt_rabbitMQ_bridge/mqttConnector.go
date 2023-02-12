@@ -74,7 +74,7 @@ func failOnError(err error, msg string) {
 }
 
 func main() {
-    time.Sleep(20 * time.Second)
+    time.Sleep(2 * time.Second)
 
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:%s", goDotEnvVariable("MQTT_BROKER_URL"), goDotEnvVariable("MQTT_PORT")))

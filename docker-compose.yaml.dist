@@ -11,28 +11,34 @@ services:
     depends_on:
       - php-fpm
     ports:
-      - "80:80"
+      - "84:80"
     networks:
       - uberserver
 
   php-fpm:
-    build:
-      context: .
-      dockerfile: ./docker/php/DockerfileCI
-    container_name: ci-symfony
+    image: registry.gitlab.com/decole/uberserver-symfony:supervisor
+    container_name: uberserver-symfony-supervisor
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
+      - ./docker/supervisor/config:/etc/supervisor/conf.d
       - ./:/var/www
       - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
+#    restart: always
+    command: /usr/bin/supervisord
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
+      - "RABBITMQ_PORT=5672"
+      - "RABBITMQ_HOST=docker-rabbitmq"
       - "PHP_IDE_CONFIG=serverName=Docker"
     depends_on:
-      - postgres
-      - rabbitmq
-      - redis
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
-      - uberserver-microservice
+      - uberserver
 
   postgres:
     image: postgres:11.2-alpine
@@ -46,6 +52,11 @@ services:
       - "POSTGRES_DB=uberserver"
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - uberserver
 
@@ -59,7 +70,13 @@ services:
       - "RABBITMQ_DEFAULT_USER=rabbit"
       - "RABBITMQ_DEFAULT_PASS=rabbit"
     ports:
+      - "5673:5672"
       - "15673:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
     networks:
       - uberserver
 
@@ -87,7 +104,8 @@ services:
       - .env.local:/mqttToRabbit/.env
 #    restart: always
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     networks:
       - uberserver
 
