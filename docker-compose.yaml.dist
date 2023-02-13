@@ -106,6 +106,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    ports:
+      - "2112:2112"
     networks:
       - uberserver
 

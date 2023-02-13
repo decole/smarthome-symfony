@@ -6,8 +6,12 @@ import (
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/joho/godotenv"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"log"
+	"net/http"
 	"os"
 	"time"
 )
@@ -73,8 +77,25 @@ func failOnError(err error, msg string) {
 	}
 }
 
+// for prometheus
+func recordMetrics() {
+	go func() {
+		opsProcessed.Inc()
+	}()
+}
+
+// for prometheus
+var (
+	opsProcessed = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "bridge_online_total",
+		Help: "Service is online",
+	})
+)
+
 func main() {
     time.Sleep(2 * time.Second)
+
+	recordMetrics()
 
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:%s", goDotEnvVariable("MQTT_BROKER_URL"), goDotEnvVariable("MQTT_PORT")))
@@ -92,6 +113,9 @@ func main() {
 	}
 
 	sub(client)
+
+	http.Handle("/metrics", promhttp.Handler())
+	_ = http.ListenAndServe(":2112", nil)
 
 	for {
 		time.Sleep(time.Second)
