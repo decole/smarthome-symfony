@@ -1,5 +1,8 @@
 # MQTT-RABBIT_MQ simple bridge
 
+https://github.com/decole/mqttToRabbitBridge
+
+
 ## Build container
 
 `docker build --tag mqtt-rabbitmq . --file ./docker/Dockerfile`
@@ -34,3 +37,10 @@ MQTT_QUEUE=mqtt
 ## Start app
 
 start go lang app: `/mqtt-rabbitmq`
+
+
+## Prometheus metrics
+
+port: 2112
+
+url: http://localhost:2112/metrics

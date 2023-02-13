@@ -80,9 +80,7 @@ final class SecureDeviceDataService
             SecurityStateEnum::GUARD_STATE->value : SecurityStateEnum::HOLD_STATE->value);
 
         $this->transaction->transactional(
-            function () use ($device) {
-                $this->repository->save($device);
-            }
+            fn () => $this->repository->save($device)
         );
 
         try {

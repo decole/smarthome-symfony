@@ -26,9 +26,9 @@ final class CheckConnectionCommand extends Command
         } catch (Throwable) {
             $output->write('error');
 
-            return 1;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

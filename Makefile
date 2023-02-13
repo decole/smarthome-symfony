@@ -52,3 +52,6 @@ pull:
 
 log:
 	docker-compose logs
+
+cron:
+	docker-compose exec php-fpm php bin/console cli:schedule:run

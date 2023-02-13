@@ -1,0 +1,29 @@
+App\Domain\ScheduleTask\Entity\ScheduleTask:
+  table: 'schedule'
+  type: entity
+  fields:
+    id:
+      id: true
+      type: uuid
+    command:
+      type: string
+    arguments:
+      type: json
+    interval:
+      type: string
+      nullable: true
+    lastRun:
+      type: datetime_immutable
+      name: last_run
+      nullable: true
+    nextRun:
+      type: datetime_immutable
+      name: next_run
+      nullable: true
+    createdAt:
+      type: datetime_immutable
+      name: created_at
+    updatedAt:
+      type: datetime_immutable
+      name: updated_at
+      nullable: true

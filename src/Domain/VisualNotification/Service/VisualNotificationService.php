@@ -100,9 +100,7 @@ final class VisualNotificationService
         $entity = new VisualNotification($dto->getType(), $dto->getMessage());
 
         $this->transaction->transactional(
-            function () use ($entity) {
-                $this->repository->save($entity);
-            }
+            fn () => $this->repository->save($entity)
         );
 
         $this->refreshCache($dto->getType());
@@ -111,9 +109,7 @@ final class VisualNotificationService
     public function setIsRead(?int $type = null): void
     {
         $this->transaction->transactional(
-            function () use ($type) {
-                $this->repository->setAllIsRead($type);
-            }
+            fn () => $this->repository->setAllIsRead($type)
         );
 
         $this->refreshCache($type);

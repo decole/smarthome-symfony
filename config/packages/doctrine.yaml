@@ -56,3 +56,7 @@ doctrine:
                 type: yml
                 prefix: 'App\Domain\PLC\Entity'
                 dir: '%kernel.project_dir%/config/mappings/PLC'
+            schedule:
+                type: yml
+                prefix: 'App\Domain\ScheduleTask\Entity'
+                dir: '%kernel.project_dir%/config/mappings/ScheduleTask'

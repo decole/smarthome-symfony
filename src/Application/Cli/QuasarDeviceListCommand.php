@@ -29,6 +29,6 @@ final class QuasarDeviceListCommand extends Command
             dump($device->getId() . ' ' . $device->getName() . ' ' . $device->getType());
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
