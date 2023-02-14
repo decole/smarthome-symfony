@@ -96,7 +96,7 @@ deploy_prod:
       docker-compose exec -T php-fpm chmod 777 -R ./var
       make restart
       make ps
-      docker-compose exec -T php-fpm chmod 777 -R ./var
+      docker-compose exec -T php-fpm chmod 777 -R ./var/cache
       EOT
   dependencies:
     - tests
