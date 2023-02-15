@@ -1,9 +1,11 @@
 {% if action == 'create' %}
-    {% set page_name = 'Форма создания сенсора' %}
+    {% set page_name = 'Sensor creation form' %}
+    {% set sensor_name = '' %}
     {% set action_form = path('sensors_admin_create_by_type', {type: sensor.type}) %}
     {% set back = path('sensors_admin_create') %}
 {% else %}
-    {% set page_name = 'Форма изменения сенсора ' ~ sensor.name %}
+    {% set page_name = 'Sensor change shape' %}
+    {% set sensor_name = sensor.name %}
     {% set action_form = path('sensors_admin_update_by_id', {id: entityId}) %}
     {% set back = path('sensors_admin') %}
 {% endif %}
@@ -11,20 +13,20 @@
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }} {{ sensor_name }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ page_name }}</h1>
+                    <h1>{{ page_name|trans }} {{ sensor_name }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ path('sensors_admin_create') }}">Создание сенсоров</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ path('sensors_admin_create') }}">{{ 'Creation of sensors'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }} {{ sensor_name }}</li>
                     </ol>
                 </div>
             </div>
@@ -36,10 +38,10 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <span class="card-title">{{ page_name }} [{{ typeTranscribe[sensor.type]|capitalize }}]</span>
+                        <span class="card-title">{{ page_name|trans }} [{{ typeTranscribe[sensor.type]|capitalize }}]</span>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                                <a href="{{ back }}" class="btn btn-dark">{{ 'Back'|trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -59,77 +61,77 @@
 
                             {% endif %}
                             <div class="form-group">
-                                <label>Название сенсора</label>
-                                <input type="text" name="name" value="{{ sensor.name }}" class="form-control" placeholder="Кухня температура" required autofocus>
+                                <label>{{ 'Sensor name'|trans }}</label>
+                                <input type="text" name="name" value="{{ sensor.name }}" class="form-control" placeholder="Kitchen temperature" required autofocus>
                             </div>
                             <div class="form-group">
-                                <label>Топик</label>
+                                <label>Topic</label>
                                 <input type="text" name="topic" value="{{ sensor.topic }}" class="form-control" placeholder="hall/example" required>
                             </div>
                             <div class="form-group">
-                                <label>Текущее состояние сенсора</label>
+                                <label>{{ 'Current state'|trans }} {{ 'sensor`s'|trans }}</label>
                                 <input type="text" name="payload" value="{{ sensor.payload }}" class="form-control" placeholder="10">
                             </div>
                             {% if sensor.type == 'temperature' or sensor.type == 'humidity' or sensor.type == 'pressure' %}
                             <div class="form-group">
-                                <label>Значение минимальное</label>
+                                <label>{{ 'Value'|trans }} {{ 'minify'|trans }}</label>
                                 <input type="text" name="payloadMin" value="{{ sensor.payloadMin }}" class="form-control" placeholder="10" required>
                             </div>
                             {% endif %}
                             {% if sensor.type == 'temperature' or sensor.type == 'humidity' or sensor.type == 'pressure' %}
                             <div class="form-group">
-                                <label>Значение максимальное</label>
+                                <label>{{ 'Value'|trans }} {{ 'maxy'|trans }}</label>
                                 <input type="text" name="payloadMax" value="{{ sensor.payloadMax }}" class="form-control" placeholder="40" required>
                             </div>
                             {% endif %}
                             {% if sensor.type == 'leakage' %}
                                 <div class="form-group">
-                                    <label>Значение - сухо</label>
+                                    <label>{{ 'Value'|trans }} - {{ 'dry'|trans }}</label>
                                     <input type="text" name="payloadDry" value="{{ sensor.payloadDry }}" class="form-control" placeholder="0" required>
                                 </div>
                             {% endif %}
                             {% if sensor.type == 'leakage' %}
                                 <div class="form-group">
-                                    <label>Значение - протечка</label>
+                                    <label>{{ 'Value'|trans }} - {{ 'leakage'|trans }}</label>
                                     <input type="text" name="payloadWet" value="{{ sensor.payloadWet }}" class="form-control" placeholder="1" required>
                                 </div>
                             {% endif %}
                             {% if sensor.type == 'dryContact' %}
                                 <div class="form-group">
-                                    <label>Значение - есть сигнал</label>
+                                    <label>{{ 'Data High'|trans }}</label>
                                     <input type="text" name="payloadHigh" value="{{ sensor.payloadHigh }}" class="form-control" placeholder="1" required>
                                 </div>
                             {% endif %}
                             {% if sensor.type == 'dryContact' %}
                                 <div class="form-group">
-                                    <label>Значение - нет сигнала</label>
+                                    <label>{{ 'Data Low'|trans }}</label>
                                     <input type="text" name="payloadLow" value="{{ sensor.payloadLow }}" class="form-control" placeholder="0" required>
                                 </div>
                             {% endif %}
 
                             <div class="form-group">
-                                <label>Текст для информации</label>
-                                <input type="text" name="message_info" value="{{ sensor.message_info }}" class="form-control" placeholder="Сенсор Кухня температура">
+                                <label>{{ 'Text for information'|trans }}</label>
+                                <input type="text" name="message_info" value="{{ sensor.message_info }}" class="form-control" placeholder="Sensor Kitchen temperature">
                             </div>
                             <div class="form-group">
-                                <label>Текст для статуса Oк</label>
-                                <input type="text" name="message_ok" value="{{ sensor.message_ok }}" class="form-control" placeholder="Сенсор Кухня температура, все хорошо">
+                                <label>{{ 'Text for ok status'|trans }}</label>
+                                <input type="text" name="message_ok" value="{{ sensor.message_ok }}" class="form-control" placeholder="Sensor Kitchen temperature, all is well">
                             </div>
                             <div class="form-group">
-                                <label>Текст для вывода алерта. <strong style="color: #cc5454">{value}</strong> - значение датчика</label>
-                                <input type="text" name="message_warn" value="{{ sensor.message_warn }}" class="form-control" placeholder="Внимание, что то произошло">
+                                <label>{{ 'Alert text'|trans }}. <strong style="color: #cc5454">{value}</strong> - {{ 'device data'|trans }}</label>
+                                <input type="text" name="message_warn" value="{{ sensor.message_warn }}" class="form-control" placeholder="Attention, something happened">
                             </div>
 
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch0" {% if sensor.status == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="statusSwitch0">Статус сенсора</label>
+                                <label class="custom-control-label" for="statusSwitch0">{{ 'Status'|trans }}</label>
                             </div>
                             <div class="custom-control custom-switch pb-2">
                                 <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch1" {% if sensor.notify == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="notifySwitch1">Присылать оповещения</label>
+                                <label class="custom-control-label" for="notifySwitch1">{{ 'Send alerts'|trans }}</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                         </div>
                     </form>
                 </div>

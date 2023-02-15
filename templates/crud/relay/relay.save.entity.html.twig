@@ -1,9 +1,9 @@
 {% if action == 'create' %}
-    {% set page_name = 'Форма создания реле' %}
+    {% set page_name = 'Relay creation form' %}
     {% set action_form = path('relay_admin_create') %}
     {% set back = path('relay_admin') %}
 {% else %}
-    {% set page_name = 'Форма изменения реле ' ~ relay.name %}
+    {% set page_name = 'Relay update form' %}
     {% set action_form = path('relay_admin_update_by_id', {id: entityId}) %}
     {% set back = path('relay_admin') %}
 {% endif %}
@@ -11,20 +11,20 @@
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ page_name }}</h1>
+                    <h1>{{ page_name|trans }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ path('relay_admin_create') }}">Настройка реле</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ path('relay_admin_create') }}">{{ 'Relay setting'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -36,10 +36,10 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <span class="card-title">{{ page_name }}</span>
+                        <span class="card-title">{{ page_name|trans }}</span>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                                <a href="{{ back }}" class="btn btn-dark">{{ 'Back'|trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -59,28 +59,28 @@
 
                             {% endif %}
                             <div class="form-group">
-                                <label>Название реле</label>
-                                <input type="text" name="name" value="{{ relay.name }}" class="form-control" placeholder="Реле 01 зал " autofocus required>
+                                <label>{{ 'Name'|trans }}</label>
+                                <input type="text" name="name" value="{{ relay.name }}" class="form-control" placeholder="Relay 01 Hall" autofocus required>
                             </div>
                             <div class="form-group">
-                                <label>Топик</label>
+                                <label>Topic</label>
                                 <input type="text" name="topic" value="{{ relay.topic }}" class="form-control" placeholder="hall/ralay01" required>
                             </div>
                             <div class="form-group pt-2">
-                                <label>Команда включить</label>
+                                <label>{{ 'Enable command'|trans }}</label>
                                 <input type="text" name="commandOn" value="{{ relay.commandOn }}" class="form-control" placeholder="on" required>
                             </div>
                             <div class="form-group">
-                                <label>Команда выключить</label>
+                                <label>{{ 'Shutdown command'|trans }}</label>
                                 <input type="text" name="commandOff" value="{{ relay.commandOff }}" class="form-control" placeholder="off" required>
                             </div>
                             <div class="form-group">
-                                <label>Текущее состояние реле</label>
+                                <label>{{ 'Current state'|trans }} {{ 'Relay'|trans }}</label>
                                 <input type="text" name="payload" value="{{ relay.payload }}" class="form-control" placeholder="1">
                             </div>
 
                             <div class="form-group">
-                                <label>Тип реле</label>
+                                <label>{{ 'Type'|trans }} {{ 'Relay'|trans }}</label>
                                 <select class="form-control" name="type">
                                     {% for key, typeOf in typeTranscribe %}
                                     <option value="{{ key }}" {% if key == relay.type%} selected {% endif %}>{{ typeOf|capitalize }}</option>
@@ -91,45 +91,45 @@
                             <div class="contur">
                                 <div class="custom-control custom-switch mb-2">
                                     <input type="checkbox" class="custom-control-input" name="isFeedbackPayload" id="statusSwitch0" {% if relay.isFeedbackPayload == 'on' %} checked {% endif %}>
-                                    <label class="custom-control-label" for="statusSwitch0">Реле имеет обратную связь</label>
+                                    <label class="custom-control-label" for="statusSwitch0">{{ 'Relay has feedback'|trans }}</label>
                                 </div>
                                 <div class="form-group">
-                                    <label>Проверочный топик</label>
+                                    <label>{{ 'Check topic'|trans }}</label>
                                     <input type="text" name="checkTopic" value="{{ relay.checkTopic }}" class="form-control" placeholder="hall/check/ralay01">
                                 </div>
                                 <div class="form-group">
-                                    <label>Проверочный сигнал - статус включен</label>
+                                    <label>{{ 'Check payload on'|trans }}</label>
                                     <input type="text" name="checkTopicPayloadOn" value="{{ relay.checkTopicPayloadOn }}" class="form-control" placeholder="1">
                                 </div>
                                 <div class="form-group">
-                                    <label>Проверочный сигнал - статус выключен</label>
+                                    <label>{{ 'Check payload off'|trans }}</label>
                                     <input type="text" name="checkTopicPayloadOff" value="{{ relay.checkTopicPayloadOff }}" class="form-control" placeholder="0">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Текст для информации</label>
-                                <input type="text" name="message_info" value="{{ relay.message_info }}" class="form-control" placeholder="Реле 1 в зале">
+                                <label>{{ 'Text for information'|trans }}</label>
+                                <input type="text" name="message_info" value="{{ relay.message_info }}" class="form-control" placeholder="Relay 01 Hall">
                             </div>
                             <div class="form-group">
-                                <label>Текст для статуса Oк</label>
-                                <input type="text" name="message_ok" value="{{ relay.message_ok }}" class="form-control" placeholder="Реле 1, работает штатно">
+                                <label>{{ 'Text for ok status'|trans }}</label>
+                                <input type="text" name="message_ok" value="{{ relay.message_ok }}" class="form-control" placeholder="Relay 01 Hall - Normal">
                             </div>
                             <div class="form-group">
-                                <label>Текст для вывода алерта. <strong style="color: #cc5454">{value}</strong> - значение датчика</label>
-                                <input type="text" name="message_warn" value="{{ relay.message_warn }}" class="form-control" placeholder="Внимание, ошибка в работе реле 1">
+                                <label>{{ 'Alert text'|trans }}. <strong style="color: #cc5454">{value}</strong> - {{ 'device data'|trans }}</label>
+                                <input type="text" name="message_warn" value="{{ relay.message_warn }}" class="form-control" placeholder="Relay 01 Hall Warn! {value}">
                             </div>
 
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch1" {% if relay.status == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="statusSwitch1">Статус реле</label>
+                                <label class="custom-control-label" for="statusSwitch1">{{ 'Status'|trans }}</label>
                             </div>
                             <div class="custom-control custom-switch pb-2">
                                 <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch2" {% if relay.notify == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="notifySwitch2">Присылать оповещения</label>
+                                <label class="custom-control-label" for="notifySwitch2">{{ 'Send alerts'|trans }}</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                         </div>
                     </form>
                 </div>

@@ -1,9 +1,9 @@
 {% if action == 'create' %}
-    {% set page_name = 'Форма мониторинга контроллера' %}
+    {% set page_name = 'Controller monitoring form' %}
     {% set action_form = path('plc_admin_create') %}
     {% set back = path('plc_admin') %}
 {% else %}
-    {% set page_name = 'Форма изменения мониторинга контроллера ' ~ plc.name %}
+    {% set page_name = 'Controller monitoring update form' %}
     {% set action_form = path('plc_admin_update_by_id', {id: entityId}) %}
     {% set back = path('plc_admin') %}
 {% endif %}
@@ -11,20 +11,20 @@
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ page_name }}</h1>
+                    <h1>{{ page_name|trans }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ path('plc_admin') }}">Настройка мониторинга контроллера</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ path('plc_admin') }}">{{ 'Setting up controller monitoring'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -36,10 +36,10 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <span class="card-title">{{ page_name }}</span>
+                        <span class="card-title">{{ page_name|trans }}</span>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                                <a href="{{ back }}" class="btn btn-dark">{{ 'Back'|trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -59,41 +59,41 @@
 
                             {% endif %}
                             <div class="form-group">
-                                <label>Название контроллера</label>
-                                <input type="text" name="name" value="{{ plc.name }}" class="form-control" placeholder="Лампа 1" autofocus required>
+                                <label>{{ 'Controller name'|trans }}</label>
+                                <input type="text" name="name" value="{{ plc.name }}" class="form-control" placeholder="Lamp 1" autofocus required>
                             </div>
                             <div class="form-group">
-                                <label>Топик мониторинга</label>
+                                <label>{{ 'Monitoring topic'|trans }}</label>
                                 <input type="text" name="targetTopic" value="{{ plc.targetTopic }}" class="form-control" placeholder="home/check/lamp01" required>
                             </div>
                             <div class="form-group">
-                                <label>Время затишья перед оповещением</label>
+                                <label>{{ 'Quiet time before notification'|trans }}</label>
                                 <input type="number" min="0" step="1" name="alarmSecondDelay" value="{{ plc.alarmSecondDelay }}" class="form-control" placeholder="60">
                             </div>
 
                             <div class="form-group">
-                                <label>Текст для информации</label>
-                                <input type="text" name="message_info" value="{{ plc.message_info }}" class="form-control" placeholder="Контроллер 1">
+                                <label>{{ 'Text for information'|trans }}</label>
+                                <input type="text" name="message_info" value="{{ plc.message_info }}" class="form-control" placeholder="Controller 1">
                             </div>
                             <div class="form-group">
-                                <label>Текст для статуса Oк</label>
-                                <input type="text" name="message_ok" value="{{ plc.message_ok }}" class="form-control" placeholder="Контроллер 1, работает штатно">
+                                <label>{{ 'Text for ok status'|trans }}</label>
+                                <input type="text" name="message_ok" value="{{ plc.message_ok }}" class="form-control" placeholder="Controller 1, working properly">
                             </div>
                             <div class="form-group">
-                                <label>Текст для вывода алерта</label>
-                                <input type="text" name="message_warn" value="{{ plc.message_warn }}" class="form-control" placeholder="Внимание, ошибка в работе контроллера 1">
+                                <label>{{ 'Alert text'|trans }}</label>
+                                <input type="text" name="message_warn" value="{{ plc.message_warn }}" class="form-control" placeholder="Attention, an error in the operation of the controller 1">
                             </div>
 
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch1" {% if plc.status == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="statusSwitch1">Статус мониторинга контроллера</label>
+                                <label class="custom-control-label" for="statusSwitch1">{{ 'Status'|trans }}</label>
                             </div>
                             <div class="custom-control custom-switch pb-2">
                                 <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch2" {% if plc.notify == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="notifySwitch2">Присылать оповещения</label>
+                                <label class="custom-control-label" for="notifySwitch2">{{ 'Send alerts'|trans }}</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                         </div>
                     </form>
                 </div>

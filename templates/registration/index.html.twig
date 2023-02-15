@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Регистрация</title>
+    <title>{{ 'Sing Up'|trans }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,7 +22,7 @@
 
     <div class="card">
         <div class="card-body register-card-body">
-            <p class="login-box-msg">Регистрация нового пользователя</p>
+            <p class="login-box-msg">{{ 'Sing Up'|trans }}</p>
 {% if isEnableRegistration == 'true' %}
             <form action="{{ path('app_register') }}" method="post">
                 <input type="hidden" name="csrf" value="{{ csrf }}">
@@ -73,23 +73,23 @@
                         <div class="icheck-primary">
                             <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                             <label for="agreeTerms">
-                                Я <a href="#">прочел</a>
+                                <a href="#">{{ 'I have read'|trans }}</a>
                             </label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-5">
-                        <button type="submit" class="btn btn-primary btn-block">Отправить</button>
+                        <button type="submit" class="btn btn-primary btn-block">{{ 'Send'|trans }}</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 {% else %}
     <div class="text-center text-capitalize mb-3">
-        <h1>Регистрация закрыта</h1>
+        <h1>{{ 'Registration is closed'|trans }}</h1>
     </div>
 {% endif %}
-            <a href="{{ path('app_login') }}" class="text-center">Я уже зарегистрирован</a>
+            <a href="{{ path('app_login') }}" class="text-center">{{ 'I am already registered'|trans }}</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->

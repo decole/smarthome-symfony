@@ -1,9 +1,9 @@
 {% if action == 'create' %}
-    {% set page_name = 'Форма создания датчика охранной системы' %}
+    {% set page_name = 'Security system sensor creation form' %}
     {% set action_form = path('security_admin_create') %}
     {% set back = path('security_admin') %}
 {% else %}
-    {% set page_name = 'Форма изменения датчика охранной системы ' ~ security.name %}
+    {% set page_name = 'Security system sensor change form'%}
     {% set action_form = path('security_admin_update_by_id', {id: entityId}) %}
     {% set back = path('security_admin') %}
 {% endif %}
@@ -11,20 +11,20 @@
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ page_name }}</h1>
+                    <h1>{{ page_name|trans }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ path('security_admin_create') }}">Настройка датчика охранной системы</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ path('security_admin_create') }}">{{ 'Setting up a security system sensor'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -36,10 +36,10 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <span class="card-title">{{ page_name }}</span>
+                        <span class="card-title">{{ page_name|trans }}</span>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                                <a href="{{ back }}" class="btn btn-dark">{{ 'Back'|trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -59,28 +59,28 @@
 
                             {% endif %}
                             <div class="form-group">
-                                <label>Название охранного датчика</label>
-                                <input type="text" name="name" value="{{ security.name }}" class="form-control" placeholder="ОШС 1" autofocus required>
+                                <label>{{ 'Name'|trans }}</label>
+                                <input type="text" name="name" value="{{ security.name }}" class="form-control" placeholder="DS1" autofocus required>
                             </div>
                             <div class="form-group">
-                                <label>Топик</label>
+                                <label>Topic</label>
                                 <input type="text" name="topic" value="{{ security.topic }}" class="form-control" placeholder="security/move01" required>
                             </div>
                             <div class="form-group">
-                                <label>Текущее состояние</label>
+                                <label>{{ 'Current state'|trans }}</label>
                                 <input type="text" name="payload" value="{{ security.payload }}" class="form-control" placeholder="1">
                             </div>
 
                             <div class="form-group">
-                                <label>Payload "Движение/Активация"</label>
+                                <label>Payload "{{ 'Movement/Activation'|trans }}"</label>
                                 <input type="text" name="detectPayload" value="{{ security.detectPayload }}" class="form-control" placeholder="on" required>
                             </div>
                             <div class="form-group">
-                                <label>Payload "Нет движения/Норма"</label>
+                                <label>Payload "{{ 'No movement/Normal'|trans }}"</label>
                                 <input type="text" name="holdPayload" value="{{ security.holdPayload }}" class="form-control" placeholder="off" required>
                             </div>
                             <div class="form-group">
-                                <label>Последняя команда</label>
+                                <label>{{ 'Last command'|trans }}</label>
                                 <input type="text" name="lastCommand" value="{{ security.lastCommand }}" class="form-control" placeholder="off">
                             </div>
 
@@ -94,16 +94,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Текст для информации</label>
-                                <input type="text" name="message_info" value="{{ security.message_info }}" class="form-control" placeholder="ОШС1">
+                                <label>{{ 'Text for information'|trans }}</label>
+                                <input type="text" name="message_info" value="{{ security.message_info }}" class="form-control" placeholder="DS1">
                             </div>
                             <div class="form-group">
-                                <label>Текст для статуса Oк</label>
-                                <input type="text" name="message_ok" value="{{ security.message_ok }}" class="form-control" placeholder="ОШС1, работает штатно">
+                                <label>{{ 'Text for ok status'|trans }}</label>
+                                <input type="text" name="message_ok" value="{{ security.message_ok }}" class="form-control" placeholder="DS1, work is normal">
                             </div>
                             <div class="form-group">
-                                <label>Текст для вывода алерта. <strong style="color: #cc5454">{value}</strong> - значение датчика</label>
-                                <input type="text" name="message_warn" value="{{ security.message_warn }}" class="form-control" placeholder="Внимание, ошибка в работе ОШС1">
+                                <label>{{ 'Alert text'|trans }}. <strong style="color: #cc5454">{value}</strong> - {{ 'device data'|trans }}</label>
+                                <input type="text" name="message_warn" value="{{ security.message_warn }}" class="form-control" placeholder="Attention, error in work DS1">
                             </div>
 
                             <hr>
@@ -132,14 +132,14 @@
 
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" name="status" id="statusSwitch1" {% if security.status == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="statusSwitch1">Статус охранного датчика</label>
+                                <label class="custom-control-label" for="statusSwitch1">{{ 'Status'|trans }}</label>
                             </div>
                             <div class="custom-control custom-switch pb-2">
                                 <input type="checkbox" class="custom-control-input" name="notify" id="notifySwitch2" {% if security.notify == 'on' %} checked {% endif %}>
-                                <label class="custom-control-label" for="notifySwitch2">Присылать оповещения</label>
+                                <label class="custom-control-label" for="notifySwitch2">{{ 'Send alerts'|trans }}</label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                         </div>
                     </form>
                 </div>

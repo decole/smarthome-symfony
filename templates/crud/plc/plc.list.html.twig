@@ -1,21 +1,21 @@
-{% set page_name = 'Настрока мониторинга активности контроллеров' %}
+{% set page_name = 'Setting up controller monitoring' %}
 
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ page_name }}</h1>
+                    <h1>{{ page_name|trans }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,11 +27,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Список контроллеров</span>
+                        <span class="card-title">{{ 'List of controllers'|trans }}</span>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <a href="{{ path('plc_admin_create') }}" type="submit" class="btn btn-primary">Создать</a>
+                                <a href="{{ path('plc_admin_create') }}" type="submit" class="btn btn-primary">{{ 'Create'|trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -41,9 +41,9 @@
                             <thead>
                             <tr>
                                 <th>№</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>{{ 'Name'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th>{{ 'Actions'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -52,10 +52,10 @@
                                 <tr>
                                     <td>{{ loop.index }}</td>
                                     <td>{{ plc.name|e }}</td>
-                                    <td>{% if plc.status == 1 %}Active{% else %}Deactivate{% endif %}</td>
+                                    <td>{% if plc.status == 1 %}{{ 'Active'|trans }}{% else %}{{ 'Deactivate'|trans }}{% endif %}</td>
                                     <td>
-                                        <a href="{{ path('plc_admin_update_by_id', {id: plc.id}) }}" class="btn btn-warning">Изменить</a>
-                                        <a href="{{ path('plc_admin_delete_by_id', {id: plc.id}) }}" class="btn btn-danger">Удалить</a>
+                                        <a href="{{ path('plc_admin_update_by_id', {id: plc.id}) }}" class="btn btn-warning">{{ 'Update'|trans }}</a>
+                                        <a href="{{ path('plc_admin_delete_by_id', {id: plc.id}) }}" class="btn btn-danger">{{ 'Delete'|trans }}</a>
                                     </td>
                                 </tr>
                             {% endfor %}

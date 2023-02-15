@@ -1,21 +1,21 @@
-{% set page_name = 'Настрока профиля' %}
+{% set page_name = 'Profile setup' %}
 
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <ha1>{{ page_name }}</ha1>
+                    <ha1>{{ page_name|trans }}</ha1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Изменение данных профиля</h3>
+                    <h3 class="card-title">{{ 'Changing profile information'|trans }}</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -45,11 +45,11 @@
                             <label for="telegram_id">Telegram Id</label>
                             <input type="text" class="form-control" id="telegram_id" placeholder="Telegram Id" name="telegram_id" value="{{ user.telegramId }}">
                         </div>
-                        <h5 class="mt-4 mb-2">Блок изменения пароля.</h5>
+                        <h5 class="mt-4 mb-2">{{ 'Password change block'|trans }}</h5>
                         <div class="form-check">
                             <div class="custom-control custom-checkbox">
                                 <input class="custom-control-input" type="checkbox" id="customCheckbox1" name="is_change">
-                                <label for="customCheckbox1" class="custom-control-label">Изменить пароль</label>
+                                <label for="customCheckbox1" class="custom-control-label">{{ 'Change password'|trans }}</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -63,7 +63,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                     </div>
                 </form>
             </div>
