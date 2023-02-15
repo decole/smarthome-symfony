@@ -1,9 +1,9 @@
 {% if action == 'create' %}
-    {% set page_name = 'Форма создания страницы' %}
+    {% set page_name = 'Page creation form' %}
     {% set action_form = path('page_admin_create') %}
     {% set back = path('page_admin') %}
 {% else %}
-    {% set page_name = 'Форма изменения страницы ' ~ pageName %}
+    {% set page_name = 'Page update form' %}
     {% set action_form = path('page_admin_update_by_id', {id: entityId}) %}
     {% set back = path('page_admin') %}
 {% endif %}
@@ -11,20 +11,20 @@
 
 {% extends "layout/layout.html.twig" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name|trans }}{% endblock %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ page_name }}</h1>
+                    <h1>{{ page_name|trans }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
                         <li class="breadcrumb-item active"><a href="{{ path('page_admin_create') }}">Настройка реле</a></li>
-                        <li class="breadcrumb-item active">{{ page_name }}</li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -36,10 +36,10 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <span class="card-title">{{ page_name }}</span>
+                        <span class="card-title">{{ page_name|trans }}</span>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <a href="{{ back }}" class="btn btn-dark">Назад</a>
+                                <a href="{{ back }}" class="btn btn-dark">{{ 'Back'|trans }}</a>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                                 {% endif %}
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                         </div>
                     </form>
                 </div>

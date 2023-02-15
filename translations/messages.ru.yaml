@@ -12,8 +12,98 @@ All device data: Все данные
 Outbuilding: Пристройка
 Settings: Настройки
 Sensors: Сенсоры
+Sensor name: Название сенсора
+Creation of sensors: Создание сенсоров
+Sensor creation form: Форма создания сенсора
+Sensor change shape: Форма изменения сенсора
 Relay: Реле
 Secure: Охранка
 FireSecure: Пожарка
 Pages: Страницы
 Monitoring PLC: Мониторинг PLC
+Name: Название
+Type: Тип
+Status: Статус
+Actions: Действия
+Active: Включен
+Deactivate: Выключен
+Create: Создать
+Update: Изменить
+Delete: Удалить
+Back: Назад
+Save: Сохранить
+Send alerts: Присылать оповещения
+Sensor list: Список сенсоров
+Relay list: Список реле
+Relay setup: Настрока реле
+Security device setup: Настрока охранной системы
+List security devise: Список датчиков охранной системы
+Sing Up: Регистрация нового пользователя
+Send: Отправить
+Registration is closed: Регистрация закрыта
+I am already registered: Я уже зарегистрирован
+I have read: Я прочел
+Event list: Список событий
+all event: всех
+notify event: нотификационных
+alarm event: аварийных
+fire-secure event: пожарных
+secure event: охранных
+no: неизвестных
+Authorization: Авторизация
+device data: значение датчика
+Text for information: Текст для информации
+Text for ok status: Текст для статуса Oк
+Alert text: Текст для вывода алерта
+Data Low: Значение - низкий сигнал
+Data High: Значение - высокий сигнал
+Value: Значение
+leakage: протечка
+dry: сухо
+maxy: максимальное
+minify: минимальное
+Current state: Текущее состояние
+sensor`s: сенсора
+Creating a sensor. Type selection: Создание сенсора. Выбор типа
+Sensor setup: Настрока сенсоров
+List of sensor types: Список типов сенсоров
+Security system sensor creation form: Форма создания датчика охранной системы
+Security system sensor change form: Форма изменения датчика охранной системы
+Setting up a security system sensor: Настройка датчика охранной системы
+Movement/Activation: Движение/Активация
+No movement/Normal: Нет движения/Норма
+Last command: Последняя команда
+Relay creation form: Форма создания реле
+Relay update form: Форма изменения реле
+Relay setting: Настройка реле
+Enable command: Команда включить
+Shutdown command: Команда выключить
+Check topic: Проверочный топик
+Check payload on: Проверочный сигнал - статус включен
+Check payload off: Проверочный сигнал - статус выключен
+Relay has feedback: Реле имеет обратную связь
+Changing profile information: Изменение данных профиля
+Profile setup: Настрока профиля
+Password change block: Блок изменения пароля
+Change password: Изменить пароль
+Quiet time before notification: Время затишья перед оповещением
+Monitoring topic: Топик мониторинга
+Controller name: Название контроллера
+Controller monitoring form: Форма мониторинга контроллера
+Controller monitoring update form: Форма изменения мониторинга контроллера
+Setting up controller monitoring: Настройка мониторинга контроллера
+List of controllers: Список контроллеров
+Page creation form: Форма создания страницы
+Page update form: Форма изменения страницы
+Setup pages: Настрока страниц
+List of pages: Список страниц
+Pages and its code name for creating settings: Страницв и ее кодовое имя для создания настроек
+all devices in the system (displayed automatically, no need to create a page): все устройства в системе (выводятся автоматически, создавать страницу не надо)
+Fire system sensor creation form: Форма создания датчика пожарной системы
+Fire system sensor update form: Форма изменения датчика пожарной системы
+Fire system sensor setting: Настройка датчика пожарной системы
+signal Norma: сигнал Норма
+fire signal: сигнал Пожар
+Fire system setup: Настрока пожарной системы
+List of fire system sensors: Список датчиков пожарной системы
+Mark as read: Отметить как прочитанное

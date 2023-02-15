@@ -3,6 +3,7 @@ twig:
     globals:
         notifications: '@App\Domain\VisualNotification\Service\VisualNotificationService'
         pages: '@App\Domain\Page\Service\TwigPageService'
+        appName: '%env(APP_HOST)%'
 when@test:
     twig:
         strict_variables: true
