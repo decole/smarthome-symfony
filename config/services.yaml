@@ -11,6 +11,7 @@ services:
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
             - '@redis_client'
+            - { 'prefix': 'session_', 'ttl': 31536000 }
 
 parameters:
     app.registration: '%env(APP_REGISTRATION_ENABLE)%'
