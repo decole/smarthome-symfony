@@ -40,7 +40,7 @@ final class SignUpService
                 ->from(new Address($this->email,  $this->subject))
                 ->to($user->getEmail())
         ->subject('Please Confirm your Email')
-        ->htmlTemplate('registration/confirmation_email.html.twig')
+        ->htmlTemplate('email/confirmation_email.html.twig')
         );
 
         return $user;

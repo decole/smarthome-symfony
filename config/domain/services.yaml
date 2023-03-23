@@ -7,7 +7,6 @@ services:
     autoconfigure: true
 
   App\Domain\SecureSystem\Service\RegistrationValidateService: ~
-
   App\Domain\SecureSystem\Service\LoginFormAuthenticator: ~
 
   App\Domain\Page\Service\PageHydrateService: ~
@@ -29,3 +28,8 @@ services:
   App\Domain\ScheduleTask\Service\ScheduleTaskService:
     arguments:
       $logger: '@monolog.logger.schedule_service'
+
+  App\Domain\SecureSystem\Service\RestorePasswordService:
+    arguments:
+      $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
+      $subject: '%env(EMAIL_RESTORE_SUBJECT)%'
