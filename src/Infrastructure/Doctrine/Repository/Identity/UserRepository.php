@@ -60,8 +60,10 @@ final class UserRepository extends ServiceEntityRepository implements PasswordUp
 
     public function findOneByEmail(string $email): ?User
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.email = :email')
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->andWhere($qb->expr()->eq('u.email', ':email'))
             ->setParameter('email', $email)
             ->getQuery()
             ->getOneOrNullResult();
@@ -74,5 +76,16 @@ final class UserRepository extends ServiceEntityRepository implements PasswordUp
             ->orderBy('u.email', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByRestoreToken(mixed $token): ?User
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->andWhere($qb->expr()->eq('u.restoreToken', ':token'))
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

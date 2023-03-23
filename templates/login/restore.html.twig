@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+
+    <title>{% block title %}{{ 'Authorization'|trans }}{% endblock %}</title>
+
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="{{ path('home') }}" class="h1"><b>{{ host }}</b></a>
+        </div>
+        <div class="card-body">
+            <p>{{ 'Restore login'|trans }}</p>
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            {% if status is null %}
+                <div class="alert alert-danger">where token?</div>
+            {% endif %}
+
+            {% if status == true %}
+                <div class="alert alert-default-info">See new password on yore email address</div>
+            {% endif %}
+
+            <!-- /.social-auth-links -->
+
+            {% if isEnableRegistration == 'true' %}
+                <p class="mb-0">
+                    <a href="{{ path('app_login') }}" class="text-center">Return to login</a>
+                </p>
+                <p class="mb-0">
+                    <a href="{{ path('app_signup') }}" class="text-center">Register a new membership</a>
+                </p>
+            {% endif %}
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="/assets/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

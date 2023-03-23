@@ -19,9 +19,19 @@ App\Domain\Identity\Entity\User:
       type: string
     isVerified:
       type: boolean
+      name: 'is_verified'
     name:
       type: string
       unique: true
     telegramId:
       type: integer
+      name: telegram_id
+      nullable: true
+    restoreToken:
+      type: string
+      name: restore_token
+      nullable: true
+    restoreTokenCreatedAt:
+      type: datetime_immutable
+      name: restore_token_created_at
       nullable: true

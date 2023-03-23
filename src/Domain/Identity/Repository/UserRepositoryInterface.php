@@ -15,4 +15,6 @@ interface UserRepositoryInterface
     public function findOneByEmail(string $email): ?User;
 
     public function findAllWithTelegramId(): array;
+
+    public function findByRestoreToken(mixed $token): ?User;
 }

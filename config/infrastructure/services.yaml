@@ -58,9 +58,6 @@ services:
   App\Infrastructure\Prometheus\Metric\MqttPayloadMetricsCollector:
     tags:
       - { name: prometheus_metrics_bundle.metrics_generator }
-  App\Infrastructure\Prometheus\Metric\DataBaseMetricsCollector:
-    tags:
-      - { name: prometheus_metrics_bundle.metrics_generator }
 
   App\Infrastructure\Telegram\Service\TelegramService:
     arguments:

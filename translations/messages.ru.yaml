@@ -107,3 +107,7 @@ fire signal: сигнал Пожар
 Fire system setup: Настрока пожарной системы
 List of fire system sensors: Список датчиков пожарной системы
 Mark as read: Отметить как прочитанное
+Restore login: Восстановления доступа к учетной записи
+Wrong restore token: Неправильный токен восстановления
+Token is expired: Токен восстановления протух
+Restore password by: Восстановление пароля к

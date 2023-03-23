@@ -4,12 +4,17 @@ namespace App\Domain\Identity\Entity;
 
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Contract\Repository\EntityInterface;
+use DateTimeImmutable;
+use Exception;
+use League\FactoryMuffin\Faker\Faker;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     use Entity;
+
+    private const EXPIRED_SECONDS = 3600;
 
     public const ROLE_USER = 'ROLE_USER';
 
@@ -23,7 +28,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
 
     private bool $isVerified;
 
-    private ?int $telegramId;
+    private ?int $telegramId = null;
+
+    private ?string $restoreToken = null;
+
+    private ?DateTimeImmutable $restoreTokenCreatedAt = null;
 
     public function __construct()
     {
@@ -123,6 +132,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
         $this->isVerified = true;
     }
 
+    public function setUnverified(): void
+    {
+        $this->isVerified = false;
+    }
+
     public function setName(?string $name): void
     {
         $this->name = $name;
@@ -146,5 +160,43 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
     public static function alias(): string
     {
         return 'user';
+    }
+
+    public function getRestoreToken(): ?string
+    {
+        return $this->restoreToken;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function generateRestoreToken(): void
+    {
+        $this->restoreToken = md5(time() . (new Faker())->getGenerator()->text(1000));
+        $this->restoreTokenCreatedAt = new DateTimeImmutable('now');
+    }
+
+    public function isRestoreTokenExpired(): bool
+    {
+        return $this->restoreTokenCreatedAt === null ||
+            time() > $this->getExpiredRestoreTokenDate()->getTimestamp();
+    }
+
+    public function getRestoreTokenDate(): DateTimeImmutable
+    {
+        return $this->restoreTokenCreatedAt;
+    }
+
+    public function getExpiredRestoreTokenDate(): DateTimeImmutable
+    {
+        $seconds = self::EXPIRED_SECONDS;
+
+        return $this->getRestoreTokenDate()->modify("+{$seconds} second");
+    }
+
+    public function cleanRestoreToken(): void
+    {
+        $this->restoreToken = null;
+        $this->restoreTokenCreatedAt = null;
     }
 }

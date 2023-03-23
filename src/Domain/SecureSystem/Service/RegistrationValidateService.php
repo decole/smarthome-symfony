@@ -16,7 +16,7 @@ final class RegistrationValidateService
 
     final public function validate(RegisterDto $dto, string $csrfSessionToken): array
     {
-        $this->validCsfr($dto, $csrfSessionToken);
+        $this->validCsrf($dto, $csrfSessionToken);
         $this->checkNotEmpty($dto);
         $this->validEmail($dto);
         $this->validPassword($dto);
@@ -25,7 +25,7 @@ final class RegistrationValidateService
         return [$this->isValid(), $this->getErrors()];
     }
 
-    private function validCsfr(RegisterDto $dto, string $csrfSessionToken): void
+    private function validCsrf(RegisterDto $dto, string $csrfSessionToken): void
     {
         if ($csrfSessionToken !== $dto->getCsrf()) {
             $this->addError('csrf', 'Csrf token is not valid!');
