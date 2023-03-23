@@ -45,12 +45,20 @@ tests:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept build
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run acceptance --xml --html
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept clean
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - tests/_output
+    # make the report available in Gitlab UI. see https://docs.gitlab.com/ee/ci/unit_test_reports.html
+    reports:
+      junit: tests/_output/report.xml
   after_script:
     - >
       if [ $CI_JOB_STATUS == 'success' ]; then
