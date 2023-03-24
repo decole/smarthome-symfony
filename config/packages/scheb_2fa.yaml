@@ -1,0 +1,35 @@
+# See the configuration reference at https://symfony.com/bundles/SchebTwoFactorBundle/6.x/configuration.html
+scheb_two_factor:
+  security_tokens:
+    - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+    - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
+
+#  google:
+#    enabled: true
+#    server_name: Server Name       # Server name used in QR code
+#    issuer: Issuer Name            # Issuer name used in QR code
+#    digits: 6
+#    window: 1
+#    template: security/2fa_form.html.twig
+#    form_renderer: acme.custom_form_renderer  # Use a custom form renderer service
+#
+#  ip_whitelist:
+#    - 127.0.0.1  # One IPv4
+#    - 192.168.0.0/16  # IPv4 subnet
+#    - 172.19.0.0/16  # IPv4 subnet
+
+#  ip_whitelist_provider: acme.custom_ip_whitelist_provider
+
+#  two_factor_token_factory: acme.custom_two_factor_token_factory
+
+#  two_factor_condition: acme.custom_two_factor_condition
+
+#  2fa_login:
+#    path: /2fa
+#    defaults:
+#      # "scheb_two_factor.form_controller" references the controller service provided by the bundle.
+#      # You don't HAVE to use it, but - except you have very special requirements - it is recommended.
+#      _controller: "scheb_two_factor.form_controller:form"
+#
+#  2fa_login_check:
+#    path: /2fa_check

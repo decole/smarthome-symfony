@@ -35,3 +35,7 @@ App\Domain\Identity\Entity\User:
       type: datetime_immutable
       name: restore_token_created_at
       nullable: true
+    googleAuthenticatorSecret:
+      type: string
+      name: google_authenticator_secret
+      nullable: true

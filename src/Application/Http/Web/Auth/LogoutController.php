@@ -2,9 +2,10 @@
 
 namespace App\Application\Http\Web\Auth;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class LogoutController
+final class LogoutController extends AbstractController
 {
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
