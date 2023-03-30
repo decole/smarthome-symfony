@@ -102,6 +102,7 @@ deploy_prod:
       docker-compose exec -T php-fpm php bin/console d:m:m --no-interaction
       docker-compose exec -T php-fpm php bin/console cache:clear
       docker-compose exec -T php-fpm chmod 777 -R ./var
+      docker-compose exec -T php-fpm php bin/console cache:warmup
       make restart
       make ps
       docker-compose exec -T php-fpm chmod 777 -R ./var/cache
