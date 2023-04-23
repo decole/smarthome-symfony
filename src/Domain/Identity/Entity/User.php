@@ -25,7 +25,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
     private ?int $telegramId = null;
     private ?string $restoreToken = null;
     private ?DateTimeImmutable $restoreTokenCreatedAt = null;
-    private ?string $googleAuthenticatorSecret = null;
+    private ?string $googleAuthSecret = null;
 
     public function __construct()
     {
@@ -194,6 +194,11 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
 
     public function getTwoFactorCode(): ?string
     {
-        return 'EUPNCWPCAQKJU33D'; // todo добавить поля и организовать генерацию кода
+        return $this->googleAuthSecret;
+    }
+
+    public function setAuthSecret(?string $googleAuthSecret): void
+    {
+        $this->googleAuthSecret = $googleAuthSecret;
     }
 }

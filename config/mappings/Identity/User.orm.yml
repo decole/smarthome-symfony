@@ -19,23 +19,23 @@ App\Domain\Identity\Entity\User:
       type: string
     isVerified:
       type: boolean
-      name: 'is_verified'
+      column: is_verified
     name:
       type: string
       unique: true
     telegramId:
       type: integer
-      name: telegram_id
+      column: telegram_id
       nullable: true
     restoreToken:
       type: string
-      name: restore_token
+      column: restore_token
       nullable: true
     restoreTokenCreatedAt:
       type: datetime_immutable
-      name: restore_token_created_at
+      column: restore_token_created_at
       nullable: true
-    googleAuthenticatorSecret:
+    googleAuthSecret:
       type: string
-      name: google_authenticator_secret
+      column: google_authenticator_secret
       nullable: true

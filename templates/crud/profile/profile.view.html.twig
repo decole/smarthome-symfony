@@ -45,6 +45,7 @@
                             <label for="telegram_id">Telegram Id</label>
                             <input type="text" class="form-control" id="telegram_id" placeholder="Telegram Id" name="telegram_id" value="{{ user.telegramId }}">
                         </div>
+
                         <h5 class="mt-4 mb-2">{{ 'Password change block'|trans }}</h5>
                         <div class="form-check">
                             <div class="custom-control custom-checkbox">
@@ -59,6 +60,16 @@
                             <label for="password">Password again</label>
                             <input type="password" class="form-control" id="password" placeholder="Password" name="password_agan">
                         </div>
+
+                    {% if twoFactor %}
+                        <h5 class="mt-4 mb-2">{{ 'Two Factor'|trans }}</h5>
+                        {% if user.twoFactorCode is empty %}
+                        <a href="{{ path('profile_update') }}" class="btn btn-dark">{{ 'Настроить второй фактор'|trans }}</a>
+                        {% else %}
+                        <a href="{{ path('profile_update') }}" class="btn btn-dark">{{ 'Изменить второй фактор'|trans }}</a>
+                        {% endif %}
+                    {% endif %}
+
                     </div>
                     <!-- /.card-body -->
 
