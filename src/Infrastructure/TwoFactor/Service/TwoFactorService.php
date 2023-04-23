@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Infrastructure\TwoFactor\Service;
+
+use App\Domain\Identity\Entity\User;
+use App\Infrastructure\TwoFactor\Dto\TwoFactorResultDto;
+use PragmaRX\Google2FA\Google2FA;
+use Symfony\Component\HttpFoundation\Request;
+
+final class TwoFactorService
+{
+    private const NAME = '2fa';
+
+    public function __construct(
+        private readonly bool $isEnable,
+    ) {
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->isEnable;
+    }
+
+    // checking the code from the user and saving the special flag to the session
+    public function checkCode(User $user, ?string $code, Request $request): TwoFactorResultDto
+    {
+        if (empty($code)) {
+            return new TwoFactorResultDto(false, 'Empty code');
+        }
+
+        $google2fa = new Google2FA();
+        $secret = $user->getTwoFactorCode();
+
+        if(!$google2fa->verifyKey($secret, $code)) {
+            return new TwoFactorResultDto(false, 'Not correct code');
+        }
+
+        $request->getSession()->set(self::NAME, md5($user->getTwoFactorCode()));
+
+        return new TwoFactorResultDto(true);
+    }
+
+    // check flag from session
+    public function isConfirm(User $user, Request $request): bool
+    {
+        $key = $request->getSession()->get(self::NAME);
+
+        return !(empty($key) || $key !== md5($user->getTwoFactorCode()));
+    }
+}

@@ -3,7 +3,6 @@
 namespace App\Domain\Identity\Entity;
 
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use League\FactoryMuffin\Faker\Faker;
@@ -11,7 +10,7 @@ use App\Domain\Common\Traits\Entity;
 use DateTimeImmutable;
 use Exception;
 
-final class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface, TwoFactorInterface
+final class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     use Entity;
 
@@ -193,23 +192,8 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
         $this->restoreTokenCreatedAt = null;
     }
 
-    public function isGoogleAuthenticatorEnabled(): bool
+    public function getTwoFactorCode(): ?string
     {
-        return null !== $this->googleAuthenticatorSecret;
-    }
-
-    public function getGoogleAuthenticatorUsername(): string
-    {
-        return $this->email;
-    }
-
-    public function getGoogleAuthenticatorSecret(): ?string
-    {
-        return $this->googleAuthenticatorSecret;
-    }
-
-    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
-    {
-        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+        return 'EUPNCWPCAQKJU33D'; // todo добавить поля и организовать генерацию кода
     }
 }

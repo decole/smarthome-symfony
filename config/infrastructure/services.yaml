@@ -81,3 +81,7 @@ services:
     arguments:
       $webhookUri: '%env(DISCORD_WEBHOOK)%'
       $logger: '@monolog.logger.discord_service'
+
+  App\Infrastructure\TwoFactor\Service\TwoFactorService:
+    arguments:
+      $isEnable: '%env(bool:TWO_FACTOR_AUTH)%'
