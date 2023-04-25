@@ -1,0 +1,73 @@
+{% set page_name = 'Setup profile two factor' %}
+
+
+{% extends "layout/layout.html.twig" %}
+
+{% block title %}{{ page_name|trans }}{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <ha1>{{ page_name|trans }}</ha1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ page_name|trans }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">{{ 'Changing profile information'|trans }}</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="POST" action="{{ path('profile_two_factor_add') }}">
+                    <div class="card-body">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error|trans }}</div>
+                        {% endif %}
+
+                        {% if success %}
+                            <div class="alert alert-success">{{ success|trans }}</div>
+                        {% endif %}
+
+                        {% if twoFactor %}
+                            <h5 class="mt-4 mb-2">{{ 'Two Factor'|trans }}</h5>
+                            {% if user.twoFactorCode is empty and isShowQrCode %}
+                                <img src="data:image/png;base64, {{ qr }}" alt="QR code" class="qr-code-image mb-3">
+
+                                <div class="form-group">
+                                    <label for="QR_code">Code confirm</label>
+                                    <input type="text" class="form-control" id="QR_code" placeholder="123456" name="code" maxlength="6">
+                                </div>
+                            {% else %}
+                                <h2>{{ 'Two factor already configured'|trans }}!</h2>
+                                <a href="{{ path('profile_two_factor_delete') }}" type="submit" class="btn btn-danger">{{ 'Delete'|trans }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <!-- /.card-body -->
+
+                    {% if twoFactor and user.twoFactorCode is empty %}
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class TwoFactorService
 {
     private const NAME = '2fa';
+    private const TEMPORARY_KEY = 'temp_secret';
 
     public function __construct(
         private readonly bool $isEnable,
@@ -28,10 +29,7 @@ final class TwoFactorService
             return new TwoFactorResultDto(false, 'Empty code');
         }
 
-        $google2fa = new Google2FA();
-        $secret = $user->getTwoFactorCode();
-
-        if(!$google2fa->verifyKey($secret, $code)) {
+        if(!$this->validateCode($user->getTwoFactorCode(), $code)) {
             return new TwoFactorResultDto(false, 'Not correct code');
         }
 
@@ -46,5 +44,29 @@ final class TwoFactorService
         $key = $request->getSession()->get(self::NAME);
 
         return !(empty($key) || $key !== md5($user->getTwoFactorCode()));
+    }
+
+    public function validateCode(string $secret, ?string $code): bool
+    {
+        if (empty($code)) {
+            return false;
+        }
+
+        return (new Google2FA())->verifyKey($secret, $code);
+    }
+
+    public function getTemporarySecret(Request $request): string
+    {
+        $secret = $request->getSession()->get(self::TEMPORARY_KEY);
+
+        if (empty($secret)) {
+            $newSecret = (new Google2FA())->generateSecretKey();
+
+            $request->getSession()->set(self::TEMPORARY_KEY, $newSecret);
+
+            $secret = $newSecret;
+        }
+
+        return $secret;
     }
 }

@@ -19,3 +19,8 @@
     opacity: 0.7;
     background: red !important;
 }
+
+.qr-code-image {
+    width: 95%;
+    max-width: 400px;
+}
