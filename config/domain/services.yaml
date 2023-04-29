@@ -33,7 +33,3 @@ services:
     arguments:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'
       $subject: '%env(EMAIL_RESTORE_SUBJECT)%'
-
-  App\Domain\SecureSystem\Service\TwoFactorQrCodeService:
-    arguments:
-      $host: '%env(APP_HOST)%'

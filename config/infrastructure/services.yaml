@@ -85,3 +85,7 @@ services:
   App\Infrastructure\TwoFactor\Service\TwoFactorService:
     arguments:
       $isEnable: '%env(bool:TWO_FACTOR_AUTH)%'
+
+  App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService:
+    arguments:
+      $host: '%env(APP_HOST)%'

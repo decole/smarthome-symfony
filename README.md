@@ -98,3 +98,7 @@ Tests by final classes: https://tomasvotruba.com/blog/2019/03/28/how-to-mock-fin
 Use lib in tests by final classes: https://medium.com/docler-engineering/how-to-make-phpunit-mocking-and-final-classes-cohabit-all-together-ec46c37c3368
 
 Reflection: https://dev.to/daniel_werner/how-to-use-reflection-to-test-private-and-protected-methods-3339
+
+Google 2fa: https://github.com/antonioribeiro/google2fa
+
+QR code gen: https://github.com/antonioribeiro/google2fa-qrcode

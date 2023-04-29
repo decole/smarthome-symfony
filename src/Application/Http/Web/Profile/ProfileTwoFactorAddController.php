@@ -2,13 +2,13 @@
 
 namespace App\Application\Http\Web\Profile;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Domain\SecureSystem\Service\TwoFactorQrCodeService;
-use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use App\Domain\SecureSystem\Service\TwoFactorCrudService;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
+use App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService;
+use App\Infrastructure\TwoFactor\Service\TwoFactorService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
 final class ProfileTwoFactorAddController extends AbstractController

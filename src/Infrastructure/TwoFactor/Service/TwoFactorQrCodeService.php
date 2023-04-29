@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Domain\SecureSystem\Service;
+namespace App\Infrastructure\TwoFactor\Service;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
 use PragmaRX\Google2FA\Google2FA;
-use Symfony\Component\Security\Core\User\UserInterface;
+use BaconQrCode\Writer;
 
 final class TwoFactorQrCodeService
 {
@@ -15,12 +15,6 @@ final class TwoFactorQrCodeService
     {
     }
 
-    /**
-     * https://blog.programster.org/setting-up-google-2FA-on-php
-     * https://medium.com/@richb_/easy-two-factor-authentication-2fa-with-google-authenticator-php-108388a1ea23
-     * https://github.com/antonioribeiro/google2fa-qrcode
-     * https://github.com/antonioribeiro/google2fa
-     */
     public function generateImageSource(UserInterface $user, string $secret): string
     {
         $qrCodeData = (new Google2FA())->getQRCodeUrl(
