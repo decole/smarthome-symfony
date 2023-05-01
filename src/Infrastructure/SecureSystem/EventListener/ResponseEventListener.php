@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Domain\SecureSystem\EventListener;
+namespace App\Infrastructure\SecureSystem\EventListener;
 
-use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Domain\Identity\Entity\User;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Security\Core\Security;
-use Psr\Container\ContainerInterface;
-use App\Domain\Identity\Entity\User;
 
 #[AsEventListener(event: 'kernel.response', priority: 590)]
 class ResponseEventListener

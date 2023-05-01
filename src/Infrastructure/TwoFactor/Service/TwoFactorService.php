@@ -33,9 +33,19 @@ final class TwoFactorService
             return new TwoFactorResultDto(false, 'Not correct code');
         }
 
-        $request->getSession()->set(self::NAME, md5($user->getTwoFactorCode()));
+        $this->setSessionIsVerifiedState($user, $request);
 
         return new TwoFactorResultDto(true);
+    }
+
+    public function setSessionIsVerifiedState(User $user, Request $request): void
+    {
+        $request->getSession()->set(self::NAME, md5($user->getTwoFactorCode()));
+    }
+
+    public function deleteSessionVerifiedState(Request $request): void
+    {
+        $request->getSession()->remove(self::NAME);
     }
 
     // check flag from session

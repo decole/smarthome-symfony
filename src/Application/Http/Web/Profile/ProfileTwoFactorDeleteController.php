@@ -26,7 +26,7 @@ final class ProfileTwoFactorDeleteController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $this->service->delete($user);
+        $this->service->delete($user, $request);
 
         return $this->redirectToRoute('profile_two_factor_add');
     }
