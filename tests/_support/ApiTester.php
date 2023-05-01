@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests;
 
+use App\Domain\Identity\Entity\User;
 use Codeception\Scenario;
 use Faker\Factory;
 use Faker\Generator;
@@ -38,9 +39,22 @@ class ApiTester extends \Codeception\Actor
         static::$faker = Factory::create();
     }
 
-    public function faker()
+    public function faker(): Generator
     {
         return self::$faker;
+    }
+
+    public function getUser(): User
+    {
+        $user = new User();
+        $user->setTelegramId(random_int(10000000, 99999999));
+        $user->setEmail($this->faker()->email());
+        $user->setName($this->faker()->word());
+        $user->setRoles([]);
+        $user->setVerified();
+        $user->setPassword($this->faker()->word());
+
+        return $user;
     }
 
     public function seeResponseIsSuccessful(int $code = 200)
