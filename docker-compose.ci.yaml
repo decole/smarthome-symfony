@@ -48,19 +48,19 @@ services:
     networks:
       - uberserver-microservice
 
-  rabbitmq:
-    image: bitnami/rabbitmq:latest
-    container_name: ci-rabbitmq
-    volumes:
-      - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
-    environment:
-      - "RABBITMQ_DEFAULT_USER=rabbit"
-      - "RABBITMQ_DEFAULT_PASS=rabbit"
-    ports:
-      - "5673:5672"
-      - "15673:15672"
-    networks:
-      - uberserver-microservice
+#  rabbitmq:
+#    image: bitnami/rabbitmq:latest
+#    container_name: ci-rabbitmq
+#    volumes:
+#      - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+#    environment:
+#      - "RABBITMQ_DEFAULT_USER=rabbit"
+#      - "RABBITMQ_DEFAULT_PASS=rabbit"
+#    ports:
+#      - "5673:5672"
+#      - "15673:15672"
+#    networks:
+#      - uberserver-microservice
 
   redis:
     image: redis:6.0

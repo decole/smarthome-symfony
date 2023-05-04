@@ -2,6 +2,12 @@ FROM registry.gitlab.com/decole/uberserver-symfony:base
 
 MAINTAINER decole <decole2014@yandex.ru>
 
+RUN apt update -q -y \
+    && apt upgrade -y \
+    && apt install -q -y --no-install-recommends \
+    sed \
+    && rm -rf /var/lib/apt/lists/*
+
 ARG USER=gitlab-runner
 ARG UID=1000
 
