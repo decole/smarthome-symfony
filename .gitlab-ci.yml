@@ -16,6 +16,7 @@ compose:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
     - cp -n .env.test .env.test.local
     - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
+    - cat .env.test.local
     - docker-compose -f docker-compose.ci.yaml build php-fpm
     - rm .env.test.local -f
     - docker-compose -f docker-compose.ci.yaml up -d
@@ -39,6 +40,7 @@ tests:
     - compose
   script:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
+    - docker-compose -f docker-compose.ci.yaml exec -T cat .env.test.local
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
