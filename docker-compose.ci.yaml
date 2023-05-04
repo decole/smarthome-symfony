@@ -14,7 +14,7 @@ services:
       - "PHP_IDE_CONFIG=serverName=Docker"
     depends_on:
       - postgres
-      - rabbitmq
+#      - rabbitmq
       - redis
     networks:
       - uberserver-microservice
@@ -70,7 +70,7 @@ services:
 
 volumes:
   notify-postgres:
-  notify-rabbitmq:
+#  notify-rabbitmq:
 
 networks:
   uberserver-microservice:
