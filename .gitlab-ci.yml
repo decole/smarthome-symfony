@@ -13,8 +13,11 @@ compose:
   tags:
     - uberserver
   script:
-    - docker-compose -f docker-compose.ci.yaml build php-fpm
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
+    - cp -n .env.test .env.test.local
+    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
+    - docker-compose -f docker-compose.ci.yaml build php-fpm
+    - rm .env.test.local -f
     - docker-compose -f docker-compose.ci.yaml up -d
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
@@ -26,8 +29,7 @@ compose:
       else
         echo 'Dropping build files'
         docker-compose -f docker-compose.ci.yaml down --remove-orphans
-        docker-compose -f docker-compose.ci.yaml rm -s -f -v
-        docker system prune -a
+        docker system prune -a -f
       fi
 
 tests:
@@ -37,8 +39,6 @@ tests:
   dependencies:
     - compose
   script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm cp -n .env.test .env.test.local
-    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
@@ -46,8 +46,7 @@ tests:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run acceptance --xml --html
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept clean
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-    - docker-compose -f docker-compose.ci.yaml rm -s -f -v
-    - docker system prune -a
+    - docker system prune -a -f
 #  artifacts:
 #    when: always
 #    expire_in: 1 week
@@ -63,8 +62,7 @@ tests:
       else
         echo 'Dropping build files'
         docker-compose -f docker-compose.ci.yaml down --remove-orphans
-        docker-compose -f docker-compose.ci.yaml rm -s -f -v
-        docker system prune -a
+        docker system prune -a -f
       fi
 
 clean:
@@ -73,8 +71,7 @@ clean:
     - uberserver
   script:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-    - docker-compose -f docker-compose.ci.yaml rm -s -f -v
-    - docker system prune -a
+    - docker system prune -a -f
   when: manual
 
 deploy_prod:

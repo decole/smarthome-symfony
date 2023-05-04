@@ -1,3 +1,8 @@
+[![pipeline status](https://gitlab.com/decole/uberserver-symfony/badges/master/pipeline.svg)](https://gitlab.com/decole/uberserver-symfony/-/commits/master)
+
+[![Latest Release](https://gitlab.com/decole/uberserver-symfony/-/badges/release.svg)](https://gitlab.com/decole/uberserver-symfony/-/releases)
+
+
 # What it is
 
 > Pet project of a smart home based on ESP8266 and MQTT protocol
