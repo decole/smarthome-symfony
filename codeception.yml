@@ -1,4 +1,5 @@
 namespace: App\Tests
+bootstrap: codeception_bootstrap.php
 paths:
     tests: tests
     output: tests/_output

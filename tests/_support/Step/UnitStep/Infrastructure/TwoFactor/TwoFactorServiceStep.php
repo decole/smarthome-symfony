@@ -7,7 +7,6 @@ use App\Infrastructure\SecureSystem\EventListener\ResponseEventListener;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use App\Tests\UnitTester;
 use Codeception\Stub;
-use phpDocumentor\Reflection\Types\This;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,5 +46,14 @@ final class TwoFactorServiceStep extends UnitTester
             container: $container,
             security: $security
         );
+    }
+
+    public function getRequest(): Request
+    {
+        $request = new Request();
+        $session = $this->grabService(SessionInterface::class);
+        $request->setSession($session);
+
+        return $request;
     }
 }
