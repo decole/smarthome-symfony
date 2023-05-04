@@ -9,12 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class TwoFactorService
 {
-    private const NAME = '2fa';
-    private const TEMPORARY_KEY = 'temp_secret';
+    public const NAME = '2fa';
+    public const TEMPORARY_KEY = 'temp_secret';
 
-    public function __construct(
-        private readonly bool $isEnable,
-    ) {
+    public function __construct(private readonly bool $isEnable)
+    {
     }
 
     public function isEnabled(): bool
