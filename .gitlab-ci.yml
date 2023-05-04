@@ -15,9 +15,9 @@ compose:
   script:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
     - docker-compose -f docker-compose.ci.yaml cp -n .env.test .env.test.local
-    - docker-compose -f docker-compose.ci.yaml sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
-    - docker-compose -f docker-compose.ci.yaml cat .env.test.local
+    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
     - docker-compose -f docker-compose.ci.yaml build php-fpm
+    - rm .env.test.local -f
     - docker-compose -f docker-compose.ci.yaml up -d
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
