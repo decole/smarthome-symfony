@@ -23,6 +23,7 @@ services:
     container_name: ci-postgres
     volumes:
       - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
+      - ./docker/postgres/initialization-db.sql:/docker-entrypoint-initdb.d/initialization-db.sql
     ports:
       - "54333:5432"
     environment:

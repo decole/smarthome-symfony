@@ -15,6 +15,7 @@ compose:
   script:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
     - cp -n .env.test .env.test.local
+    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env
     - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
     - docker-compose -f docker-compose.ci.yaml build php-fpm
     - rm .env.test.local -f

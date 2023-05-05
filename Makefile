@@ -1,16 +1,13 @@
 up:
-	docker-compose up -d --remove-orphans
+	docker-compose up -d
 
 down:
-	docker-compose down
+	docker-compose down --remove-orphans
 
 restart: down up
 
 build:
 	docker-compose build
-
-down-clear:
-	docker-compose down -v --remove-orphans
 
 console-in:
 	docker-compose exec php-fpm bash
