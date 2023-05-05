@@ -13,10 +13,8 @@ services:
       - "PSQL_HOST=postgres"
       - "PHP_IDE_CONFIG=serverName=Docker"
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - postgres
+      - redis
     networks:
       - uberserver-microservice
 
