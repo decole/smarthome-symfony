@@ -13,8 +13,8 @@ services:
       - "PSQL_HOST=postgres"
       - "PHP_IDE_CONFIG=serverName=Docker"
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
     networks:
       - uberserver-microservice
 
@@ -24,6 +24,11 @@ services:
     volumes:
       - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
       - ./docker/postgres/initialization-db.sql:/docker-entrypoint-initdb.d/initialization-db.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "54333:5432"
     environment:

@@ -8,7 +8,7 @@ variables:
   SSH_COMMAND: $SSH_COMMAND
   DB_HOST: $DB_HOST
 
-compose:
+build:
   stage: preparation
   tags:
     - uberserver
@@ -20,8 +20,6 @@ compose:
     - docker-compose -f docker-compose.ci.yaml build php-fpm
     - rm .env.test.local -f
     - docker-compose -f docker-compose.ci.yaml up -d
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
   after_script:
     - >
       if [ $CI_JOB_STATUS == 'success' ]; then
@@ -29,8 +27,19 @@ compose:
       else
         echo 'Dropping build files'
         docker-compose -f docker-compose.ci.yaml down --remove-orphans
-        docker system prune -a -f
+        docker image rm uberserver-symfony_php-fpm
       fi
+
+compose:
+  stage: preparation
+  tags:
+    - uberserver
+  dependencies:
+    - build
+  script:
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
 
 tests:
   stage: testing
@@ -39,22 +48,21 @@ tests:
   dependencies:
     - compose
   script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c --env test
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept build
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-    - docker system prune -a -f
   after_script:
     - >
       if [ $CI_JOB_STATUS == 'success' ]; then
         echo 'Success'
+        docker image rm uberserver-symfony_php-fpm
       else
         echo 'Dropping build files'
         docker-compose -f docker-compose.ci.yaml down --remove-orphans
-        docker system prune -a -f
+        docker image rm uberserver-symfony_php-fpm
       fi
 
 clean:
@@ -71,6 +79,7 @@ deploy_prod:
   tags:
     - uberserver
   script:
+    - docker system prune -a -f
     - df -H /
     - |
       ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
