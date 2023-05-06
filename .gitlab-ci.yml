@@ -43,13 +43,16 @@ compose:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 week
   cache:
     key:
       files:
         - composer.lock
     paths:
-      - vendor
-    expire_in: 1 week
+      - vendor/
     policy: pull-push
 #  cache:
 #    - key:
