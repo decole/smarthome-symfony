@@ -2,6 +2,7 @@ stages:
   - manual-clean
   - build
   - compose
+  - lint
   - testing
   - deploy
 
@@ -43,13 +44,26 @@ compose:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
   cache:
-    - key:
-        files:
-          - composer.lock
-      paths:
-        - vendor/
-      expire_in: 31d
-      policy: pull-push
+    key:
+      files:
+        - composer.lock
+    paths:
+      - vendor
+    expire_in: 1 week
+    policy: pull-push
+#  cache:
+#    - key:
+#        files:
+#          - composer.lock
+#      paths:
+#        - vendor/
+#      expire_in: 31d
+#      policy: pull-push
+
+#psalm:
+#  stage: lint
+#  script:
+#    - php /var/www/vendor/bin/psalm --no-cache --output-format=phpstorm
 
 tests:
   stage: testing
