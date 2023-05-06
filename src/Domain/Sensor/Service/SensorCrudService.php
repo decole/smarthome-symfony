@@ -184,7 +184,7 @@ final class SensorCrudService
      * Дополнительные уникальные поля разных типов сенсоров
      *
      * @param CrudSensorDto $dto
-     * @return array
+     * @return array<array-key, mixed>
      */
     private function getAdvancedFields(ValidationDtoInterface $dto): array
     {
@@ -201,7 +201,7 @@ final class SensorCrudService
                 $dto->payloadHigh,
                 $dto->payloadLow,
             ],
-            default => AdvancedFieldsException::deviceTypeNotFound($dto->type),
+            default => throw AdvancedFieldsException::deviceTypeNotFound($dto->type),
         };
     }
 }

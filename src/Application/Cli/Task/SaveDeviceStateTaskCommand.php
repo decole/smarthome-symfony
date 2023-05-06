@@ -2,26 +2,26 @@
 
 namespace App\Application\Cli\Task;
 
-use App\Application\Exception\SaveDeviceStateException;
-use App\Domain\Common\Transactions\TransactionInterface;
-use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
-use App\Domain\Contract\Repository\RelayRepositoryInterface;
-use App\Domain\Contract\Repository\SecurityRepositoryInterface;
-use App\Domain\Contract\Repository\SensorRepositoryInterface;
-use App\Domain\DeviceData\Service\DeviceCacheService;
+use App\Domain\Contract\Repository\FireSecurityRepositoryInterface as FireSecurityRepoAlias;
+use App\Domain\Contract\Repository\SecurityRepositoryInterface as SecurityRepoAlias;
+use App\Domain\Contract\Repository\SensorRepositoryInterface as SensorRepoAlias;
+use App\Domain\Contract\Repository\RelayRepositoryInterface as RelayRepoAlias;
 use App\Domain\DeviceData\Service\DeviceDataCacheService;
-use App\Domain\Event\AlertNotificationEvent;
-use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Domain\Relay\Entity\Relay;
-use App\Domain\Security\Entity\Security;
-use App\Domain\Sensor\Entity\Sensor;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
-use Psr\Cache\InvalidArgumentException;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
+use App\Domain\Common\Transactions\TransactionInterface;
+use App\Application\Exception\SaveDeviceStateException;
+use App\Domain\DeviceData\Service\DeviceCacheService;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use App\Domain\FireSecurity\Entity\FireSecurity;
+use Symfony\Component\Console\Command\Command;
+use App\Domain\Event\AlertNotificationEvent;
+use App\Domain\Security\Entity\Security;
+use Psr\Cache\InvalidArgumentException;
+use App\Domain\Sensor\Entity\Sensor;
+use App\Domain\Relay\Entity\Relay;
+use Throwable;
 
 /**
  * Периодически сохраняет данные датчиков в базу данных.
@@ -37,10 +37,10 @@ class SaveDeviceStateTaskCommand extends Command
     public function __construct(
         private readonly DeviceDataCacheService $service,
         private readonly DeviceCacheService $cacheService,
-        private readonly SensorRepositoryInterface $sensorRepository,
-        private readonly RelayRepositoryInterface $relayRepository,
-        private readonly SecurityRepositoryInterface $securityRepository,
-        private readonly FireSecurityRepositoryInterface $fireSecurityRepository,
+        private readonly SensorRepoAlias $sensorRepository,
+        private readonly RelayRepoAlias $relayRepository,
+        private readonly SecurityRepoAlias $securityRepository,
+        private readonly FireSecurityRepoAlias $fireSecurityRepository,
         private readonly TransactionInterface $transaction,
         private readonly EventDispatcherInterface $eventDispatcher
     ) {
@@ -120,8 +120,11 @@ class SaveDeviceStateTaskCommand extends Command
         $this->setTransaction($repository, $deviceId, $payload);
     }
 
-    private function setTransaction(BaseDoctrineRepository $repository, string $id, mixed $payload): void
-    {
+    private function setTransaction(
+        SensorRepoAlias|RelayRepoAlias|SecurityRepoAlias|FireSecurityRepoAlias $repository,
+        string $id,
+        mixed $payload
+    ): void {
         $this->transaction->transactional(
             function () use ($repository, $id, $payload) {
                 $entity = $repository->findById($id);

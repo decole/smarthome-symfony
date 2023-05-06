@@ -22,13 +22,15 @@ class MqttListenConsumer implements ConsumerInterface
     ) {
     }
 
-    public function execute(AMQPMessage $msg)
+    public function execute(AMQPMessage $msg): bool|int
     {
         try {
             /** @var DevicePayload $mqttMessageInput */
             $payload = $this->getDto($msg);
 
             $this->resolver->resolveDevicePayload($payload);
+
+            return self::MSG_ACK;
         } catch (Throwable $exception) {
             $text = 'Ошибка в распознавании данных из брокера сообщений';
             $this->logger->info($text, [
@@ -37,6 +39,8 @@ class MqttListenConsumer implements ConsumerInterface
 
             $event = new AlertNotificationEvent($text, [AlertNotificationEvent::MESSENGER]);
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
+
+            return self::MSG_REJECT;
         }
     }
 

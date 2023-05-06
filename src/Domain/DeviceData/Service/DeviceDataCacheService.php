@@ -56,7 +56,7 @@ final class DeviceDataCacheService
     }
 
     /**
-     * @param list<string, array<string, mixed>> $map
+     * @param array<string, mixed> $map
      * @return array
      */
     public function clearOldPayload(array $map): array
@@ -71,7 +71,7 @@ final class DeviceDataCacheService
     }
 
     /**
-     * @return list<string, array<string, mixed>>
+     * @return array<string, mixed>
      * @throws InvalidArgumentException
      */
     public function getList(): array

@@ -39,7 +39,7 @@ final class VisualNotificationService
      * twig global var service. See /config/packages/twig.yaml
      * Визуальные нотификации - общие нотификации. Не будет филдьтров по пользователю.
      * Данные кэшируются
-     * @return array<string, string|array<string, string>>
+     * @return array<string, mixed>
      */
     public function notifications(): array
     {

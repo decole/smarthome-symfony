@@ -14,7 +14,7 @@ abstract class AbstractCrudFactory
 {
     protected CacheServiceInterface $cacheService;
 
-    abstract public function getRepository(): BaseDoctrineRepository;
+    abstract public function getRepository();
 
     abstract public function getValidationService(): ValidationInterface;
 

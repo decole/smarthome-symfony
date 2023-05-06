@@ -16,10 +16,7 @@ final class SecurityCriteria extends AbstractCriteria
             $this->sendByVisualNotify();
             $this->sendByMessengers();
 
-            $this->eventDispatcher->dispatch(
-                event: new MqttSecurityAlertEvent($device, $this->payload),
-                eventName: MqttSecurityAlertEvent::NAME
-            );
+            $this->eventDispatcher->dispatch(event: new MqttSecurityAlertEvent($device, $this->payload));
         }
     }
 

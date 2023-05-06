@@ -99,11 +99,11 @@ final class PageCrudService
             return $dto;
         }
 
-        $dto->name = $request->request->get(self::NAME_ALIAS);
+        $dto->name = (string)$request->request->get(self::NAME_ALIAS);
         $dto->config = $this->getConfigByRequest($request);
-        $dto->alias = $request->request->get(self::ALIAS_FIELD_ALIAS);
-        $dto->icon = $request->request->get(self::ICON_ALIAS);
-        $dto->groupId = $request->request->get(self::GROUP_ALIAS);
+        $dto->alias = (string)$request->request->get(self::ALIAS_FIELD_ALIAS);
+        $dto->icon = (string)$request->request->get(self::ICON_ALIAS);
+        $dto->groupId = (int)$request->request->get(self::GROUP_ALIAS);
 
         return $dto;
     }
@@ -181,11 +181,7 @@ final class PageCrudService
     public function getSanitizeRequest(?Request $request, string $name): array
     {
         $result = [];
-        $list = $request?->request->get($name);
-
-        if ($list === null) {
-            return $result;
-        }
+        $list = $request?->request->get($name) ?? [];
 
         foreach ($list as $id) {
             $result[] = StringHelper::sanitize($id);
