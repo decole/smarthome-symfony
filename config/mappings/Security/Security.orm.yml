@@ -8,7 +8,6 @@ App\Domain\Security\Entity\Security:
     securityType:
       name: security_type
       type: string
-      nullable: false
     name:
       type: string
       unique: true

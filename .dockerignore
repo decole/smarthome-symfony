@@ -1,0 +1,13 @@
+/var/cache/*
+/var/log/*
+/vendor
+/docker
+Makefile
+.docker.env
+docker-compose.ci.yaml
+docker-compose.yaml
+
+.idea
+*.iml
+out
+gen

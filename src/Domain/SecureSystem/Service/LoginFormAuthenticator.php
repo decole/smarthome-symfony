@@ -3,6 +3,10 @@
 namespace App\Domain\SecureSystem\Service;
 
 use App\Domain\Contract\Repository\PageRepositoryInterface;
+use App\Domain\Identity\Repository\UserRepositoryInterface;
+use App\Domain\SecureSystem\Passport\TwoFactorBadge;
+use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
+use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +25,13 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
+    public const TWO_FACTOR_ROUTE = '2fa';
 
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly PageRepositoryInterface $repository
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly PageRepositoryInterface $repository,
+        private readonly TwoFactorService $twoFactorService
     ) {
     }
 
@@ -34,17 +41,27 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
+        $badgeList = [
+            new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token'))
+        ];
+
         return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-            ]
+            userBadge: new UserBadge($email),
+            credentials: new PasswordCredentials($request->request->get('password', '')),
+            badges: $badgeList
         );
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        if ($token->getUser() && $this->twoFactorService->isEnabled()) {
+            $user = $this->userRepository->findOneByEmail($token->getUser()->getUserIdentifier());
+
+            if ($user !== null && $user->getTwoFactorCode() !== null) {
+                return new RedirectResponse(self::TWO_FACTOR_ROUTE);
+            }
+        }
+
         return new RedirectResponse($this->generateStarterUri());
     }
 

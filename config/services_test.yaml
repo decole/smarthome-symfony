@@ -10,3 +10,6 @@ services:
 
   mqtt_client:
     class: App\Tests\Stub\Infrastructure\StubMqttClient
+
+  App\Infrastructure\SecureSystem\EventListener\ResponseEventListener:
+    public: true

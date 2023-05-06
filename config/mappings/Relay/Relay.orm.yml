@@ -42,7 +42,6 @@ App\Domain\Relay\Entity\Relay:
       nullable: true
     type:
       type: string
-      nullable: false
     status:
       type: smallint
     notify:

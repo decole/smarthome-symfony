@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests;
 
+use App\Domain\Identity\Entity\User;
 use Codeception\Scenario;
 use Faker\Generator;
 use Faker\Factory;
@@ -27,10 +28,6 @@ class UnitTester extends \Codeception\Actor
     /** @var Generator */
     static $faker;
 
-    /**
-    * Define custom actions here
-    */
-
     public function __construct(Scenario $scenario)
     {
         parent::__construct($scenario);
@@ -38,8 +35,21 @@ class UnitTester extends \Codeception\Actor
         static::$faker = Factory::create();
     }
 
-    public function faker()
+    public function faker(): Generator
     {
         return self::$faker;
+    }
+
+    public function getUser(): User
+    {
+        $user = new User();
+        $user->setTelegramId(random_int(10000000, 99999999));
+        $user->setEmail($this->faker()->email());
+        $user->setName($this->faker()->word());
+        $user->setRoles([]);
+        $user->setVerified();
+        $user->setPassword($this->faker()->word());
+
+        return $user;
     }
 }

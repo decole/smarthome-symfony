@@ -20,7 +20,7 @@ final class RestoreMyPasswordController extends AbstractController
         if ($token = $request->get('token')) {
             [$error, $status] = $this->service->restoreByToken($token);
         }
-        // todo translation by text
+
         return $this->render('login/restore.html.twig', [
             'isEnableRegistration' => $this->getParameter('app.registration'),
             'host' => $this->getParameter('app.host'),

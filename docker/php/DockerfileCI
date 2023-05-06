@@ -5,6 +5,8 @@ MAINTAINER decole <decole2014@yandex.ru>
 ARG USER=gitlab-runner
 ARG UID=1000
 
+COPY ./ /var/www
+
 RUN useradd -G www-data,root -u ${UID} -d /home/${USER} ${USER}  \
     && mkdir -p /home/${USER}  \
     && chown -R ${USER}:${USER} /var/www

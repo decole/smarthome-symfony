@@ -2,42 +2,34 @@
 
 namespace App\Domain\Identity\Entity;
 
-use App\Domain\Common\Traits\Entity;
-use App\Domain\Contract\Repository\EntityInterface;
-use DateTimeImmutable;
-use Exception;
-use League\FactoryMuffin\Faker\Faker;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Domain\Contract\Repository\EntityInterface;
+use League\FactoryMuffin\Faker\Faker;
+use App\Domain\Common\Traits\Entity;
+use DateTimeImmutable;
+use Exception;
 
 final class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     use Entity;
 
     private const EXPIRED_SECONDS = 3600;
-
     public const ROLE_USER = 'ROLE_USER';
 
     private string $name;
-
-    private $email;
-
-    private $roles = [];
-
-    private $password;
-
-    private bool $isVerified;
-
+    private ?string $email;
+    private array $roles = [];
+    private string $password;
+    private bool $isVerified = false;
     private ?int $telegramId = null;
-
     private ?string $restoreToken = null;
-
     private ?DateTimeImmutable $restoreTokenCreatedAt = null;
+    private ?string $googleAuthSecret = null;
 
     public function __construct()
     {
         $this->identify();
-        $this->isVerified = false;
     }
 
     public function getLogin(): string
@@ -198,5 +190,15 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
     {
         $this->restoreToken = null;
         $this->restoreTokenCreatedAt = null;
+    }
+
+    public function getTwoFactorCode(): ?string
+    {
+        return $this->googleAuthSecret;
+    }
+
+    public function setAuthSecret(?string $googleAuthSecret): void
+    {
+        $this->googleAuthSecret = $googleAuthSecret;
     }
 }

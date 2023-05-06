@@ -24,9 +24,13 @@ RUN apt update -q -y \
     zip \
     psmisc \
     librabbitmq-dev \
-    libssh-dev
-
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    libssh-dev \
+    libmagickwand-dev \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install xml \
+    && docker-php-ext-enable xml \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pgsql pdo_pgsql \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install zip \
@@ -34,14 +38,16 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-install sockets \
     && pecl install amqp \
-    && docker-php-ext-enable amqp
+    && docker-php-ext-enable amqp \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY docker/php/php-fpm.ini /usr/local/etc/php/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN pear install PHP_CodeSniffer
 
-RUN apt install libmosquitto-dev gcc -y \
+RUN apt update -q -y \
+    && apt install libmosquitto-dev gcc -y \
     && cd /tmp \
     && git clone https://github.com/nismoryco/Mosquitto-PHP.git \
     && cd Mosquitto-PHP/ \
@@ -50,7 +56,7 @@ RUN apt install libmosquitto-dev gcc -y \
     && make \
     && make install
 
-RUN echo -e "\n\n====================== Remove unised ======================\n" \
+RUN echo -e "\n\n====================== Remove unused ======================\n" \
     && apt autoremove gcc -y \
     && apt clean all \
     && rm -rvf /var/lib/apt/lists/* /tmp/* /var/tmp/* \

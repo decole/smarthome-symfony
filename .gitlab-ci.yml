@@ -1,6 +1,8 @@
 stages:
   - manual-clean
-  - preparation
+  - build
+  - compose
+  - lint
   - testing
   - deploy
 
@@ -8,58 +10,86 @@ variables:
   SSH_COMMAND: $SSH_COMMAND
   DB_HOST: $DB_HOST
 
-composer:
-  stage: preparation
+build:
+  stage: build
   tags:
     - uberserver
   script:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-    - docker-compose -f docker-compose.ci.yaml pull
+    - cp -n .env.test .env.test.local
+    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env
+    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
+    - docker-compose -f docker-compose.ci.yaml build php-fpm
+    - rm .env.test.local -f
     - docker-compose -f docker-compose.ci.yaml up -d
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
   after_script:
     - >
       if [ $CI_JOB_STATUS == 'success' ]; then
         echo 'Success'
       else
-        echo 'Droping files'
-        docker-compose -f docker-compose.ci.yaml run -T php-fpm chmod 777 -R ./
-        docker-compose -f docker-compose.ci.yaml run -T php-fpm rm -rf ./var ./vendor .env.test.local
+        echo 'Dropping build files'
+        docker-compose -f docker-compose.ci.yaml down --remove-orphans
+        docker image rm uberserver-symfony_php-fpm
       fi
+
+compose:
+  stage: compose
+  interruptible: true
+  tags:
+    - uberserver
+  dependencies:
+    - build
+  script:
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 week
+  cache:
+    key:
+      files:
+        - composer.lock
+    paths:
+      - vendor/
+    policy: pull-push
+#  cache:
+#    - key:
+#        files:
+#          - composer.lock
+#      paths:
+#        - vendor/
+#      expire_in: 31d
+#      policy: pull-push
+
+#psalm:
+#  stage: lint
+#  script:
+#    - php /var/www/vendor/bin/psalm --no-cache --output-format=phpstorm
 
 tests:
   stage: testing
   tags:
     - uberserver
   dependencies:
-    - composer
+    - compose
   script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm cp -n .env.test .env.test.local
-    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force --env test
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c --env test
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --no-interaction
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept build
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept clean
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
   after_script:
     - >
       if [ $CI_JOB_STATUS == 'success' ]; then
         echo 'Success'
+        docker image rm uberserver-symfony_php-fpm
       else
-        echo 'Droping build files'
-        docker-compose -f docker-compose.ci.yaml run -T php-fpm chmod 777 -R ./
-        docker-compose -f docker-compose.ci.yaml run -T php-fpm rm -rf ./var ./vendor .env.test.local
+        echo 'Dropping build files'
         docker-compose -f docker-compose.ci.yaml down --remove-orphans
+        docker image rm uberserver-symfony_php-fpm
       fi
 
 clean:
@@ -67,11 +97,8 @@ clean:
   tags:
     - uberserver
   script:
-    - docker-compose -f docker-compose.ci.yaml down
-    - docker-compose -f docker-compose.ci.yaml up -d
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf ./var ./vendor
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm rm -rf .env.test.local
+    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
+    - docker system prune -a -f
   when: manual
 
 deploy_prod:
@@ -79,6 +106,7 @@ deploy_prod:
   tags:
     - uberserver
   script:
+    - docker system prune -a -f
     - df -H /
     - |
       ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
@@ -94,6 +122,7 @@ deploy_prod:
       docker-compose exec -T php-fpm php bin/console d:m:m --no-interaction
       docker-compose exec -T php-fpm php bin/console cache:clear
       docker-compose exec -T php-fpm chmod 777 -R ./var
+      docker-compose exec -T php-fpm php bin/console cache:warmup
       make restart
       make ps
       docker-compose exec -T php-fpm chmod 777 -R ./var/cache
