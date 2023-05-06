@@ -1,6 +1,7 @@
 stages:
   - manual-clean
-  - preparation
+  - build
+  - compose
   - testing
   - deploy
 
@@ -9,7 +10,7 @@ variables:
   DB_HOST: $DB_HOST
 
 build:
-  stage: preparation
+  stage: build
   tags:
     - uberserver
   script:
@@ -31,7 +32,8 @@ build:
       fi
 
 compose:
-  stage: preparation
+  stage: compose
+  interruptible: true
   tags:
     - uberserver
   dependencies:
@@ -40,6 +42,14 @@ compose:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
+  cache:
+    - key:
+        files:
+          - composer.lock
+      paths:
+        - vendor/
+      expire_in: 31d
+      policy: pull-push
 
 tests:
   stage: testing
@@ -48,9 +58,9 @@ tests:
   dependencies:
     - compose
   script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force --env test
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c --env test
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --env test --no-interaction
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --no-interaction
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept build
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans

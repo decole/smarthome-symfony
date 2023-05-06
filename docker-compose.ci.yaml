@@ -23,26 +23,18 @@ services:
     container_name: ci-postgres
     volumes:
       - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
-      - ./docker/postgres/initialization-db.sql:/docker-entrypoint-initdb.d/initialization-db.sql
     ports:
       - "54333:5432"
     environment:
       - "POSTGRES_DB=test"
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
     networks:
       - uberserver-microservice
 
   redis:
     image: redis:6.0
     container_name: ci-redis
-#    healthcheck:
-#      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     networks:
       - uberserver-microservice
 
