@@ -1,8 +1,8 @@
 stages:
   - manual-clean
+  - lint
   - build
   - compose
-  - lint
   - testing
   - deploy
 
@@ -44,11 +44,6 @@ compose:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
 
-psalm:
-  stage: lint
-  script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php /var/www/vendor/bin/psalm --no-cache --output-format=phpstorm
-
 tests:
   stage: testing
   tags:
@@ -80,6 +75,12 @@ clean:
   script:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
     - docker system prune -a -f
+  when: manual
+
+psalm:
+  stage: lint
+  script:
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php /var/www/vendor/bin/psalm --no-cache --output-format=phpstorm
   when: manual
 
 deploy_prod:
