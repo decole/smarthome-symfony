@@ -50,6 +50,10 @@ services:
 
   App\Infrastructure\Security\Auth\Service\CsrfService: ~
 
+  App\Infrastructure\Security\Api\ApiSecureService:
+    arguments:
+      $targetToken: '%env(API_BASIC_TOKEN)%'
+
   App\Infrastructure\Security\Register\Service\SignUpService:
     arguments:
       $email: '%env(EMAIL_REGISTRATION_EMAIL)%'

@@ -5,6 +5,7 @@ twig:
         pages: '@App\Domain\Page\Service\TwigPageService'
         appName: '%env(APP_HOST)%'
         twoFactor: '%env(TWO_FACTOR_AUTH)%'
+        apiSecureToken: '%env(API_BASIC_TOKEN)%'
 when@test:
     twig:
         strict_variables: true

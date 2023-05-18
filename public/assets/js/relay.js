@@ -3,9 +3,10 @@ $(document).ready(function() {
     $(".relay-control[data-swift-topic] > button").click(function () {
         let $this = $(this);
         let topic = $this.parent().data('swift-topic');
+        let token = $this.parent().data('token');
         let obj = $this.parent();
 
-        $.post( "/api/device/send", { topic: topic, payload: $this.val() })
+        $.post( "/api/device/send", { topic: topic, payload: $this.val(), token: token })
             .fail(function() { alert( "error posting to swift" ) })
             .done(function( data ) { console.log( data ); });
 
