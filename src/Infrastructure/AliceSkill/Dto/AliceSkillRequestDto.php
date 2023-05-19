@@ -4,7 +4,7 @@ namespace App\Infrastructure\AliceSkill\Dto;
 
 class AliceSkillRequestDto
 {
-    private int $messageId;
+    private string $messageId;
 
     private string $sessionId;
 
@@ -30,7 +30,7 @@ class AliceSkillRequestDto
 
     public function __construct(?array $request)
     {
-        $this->messageId = $request['session']['message_id'] ?? 0;
+        $this->messageId = $request['session']['message_id'] ?? '';
         $this->sessionId = $request['session']['session_id'] ?? '';
         $this->skillId = $request['session']['skill_id'] ?? '';
         $this->userId = $request['session']['user']['user_id'] ?? '';
@@ -46,7 +46,7 @@ class AliceSkillRequestDto
         $this->version = $request['version'] ?? '1.0';
     }
 
-    public function getMessageId(): int
+    public function getMessageId(): string
     {
         return $this->messageId;
     }

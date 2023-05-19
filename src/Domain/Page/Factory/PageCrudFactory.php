@@ -19,7 +19,7 @@ final class PageCrudFactory extends AbstractCrudFactory
         $this->cacheService = $cacheService;
     }
 
-    public function getRepository(): BaseDoctrineRepository
+    public function getRepository(): PageRepositoryInterface
     {
         return $this->repository;
     }

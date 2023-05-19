@@ -19,7 +19,7 @@ final class ProfileCrudFactory extends AbstractCrudFactory
         $this->cacheService = $cacheService;
     }
 
-    public function getRepository(): BaseDoctrineRepository
+    public function getRepository(): ProfileRepositoryInterface
     {
         return $this->repository;
     }

@@ -20,9 +20,9 @@ final class DateTimeImmutableMicroType extends Type
     }
 
     /**
+     * @psalm-suppress InvalidReturnType
      * @param mixed $value
-     * @param AbstractPlatform $platform
-     * @return bool|DateTimeImmutable|null
+     * @return bool|DatetimeImmutableType|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): bool|null|DateTimeImmutable
     {
@@ -36,6 +36,7 @@ final class DateTimeImmutableMicroType extends Type
             $value .= '.000000';
         }
 
+        /** @psalm-suppress InvalidReturnStatement */
         return DateTimeImmutable::createFromFormat($this->formatString(), $value, new DateTimeZone('UTC'));
     }
 

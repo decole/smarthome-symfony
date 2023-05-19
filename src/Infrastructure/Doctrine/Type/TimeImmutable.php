@@ -7,9 +7,8 @@ namespace App\Infrastructure\Doctrine\Type;
 use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\TimeImmutableType;
 
-final class TimeImmutable extends TimeImmutableType
+final class TimeImmutable extends \Doctrine\DBAL\Types\DateTimeImmutableType
 {
     public function getName(): string
     {
@@ -22,6 +21,7 @@ final class TimeImmutable extends TimeImmutableType
             return null;
         }
 
+        /** @psalm-suppress InvalidClass */
         if ($value instanceof \DatetimeImmutable) {
             return $this->convertDateTimeToUTC($value)->format($platform->getTimeFormatString());
         }
@@ -59,8 +59,6 @@ final class TimeImmutable extends TimeImmutableType
     /**
      * Конвертирует дату и время в utc
      *
-     * @param \DateTimeImmutable $dateTime
-     * @return \DateTimeImmutable
      * @throws \Exception
      */
     private function convertDateTimeToUTC(\DateTimeImmutable $dateTime): \DateTimeImmutable

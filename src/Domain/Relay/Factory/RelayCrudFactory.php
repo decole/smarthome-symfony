@@ -19,7 +19,7 @@ final class RelayCrudFactory extends AbstractCrudFactory
         $this->cacheService = $cacheService;
     }
 
-    public function getRepository(): BaseDoctrineRepository
+    public function getRepository(): RelayRepositoryInterface
     {
         return $this->repository;
     }
