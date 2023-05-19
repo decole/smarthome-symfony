@@ -1,8 +1,8 @@
 stages:
   - manual-clean
+  - lint
   - build
   - compose
-  - lint
   - testing
   - deploy
 
@@ -43,30 +43,6 @@ compose:
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
     - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
-  artifacts:
-    paths:
-      - vendor/
-    expire_in: 1 week
-  cache:
-    key:
-      files:
-        - composer.lock
-    paths:
-      - vendor/
-    policy: pull-push
-#  cache:
-#    - key:
-#        files:
-#          - composer.lock
-#      paths:
-#        - vendor/
-#      expire_in: 31d
-#      policy: pull-push
-
-#psalm:
-#  stage: lint
-#  script:
-#    - php /var/www/vendor/bin/psalm --no-cache --output-format=phpstorm
 
 tests:
   stage: testing
@@ -101,12 +77,17 @@ clean:
     - docker system prune -a -f
   when: manual
 
+psalm:
+  stage: lint
+  script:
+    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php /var/www/vendor/bin/psalm --no-cache --output-format=phpstorm
+  when: manual
+
 deploy_prod:
   stage: deploy
   tags:
     - uberserver
   script:
-    - docker system prune -a -f
     - df -H /
     - |
       ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
@@ -118,11 +99,11 @@ deploy_prod:
       git pull
       df -H /
       make pull
-      docker-compose exec -T php-fpm composer install --no-dev --optimize-autoloader
-      docker-compose exec -T php-fpm php bin/console d:m:m --no-interaction
-      docker-compose exec -T php-fpm php bin/console cache:clear
-      docker-compose exec -T php-fpm chmod 777 -R ./var
-      docker-compose exec -T php-fpm php bin/console cache:warmup
+      make down
+      docker-compose run -T php-fpm php bin/console d:m:m --no-interaction 
+      docker-compose run -T php-fpm composer install --no-dev --optimize-autoloader
+      docker-compose run -T php-fpm chmod 777 -R ./var
+      docker-compose run -T php-fpm php bin/console cache:warmup
       make restart
       make ps
       docker-compose exec -T php-fpm chmod 777 -R ./var/cache

@@ -4,11 +4,18 @@ namespace App\Domain\Contract\Repository;
 
 use App\Domain\PLC\Entity\PLC;
 
+/**
+ * Contract for a Doctrine persistence layer ObjectRepository class to implement.
+ *
+ * @template-covariant T of object
+ */
 interface PlcRepositoryInterface
 {
     /**
-     * @param int|null $status
-     * @return list<PLC>
+     * Finds all objects in the repository.
+     *
+     * @return array<int, object> The objects.
+     * @psalm-return T[]
      */
     public function findAll(?int $status = null): array;
 

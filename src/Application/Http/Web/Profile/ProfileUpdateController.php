@@ -38,9 +38,9 @@ final class ProfileUpdateController extends AbstractController
 
             if (count($errors) === 0) {
                 $this->crud->update($user, $dto);
-
-                return $this->redirectToRoute('profile_view');
             }
         }
+
+        return $this->redirectToRoute('profile_view');
     }
 }

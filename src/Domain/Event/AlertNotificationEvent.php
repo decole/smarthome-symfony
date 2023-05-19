@@ -12,6 +12,9 @@ final class AlertNotificationEvent extends Event
     public const DISCORD = 'discord';
     public const ALICE = 'alice';
 
+    /**
+     * @param list<string> $types
+     */
     public function __construct(private readonly string $message, private readonly array $types)
     {
     }
@@ -21,6 +24,9 @@ final class AlertNotificationEvent extends Event
         return $this->message;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getTypes(): array
     {
         return $this->types;

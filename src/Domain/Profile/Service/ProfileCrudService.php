@@ -63,10 +63,15 @@ final class ProfileCrudService
         $dto = new CrudProfileDto();
 
         $dto->login = $login;
-        $dto->email = $request->request->get(self::EMAIL_ALIAS);
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        $dto->email = (string)$request->request->get(self::EMAIL_ALIAS);
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->telegramId = $request->request->get(self::TELEGRAM_ALIAS);
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->isChangePassword = $request->request->get(self::IS_CHANGE_PASSWORD_ALIAS);
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->password = $request->request->get(self::PASSWORD_ALIAS);
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->passwordAgan = $request->request->get(self::PASSWORD_AGAN_ALIAS);
 
         return $dto;

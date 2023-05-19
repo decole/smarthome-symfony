@@ -19,7 +19,7 @@ final class SecurityCrudFactory extends AbstractCrudFactory
         $this->cacheService = $cacheService;
     }
 
-    public function getRepository(): BaseDoctrineRepository
+    public function getRepository(): SecurityRepositoryInterface
     {
         return $this->repository;
     }

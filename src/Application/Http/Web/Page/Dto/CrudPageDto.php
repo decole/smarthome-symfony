@@ -21,7 +21,7 @@ class CrudPageDto implements ValidationDtoInterface
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    public string $groupId;
+    public int $groupId;
 
     #[Assert\NotBlank]
     #[Assert\NotNull]

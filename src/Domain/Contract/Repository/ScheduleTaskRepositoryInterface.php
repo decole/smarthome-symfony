@@ -12,7 +12,9 @@ interface ScheduleTaskRepositoryInterface
     public function findAllActive(): array;
 
     /**
-     * @return ScheduleTask[]
+     * Contract for a Doctrine persistence layer ObjectRepository class to implement.
+     *
+     * @template-covariant T of object
      */
     public function findAll(): array;
 }

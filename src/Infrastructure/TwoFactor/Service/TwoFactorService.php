@@ -55,7 +55,7 @@ final class TwoFactorService
         return !(empty($key) || $key !== md5($user->getTwoFactorCode()));
     }
 
-    public function validateCode(string $secret, ?string $code): bool
+    public function validateCode(string $secret, ?string $code): bool|int
     {
         if (empty($code)) {
             return false;

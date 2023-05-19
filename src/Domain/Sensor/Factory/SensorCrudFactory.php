@@ -19,7 +19,7 @@ final class SensorCrudFactory extends AbstractCrudFactory
         $this->cacheService = $cacheService;
     }
 
-    final public function getRepository(): BaseDoctrineRepository
+    final public function getRepository(): SensorRepositoryInterface
     {
         return $this->repository;
     }

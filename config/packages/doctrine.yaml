@@ -11,7 +11,7 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         types:
             uuid: Ramsey\Uuid\Doctrine\UuidType
-            datetime_immutable: App\Infrastructure\Doctrine\Type\DatetimeImmutable
+            datetime_immutable: App\Infrastructure\Doctrine\Type\DatetimeImmutableType
             time_immutable: App\Infrastructure\Doctrine\Type\TimeImmutable
             datetime_immutable_microseconds: App\Infrastructure\Doctrine\Type\DateTimeImmutableMicroType
             datetime_microseconds: App\Infrastructure\Doctrine\Type\DateTimeMicroType

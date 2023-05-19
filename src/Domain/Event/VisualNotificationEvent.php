@@ -11,7 +11,7 @@ use App\Domain\Sensor\Entity\Sensor;
 use App\Domain\VisualNotification\Entity\VisualNotification;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class VisualNotificationEvent extends Event
+final class VisualNotificationEvent extends Event
 {
     public const NAME = 'notification.visual.send';
 
@@ -26,10 +26,8 @@ class VisualNotificationEvent extends Event
 
     /**
      * Определяет тип визуальной нотификации по типу датчика
-     *
-     * @return string
      */
-    public function getNotifyType(): string
+    public function getNotifyType(): int
     {
         return match ($this->device::alias()) {
             Sensor::alias(),
