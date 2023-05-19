@@ -12,9 +12,9 @@
             {% if device.type == 'sensor' %}
                 {% include 'common/sensor.html.twig' with {'device': device.entity} only %}
             {% elseif device.type == 'relay' %}
-                {% include 'common/relay.html.twig' with {'device': device.entity} only %}
+                {% include 'common/relay.html.twig' with {'device': device.entity, 'secure_token': apiSecureToken} only %}  {#  , 'secure_token': secureToken #}
             {% elseif device.type == 'security' %}
-                {% include 'common/security.html.twig' with {'device': device.entity} only %}
+                {% include 'common/security.html.twig' with {'device': device.entity, 'secure_token': apiSecureToken} only %}
             {% elseif device.type == 'fireSecurity' %}
                 {% include 'common/fireSecurity.html.twig' with {'device': device.entity} only %}
             {% endif %}

@@ -23,7 +23,8 @@ final class PageViewController extends AbstractController
 
         return $this->render('page/index.html.twig', [
             'title' => $name,
-            'devices' => $this->service->getDeviceList(name: $name)
+            'devices' => $this->service->getDeviceList(name: $name),
+//            'secureToken' => '3333',
         ]);
     }
 }

@@ -3,7 +3,7 @@
         <span class="info-box-icon bg-yellow"><i class="fas fa-shield-alt"></i></span>
         <div class="info-box-content">
             <span class="info-box-text">{{ device.name }}</span>
-            <div class="btn-group secure-sensor-control" data-secstate-topic="{{ device.topic }}" data-security-last-state="{{ device.lastCommand }}" data-swift-id="{{ device.id }}">
+            <div class="btn-group secure-sensor-control" data-secstate-topic="{{ device.topic }}" data-security-last-state="{{ device.lastCommand }}" data-swift-id="{{ device.id }}" data-token="{{ secure_token }}">
                 <a class="btn btn-outline-info secure-state-info"><i class="fas fa-male"></i></a>
                 <button type="button" class="btn btn-outline-success secure-trigger-on"><i class="fas fa-eye"></i></button>
                 <button type="button" class="btn btn-outline-danger secure-trigger-off active"><i class="fas fa-eye-slash"></i></button>
