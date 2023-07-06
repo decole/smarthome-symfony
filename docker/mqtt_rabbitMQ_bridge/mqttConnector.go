@@ -6,12 +6,8 @@ import (
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/joho/godotenv"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"log"
-	"net/http"
 	"os"
 	"time"
 )
@@ -61,6 +57,10 @@ func sendToRabbitMQ(msg mqtt.Message) {
 			Body:        jsonString,
 		})
 	failOnError(err, "Failed to publish a message")
+
+	if err != nil {
+		os.Exit(1)
+	}
 }
 
 var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
@@ -68,7 +68,8 @@ var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
 }
 
 var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
-	fmt.Printf("Connect lost: %v", err)
+	fmt.Printf("MQTT connect lost: %v", err)
+	os.Exit(1)
 }
 
 func failOnError(err error, msg string) {
@@ -77,26 +78,8 @@ func failOnError(err error, msg string) {
 	}
 }
 
-// for prometheus
-func recordMetrics() {
-	go func() {
-		opsProcessed.Inc()
-	}()
-}
-
-// for prometheus
-var (
-	opsProcessed = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "bridge_online_total",
-		Help: "Service is online",
-	})
-)
-
 func main() {
-    time.Sleep(2 * time.Second)
-
-	recordMetrics()
-
+	// https://gabrieltanner.org/blog/collecting-prometheus-metrics-in-golang/
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:%s", goDotEnvVariable("MQTT_BROKER_URL"), goDotEnvVariable("MQTT_PORT")))
 	opts.SetClientID(goDotEnvVariable("CLIENT_ID"))
@@ -113,9 +96,6 @@ func main() {
 	}
 
 	sub(client)
-
-	http.Handle("/metrics", promhttp.Handler())
-	_ = http.ListenAndServe(":2112", nil)
 
 	for {
 		time.Sleep(time.Second)
