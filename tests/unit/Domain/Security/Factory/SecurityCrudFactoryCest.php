@@ -6,7 +6,7 @@ use App\Application\Service\Validation\Security\SecurityCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Security\Factory\SecurityCrudFactory;
-use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
+use App\Infrastructure\Repository\Security\SecurityRepository;
 use App\Tests\UnitTester;
 
 class SecurityCrudFactoryCest

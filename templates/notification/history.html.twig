@@ -1,33 +1,16 @@
-{% if type == 99 %}
-    {% set type_name = 'all event' %}
-{% elseif type == 0 %}
-    {% set type_name = 'notify event' %}
-{% elseif type == 1 %}
-    {% set type_name = 'alarm event' %}
-{% elseif type == 2 %}
-    {% set type_name = 'fire-secure event' %}
-{% elseif type == 3 %}
-    {% set type_name = 'secure event' %}
-{% else %}
-    {% set type_name = 'no' %}
-{% endif %}
-
-
-{% extends "layout/layout.html.twig" %}
-
-{% block title %}{{ title }}{% endblock %}
+{% extends 'layout/layout.html.twig' %}
 
 {% block content %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ title }}</h1>
+                    <h1>{{ 'Notification history'|trans }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
-                        <li class="breadcrumb-item active">{{ title }}</li>
+                        <li class="breadcrumb-item active">{{ 'Notification history'|trans }}</li>
                     </ol>
                 </div>
             </div>
@@ -39,21 +22,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">{{ 'Event list'|trans }} {{ type_name|trans }} </span>
-
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm">
-                                <a href="{{ path('notify-history') }}" class="btn btn-primary mr-1">{{ 'Notification history'|trans }}</a>
-                                <a href="{{ path('visual_notify_update_by_type', {type: type}) }}" class="btn btn-warning">{{ 'Mark as read'|trans }}</a>
-                            </div>
-                        </div>
+                        <span class="card-title">{{ 'Event list'|trans }}</span>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
                             <thead>
                             <tr>
-                                <th>№</th>
                                 <th>{{ 'Type'|trans }}</th>
                                 <th>{{ 'Message'|trans }}</th>
                                 <th>{{ 'Date'|trans }}</th>
@@ -62,7 +37,6 @@
                             <tbody>
                             {% for notify in notifies %}
                                 <tr>
-                                    <td>{{ loop.index }}</td>
                                     <td>{{ notify.stringType|e }}</td>
                                     <td>{{ notify.message|e }}</td>
                                     <td>{{ notify.createdAt|date("d.m.Y H:i:s", "Europe/Volgograd") }}</td>
@@ -72,6 +46,13 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="{{ path('notify-history', {page: prev}) }}">«</a></li>
+                            <li class="page-item"><a class="page-link">{{ page }}/{{ pageCount }}</a></li>
+                            <li class="page-item"><a class="page-link" href="{{ path('notify-history', {page: next}) }}">»</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- /.card -->
             </div>
@@ -80,3 +61,4 @@
     </div>
 
 {% endblock %}
+

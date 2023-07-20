@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\ScheduleTask;
+namespace App\Infrastructure\Repository\ScheduleTask;
 
 use App\Domain\Contract\Repository\ScheduleTaskRepositoryInterface;
 use App\Domain\ScheduleTask\Entity\ScheduleTask;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 
 final class ScheduleTaskRepository extends BaseDoctrineRepository implements ScheduleTaskRepositoryInterface
 {

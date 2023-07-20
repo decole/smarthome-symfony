@@ -12,6 +12,7 @@
 docker-compose.yaml
 /.docker.env
 /docker/alertmanager/alertmanager.yml
+/src/Application/Cli/Task/
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

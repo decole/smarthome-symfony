@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\PLC;
+namespace App\Infrastructure\Repository\PLC;
 
 use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\PlcRepositoryInterface;
 use App\Domain\PLC\Entity\PLC;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
 final class PlcRepository extends BaseDoctrineRepository implements PlcRepositoryInterface

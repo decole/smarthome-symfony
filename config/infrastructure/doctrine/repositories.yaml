@@ -3,17 +3,17 @@ services:
     autowire: true
     autoconfigure: true
   _instanceof:
-    App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository:
+    App\Infrastructure\Repository\BaseDoctrineRepository:
       tags: [ 'doctrine.repository' ]
       calls:
         - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
 
   Doctrine\ORM\EntityManager: '@doctrine.orm.entity_manager'
 
-  App\Infrastructure\Doctrine\Repository\:
-    resource: '%kernel.project_dir%/src/Infrastructure/Doctrine/Repository/**/*Repository.php'
+  App\Infrastructure\Repository\:
+    resource: '%kernel.project_dir%/src/Infrastructure/Repository/**/*Repository.php'
     autowire: true
 
   # Репозиторий security обертки Symfony, под общее правило не подпадает. Регистрирую отдельно
   App\Domain\Identity\Repository\UserRepositoryInterface:
-    class: App\Infrastructure\Doctrine\Repository\Identity\UserRepository
+    class: App\Infrastructure\Repository\Identity\UserRepository

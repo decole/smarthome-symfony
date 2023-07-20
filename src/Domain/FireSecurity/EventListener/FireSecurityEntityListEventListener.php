@@ -4,7 +4,7 @@ namespace App\Domain\FireSecurity\EventListener;
 
 use App\Domain\Event\EntityListEvent;
 use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Infrastructure\Doctrine\Repository\FireSecurity\FireSecurityRepository;
+use App\Infrastructure\Repository\FireSecurity\FireSecurityRepository;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: EntityListEvent::NAME, method: 'onSensorEntityListEvent')]

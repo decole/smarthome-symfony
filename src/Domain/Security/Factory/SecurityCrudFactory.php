@@ -7,7 +7,6 @@ use App\Application\Service\Validation\Security\SecurityCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\DeviceData\Service\DeviceCacheService;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 
 final class SecurityCrudFactory extends AbstractCrudFactory
 {

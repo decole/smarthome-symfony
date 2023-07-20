@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\Identity;
+namespace App\Infrastructure\Repository\Identity;
 
 use App\Domain\Identity\Entity\User;
 use App\Domain\Identity\Repository\UserRepositoryInterface;

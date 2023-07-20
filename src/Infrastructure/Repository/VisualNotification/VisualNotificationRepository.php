@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\VisualNotification;
+namespace App\Infrastructure\Repository\VisualNotification;
 
 use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
 use App\Domain\VisualNotification\Entity\VisualNotification;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use DateTimeImmutable;
 use DateTimeZone;
-use Webmozart\Assert\Assert;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Types;
+use Webmozart\Assert\Assert;
 
 final class VisualNotificationRepository extends BaseDoctrineRepository implements VisualNotificationRepositoryInterface
 {
@@ -69,5 +70,28 @@ final class VisualNotificationRepository extends BaseDoctrineRepository implemen
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findByFilters(Criteria $criteria): array
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+
+        $qb
+            ->select('v')
+            ->from(VisualNotification::class, 'v');
+
+        $qb->addCriteria($criteria);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function count(): int
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb
+            ->select('count(v.id)')
+            ->from(VisualNotification::class, 'v');
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }
