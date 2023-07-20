@@ -11,7 +11,7 @@
             <a href="{{ path('home') }}" class="nav-link">{% trans %}Home{% endtrans %}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">{% trans %}Contact{% endtrans %}</a>
+            <a class="nav-link">ip: {{ app.request.clientIp }}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">{% trans %}Application Environment{% endtrans %}: {{ app.environment }}</a>
