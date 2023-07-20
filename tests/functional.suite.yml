@@ -8,6 +8,7 @@ modules:
         - Doctrine2:
               depends: Symfony
               cleanup: true
+              purge_mode: 1 # 1: DELETE (=default), 2: TRUNCATE
         - DataFactory:
             depends: Doctrine2
         - \App\Tests\Helper\Factories

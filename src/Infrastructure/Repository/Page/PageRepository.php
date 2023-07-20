@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\Page;
+namespace App\Infrastructure\Repository\Page;
 
 use App\Domain\Contract\Repository\PageRepositoryInterface;
 use App\Domain\Page\Entity\Page;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
 final class PageRepository extends BaseDoctrineRepository implements PageRepositoryInterface

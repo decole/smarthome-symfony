@@ -7,7 +7,7 @@ use App\Domain\DeviceData\Entity\SecureDeviceDataState;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Security\Enum\SecurityStateEnum;
-use App\Infrastructure\Doctrine\Repository\Security\SecurityRepository;
+use App\Infrastructure\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;

@@ -1,36 +1,33 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\FireSecurity;
+namespace App\Infrastructure\Repository\Sensor;
 
 use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Common\Exception\UnresolvableArgumentException;
-use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
-use App\Domain\FireSecurity\Entity\FireSecurity;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Domain\Contract\Repository\SensorRepositoryInterface;
+use App\Domain\Sensor\Entity\Sensor;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
-final class FireSecurityRepository extends BaseDoctrineRepository implements FireSecurityRepositoryInterface
+final class SensorRepository extends BaseDoctrineRepository implements SensorRepositoryInterface
 {
-    /**
-     * @throws UnresolvableArgumentException
-     */
     public function findAll(?int $status = null): array
     {
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb
-            ->select('f')
-            ->from(FireSecurity::class, 'f')
-            ->orderBy('f.createdAt', 'DESC');
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->orderBy('s.createdAt', 'DESC');
 
         if ($status !== null) {
             if (EntityStatusEnum::tryFrom($status) === null) {
-                throw UnresolvableArgumentException::argumentIsNotSet('Fire security device status');
+                throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('f.status', ':status')
+                    $qb->expr()->eq('s.status', ':status')
                 )
                 ->setParameter('status', $status);
         }
@@ -41,12 +38,12 @@ final class FireSecurityRepository extends BaseDoctrineRepository implements Fir
     /**
      * @throws NonUniqueResultException
      */
-    public function findById(string $id): ?FireSecurity
+    public function findById(string $id): ?Sensor
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('f')
-            ->from(FireSecurity::class, 'f')
-            ->where('f.id = :value')
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->where('s.id = :value')
             ->setParameter('value', $id)
             ->getQuery()
             ->getOneOrNullResult();
@@ -55,12 +52,12 @@ final class FireSecurityRepository extends BaseDoctrineRepository implements Fir
     /**
      * @throws NonUniqueResultException
      */
-    public function findByName(string $value): ?FireSecurity
+    public function findByName(string $value): ?Sensor
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('f')
-            ->from(FireSecurity::class, 'f')
-            ->where('f.name = :value')
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->where('s.name = :value')
             ->setParameter('value', $value)
             ->getQuery()
             ->getOneOrNullResult();
@@ -69,12 +66,12 @@ final class FireSecurityRepository extends BaseDoctrineRepository implements Fir
     /**
      * @throws NonUniqueResultException
      */
-    public function findByTopic(string $value): ?FireSecurity
+    public function findByTopic(string $value): ?Sensor
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('f')
-            ->from(FireSecurity::class, 'f')
-            ->where('f.topic = :value')
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->where('s.topic = :value')
             ->setParameter('value', $value)
             ->getQuery()
             ->getOneOrNullResult();

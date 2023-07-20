@@ -6,7 +6,7 @@ use App\Application\Service\Validation\FireSecurity\FireSecurityCrudValidationSe
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\FireSecurity\Factory\FireSecurityCrudFactory;
-use App\Infrastructure\Doctrine\Repository\FireSecurity\FireSecurityRepository;
+use App\Infrastructure\Repository\FireSecurity\FireSecurityRepository;
 use App\Tests\UnitTester;
 
 class FireSecurityCrudFactoryCest

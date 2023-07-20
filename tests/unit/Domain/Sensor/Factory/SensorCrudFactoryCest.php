@@ -6,7 +6,7 @@ use App\Application\Service\Validation\Sensor\SensorCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
 use App\Domain\Sensor\Factory\SensorCrudFactory;
-use App\Infrastructure\Doctrine\Repository\Sensor\SensorRepository;
+use App\Infrastructure\Repository\Sensor\SensorRepository;
 use App\Tests\UnitTester;
 
 class SensorCrudFactoryCest

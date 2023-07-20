@@ -14,7 +14,7 @@ final class VisualNotificationListController extends AbstractController
     {
     }
 
-    #[Route('/visual-notify/{type}', name: "visual_notify")]
+    #[Route('/visual-notify/{type}', name: 'visual_notify')]
     public function index(int $type): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

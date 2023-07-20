@@ -4,7 +4,7 @@ namespace App\Domain\Page\Factory;
 
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Page\Dto\PageEntityDto;
-use App\Infrastructure\Doctrine\Factory\OutputFactoryInterface;
+use App\Infrastructure\Output\Factory\OutputFactoryInterface;
 
 final class PageEntityDtoFactory implements OutputFactoryInterface
 {

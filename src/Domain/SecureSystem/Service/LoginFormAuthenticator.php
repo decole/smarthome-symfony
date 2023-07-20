@@ -5,7 +5,6 @@ namespace App\Domain\SecureSystem\Service;
 use App\Domain\Contract\Repository\PageRepositoryInterface;
 use App\Domain\Identity\Repository\UserRepositoryInterface;
 use App\Domain\SecureSystem\Passport\TwoFactorBadge;
-use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
