@@ -1,34 +1,38 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\Security;
+declare(strict_types=1);
+
+namespace App\Infrastructure\Repository\FireSecurity;
 
 use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Common\Exception\UnresolvableArgumentException;
-use App\Domain\Contract\Repository\SecurityRepositoryInterface;
-use App\Domain\Security\Entity\Security;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
+use App\Domain\FireSecurity\Entity\FireSecurity;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Webmozart\Assert\Assert;
 
-final class SecurityRepository extends BaseDoctrineRepository implements SecurityRepositoryInterface
+final class FireSecurityRepository extends BaseDoctrineRepository implements FireSecurityRepositoryInterface
 {
+    /**
+     * @throws UnresolvableArgumentException
+     */
     public function findAll(?int $status = null): array
     {
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb
-            ->select('s')
-            ->from(Security::class, 's')
-            ->orderBy('s.createdAt', 'DESC');
+            ->select('f')
+            ->from(FireSecurity::class, 'f')
+            ->orderBy('f.createdAt', 'DESC');
 
         if ($status !== null) {
             if (EntityStatusEnum::tryFrom($status) === null) {
-                throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
+                throw UnresolvableArgumentException::argumentIsNotSet('Fire security device status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('s.status', ':status')
+                    $qb->expr()->eq('f.status', ':status')
                 )
                 ->setParameter('status', $status);
         }
@@ -39,12 +43,12 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
     /**
      * @throws NonUniqueResultException
      */
-    public function findById(string $id): ?Security
+    public function findById(string $id): ?FireSecurity
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('s')
-            ->from(Security::class, 's')
-            ->where('s.id = :value')
+            ->select('f')
+            ->from(FireSecurity::class, 'f')
+            ->where('f.id = :value')
             ->setParameter('value', $id)
             ->getQuery()
             ->getOneOrNullResult();
@@ -53,12 +57,12 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
     /**
      * @throws NonUniqueResultException
      */
-    public function findByName(string $value): ?Security
+    public function findByName(string $value): ?FireSecurity
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('s')
-            ->from(Security::class, 's')
-            ->where('s.name = :value')
+            ->select('f')
+            ->from(FireSecurity::class, 'f')
+            ->where('f.name = :value')
             ->setParameter('value', $value)
             ->getQuery()
             ->getOneOrNullResult();
@@ -67,12 +71,12 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
     /**
      * @throws NonUniqueResultException
      */
-    public function findByTopic(string $value): ?Security
+    public function findByTopic(string $value): ?FireSecurity
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('s')
-            ->from(Security::class, 's')
-            ->where('s.topic = :value')
+            ->select('f')
+            ->from(FireSecurity::class, 'f')
+            ->where('f.topic = :value')
             ->setParameter('value', $value)
             ->getQuery()
             ->getOneOrNullResult();

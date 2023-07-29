@@ -6,7 +6,7 @@ use App\Application\Service\Validation\Relay\RelayCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use App\Domain\Relay\Factory\RelayCrudFactory;
-use App\Infrastructure\Doctrine\Repository\Relay\RelayRepository;
+use App\Infrastructure\Repository\Relay\RelayRepository;
 use App\Tests\UnitTester;
 
 class RelayCrudFactoryCest

@@ -6,7 +6,7 @@ use App\Application\Service\Validation\Page\PageCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\PageRepositoryInterface;
 use App\Domain\Page\Factory\PageCrudFactory;
-use App\Infrastructure\Doctrine\Repository\Page\PageRepository;
+use App\Infrastructure\Repository\Page\PageRepository;
 use App\Tests\UnitTester;
 
 class PageCrudFactoryCest

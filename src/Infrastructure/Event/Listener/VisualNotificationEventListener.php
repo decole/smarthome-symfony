@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Event\Listener;
 
 use App\Domain\Event\VisualNotificationEvent;

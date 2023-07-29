@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Security\Factory;
 
 use App\Application\Service\Factory\AbstractCrudFactory;
@@ -7,7 +9,6 @@ use App\Application\Service\Validation\Security\SecurityCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\DeviceData\Service\DeviceCacheService;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
 
 final class SecurityCrudFactory extends AbstractCrudFactory
 {

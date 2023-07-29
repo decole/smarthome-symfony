@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Web\FireSecurity;
 
 use App\Domain\FireSecurity\Service\FireSecurityCrudService;

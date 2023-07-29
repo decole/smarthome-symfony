@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository;
+declare(strict_types=1);
+
+namespace App\Infrastructure\Repository;
 
 use App\Domain\Contract\Repository\EntityInterface;
 use Doctrine\ORM\EntityManager;

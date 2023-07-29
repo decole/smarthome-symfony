@@ -119,3 +119,6 @@ Two factor saved: Второй фактор сохранен
 Two factor already configured: Второй фактор уже настроен
 Setup two factor: Настроить второй фактор
 Change two factor: Изменить второй фактор
+Message: 'Сообщение'
+Date: 'Дата'
+Notification history: 'История нотификаций'

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\PLC\Factory;
 
 use App\Application\Service\Factory\AbstractCrudFactory;
@@ -7,8 +9,8 @@ use App\Application\Service\Validation\PLC\PlcCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\PlcRepositoryInterface;
 use App\Domain\PLC\Service\PlcCacheService;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
-use App\Infrastructure\Doctrine\Repository\PLC\PlcRepository;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
+use App\Infrastructure\Repository\PLC\PlcRepository;
 
 final class PlcCrudFactory extends AbstractCrudFactory
 {

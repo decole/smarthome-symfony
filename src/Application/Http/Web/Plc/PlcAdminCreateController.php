@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Web\Plc;
 
 use App\Domain\Identity\Entity\User;

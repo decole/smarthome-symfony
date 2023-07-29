@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Web\VisualNotification;
 
 use App\Domain\Identity\Entity\User;
@@ -14,7 +16,7 @@ final class VisualNotificationListController extends AbstractController
     {
     }
 
-    #[Route('/visual-notify/{type}', name: "visual_notify")]
+    #[Route('/visual-notify/{type}', name: 'visual_notify')]
     public function index(int $type): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

@@ -1,33 +1,35 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\Relay;
+declare(strict_types=1);
+
+namespace App\Infrastructure\Repository\Sensor;
 
 use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Common\Exception\UnresolvableArgumentException;
-use App\Domain\Contract\Repository\RelayRepositoryInterface;
-use App\Domain\Relay\Entity\Relay;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Domain\Contract\Repository\SensorRepositoryInterface;
+use App\Domain\Sensor\Entity\Sensor;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
-final class RelayRepository extends BaseDoctrineRepository implements RelayRepositoryInterface
+final class SensorRepository extends BaseDoctrineRepository implements SensorRepositoryInterface
 {
     public function findAll(?int $status = null): array
     {
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb
-            ->select('r')
-            ->from(Relay::class, 'r')
-            ->orderBy('r.createdAt', 'DESC');
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->orderBy('s.createdAt', 'DESC');
 
         if ($status !== null) {
             if (EntityStatusEnum::tryFrom($status) === null) {
-                throw UnresolvableArgumentException::argumentIsNotSet('Relay device status');
+                throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('r.status', ':status')
+                    $qb->expr()->eq('s.status', ':status')
                 )
                 ->setParameter('status', $status);
         }
@@ -38,12 +40,12 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
     /**
      * @throws NonUniqueResultException
      */
-    public function findById(string $id): ?Relay
+    public function findById(string $id): ?Sensor
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('r')
-            ->from(Relay::class, 'r')
-            ->where('r.id = :value')
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->where('s.id = :value')
             ->setParameter('value', $id)
             ->getQuery()
             ->getOneOrNullResult();
@@ -52,12 +54,12 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
     /**
      * @throws NonUniqueResultException
      */
-    public function findByName(string $value): ?Relay
+    public function findByName(string $value): ?Sensor
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('r')
-            ->from(Relay::class, 'r')
-            ->where('r.name = :value')
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->where('s.name = :value')
             ->setParameter('value', $value)
             ->getQuery()
             ->getOneOrNullResult();
@@ -66,12 +68,12 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
     /**
      * @throws NonUniqueResultException
      */
-    public function findByTopic(string $value): ?Relay
+    public function findByTopic(string $value): ?Sensor
     {
         return $this->entityManager->createQueryBuilder()
-            ->select('r')
-            ->from(Relay::class, 'r')
-            ->where('r.topic = :value')
+            ->select('s')
+            ->from(Sensor::class, 's')
+            ->where('s.topic = :value')
             ->setParameter('value', $value)
             ->getQuery()
             ->getOneOrNullResult();

@@ -6,7 +6,7 @@ use App\Application\Service\Validation\Profile\ProfileCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\ProfileRepositoryInterface;
 use App\Domain\Profile\Factory\ProfileCrudFactory;
-use App\Infrastructure\Doctrine\Repository\Profile\ProfileRepository;
+use App\Infrastructure\Repository\Profile\ProfileRepository;
 use App\Tests\UnitTester;
 
 class ProfileCrudFactoryCest

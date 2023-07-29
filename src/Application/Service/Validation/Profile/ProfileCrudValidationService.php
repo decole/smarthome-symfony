@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Service\Validation\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;

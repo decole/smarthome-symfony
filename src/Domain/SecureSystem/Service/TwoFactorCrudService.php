@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\SecureSystem\Service;
 
 use App\Domain\Identity\Repository\UserRepositoryInterface;

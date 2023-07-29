@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Service\Validation\DataValidation;
 
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidateTypes\Factory\SensorDataValidateFactory;

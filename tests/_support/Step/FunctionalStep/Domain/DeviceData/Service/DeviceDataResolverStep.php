@@ -46,8 +46,8 @@ class DeviceDataResolverStep extends FunctionalTester
         $dto = new CrudSensorDto();
 
         $dto->type = $type;
-        $dto->name = $this->faker()->word() . $type;
-        $dto->topic = $this->faker()->word();
+        $dto->name = $this->faker()->word() . random_int(1, 1000) . $type;
+        $dto->topic = $this->faker()->word() . random_int(1000, 2000);
         $dto->payload = $this->faker()->word();
         $dto->payloadMin = 0;
         $dto->payloadMax = 100;

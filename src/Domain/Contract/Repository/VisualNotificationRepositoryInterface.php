@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Contract\Repository;
 
-use App\Domain\VisualNotification\Entity\VisualNotification;
+use Doctrine\Common\Collections\Criteria;
 
+/**
+ * Contract for a Doctrine persistence layer ObjectRepository class to implement.
+ *
+ * @template-covariant T of object
+ */
 interface VisualNotificationRepositoryInterface
 {
     /**
      * Поиск по типу с фильтром
-     * @param int|null $type
-     * @param bool|null $isRead
-     * @return array<int, VisualNotification>
      */
     public function findByTypeAndIsRead(
         ?int $type = null,
@@ -19,8 +23,13 @@ interface VisualNotificationRepositoryInterface
 
     /**
      * Пометить все прочитанное по типу либо все без типа нотификаций
-     * @param int|null $type
-     * @return void
      */
     public function setAllIsRead(?int $type = null): void;
+
+    /**
+     * Отдает данные согласно фильтру
+     */
+    public function findByFilters(Criteria $criteria): array;
+
+    public function count(): int;
 }

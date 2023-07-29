@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Infrastructure\Doctrine\Repository\Profile;
+declare(strict_types=1);
+
+namespace App\Infrastructure\Repository\Profile;
 
 use App\Domain\Contract\Repository\ProfileRepositoryInterface;
 use App\Domain\Identity\Entity\User;
-use App\Infrastructure\Doctrine\Repository\BaseDoctrineRepository;
+use App\Infrastructure\Repository\BaseDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
 final class ProfileRepository extends BaseDoctrineRepository implements ProfileRepositoryInterface

@@ -1,0 +1,64 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{ 'Notification history'|trans }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ path('home') }}">{{ 'Home'|trans }}</a></li>
+                        <li class="breadcrumb-item active">{{ 'Notification history'|trans }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">{{ 'Event list'|trans }}</span>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Type'|trans }}</th>
+                                <th>{{ 'Message'|trans }}</th>
+                                <th>{{ 'Date'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for notify in notifies %}
+                                <tr>
+                                    <td>{{ notify.stringType|e }}</td>
+                                    <td>{{ notify.message|e }}</td>
+                                    <td>{{ notify.createdAt|date("d.m.Y H:i:s", "Europe/Volgograd") }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="{{ path('notify-history', {page: prev}) }}">«</a></li>
+                            <li class="page-item"><a class="page-link">{{ page }}/{{ pageCount }}</a></li>
+                            <li class="page-item"><a class="page-link" href="{{ path('notify-history', {page: next}) }}">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}
+

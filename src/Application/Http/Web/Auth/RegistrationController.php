@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Web\Auth;
 
 use App\Domain\SecureSystem\Dto\RegisterDto;
 use App\Domain\SecureSystem\Service\RegistrationValidateService;
+use App\Infrastructure\Output\Service\RateLimitService;
 use App\Infrastructure\Security\Auth\Service\CsrfService;
 use App\Infrastructure\Security\Register\Service\SignUpService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +19,16 @@ final class RegistrationController extends AbstractController
     public function __construct(
         private readonly CsrfService $csrf,
         private readonly RegistrationValidateService $validation,
-        private readonly SignUpService $service
+        private readonly SignUpService $service,
+        private readonly RateLimitService $rateLimitService
     ) {
     }
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request): Response
     {
+        $this->rateLimitService->http($request);
+
         $dto = new RegisterDto($request);
 
         [$valid, $errors] = $this->validation->validate($dto, $this->csrf->getToken());

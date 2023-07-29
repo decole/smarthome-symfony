@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Security\Register\Service;
 
 use App\Domain\Common\Transactions\TransactionInterface;
 use App\Domain\Identity\Entity\User;
 use App\Domain\SecureSystem\Dto\RegisterDto;
-use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
+use App\Infrastructure\Repository\Identity\UserRepository;
 use App\Infrastructure\Security\Auth\Service\EmailVerifyService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;

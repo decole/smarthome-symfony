@@ -43,6 +43,7 @@
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
+                                <a href="{{ path('notify-history') }}" class="btn btn-primary mr-1">{{ 'Notification history'|trans }}</a>
                                 <a href="{{ path('visual_notify_update_by_type', {type: type}) }}" class="btn btn-warning">{{ 'Mark as read'|trans }}</a>
                             </div>
                         </div>
@@ -53,8 +54,9 @@
                             <thead>
                             <tr>
                                 <th>№</th>
-                                <th>type</th>
-                                <th>Message</th>
+                                <th>{{ 'Type'|trans }}</th>
+                                <th>{{ 'Message'|trans }}</th>
+                                <th>{{ 'Date'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -63,6 +65,7 @@
                                     <td>{{ loop.index }}</td>
                                     <td>{{ notify.stringType|e }}</td>
                                     <td>{{ notify.message|e }}</td>
+                                    <td>{{ notify.createdAt|date("d.m.Y H:i:s", "Europe/Volgograd") }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

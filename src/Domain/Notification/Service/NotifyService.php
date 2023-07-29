@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Notification\Service;
 
 use App\Domain\Event\NotificationEvent;
@@ -8,7 +10,7 @@ use App\Domain\Notification\Entity\DiscordNotificationMessage;
 use App\Domain\Notification\Entity\TelegramNotificationMessage;
 use App\Domain\VisualNotification\Dto\VisualNotificationDto;
 use App\Domain\VisualNotification\Service\VisualNotificationService;
-use App\Infrastructure\Doctrine\Repository\Identity\UserRepository;
+use App\Infrastructure\Repository\Identity\UserRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
