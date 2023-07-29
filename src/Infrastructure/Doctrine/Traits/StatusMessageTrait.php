@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Doctrine\Traits;
 
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;

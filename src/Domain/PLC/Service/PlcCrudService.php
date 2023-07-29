@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\PLC\Service;
 
 use App\Application\Helper\StringHelper;
@@ -97,6 +99,12 @@ final class PlcCrudService
 
         foreach ($request->request as $param => $value) {
             if (property_exists($dto, $param)) {
+                if ($param === 'alarmSecondDelay') {
+                    $dto->alarmSecondDelay = (int)StringHelper::sanitize($value);
+
+                    continue;
+                }
+
                 $dto->$param = StringHelper::sanitize($value);
             }
         }

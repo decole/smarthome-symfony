@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Mqtt\Entity;
 
 use App\Infrastructure\Mqtt\Exception\MqttException;
@@ -17,7 +19,7 @@ final class MqttClient implements MqttClientInterface
 
     private ?Client $client = null;
 
-    public function __construct(private string $broker, private string $port)
+    public function __construct(private string $broker, private int $port)
     {
     }
 

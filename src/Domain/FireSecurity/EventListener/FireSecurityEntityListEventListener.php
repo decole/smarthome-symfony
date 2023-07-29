@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\FireSecurity\EventListener;
 
 use App\Domain\Event\EntityListEvent;

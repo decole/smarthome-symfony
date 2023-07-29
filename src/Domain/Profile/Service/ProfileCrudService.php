@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Profile\Service;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
@@ -66,7 +68,7 @@ final class ProfileCrudService
         /** @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->email = (string)$request->request->get(self::EMAIL_ALIAS);
         /** @psalm-suppress InvalidPropertyAssignmentValue */
-        $dto->telegramId = $request->request->get(self::TELEGRAM_ALIAS);
+        $dto->telegramId = $this->integerOrNull($request->request->get(self::TELEGRAM_ALIAS));
         /** @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->isChangePassword = $request->request->get(self::IS_CHANGE_PASSWORD_ALIAS);
         /** @psalm-suppress InvalidPropertyAssignmentValue */
@@ -75,5 +77,10 @@ final class ProfileCrudService
         $dto->passwordAgan = $request->request->get(self::PASSWORD_AGAN_ALIAS);
 
         return $dto;
+    }
+
+    private function integerOrNull(mixed $value): ?int
+    {
+        return $value === null ? $value : (int)$value;
     }
 }

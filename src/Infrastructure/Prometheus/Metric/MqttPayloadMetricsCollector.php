@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Prometheus\Metric;
 
 use App\Domain\DeviceData\Service\DeviceDataCacheService;
@@ -33,7 +35,7 @@ final class MqttPayloadMetricsCollector implements RequestMetricsCollectorInterf
             }
 
             if (filter_var($payload, FILTER_VALIDATE_FLOAT) !== false) {
-                $this->incPayloads($topic, (float)$payload);
+                $this->incPayloads($topic, $payload);
             }
         }
     }

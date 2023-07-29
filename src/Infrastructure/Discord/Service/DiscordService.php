@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Discord\Service;
 
 use App\Domain\Event\AlertNotificationEvent;

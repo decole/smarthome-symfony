@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\SecureSystem\EventListener;
 
 use App\Domain\Identity\Entity\User;

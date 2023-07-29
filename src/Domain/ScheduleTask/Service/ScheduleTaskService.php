@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\ScheduleTask\Service;
 
 use App\Domain\Common\Transactions\TransactionInterface;

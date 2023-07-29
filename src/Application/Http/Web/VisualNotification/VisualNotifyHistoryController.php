@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Web\VisualNotification;
 
 use App\Application\Http\Web\VisualNotification\Dto\VisualNotificationHistoryInputDto;
@@ -20,7 +22,7 @@ final class VisualNotifyHistoryController extends AbstractController
     {
         $dto = new VisualNotificationHistoryInputDto();
 
-        $dto->page = $request->get('page', 1);
+        $dto->page = (int)$request->get('page', 1);
 
         $dto = $this->service->paginate($dto);
 
