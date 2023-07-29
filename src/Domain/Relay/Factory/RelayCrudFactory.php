@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Relay\Factory;
 
 use App\Application\Service\Factory\AbstractCrudFactory;

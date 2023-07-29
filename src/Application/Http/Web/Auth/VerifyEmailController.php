@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Web\Auth;
 
 use App\Domain\Identity\Entity\User;
+use App\Infrastructure\Output\Service\RateLimitService;
 use App\Infrastructure\Security\Auth\Service\EmailVerifyService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,8 +18,10 @@ use Webmozart\Assert\InvalidArgumentException;
 
 final class VerifyEmailController extends AbstractController
 {
-    public function __construct(private readonly EmailVerifyService $emailVerifier)
-    {
+    public function __construct(
+        private readonly EmailVerifyService $emailVerifier,
+        private readonly RateLimitService $rateLimitService,
+    ) {
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
@@ -25,6 +30,8 @@ final class VerifyEmailController extends AbstractController
         TranslatorInterface $translator,
         EntityManagerInterface $manager
     ): Response {
+        $this->rateLimitService->http($request);
+
         $id = $request->get('id');
 
         if (null === $id) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\FireSecurity\Factory;
 
 use App\Application\Service\Factory\AbstractCrudFactory;

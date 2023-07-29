@@ -93,3 +93,8 @@ services:
   App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService:
     arguments:
       $host: '%env(APP_HOST)%'
+
+  App\Infrastructure\Output\Service\RateLimitService:
+    arguments:
+      $httpLimit: 25
+      $httpLimitMinutes: 1

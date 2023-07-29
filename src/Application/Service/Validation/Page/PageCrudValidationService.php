@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Service\Validation\Page;
 
 use App\Application\Http\Web\Page\Dto\CrudPageDto;

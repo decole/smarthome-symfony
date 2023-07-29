@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\AliceSkill\Factory;
 
 use App\Infrastructure\AliceSkill\Dialog\AliceDialogInterface;

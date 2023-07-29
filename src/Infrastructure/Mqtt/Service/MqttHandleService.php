@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Mqtt\Service;
 
 use App\Domain\Event\AlertNotificationEvent;

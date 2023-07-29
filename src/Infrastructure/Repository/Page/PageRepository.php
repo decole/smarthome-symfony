@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Repository\Page;
 
 use App\Domain\Contract\Repository\PageRepositoryInterface;

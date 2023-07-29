@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Page\Entity;
 
 use App\Domain\Common\Traits\CreatedAt;

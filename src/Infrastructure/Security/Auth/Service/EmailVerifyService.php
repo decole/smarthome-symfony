@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Security\Auth\Service;
 
 use App\Domain\Identity\Entity\User;

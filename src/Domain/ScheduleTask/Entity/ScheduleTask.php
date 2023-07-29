@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\ScheduleTask\Entity;
 
 use App\Domain\Common\Traits\CreatedAt;
@@ -65,9 +67,13 @@ final class ScheduleTask implements EntityInterface
     {
         if ($nextRun !== null) {
             /** @var DateTimeImmutable $nextRun */
-            [$hour, $minute, $second] = [$nextRun->format('H'), $nextRun->format('i'), 0];
+            [$hour, $minute, $second] = [(int)$nextRun->format('H'), (int)$nextRun->format('i'), 0];
 
-            $nextRun = $nextRun->setTime(hour: $hour, minute: $minute, second: $second);
+            $nextRun = $nextRun->setTime(
+                hour: $hour,
+                minute: $minute,
+                second: $second
+            );
         }
 
         $this->nextRun = $nextRun;

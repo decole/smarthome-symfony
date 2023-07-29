@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Security\Register\Service;
 
 use App\Domain\Common\Transactions\TransactionInterface;
