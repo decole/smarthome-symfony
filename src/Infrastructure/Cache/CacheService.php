@@ -8,8 +8,9 @@ use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\CacheItem;
+use Symfony\Contracts\Cache\ItemInterface;
 
-final class CacheService
+final class CacheService implements CacheServiceInterface
 {
     public function __construct(private readonly RedisAdapter $cache)
     {
@@ -41,7 +42,7 @@ final class CacheService
      */
     public function set(string $key, mixed $value, int $lifetime = 0): void
     {
-        /** @var CacheItem $item */
+        /** @var ItemInterface $item */
         $item = $this->cache->getItem($key);
         $item->set($value);
         $item->expiresAfter($lifetime === 0 ? null : $lifetime);

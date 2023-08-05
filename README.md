@@ -3,9 +3,9 @@
 [![Latest Release](https://gitlab.com/decole/uberserver-symfony/-/badges/release.svg)](https://gitlab.com/decole/uberserver-symfony/-/releases)
 
 
-# What it is
+# What it is?
 
-> Pet project of a smart home based on ESP8266 and MQTT protocol
+## Pet project of a smart home based on ESP8266 and MQTT protocol
 
 Smart Home:
  - MQTT broker
@@ -26,6 +26,9 @@ Devices:
 
 
 ## Description
+
+- [Start and configure.md](docs%2Fproject%2FStart%20and%20configure.md) 
+- [Work process.md](docs%2Fproject%2FWork%20process.md)
 
 ---
 
