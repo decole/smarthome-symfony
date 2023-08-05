@@ -99,13 +99,10 @@ deploy_prod:
       git pull
       df -H /
       make pull
-      make down
       docker-compose run -T commands composer install --no-dev --optimize-autoloader
       docker-compose run -T commands php bin/console d:m:m --no-interaction
       docker-compose run -T commands chmod 777 -R ./var
-      docker-compose run -T commands php bin/console cache:clear
       docker-compose run -T commands php bin/console cache:warmup
-      docker-compose run -T commands chmod 777 -R ./var/cache
       make restart
       make ps
       EOT
