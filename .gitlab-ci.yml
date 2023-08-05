@@ -100,10 +100,7 @@ deploy_prod:
       df -H /
       docker-compose pull
       docker-compose stop mqtt-bridge php-fpm
-      docker-compose run -T commands composer install --no-dev --optimize-autoloader
-      docker-compose run -T commands php bin/console d:m:m --no-interaction
-      docker-compose run -T commands chmod 777 -R ./var
-      docker-compose run -T commands php bin/console cache:warmup
+      sh ci_to_prod.sh
       docker-compose down --remove-orphans
       docker-compose up -d
       docker-compose ps
