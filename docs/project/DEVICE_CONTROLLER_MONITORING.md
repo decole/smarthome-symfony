@@ -1,36 +1,35 @@
-# Мониторинг контроллеров умного дома
+# Monitoring smart home controllers
 
-Мониторим MQTT контроллеры посрдством наблюдения за одним топиком контроллера.
+We monitor MQTT controllers by monitoring one controller topic.
 
-Контроллер отправляет периодически свое состояние, сервис подключен к mqtt слушателю.
+The controller sends its state periodically, the service is connected to the mqtt listener.
 
-Хранит последнюю дату публикованного топика наблюдаемого контроллера.
+Stores the latest published topic of the observed controller.
 
-При необходимости оповещает пользователя если контроллер не пушит данные больше определенного времени.
+If necessary, notifies the user if the controller does not push data for more than a certain time.
 
-Данные по контроллерам сохраняются в БД раз в минуту. На сайт отдаются последние закэшированные данные по контроллерам 
-или данные из БД если нет кэша по данному контроллеру.
-
-
-## Как будет выглядеть
-
-Вкладка на сайте "Настройка PLC"
-
-Как зайдем, будет выведена табличка контроллеров с колонкой время последнего действия, выводится время самого близкого к
-нашему времени дата и время публикованного топика. 
+Controller data is stored in the database once a minute. The site receives the latest cached data on controllers
+or data from the database if there is no cache for this controller.
 
 
-## Настройки
+## What will it look like
 
-- контроллер
-  - топик наблюдения - записанный вручную
-  - флаг оповещения
-  - время тишины, после которого будет произходить оповещение
+Tab on the site "Setting PLC"
+
+When we enter, a panel of controllers will be displayed with a column for the time of the last action, the time of the closest to
+our time the date and time of the published topic.
+
+
+## Settings
+
+- controller
+    - observation topic - recorded manually
+    - alert flag
+    - time of silence after which an alert will occur
 
 
 ---
 
-Воркер, который при старте кэширует данные по контроллерам.
+A worker that caches data on controllers at startup.
 
-Берем кэшированные свежие данные из DeviceCacheService, сопостовлять mqtt topic и хранить в кэше.
-
+We take the cached fresh data from the DeviceCacheService, match the mqtt topic and store it in the cache.

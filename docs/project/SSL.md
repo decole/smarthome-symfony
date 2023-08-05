@@ -1,4 +1,4 @@
-Использовал этот гайд
+Used this guide
 
 https://www.humankode.com/ssl/create-a-selfsigned-certificate-for-nginx-in-5-minutes/
 
@@ -6,10 +6,10 @@ https://www.humankode.com/ssl/create-a-selfsigned-certificate-for-nginx-in-5-min
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf
 ```
 
-нужно в docker-compose.yml указать 443 порт
+you need to specify port 443 in docker-compose.yml
 
 
-пример:
+Example:
 
 ```yaml
 services:
@@ -32,9 +32,9 @@ services:
       - uberserver
 ```
 
-будет доступно по адресу https://uberserver.local:444/
+will be available at https://uberserver.local:444/
 
-незабудь в /etc/hosts прописать
+don't forget to put in /etc/hosts
 
 ```shell
 127.0.0.1       uberserver.local
