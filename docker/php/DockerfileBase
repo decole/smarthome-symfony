@@ -34,17 +34,14 @@ RUN apt update -q -y \
     && docker-php-ext-install pgsql pdo_pgsql \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install zip \
-#    && pecl install xdebug \
-#    && docker-php-ext-enable xdebug \
     && docker-php-ext-install sockets \
     && pecl install amqp \
     && docker-php-ext-enable amqp \
     && rm -rf /var/lib/apt/lists/*
 
-COPY docker/php/php-fpm.ini /usr/local/etc/php/php.ini
+COPY ./docker/php/php-fpm.ini /usr/local/etc/php/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN pear install PHP_CodeSniffer
 
 RUN apt update -q -y \
     && apt install libmosquitto-dev gcc -y \

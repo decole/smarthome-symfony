@@ -6,7 +6,8 @@ Makefile
 .docker.env
 docker-compose.ci.yaml
 docker-compose.yaml
-
+!/docker/php/php-fpm.ini
+!/docker/supervisor/supervisord.conf
 .idea
 *.iml
 out
