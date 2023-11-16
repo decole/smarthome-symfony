@@ -3,14 +3,14 @@
 namespace App\Application\Cli;
 
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'cli:quasar:device-list')]
 final class QuasarDeviceListCommand extends Command
 {
-    protected static $defaultName = 'cli:quasar:device-list';
-
     public function __construct(private readonly QuasarNotificationService $service)
     {
         parent::__construct();
@@ -26,7 +26,7 @@ final class QuasarDeviceListCommand extends Command
         $map = $this->service->getDevices();
 
         foreach ($map as $device) {
-            dump($device->getId() . ' ' . $device->getName() . ' ' . $device->getType());
+            $output->writeln(sprintf('<info>%s %s %s</info>', $device->getId(), $device->getName(), $device->getType()));
         }
 
         return Command::SUCCESS;

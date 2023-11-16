@@ -22,6 +22,7 @@ class MqttListenConsumer implements ConsumerInterface
     ) {
     }
 
+    /** @deprecated */
     public function execute(AMQPMessage $msg): bool|int
     {
         try {
