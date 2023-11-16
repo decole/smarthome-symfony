@@ -32,20 +32,20 @@ class AliceSkillRequestDto
 
     public function __construct(?array $request)
     {
-        $this->messageId = $request['session']['message_id'] ?? '';
-        $this->sessionId = $request['session']['session_id'] ?? '';
-        $this->skillId = $request['session']['skill_id'] ?? '';
-        $this->userId = $request['session']['user']['user_id'] ?? '';
-        $this->applicationId = $request['session']['application']['application_id'] ?? '';
-        $this->clientId = $request['session']['user_id'] ?? '';
-        $this->isNewSession = $request['session']['new'] ?? true;
+        $this->messageId = (string)($request['session']['message_id'] ?? '');
+        $this->sessionId = (string)($request['session']['session_id'] ?? '');
+        $this->skillId = (string)($request['session']['skill_id'] ?? '');
+        $this->userId = (string)($request['session']['user']['user_id'] ?? '');
+        $this->applicationId = (string)($request['session']['application']['application_id'] ?? '');
+        $this->clientId = (string)($request['session']['user_id'] ?? '');
+        $this->isNewSession = (bool)($request['session']['new'] ?? true);
 
         $this->command = mb_strtolower($request['request']['command'] ?? null);
         $this->originalUtterance = $request['request']['original_utterance'] ?? null;
         $this->nluTokenList = $request['request']['nlu']['tokens'] ?? [];
-        $this->type = $request['request']['type'] ?? 'SimpleUtterance';
+        $this->type = (string)($request['request']['type'] ?? 'SimpleUtterance');
 
-        $this->version = $request['version'] ?? '1.0';
+        $this->version = (string)($request['version'] ?? '1.0');
     }
 
     public function getMessageId(): string
