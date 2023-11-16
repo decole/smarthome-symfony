@@ -9,12 +9,17 @@ services:
     autoconfigure: true
 
   mqtt_client:
-    class: App\Infrastructure\Mqtt\Entity\MqttClient
+    class: App\Infrastructure\Mqtt\Entity\PhpMqttClient
     arguments:
       $broker: '%env(MQTT_BROKER_URL)%'
       $port: '%env(MQTT_PORT)%'
 
   App\Infrastructure\Mqtt\Service\MqttHandleService:
+    arguments:
+      $client: '@mqtt_client'
+      $logger: '@monolog.logger.mqtt_transport'
+
+  App\Infrastructure\Mqtt\Service\MqttSubscribeService:
     arguments:
       $client: '@mqtt_client'
       $logger: '@monolog.logger.mqtt_transport'

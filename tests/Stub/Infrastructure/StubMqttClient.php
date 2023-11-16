@@ -3,6 +3,7 @@
 namespace App\Tests\Stub\Infrastructure;
 
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
+use Closure;
 
 class StubMqttClient implements MqttClientInterface
 {
@@ -37,15 +38,7 @@ class StubMqttClient implements MqttClientInterface
     {
     }
 
-    public function subscribe(string $topic, int $qos): void
-    {
-    }
-
-    public function onMessage(mixed $callback): void
-    {
-    }
-
-    public function loop(): void
+    public function subscribe(string $topic, int $qos, Closure $closure): void
     {
     }
 }

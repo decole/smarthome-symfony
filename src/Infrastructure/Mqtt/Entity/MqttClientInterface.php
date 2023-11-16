@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Mqtt\Entity;
 
+use Closure;
+
 interface MqttClientInterface
 {
     public function getClient(): mixed;
@@ -18,9 +20,5 @@ interface MqttClientInterface
 
     public function publish(string $topic, string $payload, int $qos = 0, bool $retain = false): void;
 
-    public function subscribe(string $topic, int $qos): void;
-
-    public function onMessage(mixed $callback): void;
-
-    public function loop(): void;
+    public function subscribe(string $topic, int $qos, Closure $closure): void;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Mqtt\Entity;
 
 use App\Infrastructure\Mqtt\Exception\MqttException;
+use Closure;
 use Mosquitto\Client;
 use Mosquitto\Message;
 
@@ -92,18 +93,8 @@ final class MqttClient implements MqttClientInterface
         }
     }
 
-    public function subscribe(string $topic, int $qos): void
+    public function subscribe(string $topic, int $qos, Closure $closure): void
     {
         $this->getClient()->subscribe($topic, $qos);
-    }
-
-    public function onMessage(mixed $callback): void
-    {
-        $this->getClient()->onMessage($callback);
-    }
-
-    public function loop(): void
-    {
-        $this->getClient()->loop(50);
     }
 }

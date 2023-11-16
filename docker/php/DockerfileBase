@@ -35,6 +35,8 @@ RUN apt update -q -y \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install zip \
     && docker-php-ext-install sockets \
+    && docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-install pcntl \
     && pecl install amqp \
     && docker-php-ext-enable amqp \
     && rm -rf /var/lib/apt/lists/*
@@ -42,16 +44,6 @@ RUN apt update -q -y \
 COPY ./docker/php/php-fpm.ini /usr/local/etc/php/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN apt update -q -y \
-    && apt install libmosquitto-dev gcc -y \
-    && cd /tmp \
-    && git clone https://github.com/nismoryco/Mosquitto-PHP.git \
-    && cd Mosquitto-PHP/ \
-    && phpize \
-    && ./configure --prefix=/usr/local --with-mosquitto \
-    && make \
-    && make install
 
 RUN echo -e "\n\n====================== Remove unused ======================\n" \
     && apt autoremove gcc -y \
