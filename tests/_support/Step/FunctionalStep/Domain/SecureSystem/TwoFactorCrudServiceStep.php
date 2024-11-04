@@ -9,6 +9,7 @@ use App\Domain\SecureSystem\Service\TwoFactorCrudService;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use App\Tests\FunctionalTester;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class TwoFactorCrudServiceStep extends FunctionalTester
@@ -25,7 +26,7 @@ class TwoFactorCrudServiceStep extends FunctionalTester
     public function getRequestWithSession(): Request
     {
         $request = new Request();
-        $session = $this->grabService(SessionInterface::class);
+        $session = $this->grabService(Session::class);
         $request->setSession($session);
 
         return $request;

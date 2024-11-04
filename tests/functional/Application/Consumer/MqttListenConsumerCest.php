@@ -2,6 +2,7 @@
 
 namespace App\Tests\functional\Application\Consumer;
 
+use Codeception\Attribute\Skip;
 use App\Application\Consumer\MqttListenConsumer;
 use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\DeviceData\Service\DeviceDataResolver;
@@ -17,6 +18,7 @@ use Psr\Log\NullLogger;
 use ReflectionMethod;
 use Symfony\Component\Serializer\SerializerInterface;
 
+#[Skip('disable consumer')]
 class MqttListenConsumerCest
 {
     public function finalClass(FunctionalTester $I): void

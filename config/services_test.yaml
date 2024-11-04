@@ -13,3 +13,6 @@ services:
 
   App\Infrastructure\SecureSystem\EventListener\ResponseEventListener:
     public: true
+
+  Symfony\Component\HttpFoundation\Session\Session:
+    public: true
