@@ -59,7 +59,6 @@ final class DeviceDataCacheService
 
     /**
      * @param array<string, mixed> $map
-     * @return array
      */
     public function clearOldPayload(array $map): array
     {
@@ -84,7 +83,7 @@ final class DeviceDataCacheService
     private function getTopicPayload(array $cached, mixed $topic): ?string
     {
         foreach ($cached as $cachedTopic => $payload) {
-            if (trim($cachedTopic) == trim($topic)) {
+            if (trim($cachedTopic) === trim($topic)) {
                 return $payload['payload'];
             }
         }

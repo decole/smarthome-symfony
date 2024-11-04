@@ -16,7 +16,7 @@ final class RepositoryCompiler implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        foreach ($container->findTaggedServiceIds('doctrine.repository') as $id => $_) {
+        foreach (array_keys($container->findTaggedServiceIds('doctrine.repository')) as $id) {
             $class = $container->getDefinition($id)->getClass();
 
             if (null === $class) {
@@ -26,7 +26,7 @@ final class RepositoryCompiler implements CompilerPassInterface
             $implementation = new ReflectionClass($class);
 
             foreach ($implementation->getInterfaces() as $reflectionClass) {
-                if (mb_substr(self::REPOSITORY_POSTFIX, -mb_strlen($reflectionClass->name))) {
+                if (mb_substr(self::REPOSITORY_POSTFIX, -mb_strlen($reflectionClass->name)) !== '' && mb_substr(self::REPOSITORY_POSTFIX, -mb_strlen($reflectionClass->name)) !== '0') {
                     $container->setAlias($reflectionClass->name, $implementation->name);
                 }
             }

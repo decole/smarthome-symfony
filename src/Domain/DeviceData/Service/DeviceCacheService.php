@@ -50,7 +50,7 @@ final class DeviceCacheService implements CacheServiceInterface
     {
         return $this->cache->getOrSet(
             key: CacheKeyListEnum::DEVICE_MAP_CACHE->value,
-            callback: function (ItemInterface $item) {
+            callback: function (ItemInterface $item): array {
                 return $this->getMap();
             }
         );
@@ -64,7 +64,7 @@ final class DeviceCacheService implements CacheServiceInterface
     {
         return $this->cache->getOrSet(
             key: CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE->value,
-            callback: function (ItemInterface $item) {
+            callback: function (ItemInterface $item): array {
                 $topicList = [];
                 $map = $this->getDeviceMap();
 

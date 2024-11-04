@@ -56,7 +56,7 @@ final class RegistrationValidateService
 
         $user = $this->repository->findOneByName($dto->getName());
 
-        if ($user !== null) {
+        if ($user instanceof \App\Domain\Identity\Entity\User) {
             $this->addError('login', 'Login exist');
         }
     }
@@ -85,7 +85,7 @@ final class RegistrationValidateService
             $this->addError('email', 'Invalid email format');
         }
 
-        if ($this->repository->findOneByEmail($dto->getEmail())) {
+        if ($this->repository->findOneByEmail($dto->getEmail()) instanceof \App\Domain\Identity\Entity\User) {
             $this->addError('email', 'email is exist');
         }
     }

@@ -38,8 +38,17 @@ RUN apt update -q -y \
 #    && docker-php-ext-configure pcntl --enable-pcntl \
 #    && docker-php-ext-install pcntl \
     && pecl install amqp \
-    && docker-php-ext-enable amqp \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-enable amqp
+
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-install pcntl
+
+RUN apt-get -y update \
+    && apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY ./docker/php/php-fpm.ini /usr/local/etc/php/php.ini
 

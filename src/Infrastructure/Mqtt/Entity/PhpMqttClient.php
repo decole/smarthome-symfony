@@ -23,7 +23,7 @@ final class PhpMqttClient implements MqttClientInterface
 
     public function getClient(): MqttClientAlias
     {
-        if ($this->client === null) {
+        if (!$this->client instanceof \PhpMqtt\Client\MqttClient) {
             $this->client = new MqttClientAlias(
                 $this->broker,
                 $this->port,

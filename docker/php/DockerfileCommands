@@ -36,8 +36,20 @@ RUN apt update -q -y \
     && docker-php-ext-install zip \
     && docker-php-ext-install sockets \
     && pecl install amqp \
-    && docker-php-ext-enable amqp \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-enable amqp
+#    && docker-php-ext-configure pcntl --enable-pcntl \
+#    && docker-php-ext-install \
+#    && pcntl \
+
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-install pcntl
+
+RUN apt-get -y update \
+    && apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

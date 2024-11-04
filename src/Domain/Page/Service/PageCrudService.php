@@ -86,7 +86,7 @@ final class PageCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity) {
+        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -95,7 +95,7 @@ final class PageCrudService
     {
         $dto = new CrudPageDto();
 
-        if ($request === null || $request->request->get(self::NAME_ALIAS) === null) {
+        if (!$request instanceof \Symfony\Component\HttpFoundation\Request || $request->request->get(self::NAME_ALIAS) === null) {
             $this->setDefault($dto);
 
             return $dto;
@@ -127,10 +127,6 @@ final class PageCrudService
         return $dto;
     }
 
-    /**
-     * @param CrudPageDto $dto
-     * @return Page
-     */
     public function getNewEntityByDto(CrudPageDto $dto): Page
     {
         return new Page(
@@ -202,7 +198,6 @@ final class PageCrudService
     }
 
     /**
-     * @param Request|null $request
      * @return array<string, array<string, string>>
      */
     private function getConfigByRequest(?Request $request): array

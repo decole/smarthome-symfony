@@ -10,13 +10,6 @@ use App\Domain\Relay\Entity\Relay;
 
 final class RelayDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    /**
-     * @var Relay $device
-     */
-
-    /**
-     * @return DeviceDataValidatedDto
-     */
     public function handle(): DeviceDataValidatedDto
     {
         assert($this->device instanceof Relay);

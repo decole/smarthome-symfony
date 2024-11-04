@@ -49,33 +49,21 @@ final class Page implements EntityInterface
         return 'page';
     }
 
-    /**
-     * @return string
-     */
     public function getAliasUri(): string
     {
         return $this->alias;
     }
 
-    /**
-     * @param string $alias
-     */
     public function setAlias(string $alias): void
     {
         $this->alias = $alias;
     }
 
-    /**
-     * @return string
-     */
     public function getIcon(): string
     {
         return $this->icon;
     }
 
-    /**
-     * @param string $icon
-     */
     public function setIcon(string $icon): void
     {
         $this->icon = $icon;

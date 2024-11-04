@@ -85,14 +85,14 @@ final class ScheduleAddCommand extends Command
         return new ScheduleTaskInputDto(
             command: $command,
             arguments: $arguments,
-            interval: $this->getInterval($rawInterval, $output),
+            interval: $this->getInterval($rawInterval),
             nextRun: $nextRun
         );
     }
 
-    private function getInterval(?string $rawInterval, OutputInterface $output): ?string
+    private function getInterval(?string $rawInterval): ?string
     {
-        if ($rawInterval !== null && $this->service->getNextDate($rawInterval) !== null) {
+        if ($rawInterval !== null && $this->service->getNextDate($rawInterval) instanceof \DateTimeImmutable) {
             return $rawInterval;
         }
 

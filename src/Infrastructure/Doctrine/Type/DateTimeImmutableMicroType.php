@@ -40,9 +40,6 @@ final class DateTimeImmutableMicroType extends Type
         return DateTimeImmutable::createFromFormat($this->formatString(), $value, new DateTimeZone('UTC'));
     }
 
-    /**
-     * @return string
-     */
     protected function formatString(): string
     {
         return 'Y-m-d H:i:s.u';

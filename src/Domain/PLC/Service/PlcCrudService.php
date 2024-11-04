@@ -84,7 +84,7 @@ final class PlcCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity) {
+        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -93,7 +93,7 @@ final class PlcCrudService
     {
         $dto = new CrudPlcDto();
 
-        if ($request === null) {
+        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
             return $dto;
         }
 
@@ -126,16 +126,12 @@ final class PlcCrudService
 
         $this->setStatusMessage($dto, $entity);
 
-        $dto->notify = $entity->isNotify() === true ? 'on' : null;
+        $dto->notify = $entity->isNotify() ? 'on' : null;
         $dto->status = $entity->getStatus() === EntityStatusEnum::STATUS_ACTIVE->value ? 'on' : null;
 
         return $dto;
     }
 
-    /**
-     * @param CrudPlcDto $dto
-     * @return PLC
-     */
     public function getNewEntityByDto(CrudPlcDto $dto): PLC
     {
         return new PLC(

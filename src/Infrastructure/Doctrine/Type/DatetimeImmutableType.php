@@ -62,8 +62,6 @@ final class DatetimeImmutableType extends \Doctrine\DBAL\Types\DateTimeImmutable
     /**
      * Конвертирует дату и время в utc
      *
-     * @param \DateTimeImmutable $dateTime
-     * @return \DateTimeImmutable
      * @throws \Exception
      */
     private function convertDateTimeToUTC(\DateTimeImmutable $dateTime): \DateTimeImmutable

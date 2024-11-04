@@ -37,7 +37,7 @@ final class ScheduleTaskService
 
     public function handle(ScheduleTask $task, Application $application, OutputInterface $output): void
     {
-        if ($task->getNextRun() === null) {
+        if (!$task->getNextRun() instanceof \DateTimeImmutable) {
             $this->logger->info('Catch stab handle command', [
                 'command' => $task->getCommand(),
             ]);

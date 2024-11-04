@@ -40,7 +40,7 @@ final class MqttPayloadMetricsCollector implements RequestMetricsCollectorInterf
         }
     }
 
-    private function incPayloads(string $topic, ?string $payload)
+    private function incPayloads(string $topic, ?string $payload): void
     {
         $counter = $this->collectionRegistry->getOrRegisterCounter(
             $this->namespace,

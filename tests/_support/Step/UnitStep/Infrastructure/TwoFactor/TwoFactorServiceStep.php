@@ -6,14 +6,12 @@ use App\Domain\Identity\Entity\User;
 use App\Infrastructure\SecureSystem\EventListener\ResponseEventListener;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use App\Tests\UnitTester;
-use Codeception\Stub;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\Security\Core\Security;
 
 final class TwoFactorServiceStep extends UnitTester
 {
@@ -37,14 +35,10 @@ final class TwoFactorServiceStep extends UnitTester
     {
         $service = new TwoFactorService(true);
         $container = $this->grabService(ContainerInterface::class);
-        $security = Stub::makeEmpty(Security::class, [
-            'getUser' => $user,
-        ]);
 
         return new ResponseEventListener(
             twoFactorService: $service,
-            container: $container,
-            security: $security
+            container: $container
         );
     }
 

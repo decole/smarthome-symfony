@@ -24,7 +24,6 @@ final class SecurityCriteria extends AbstractCriteria
 
     public function prepareAlertMessage(): string
     {
-        /** @var Security $device */
         $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
 
         $name = $this->device?->getName() ?? $this->payload->getTopic();

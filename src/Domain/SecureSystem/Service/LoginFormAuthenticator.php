@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\SecureSystem\Service;
 
 use App\Domain\Contract\Repository\PageRepositoryInterface;
+use App\Domain\Identity\Entity\User;
 use App\Domain\Identity\Repository\UserRepositoryInterface;
 use App\Domain\SecureSystem\Passport\TwoFactorBadge;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
@@ -58,7 +59,7 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($token->getUser() && $this->twoFactorService->isEnabled()) {
             $user = $this->userRepository->findOneByEmail($token->getUser()->getUserIdentifier());
 
-            if ($user !== null && $user->getTwoFactorCode() !== null) {
+            if ($user instanceof User && $user->getTwoFactorCode() !== null) {
                 return new RedirectResponse(self::TWO_FACTOR_ROUTE);
             }
         }

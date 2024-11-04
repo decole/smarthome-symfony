@@ -22,7 +22,6 @@ final class SmartHomeService
     }
 
     /**
-     * @param string|null $content
      * @return DeviceInterface[]
      * @throws Exception
      */
@@ -46,7 +45,7 @@ final class SmartHomeService
 
             $entity = $this->deviceService->getDevice($id);
 
-            if ($entity !== null) {
+            if ($entity instanceof \App\Infrastructure\YandexSmartHome\Device\DeviceInterface) {
                 $result[] = $entity;
             }
         }

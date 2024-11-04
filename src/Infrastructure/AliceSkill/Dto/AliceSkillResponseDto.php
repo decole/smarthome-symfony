@@ -12,8 +12,6 @@ class AliceSkillResponseDto
 
     /**
      * https://yandex.ru/dev/dialogs/alice/doc/response.html
-     *
-     * @return array
      */
     public function getResult(): array
     {

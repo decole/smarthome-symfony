@@ -11,13 +11,6 @@ use App\Domain\Sensor\Entity\Sensor;
 
 final class SensorDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    /**
-     * @var Sensor $device
-     */
-
-    /**
-     * @return DeviceDataValidatedDto
-     */
     public function handle(): DeviceDataValidatedDto
     {
         if (!$this->device->isNotify()) {

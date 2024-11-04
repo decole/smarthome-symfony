@@ -47,8 +47,8 @@ final class PlcCrudValidationService implements ValidationInterface
             $updatingEntity = $this->repository->findById($this->dto->savedId);
             $savedEntity = $this->repository->findByName($this->dto->name);
 
-            if ($savedEntity !== null &&
-                $updatingEntity!== null &&
+            if ($savedEntity instanceof \App\Domain\PLC\Entity\PLC &&
+                $updatingEntity instanceof \App\Domain\PLC\Entity\PLC &&
                 $updatingEntity->getIdToString() !== $savedEntity->getIdToString()
             ) {
                 $list->add(new ConstraintViolation(
@@ -64,7 +64,7 @@ final class PlcCrudValidationService implements ValidationInterface
             return $list;
         }
 
-        if ($this->repository->findByName($this->dto->name)) {
+        if ($this->repository->findByName($this->dto->name) instanceof \App\Domain\PLC\Entity\PLC) {
             $list->add(new ConstraintViolation(
                 message: 'Plc name already exist.',
                 messageTemplate: null,
@@ -75,7 +75,7 @@ final class PlcCrudValidationService implements ValidationInterface
             ));
         }
 
-        if ($this->repository->findByTargetTopic($this->dto->targetTopic)) {
+        if ($this->repository->findByTargetTopic($this->dto->targetTopic) instanceof \App\Domain\PLC\Entity\PLC) {
             $list->add(new ConstraintViolation(
                 message: 'Plc targetTopic already exist.',
                 messageTemplate: null,

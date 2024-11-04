@@ -27,7 +27,7 @@ final class SecureDeviceTopicPayloadApiController
         if (mb_strlen($topic) == 0) {
             return new JsonResponse([
                 'error' => 'empty topics'
-            ], 400);
+            ], \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(

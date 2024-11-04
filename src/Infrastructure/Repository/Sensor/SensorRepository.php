@@ -23,7 +23,7 @@ final class SensorRepository extends BaseDoctrineRepository implements SensorRep
             ->orderBy('s.createdAt', 'DESC');
 
         if ($status !== null) {
-            if (EntityStatusEnum::tryFrom($status) === null) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
             }
 
