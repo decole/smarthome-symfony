@@ -1,7 +1,6 @@
 imports:
   - { resource: 'http.yaml' }
   - { resource: 'cli.yaml' }
-  - { resource: 'consumers.yaml' }
 
 services:
   _defaults:

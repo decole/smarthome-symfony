@@ -5,15 +5,15 @@ framework:
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             failed: 'doctrine://default?queue_name=failed'
-            sync:
-              dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async: "%env(MESSENGER_TRANSPORT_DSN)%"
+            sync: 'sync://'
 
         routing:
-            Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
-            Symfony\Component\Notifier\Message\ChatMessage: sync
-            Symfony\Component\Notifier\Message\SmsMessage: sync
-            App\Domain\Notification\Entity\TelegramNotificationMessage: sync
-            App\Domain\Notification\Entity\AliceNotificationMessage: sync
-            App\Domain\Notification\Entity\DiscordNotificationMessage: sync
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+            Symfony\Component\Notifier\Message\ChatMessage: async
+            Symfony\Component\Notifier\Message\SmsMessage: async
+            App\Domain\Notification\Entity\TelegramNotificationMessage: async
+            App\Domain\Notification\Entity\AliceNotificationMessage: async
+            App\Domain\Notification\Entity\DiscordNotificationMessage: async
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
