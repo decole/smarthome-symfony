@@ -26,7 +26,7 @@ final class TwoFactorService
     // checking the code from the user and saving the special flag to the session
     public function checkCode(User $user, ?string $code, Request $request): TwoFactorResultDto
     {
-        if (empty($code)) {
+        if ($code === null || $code === '' || $code === '0') {
             return new TwoFactorResultDto(false, 'Empty code');
         }
 
@@ -54,12 +54,12 @@ final class TwoFactorService
     {
         $key = $request->getSession()->get(self::NAME);
 
-        return !(empty($key) || $key !== md5($user->getTwoFactorCode()));
+        return !empty($key) && $key === md5($user->getTwoFactorCode());
     }
 
     public function validateCode(string $secret, ?string $code): bool|int
     {
-        if (empty($code)) {
+        if ($code === null || $code === '' || $code === '0') {
             return false;
         }
 

@@ -30,7 +30,7 @@ final class ScheduleDeleteCommand extends Command
         $i = 1;
         $list = $this->repository->findAll();
 
-        if (empty($list)) {
+        if ($list === []) {
             $output->writeln('Not have tasks. Count = 0.');
 
             return Command::SUCCESS;

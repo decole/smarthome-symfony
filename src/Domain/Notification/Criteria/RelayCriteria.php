@@ -21,7 +21,6 @@ final class RelayCriteria extends AbstractCriteria
 
     public function prepareAlertMessage(): string
     {
-        /** @var Relay $device */
         $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
 
         $name = $this->device?->getName() ?? $this->payload->getTopic();

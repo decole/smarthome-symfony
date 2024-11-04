@@ -28,7 +28,7 @@ final class RelayDeviceOperateApiController
         if ($topic === null || $payload === null) {
             return new JsonResponse([
                 'error' => 'empty post data'
-            ], 400);
+            ], \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
         }
 
         $message = new DevicePayload(

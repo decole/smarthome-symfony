@@ -32,7 +32,7 @@ final class SecureDeviceSetStateTriggerApiController
         if (mb_strlen($trigger) == 0 || mb_strlen($topic) == 0) {
             return new JsonResponse([
                 'error' => 'empty topic or trigger state'
-            ], 400);
+            ], \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
         }
 
         $isTriggered = $trigger === 'true';

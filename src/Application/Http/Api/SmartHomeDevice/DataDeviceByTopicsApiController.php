@@ -22,10 +22,10 @@ final class DataDeviceByTopicsApiController
     {
         $topics = $this->service->transcribeUri($request->get('topics'));
 
-        if (empty($topics)) {
+        if ($topics === []) {
             return new JsonResponse([
                 'error' => 'empty topics'
-            ], 400);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse($this->deviceDataCacheService->getPayloadByTopicList($topics));

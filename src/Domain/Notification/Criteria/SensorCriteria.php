@@ -21,7 +21,6 @@ final class SensorCriteria extends AbstractCriteria
 
     public function prepareAlertMessage(): string
     {
-        /** @var Sensor $device */
         $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
 
         $name = $this->device?->getName() ?? $this->payload->getTopic();

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 final class ProfileTwoFactorAddController extends AbstractController
 {
@@ -19,18 +20,17 @@ final class ProfileTwoFactorAddController extends AbstractController
         private readonly TwoFactorQrCodeService $qrCodeService,
         private readonly TwoFactorService $validateService,
         private readonly TwoFactorCrudService $service,
-        private readonly Security $security
     ) {
     }
 
     #[Route('/user/profile/two-factor-add', name: "profile_two_factor_add")]
     public function addTwoFactor(Request $request): Response
     {
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $error = null;
         $success = false;
 
-        if ($user === null) {
+        if (!$user instanceof UserInterface) {
             return $this->redirectToRoute('app_login');
         }
 
@@ -52,9 +52,9 @@ final class ProfileTwoFactorAddController extends AbstractController
         }
 
         return $this->render('crud/profile/profile.add.two.factor.html.twig', [
-            'user' => $this->security->getUser(),
-            'qr' => !$success ? $this->qrCodeService->generateImageSource($user, $secret) : null,
-            'success' => $success === true ? 'Two factor saved' : null,
+            'user' => $this->getUser(),
+            'qr' => $success ? null : $this->qrCodeService->generateImageSource($user, $secret),
+            'success' => $success ? 'Two factor saved' : null,
             'isShowQrCode' => !$success,
             'error' => $error,
         ]);

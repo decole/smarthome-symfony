@@ -19,7 +19,7 @@ final class TwoFactorController extends AbstractController
     }
 
     #[Route('/2fa', name: '2fa')]
-    public function index(Request $request, Security $security): Response
+    public function index(Request $request, \Symfony\Bundle\SecurityBundle\Security $security): Response
     {
         /** @var User $user */
         $user = $security->getUser();

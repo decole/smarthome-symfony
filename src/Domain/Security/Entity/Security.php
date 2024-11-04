@@ -140,14 +140,14 @@ final class Security implements EntityInterface
 
     private function checkStatusType(int $status): void
     {
-        if (EntityStatusEnum::tryFrom($status) === null) {
+        if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
         }
     }
 
     private function checkSecurityType(string $type): void
     {
-        if (SecurityTypeEnum::tryFrom($type) === null) {
+        if (!SecurityTypeEnum::tryFrom($type) instanceof \App\Domain\Security\Enum\SecurityTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Security device type');
         }
     }

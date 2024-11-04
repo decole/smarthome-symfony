@@ -21,7 +21,7 @@ class ResponseEventListener
     public function __construct(
         private readonly TwoFactorService $twoFactorService,
         private readonly ContainerInterface $container,
-        private readonly Security $security,
+        private Security $security,
     ) {
     }
 

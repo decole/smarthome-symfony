@@ -26,3 +26,7 @@ yarn-error.log
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 /.psalm/cache/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

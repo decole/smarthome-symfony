@@ -45,11 +45,11 @@ final class RestorePasswordService
     {
         $user = $this->repository->findOneByEmail(StringHelper::sanitize($dto->email));
 
-        if ($user === null) {
+        if (!$user instanceof \App\Domain\Identity\Entity\User) {
             return;
         }
 
-        $this->transaction->transactional(function () use ($user) {
+        $this->transaction->transactional(function () use ($user): void {
             $user->setUnverified();
             $user->generateRestoreToken();
             $this->repository->add($user);
@@ -75,7 +75,7 @@ final class RestorePasswordService
 
         $user = $this->repository->findByRestoreToken($token);
 
-        if ($user === null) {
+        if (!$user instanceof \App\Domain\Identity\Entity\User) {
             $error = $this->translator->trans('Wrong restore token');
         }
 
@@ -104,7 +104,7 @@ final class RestorePasswordService
     {
         $password = $this->faker->getGenerator()->password(12);
 
-        $this->transaction->transactional(function () use ($user, $password) {
+        $this->transaction->transactional(function () use ($user, $password): void {
             $user->setVerified();
             $user->cleanRestoreToken();
             $user->setPassword($this->passwordHasher->hashPassword($user, $password));

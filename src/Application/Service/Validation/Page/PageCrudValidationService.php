@@ -48,7 +48,7 @@ final class PageCrudValidationService implements ValidationInterface
 
     private function uniqueValidate(ConstraintViolationList $list): ConstraintViolationListInterface
     {
-        if ($this->repository->findByName($this->dto->name)) {
+        if ($this->repository->findByName($this->dto->name) instanceof \App\Domain\Page\Entity\Page) {
             $list->add(new ConstraintViolation(
                 message: 'Page name already exist.',
                 messageTemplate: null,

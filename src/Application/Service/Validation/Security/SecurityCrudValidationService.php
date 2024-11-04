@@ -45,7 +45,7 @@ final class SecurityCrudValidationService implements ValidationInterface
 
     private function uniqueValidate(ConstraintViolationList $list): ConstraintViolationListInterface
     {
-        if ($this->repository->findByName($this->dto->name)) {
+        if ($this->repository->findByName($this->dto->name) instanceof \App\Domain\Security\Entity\Security) {
             $list->add(new ConstraintViolation(
                 message: 'Security device name already exist.',
                 messageTemplate: null,
@@ -56,7 +56,7 @@ final class SecurityCrudValidationService implements ValidationInterface
             ));
         }
 
-        if ($this->repository->findByTopic($this->dto->topic)) {
+        if ($this->repository->findByTopic($this->dto->topic) instanceof \App\Domain\Security\Entity\Security) {
             $list->add(new ConstraintViolation(
                 message: 'Security device topic already exist.',
                 messageTemplate: null,

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95e1c764a30eb88f667d790184f6523a",
+    "content-hash": "41aa95df09dc2b8d79889860daef3b1c",
     "packages": [
         {
             "name": "artprima/prometheus-metrics-bundle",
@@ -2030,16 +2030,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "4.8.5",
+            "version": "5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "0db25b506a8411a5e1644ebaa67123a6eb7b6a77"
+                "reference": "0cc00f0626b73bc71a1ea17af01387d0ac75e046"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/0db25b506a8411a5e1644ebaa67123a6eb7b6a77",
-                "reference": "0db25b506a8411a5e1644ebaa67123a6eb7b6a77",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/0cc00f0626b73bc71a1ea17af01387d0ac75e046",
+                "reference": "0cc00f0626b73bc71a1ea17af01387d0ac75e046",
                 "shasum": ""
             },
             "require": {
@@ -2050,7 +2050,7 @@
                 "khanamiryan/qrcode-detector-decoder": "^1.0.6"
             },
             "require-dev": {
-                "endroid/quality": "dev-master",
+                "endroid/quality": "dev-main",
                 "ext-gd": "*",
                 "khanamiryan/qrcode-detector-decoder": "^1.0.4||^2.0.2",
                 "setasign/fpdf": "^1.8.2"
@@ -2064,7 +2064,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.x-dev"
+                    "dev-main": "5.x-dev"
                 }
             },
             "autoload": {
@@ -2093,7 +2093,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/4.8.5"
+                "source": "https://github.com/endroid/qr-code/tree/5.0.7"
             },
             "funding": [
                 {
@@ -2101,7 +2101,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-29T14:03:20+00:00"
+            "time": "2024-03-08T11:24:40+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
@@ -14402,6 +14402,64 @@
             "time": "2021-09-22T16:57:06+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "1.12.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-18T11:12:07+00:00"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "10.1.16",
             "source": {
@@ -14966,6 +15024,65 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.12.4"
             },
             "time": "2024-06-10T01:18:23+00:00"
+        },
+        {
+            "name": "rector/rector",
+            "version": "1.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rectorphp/rector.git",
+                "reference": "05755bf43617449c08ee8e50fb840c85ad3b1240"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/05755bf43617449c08ee8e50fb840c85ad3b1240",
+                "reference": "05755bf43617449c08ee8e50fb840c85ad3b1240",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0",
+                "phpstan/phpstan": "^1.12.5"
+            },
+            "conflict": {
+                "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
+                "rector/rector-phpunit": "*",
+                "rector/rector-symfony": "*"
+            },
+            "suggest": {
+                "ext-dom": "To manipulate phpunit.xml via the custom-rule command"
+            },
+            "bin": [
+                "bin/rector"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+            "keywords": [
+                "automation",
+                "dev",
+                "migration",
+                "refactoring"
+            ],
+            "support": {
+                "issues": "https://github.com/rectorphp/rector/issues",
+                "source": "https://github.com/rectorphp/rector/tree/1.2.8"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-18T11:54:27+00:00"
         },
         {
             "name": "sebastian/cli-parser",

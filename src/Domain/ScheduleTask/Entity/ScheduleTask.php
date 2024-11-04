@@ -65,7 +65,7 @@ final class ScheduleTask implements EntityInterface
 
     public function setNextRun(?DateTimeImmutable $nextRun): void
     {
-        if ($nextRun !== null) {
+        if ($nextRun instanceof \DateTimeImmutable) {
             /** @var DateTimeImmutable $nextRun */
             [$hour, $minute, $second] = [(int)$nextRun->format('H'), (int)$nextRun->format('i'), 0];
 

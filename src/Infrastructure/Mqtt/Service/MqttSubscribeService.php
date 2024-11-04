@@ -28,7 +28,7 @@ final class MqttSubscribeService
             $this->client->subscribe(
                 self::SUBSCRIBE_TOPIC,
                 1,
-                function ($topic, $message, $retained, $matchedWildcards) {
+                function ($topic, $message, $retained, $matchedWildcards): void {
                     $this->resolver->resolveDevicePayload(new DevicePayload($topic, $message));
                 }
             );

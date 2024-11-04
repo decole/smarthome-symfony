@@ -47,7 +47,7 @@ final class RelayCrudValidationService implements ValidationInterface
 
     private function uniqueValidate(ConstraintViolationList $list): ConstraintViolationListInterface
     {
-        if ($this->repository->findByName($this->dto->name)) {
+        if ($this->repository->findByName($this->dto->name) instanceof \App\Domain\Relay\Entity\Relay) {
             $list->add(new ConstraintViolation(
                 message: 'Relay name already exist.',
                 messageTemplate: null,
@@ -58,7 +58,7 @@ final class RelayCrudValidationService implements ValidationInterface
             ));
         }
 
-        if ($this->repository->findByTopic($this->dto->topic)) {
+        if ($this->repository->findByTopic($this->dto->topic) instanceof \App\Domain\Relay\Entity\Relay) {
             $list->add(new ConstraintViolation(
                 message: 'Relay topic already exist.',
                 messageTemplate: null,

@@ -59,7 +59,6 @@ class SaveDeviceStateTaskCommand extends Command
     }
 
     /**
-     * @return void
      * @throws SaveDeviceStateException|InvalidArgumentException
      */
     private function handle(): void
@@ -126,7 +125,7 @@ class SaveDeviceStateTaskCommand extends Command
         mixed $payload
     ): void {
         $this->transaction->transactional(
-            function () use ($repository, $id, $payload) {
+            function () use ($repository, $id, $payload): void {
                 $entity = $repository->findById($id);
 
                 if (null !== $entity) {

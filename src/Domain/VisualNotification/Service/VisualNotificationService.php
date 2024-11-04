@@ -118,7 +118,6 @@ final class VisualNotificationService
     }
 
     /**
-     * @param int|null $type
      * @return array<int, VisualNotification>
      * @throws InvalidArgumentException
      */
@@ -134,7 +133,7 @@ final class VisualNotificationService
 
         return $this->cacheService->getOrSet(
             key: $cacheKey,
-            callback: function (ItemInterface $item) use ($type) {
+            callback: function (ItemInterface $item) use ($type): array {
                 $item->expiresAfter(3600);
                 return $this->repository->findByTypeAndIsRead(type: $type, isRead: false);
             }
@@ -162,7 +161,7 @@ final class VisualNotificationService
 
     private function minimalTime(?DateTimeImmutable $time, DateTimeImmutable $createdAt): ?DateTimeImmutable
     {
-        if ($time === null) {
+        if (!$time instanceof \DateTimeImmutable) {
             return $createdAt;
         }
 
@@ -175,7 +174,7 @@ final class VisualNotificationService
 
     private function diffTime(?DateTimeImmutable $time): ?string
     {
-        if ($time === null) {
+        if (!$time instanceof \DateTimeImmutable) {
             return null;
         }
 

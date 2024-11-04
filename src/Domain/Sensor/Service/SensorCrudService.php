@@ -104,7 +104,7 @@ final class SensorCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity) {
+        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -119,7 +119,7 @@ final class SensorCrudService
         $dto = new CrudSensorDto();
         $dto->type = $type;
 
-        if ($request === null) {
+        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
             return $dto;
         }
 
@@ -156,10 +156,6 @@ final class SensorCrudService
         return $dto;
     }
 
-    /**
-     * @param CrudSensorDto $dto
-     * @return Sensor
-     */
     public function getNewEntityByDto(CrudSensorDto $dto): Sensor
     {
         Assert::inArray($dto->type, $this->getTypes());

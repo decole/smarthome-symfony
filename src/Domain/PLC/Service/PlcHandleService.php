@@ -105,12 +105,7 @@ final class PlcHandleService
 
             return true;
         }
-
-        if (time() >= $time) {
-            return false;
-        }
-
-        return true;
+        return time() < $time;
     }
 
     private function notifyOffline(array $plc): void

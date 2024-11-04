@@ -22,7 +22,7 @@ final class SitePageService
     {
         $page = $this->repository->findByName($name);
 
-        if ($page === null) {
+        if (!$page instanceof \App\Domain\Page\Entity\Page) {
             return [];
         }
 

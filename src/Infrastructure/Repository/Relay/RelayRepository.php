@@ -23,7 +23,7 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
             ->orderBy('r.createdAt', 'DESC');
 
         if ($status !== null) {
-            if (EntityStatusEnum::tryFrom($status) === null) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Relay device status');
             }
 

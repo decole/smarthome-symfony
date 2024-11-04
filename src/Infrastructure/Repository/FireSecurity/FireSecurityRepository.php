@@ -26,7 +26,7 @@ final class FireSecurityRepository extends BaseDoctrineRepository implements Fir
             ->orderBy('f.createdAt', 'DESC');
 
         if ($status !== null) {
-            if (EntityStatusEnum::tryFrom($status) === null) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Fire security device status');
             }
 

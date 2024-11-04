@@ -65,24 +65,21 @@ final class SecureDeviceDataService
     /**
      * Сохранение нового состояния устройства безопасности из виджета безопасности
      *
-     * @param string $topic
-     * @param bool $trigger
-     * @return void
      * @throws NonUniqueResultException
      */
     public function setTrigger(string $topic, bool $trigger): void
     {
         $device = $this->repository->findByTopic($topic);
 
-        if ($device === null) {
+        if (!$device instanceof \App\Domain\Security\Entity\Security) {
             return;
         }
 
-        $device->setLastCommand($trigger === true ?
+        $device->setLastCommand($trigger ?
             SecurityStateEnum::GUARD_STATE->value : SecurityStateEnum::HOLD_STATE->value);
 
         $this->transaction->transactional(
-            fn () => $this->repository->save($device)
+            fn (): \App\Domain\Contract\Repository\EntityInterface => $this->repository->save($device)
         );
 
         try {

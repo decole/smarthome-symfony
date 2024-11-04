@@ -12,7 +12,6 @@ use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Domain\FireSecurity\Factory\FireSecurityCrudFactory;
-use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
@@ -88,7 +87,7 @@ final class FireSecurityCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity) {
+        if ($entity instanceof EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -97,7 +96,7 @@ final class FireSecurityCrudService
     {
         $dto = new CrudFireSecurityDto();
 
-        if ($request === null) {
+        if (!$request instanceof Request) {
             return $dto;
         }
 

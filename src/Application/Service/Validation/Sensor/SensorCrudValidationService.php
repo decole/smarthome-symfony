@@ -45,7 +45,7 @@ final class SensorCrudValidationService implements ValidationInterface
 
     private function uniqueValidate(ConstraintViolationList $list): ConstraintViolationListInterface
     {
-        if ($this->repository->findByName($this->dto->name)) {
+        if ($this->repository->findByName($this->dto->name) instanceof \App\Domain\Sensor\Entity\Sensor) {
             $list->add(new ConstraintViolation(
                 message: 'Sensor name already exist.',
                 messageTemplate: null,
@@ -56,7 +56,7 @@ final class SensorCrudValidationService implements ValidationInterface
             ));
         }
 
-        if ($this->repository->findByTopic($this->dto->topic)) {
+        if ($this->repository->findByTopic($this->dto->topic) instanceof \App\Domain\Sensor\Entity\Sensor) {
             $list->add(new ConstraintViolation(
                 message: 'Sensor topic already exist.',
                 messageTemplate: null,

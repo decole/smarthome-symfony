@@ -107,7 +107,7 @@ final class FireSecurity implements EntityInterface
      */
     private function checkStatusType(?int $status): void
     {
-        if (EntityStatusEnum::tryFrom($status) === null) {
+        if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Fire security device status');
         }
     }

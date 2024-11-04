@@ -37,13 +37,7 @@ final class VisualNotificationHistoryService
 
     private function gerPrev(int $current): int
     {
-        if ($current === 1) {
-            $prev = 1;
-        } else {
-            $prev = $current - 1;
-        }
-
-        return $prev;
+        return $current === 1 ? 1 : $current - 1;
     }
 
     public function getPages(VisualNotificationHistoryInputDto $dto): int

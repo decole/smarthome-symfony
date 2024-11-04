@@ -98,7 +98,7 @@ final class SecurityCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity) {
+        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -115,7 +115,7 @@ final class SecurityCrudService
     {
         $dto = new CrudSecurityDto();
 
-        if ($request === null) {
+        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
             return $dto;
         }
 
@@ -157,13 +157,11 @@ final class SecurityCrudService
     }
 
     /**
-     * @param CrudSecurityDto $dto
-     * @return Security
      * @throws JsonException|UnresolvableArgumentException
      */
     public function getNewEntityByDto(CrudSecurityDto $dto): Security
     {
-        if (SecurityTypeEnum::tryFrom($dto->type) === null) {
+        if (!SecurityTypeEnum::tryFrom($dto->type) instanceof \App\Domain\Security\Enum\SecurityTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Security device type');
         }
 

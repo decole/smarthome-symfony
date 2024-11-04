@@ -45,12 +45,6 @@ final class DeviceDataValidationFactory
 
     public function findDevice(DevicePayload $payload): ?EntityInterface
     {
-        foreach ($this->map as $topic => $device) {
-            if ($topic === $payload->getTopic()) {
-                return $device;
-            }
-        }
-
-        return null;
+        return $this->map[$payload->getTopic()] ?? null;
     }
 }

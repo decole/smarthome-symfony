@@ -22,7 +22,7 @@ final class SchedulerCommand extends Command
     {
         $application = $this->getApplication();
 
-        if ($application === null) {
+        if (!$application instanceof \Symfony\Component\Console\Application) {
             throw new Exception('not create application');
         }
 

@@ -23,7 +23,7 @@ final class PlcRepository extends BaseDoctrineRepository implements PlcRepositor
             ->orderBy('d.createdAt', 'DESC');
 
         if ($status !== null) {
-            if (EntityStatusEnum::tryFrom($status) === null) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('PLC status');
             }
 

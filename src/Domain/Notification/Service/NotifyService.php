@@ -27,9 +27,6 @@ final class NotifyService
 
     /**
      * Нотификация в телеграм (и в дискорд, если телеграм сообщений нет)
-     *
-     * @param string $message
-     * @return void
      */
     public function messengerNotify(string $message): void
     {
@@ -56,9 +53,6 @@ final class NotifyService
 
     /**
      * Нотификация в дискорд
-     *
-     * @param string $message
-     * @return void
      */
     public function discordNotify(string $message): void
     {
@@ -68,9 +62,6 @@ final class NotifyService
 
     /**
      * Нотификация через колонку с Алисой по сервису Quasar IOT
-     *
-     * @param string $message
-     * @return void
      */
     public function aliceNotify(string $message): void
     {

@@ -110,7 +110,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -172,7 +172,7 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
 
     public function isRestoreTokenExpired(): bool
     {
-        return $this->restoreTokenCreatedAt === null ||
+        return !$this->restoreTokenCreatedAt instanceof \DateTimeImmutable ||
             time() > $this->getExpiredRestoreTokenDate()->getTimestamp();
     }
 

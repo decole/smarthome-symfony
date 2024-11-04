@@ -8,6 +8,7 @@ use App\Application\Http\Web\FireSecurity\Dto\CrudFireSecurityDto;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
+use App\Domain\FireSecurity\Entity\FireSecurity;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -47,7 +48,7 @@ final class FireSecurityCrudValidationService implements ValidationInterface
 
     private function uniqueValidate(ConstraintViolationList $list): ConstraintViolationListInterface
     {
-        if ($this->repository->findByName($this->dto->name)) {
+        if ($this->repository->findByName($this->dto->name) instanceof FireSecurity) {
             $list->add(new ConstraintViolation(
                 message: 'Fire security device name already exist.',
                 messageTemplate: null,
@@ -58,7 +59,7 @@ final class FireSecurityCrudValidationService implements ValidationInterface
             ));
         }
 
-        if ($this->repository->findByTopic($this->dto->topic)) {
+        if ($this->repository->findByTopic($this->dto->topic) instanceof FireSecurity) {
             $list->add(new ConstraintViolation(
                 message: 'Fire security device topic already exist.',
                 messageTemplate: null,

@@ -13,13 +13,10 @@ final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator impl
     /**
      * @var Security $device
      */
-
     /**
      * null - состояние неопределено
      * true - нормальное состояние
      * false - обнаружено движение
-     *
-     * @return DeviceDataValidatedDto
      */
     public function handle(): DeviceDataValidatedDto
     {

@@ -94,7 +94,7 @@ final class RelayCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity) {
+        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -111,7 +111,7 @@ final class RelayCrudService
     {
         $dto = new CrudRelayDto();
 
-        if ($request === null) {
+        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
             return $dto;
         }
 
@@ -138,7 +138,7 @@ final class RelayCrudService
         $dto->commandOff = $entity->getCommandOff();
         $dto->lastCommand = $entity->getLastCommand();
 
-        $dto->isFeedbackPayload = $entity->isFeedbackPayload() === true ? 'on' : null;
+        $dto->isFeedbackPayload = $entity->isFeedbackPayload() ? 'on' : null;
         $dto->checkTopic = $entity->getCheckTopic();
         $dto->checkTopicPayloadOn = $entity->getCheckTopicPayloadOn();
         $dto->checkTopicPayloadOff = $entity->getCheckTopicPayloadOff();
@@ -151,13 +151,11 @@ final class RelayCrudService
     }
 
     /**
-     * @param CrudRelayDto $dto
-     * @return Relay
      * @throws UnresolvableArgumentException
      */
     public function getNewEntityByDto(CrudRelayDto $dto): Relay
     {
-        if (RelayTypeEnum::tryFrom($dto->type) === null) {
+        if (!RelayTypeEnum::tryFrom($dto->type) instanceof \App\Domain\Relay\Enum\RelayTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Relay device type');
         }
 

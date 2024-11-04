@@ -23,7 +23,7 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
             ->orderBy('s.createdAt', 'DESC');
 
         if ($status !== null) {
-            if (EntityStatusEnum::tryFrom($status) === null) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
             }
 

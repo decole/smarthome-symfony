@@ -20,8 +20,6 @@ final class DateTimeMicroType extends Type
 
     /**
      * @param mixed $value
-     * @param AbstractPlatform $platform
-     * @return bool|DateTime|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): bool|null|DateTime
     {
@@ -38,9 +36,6 @@ final class DateTimeMicroType extends Type
         return DateTime::createFromFormat($this->formatString(), $value);
     }
 
-    /**
-     * @return string
-     */
     protected function formatString(): string
     {
         return 'Y-m-d H:i:s.u';
