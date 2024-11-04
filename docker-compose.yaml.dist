@@ -76,25 +76,25 @@ services:
     networks:
       - uberserver
 
-  rabbitmq:
-    image: bitnami/rabbitmq:latest
-    container_name: uberserver-rabbitmq
-    volumes:
-      - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
-      - uberserver-rabbitmq:/var/lib/rabbitmq
-    environment:
-      - "RABBITMQ_DEFAULT_USER=rabbit"
-      - "RABBITMQ_DEFAULT_PASS=rabbit"
-    ports:
-      - "5673:5672"
-      - "15673:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    networks:
-      - uberserver
+#  rabbitmq:
+#    image: bitnami/rabbitmq:latest
+#    container_name: uberserver-rabbitmq
+#    volumes:
+#      - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+#      - uberserver-rabbitmq:/var/lib/rabbitmq
+#    environment:
+#      - "RABBITMQ_DEFAULT_USER=rabbit"
+#      - "RABBITMQ_DEFAULT_PASS=rabbit"
+#    ports:
+#      - "5673:5672"
+#      - "15673:15672"
+#    healthcheck:
+#      test: rabbitmq-diagnostics -q ping
+#      interval: 30s
+#      timeout: 30s
+#      retries: 3
+#    networks:
+#      - uberserver
 
   redis:
     image: redis:6.0

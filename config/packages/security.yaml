@@ -20,11 +20,19 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-
             login_throttling:
                 max_attempts: 5
                 interval: '15 minutes'
-
+            form_login:
+              login_path: app_login
+              check_path: app_login
+            remember_me:
+              secret: '%kernel.secret%' # required
+              always_remember_me: true
+              lifetime: 604800 # 1 week in seconds
+              signature_properties: [ 'password', 'updatedAt' ]
+              token_provider:
+                doctrine: true
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -38,6 +46,9 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+        secured_area:
+          form_login:
+            enable_csrf: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
