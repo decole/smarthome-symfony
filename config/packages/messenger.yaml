@@ -5,7 +5,8 @@ framework:
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             failed: 'doctrine://default?queue_name=failed'
-            sync: 'sync://'
+            sync:
+              dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
