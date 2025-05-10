@@ -25,7 +25,7 @@ final class ForgotMyPasswordController extends AbstractController
     /**
      * @throws JsonException|TransportExceptionInterface
      */
-    #[Route(path: '/forgot_password', name: 'app_forgot_password')]
+    #[Route(path: '/forgot_password_remedy', name: 'app_forgot_password')]
     public function forgotPassword(Request $request): Response
     {
         $banner = false;
