@@ -4,7 +4,7 @@
   "minimum-stability" : "stable",
   "prefer-stable" : true,
   "require" : {
-    "php": "^8.1",
+    "php": ">=8.3",
     "ext-ctype": "*",
     "ext-iconv": "*",
     "ext-json": "*",
@@ -142,7 +142,7 @@
     "symfony/var-dumper": "6.0.*",
     "symfony/debug-bundle": "6.0.*",
     "symfony/web-profiler-bundle": "6.0.*",
-    "vimeo/psalm": "^5.0",
+    "vimeo/psalm": "^6.10",
     "weirdan/doctrine-psalm-plugin": "^v2.3"
   }
 }

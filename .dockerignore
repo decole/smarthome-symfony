@@ -12,3 +12,6 @@ docker-compose.yaml
 *.iml
 out
 gen
+src
+.env.local
+.env.test.local
