@@ -89,8 +89,8 @@ deploy_prod:
       df -H /
       sh ci_to_prod.sh
       EOT
-  dependencies:
-    - tests
+#  dependencies:
+#    - tests
   environment:
     name: deploy
   only:
