@@ -52,6 +52,9 @@ COPY ./docker/php/php-fpm.ini /usr/local/etc/php/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# переход на русское зеркало
+RUN composer config -g repos.packagist composer https://packagist.org.ru
+
 RUN echo -e "\n\n====================== Remove unused ======================\n" \
     && apt autoremove gcc -y \
     && apt clean all \

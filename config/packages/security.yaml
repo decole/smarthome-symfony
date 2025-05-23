@@ -1,66 +1,56 @@
 security:
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+        App\Domain\Identity\Entity\User:
+            algorithm: auto
 
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Domain\Identity\Entity\User
                 property: email
-        # used to reload user from session & other features (e.g. switch_user)
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
+            json_login:
+                check_path: api_login_check
             provider: app_user_provider
-            login_throttling:
-                max_attempts: 5
-                interval: '15 minutes'
-            form_login:
-              login_path: app_login
-              check_path: app_login
-            remember_me:
-              secret: '%kernel.secret%' # required
-              always_remember_me: true
-              lifetime: 604800 # 1 week in seconds
-              signature_properties: [ 'password', 'updatedAt' ]
-              token_provider:
-                doctrine: true
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-#            anonymous: true
-            entry_point: App\Domain\SecureSystem\Service\LoginFormAuthenticator
-            custom_authenticator: App\Domain\SecureSystem\Service\LoginFormAuthenticator
+    role_hierarchy:
+        ROLE_ADMIN: [ ROLE_USER, ROLE_SONATA_ADMIN ]
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
-        secured_area:
-          form_login:
-            enable_csrf: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/doc, roles: PUBLIC_ACCESS } # by after tests - ROLE_ADMIN
+        - { path: ^/api/common, roles: PUBLIC_ACCESS }
+        - { path: ^/api/security, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/login_check$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/request$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/check-email$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
+        - { path: ^/api/debug/env, role: PUBLIC_ACCESS } # delete after tests
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/system/health-check, roles: PUBLIC_ACCESS }
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/activate/.*$, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: PUBLIC_ACCESS }
+        - { path: ^/.*, role: PUBLIC_ACCESS }
 
 when@test:
     security:
         password_hashers:
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon
+                cost: 4
+                time_cost: 3
+                memory_cost: 10

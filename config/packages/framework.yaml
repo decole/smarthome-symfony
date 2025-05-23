@@ -1,12 +1,24 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
+    #csrf_protection: true
+    annotations: false
     http_method_override: false
+    handle_all_throwables: true
 
-    http_cache: true
+    http_client:
+        max_host_connections: 10
+        default_options:
+            max_duration: 300
+            extra:
+                curl:
+                    !php/const CURLOPT_ENCODING: 'gzip'
+            headers:
+                Accept-Encoding: 'gzip'
 
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    # Remove or comment this section to explicitly disable session support.
     session:
-        enabled: true
         cookie_secure: auto
         cookie_samesite: lax
         handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
@@ -15,6 +27,19 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+when@prod:
+    framework:
+        profiler:
+            enabled: false
+        router:
+            strict_requirements: null
+
+when@dev:
+    framework:
+        profiler:
+            enabled: true
+            collect: true
 
 when@test:
     framework:

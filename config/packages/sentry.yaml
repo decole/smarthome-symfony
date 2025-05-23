@@ -1,23 +1,9 @@
-sentry:
-  dsn: '%env(SENTRY_DSN)%'
-  register_error_listener: false
-  options:
-    environment: '%kernel.environment%'
-    send_default_pii: true
-    release: '%env(APP_VERSION)%'
-    traces_sample_rate: '%env(float:SENTRY_TRACES_SAMPLE_RATE)%'
-
-monolog:
-  handlers:
+when@prod:
     sentry:
-      type: service
-      id: Sentry\Monolog\Handler
-
-services:
-  Sentry\Monolog\Handler:
-    arguments:
-      $hub: '@Sentry\State\HubInterface'
-      $level: !php/const Monolog\Logger::ERROR
-
-  Monolog\Processor\PsrLogMessageProcessor:
-    tags: { name: monolog.processor, handler: sentry }
+        dsn: '%env(SENTRY_DSN)%'
+        register_error_listener: false
+        tracing:
+            enabled: true
+        options:
+            environment: '%env(SENTRY_ENVIRONMENT)%'
+            traces_sample_rate: 1.0
