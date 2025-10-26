@@ -68,17 +68,4 @@ class ProfileCrudValidationServiceCest
     {
         return $I->grabService(ProfileCrudValidationService::class);
     }
-
-    private function getUser(FunctionalTester $I): User
-    {
-        $user = new User();
-        $user->setTelegramId(random_int(10000000, 99999999));
-        $user->setEmail($I->faker()->email());
-        $user->setName($I->faker()->word());
-        $user->setRoles([]);
-        $user->setVerified();
-        $user->setPassword($I->faker()->word());
-
-        return $user;
-    }
 }

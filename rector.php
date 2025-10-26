@@ -13,13 +13,10 @@ return RectorConfig::configure()
         TypedPropertyFromStrictConstructorRector::class
     ])
     ->withSets([
-        SymfonySetList::SYMFONY_70,
+        SymfonySetList::SYMFONY_72,
         SymfonySetList::SYMFONY_CODE_QUALITY,
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
-        LevelSetList::UP_TO_PHP_80,
-    ])
-    ->skip([
-        __DIR__.'/**/_generated/*',
+//        LevelSetList::UP_TO_PHP_82,
     ])
     ->withAttributesSets(symfony: true, doctrine: true)
     ->withPreparedSets(typeDeclarations: true)
@@ -29,6 +26,4 @@ return RectorConfig::configure()
         deadCode: true,
         codeQuality: true
     )
-    ->importNames()
-    ->importShortClasses(false)
 ;

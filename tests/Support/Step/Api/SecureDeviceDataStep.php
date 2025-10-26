@@ -32,7 +32,7 @@ class SecureDeviceDataStep extends ApiTester
 
         $this->sendPost('/secure/trigger', [
             'topic' => $topic,
-            'trigger' => true === $state ? 'true' : 'false',
+            'trigger' => $state ? 'true' : 'false',
         ]);
     }
 
@@ -47,16 +47,16 @@ class SecureDeviceDataStep extends ApiTester
         $dto->type = 'mqtt_security_device';
         $dto->name = $this->faker()->word();
         $dto->topic = $this->faker()->word();
-        $dto->payload = true === $isTriggered ? 1 : 0;
+        $dto->payload = $isTriggered ? 1 : 0;
         $dto->detectPayload = 1;
         $dto->holdPayload = 0;
-        $dto->lastCommand = true === $isGuarded ? SecurityStateEnum::GUARD_STATE->value :
+        $dto->lastCommand = $isGuarded ? SecurityStateEnum::GUARD_STATE->value :
             SecurityStateEnum::HOLD_STATE->value;
         $dto->message_info = $this->faker()->word();
         $dto->message_ok = $this->faker()->word();
         $dto->message_warn = $this->faker()->word();
-        $dto->status = true === $isActive ? 'on' : 'off';
-        $dto->notify = true === $isNotify ? 'on' : 'off';
+        $dto->status = $isActive ? 'on' : 'off';
+        $dto->notify = $isNotify ? 'on' : 'off';
 
         return $this->grabService(SecurityCrudService::class)->create($dto);
     }

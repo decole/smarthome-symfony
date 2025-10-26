@@ -25,8 +25,6 @@ class DeviceDataResolverForSensorsCest
      */
     private ?array $list = null;
 
-    private DeviceDataResolver $resolver;
-
     private DeviceDataValidationService $validateService;
 
     private DeviceDataCacheService $cacheService;
@@ -36,8 +34,6 @@ class DeviceDataResolverForSensorsCest
         if (null === $this->list) {
             $this->list = $I->createAllTypeSensors();
         }
-
-        $this->resolver = $I->grabService(DeviceDataResolver::class);
         $this->validateService = $I->grabService(DeviceDataValidationService::class);
         $this->cacheService = $I->grabService(DeviceDataCacheService::class);
     }

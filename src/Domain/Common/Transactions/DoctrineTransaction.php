@@ -18,7 +18,7 @@ final class DoctrineTransaction implements TransactionInterface
 
     public function flush($entity = null): void
     {
-        $this->manager->flush($entity);
+        $this->manager->flush();
     }
 
     public function transactional(callable $scope, ?callable $failOver = null)
@@ -56,7 +56,7 @@ final class DoctrineTransaction implements TransactionInterface
                 $this->manager->persist($entity);
             }
 
-            $this->manager->flush($entities);
+            $this->manager->flush();
             $this->connection->commit();
         } catch (\Throwable $exception) {
             // Не закрываем entity manager в тестовом окружении

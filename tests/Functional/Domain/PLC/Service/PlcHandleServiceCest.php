@@ -31,7 +31,7 @@ class PlcHandleServiceCest
 
     public function _before(PlcHandleServiceStep $I): void
     {
-        if (null === $this->device) {
+        if (!$this->device instanceof \App\Domain\Sensor\Entity\Sensor) {
             $this->device = $I->createSensor();
         }
 
@@ -108,7 +108,7 @@ class PlcHandleServiceCest
      */
     public function offlineDeviceAndFirstDetectOfflinePlc(PlcHandleServiceStep $I): void
     {
-        $plc = $I->savePlc(
+        $I->savePlc(
             name: $plcName = $I->faker()->word(),
             topic: $plcTopic = $this->device->getTopic(),
             delay: $plcDelay = 60,
@@ -143,7 +143,7 @@ class PlcHandleServiceCest
      */
     public function offlineDeviceAndFirstDetectOfflinePlcWithNotify(PlcHandleServiceStep $I): void
     {
-        $plc = $I->savePlc(
+        $I->savePlc(
             name: $plcName = $I->faker()->word(),
             topic: $plcTopic = $this->device->getTopic(),
             delay: $plcDelay = 60,
@@ -267,11 +267,6 @@ class PlcHandleServiceCest
     private function getCachePlcMap(): mixed
     {
         return $this->cache->get('plc_cache_map');
-    }
-
-    private function clearCachePlcMap(): void
-    {
-        $this->cache->delete(['plc_cache_map']);
     }
 
     private function emptyCachePlcMap(): void

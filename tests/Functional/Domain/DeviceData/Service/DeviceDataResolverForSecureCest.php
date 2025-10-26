@@ -18,15 +18,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 #[Skip('This test not support new version codeception')]
 class DeviceDataResolverForSecureCest
 {
-    private DeviceDataResolver $resolver;
-
     private DeviceDataValidationService $validateService;
 
     private DeviceDataCacheService $cacheService;
 
     public function _before(DeviceDataResolverStep $I): void
     {
-        $this->resolver = $I->grabService(DeviceDataResolver::class);
         $this->validateService = $I->grabService(DeviceDataValidationService::class);
         $this->cacheService = $I->grabService(DeviceDataCacheService::class);
     }

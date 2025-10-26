@@ -31,7 +31,7 @@ class UserByEntityManagerCest
         /** @var EntityManager $userManager */
         $userManager = $I->grabService(EntityManager::class);
 
-        $actualUser = $userManager->find(User::class, (string) $id);
+        $userManager->find(User::class, (string) $id);
 
         $I->seeInRepository(User::class, [
             'id' => (string) $id,

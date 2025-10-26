@@ -22,6 +22,6 @@ class TwoFactorQrCodeServiceCest
 
     public function negativeGenerateImageSource(UnitTester $I): void
     {
-        $I->expectThrowable(\Throwable::class, fn() => new TwoFactorQrCodeService());
+        $I->expectThrowable(\Throwable::class, fn(): \App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService => new TwoFactorQrCodeService());
     }
 }

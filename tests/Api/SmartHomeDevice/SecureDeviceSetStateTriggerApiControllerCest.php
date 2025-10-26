@@ -16,18 +16,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 #[Skip('This test not support new version codeception')]
 class SecureDeviceSetStateTriggerApiControllerCest
 {
-    private DeviceDataResolver $resolver;
-
     private DeviceCacheService $cache;
 
     public function _before(SecureDeviceDataStep $I): void
     {
         $this->cache = $I->grabService(DeviceCacheService::class);
-        $this->resolver = new DeviceDataResolver(
-            validateService: $I->grabService(DeviceDataValidationService::class),
-            cacheService: $I->grabService(DeviceDataCacheService::class),
-            eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => fn () => (object) []]),
-        );
     }
 
     public function positiveSetTriggerOn(SecureDeviceDataStep $I): void

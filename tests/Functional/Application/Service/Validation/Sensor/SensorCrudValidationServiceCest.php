@@ -114,7 +114,7 @@ class SensorCrudValidationServiceCest
 
         $service->setValue($dto);
 
-        $s = $this->crudService($I)->create($dto);
+        $this->crudService($I)->create($dto);
 
         /** @var ConstraintViolationList $result */
         $result = $service->validate(false);

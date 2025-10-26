@@ -45,8 +45,8 @@ class PlcHandleServiceStep extends FunctionalTester
         $dto->message_info = $dto->name . ' info';
         $dto->message_ok = $dto->name . ' ok';
         $dto->message_warn = $dto->name . ' warning';
-        $dto->status = true === $status ? 'on' : null;
-        $dto->notify = true === $status ? 'on' : null;
+        $dto->status = $status ? 'on' : null;
+        $dto->notify = $status ? 'on' : null;
 
         return $this->crudPlcService()->create($dto);
     }

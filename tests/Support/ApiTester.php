@@ -57,25 +57,25 @@ class ApiTester extends \Codeception\Actor
         return $user;
     }
 
-    public function seeResponseIsSuccessful(int $code = 200)
+    public function seeResponseIsSuccessful(int $code = 200): void
     {
         $this->seeResponseCodeIs($code);
         $this->seeResponseIsJson();
     }
 
-    public function seeResponseIsValidationError(int $code = 422)
+    public function seeResponseIsValidationError(int $code = 422): void
     {
         $this->seeResponseCodeIs($code);
         $this->seeResponseIsJson();
     }
 
-    public function seeResponseIsForbidden(int $code = 403)
+    public function seeResponseIsForbidden(int $code = 403): void
     {
         $this->seeResponseCodeIs($code);
         $this->seeResponseIsJson();
     }
 
-    public function seeResponseIsException(int $code = 400)
+    public function seeResponseIsException(int $code = 400): void
     {
         $this->seeResponseCodeIs($code);
         $this->seeResponseIsJson();

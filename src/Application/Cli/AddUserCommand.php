@@ -114,7 +114,7 @@ final class AddUserCommand extends Command
         $email = $input->getArgument('email');
 
         // make sure to validate the user data is correct
-        $this->validateUserData($username, $plainPassword, $email);
+        $this->validateUserData($plainPassword, $email);
 
         // create the user and hash its password
         $user = new User();
@@ -140,7 +140,7 @@ final class AddUserCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function validateUserData(string $username, string $plainPassword, string $email): void
+    private function validateUserData(string $plainPassword, string $email): void
     {
         // first check if a user with the same username already exists.
         $existingUser = $this->users->findOneBy(['email' => $email]);

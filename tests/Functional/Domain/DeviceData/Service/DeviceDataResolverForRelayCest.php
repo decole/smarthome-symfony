@@ -20,19 +20,15 @@ class DeviceDataResolverForRelayCest
 {
     private ?Relay $device = null;
 
-    private DeviceDataResolver $resolver;
-
     private DeviceDataValidationService $validateService;
 
     private DeviceDataCacheService $cacheService;
 
     public function _before(DeviceDataResolverStep $I): void
     {
-        if (null === $this->device) {
+        if (!$this->device instanceof \App\Domain\Relay\Entity\Relay) {
             $this->device = $I->createDryRelayDevice();
         }
-
-        $this->resolver = $I->grabService(DeviceDataResolver::class);
         $this->validateService = $I->grabService(DeviceDataValidationService::class);
         $this->cacheService = $I->grabService(DeviceDataCacheService::class);
     }

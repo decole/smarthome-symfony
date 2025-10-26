@@ -53,7 +53,7 @@ final class ScheduleAddCommand extends Command
         $interval = $helper->ask($input, $output, $questionInterval);
         $nextRun = $helper->ask($input, $output, $questionNextRun);
 
-        $this->service->add($this->hydrateAnswers($command, $arguments, $interval, $nextRun, $output));
+        $this->service->add($this->hydrateAnswers($command, $arguments, $interval, $nextRun));
 
         return Command::SUCCESS;
     }
@@ -66,7 +66,6 @@ final class ScheduleAddCommand extends Command
         ?string $rawArguments,
         ?string $rawInterval,
         ?string $rawNextRun,
-        OutputInterface $output,
     ): ScheduleTaskInputDto {
         $arguments = [];
         $nextRun = new \DateTimeImmutable();

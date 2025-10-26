@@ -242,8 +242,6 @@ class RelayCrudServiceCest
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
-        $notify = 'on' === $example['status'];
-
         /** @var Relay $entity */
         $entity = $service->create($dto);
 
@@ -330,8 +328,6 @@ class RelayCrudServiceCest
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
 
-        $notify = 'on' === $example['status'];
-
         /** @var Relay $entity */
         $entity = $service->create($dto);
 
@@ -388,8 +384,6 @@ class RelayCrudServiceCest
         $dto->message_warn = $messageWarn = $I->faker()->word();
         $dto->status = $example['status'];
         $dto->notify = $example['status'];
-
-        $notify = 'on' === $example['status'];
 
         /** @var Relay $entity */
         $entity = $service->create($dto);

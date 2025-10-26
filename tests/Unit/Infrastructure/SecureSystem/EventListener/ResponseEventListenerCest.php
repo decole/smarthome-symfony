@@ -37,7 +37,7 @@ class ResponseEventListenerCest
 
     public function noAuth(TwoFactorServiceStep $I): void
     {
-        $user = $I->getUser();
+        $I->getUser();
         $event = $I->createEvent();
         $listener = $I->createListener();
         $listener($event);

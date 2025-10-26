@@ -8,7 +8,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ path('home') }}" class="nav-link">{% trans %}Home{% endtrans %}</a>
+            <a href="{{ path('home_page') }}" class="nav-link">{% trans %}Home{% endtrans %}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link">ip: {{ app.request.clientIp }}</a>
@@ -74,7 +74,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ path('home') }}" class="brand-link">
+    <a href="{{ path('home_page') }}" class="brand-link">
         <img src="/assets/images/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">{{ appName }}</span>
     </a>
@@ -96,7 +96,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     {% for page in pages %}
                 <li class="nav-item">
-                    <a href="/{{ page.aliasUri }}" class="nav-link {{ page.aliasUri in route ? 'active' }}">
+                    <a href="/{{ app.locale }}/{{ page.aliasUri }}" class="nav-link {{ page.aliasUri in route ? 'active' }}">
                         <i class="nav-icon {{ page.icon }}"></i>
                         <p>
                             {{ page.name|capitalize|trans }}

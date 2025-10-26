@@ -13,7 +13,6 @@ extensions:
 params:
     - .env
     - .env.test
-    - .env.test.local
 
 settings:
   shuffle: true
@@ -26,6 +25,4 @@ coverage:
     include:
         - src/*
     exclude:
-        - src/Migrations/*
-        - src/Fixtures/*
         - src/DependencyInjection/*

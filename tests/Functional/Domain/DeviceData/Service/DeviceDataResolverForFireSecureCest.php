@@ -20,19 +20,15 @@ class DeviceDataResolverForFireSecureCest
 {
     private ?FireSecurity $device = null;
 
-    private DeviceDataResolver $resolver;
-
     private DeviceDataValidationService $validateService;
 
     private DeviceDataCacheService $cacheService;
 
     public function _before(DeviceDataResolverStep $I): void
     {
-        if (null === $this->device) {
+        if (!$this->device instanceof \App\Domain\FireSecurity\Entity\FireSecurity) {
             $this->device = $I->createFireSecureDevice();
         }
-
-        $this->resolver = $I->grabService(DeviceDataResolver::class);
         $this->validateService = $I->grabService(DeviceDataValidationService::class);
         $this->cacheService = $I->grabService(DeviceDataCacheService::class);
     }
