@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Common\Traits;
 
-use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedAt
 {
-    protected DateTimeImmutable $createdAt;
+    #[ORM\Column(type: 'datetime_immutable')]
+    protected \DateTimeImmutable $createdAt;
 
-    final public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    final public function onCreated(): void
+    public function onCreated(): void
     {
-        $this->createdAt = new DateTimeImmutable('now', new \DateTimeZone('utc'));
+        $this->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('utc'));
     }
 }

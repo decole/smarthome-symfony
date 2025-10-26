@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli;
 
 use App\Infrastructure\Mqtt\Service\MqttSubscribeService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\SignalableCommandInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(name: 'cli:mqtt')]
-final class MqttHandleCommand extends Command
+final class MqttHandleCommand extends Command implements SignalableCommandInterface
 {
     public function __construct(private readonly MqttSubscribeService $subscribeService)
     {
@@ -21,5 +24,24 @@ final class MqttHandleCommand extends Command
         $this->subscribeService->execute();
 
         return Command::SUCCESS;
+    }
+
+    public function getSubscribedSignals(): array
+    {
+        return [
+            \SIGINT, // Handle Ctrl+C
+            \SIGTERM, // Handle termination signals
+        ];
+    }
+
+    public function handleSignal(int $signal, false|int $previousExitCode = 0): int|false
+    {
+        if (!\in_array($signal, [\SIGINT, \SIGTERM], true)) {
+            return Command::FAILURE;
+        }
+
+        $this->subscribeService->stop();
+
+        return false;
     }
 }

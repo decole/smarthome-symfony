@@ -1,62 +1,115 @@
-doctrine_migrations:
-    migrations_paths:
-        'DoctrineMigrations': '%kernel.project_dir%/src/Migrations'
-    storage:
-        table_storage:
-            table_name: 'doctrine_migration_versions'
-
 doctrine:
+  dbal:
+    url: '%env(resolve:DATABASE_URL)%'
+
+    # IMPORTANT: You MUST configure your server version,
+    # either here or in the DATABASE_URL env var (see .env file)
+    #server_version: '16'
+
+    profiling_collect_backtrace: '%kernel.debug%'
+    use_savepoints: true
+    types:
+      uuid: Ramsey\Uuid\Doctrine\UuidType
+      datetime_immutable: App\Infrastructure\Doctrine\Type\DatetimeImmutableType
+      time_immutable: App\Infrastructure\Doctrine\Type\TimeImmutable
+      datetime_immutable_microseconds: App\Infrastructure\Doctrine\Type\DateTimeImmutableMicroType
+      datetime_microseconds: App\Infrastructure\Doctrine\Type\DateTimeMicroType
+  orm:
+    auto_generate_proxy_classes: true
+    enable_lazy_ghost_objects: true
+    report_fields_where_declared: true
+    validate_xml_mapping: true
+    naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+    identity_generation_preferences:
+      Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
+    auto_mapping: true
+    mappings:
+      User:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/Identity/Entity'
+        prefix: 'App\Domain\Identity\Entity'
+        alias: Page
+      Page:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/Page/Entity'
+        prefix: 'App\Domain\Page\Entity'
+        alias: Page
+      Sensor:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/Sensor/Entity'
+        prefix: 'App\Domain\Sensor\Entity'
+        alias: Sensor
+      Relay:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/Relay/Entity'
+        prefix: 'App\Domain\Relay\Entity'
+        alias: Relay
+      FireSecurity:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/FireSecurity/Entity'
+        prefix: 'App\Domain\FireSecurity\Entity'
+        alias: FireSecurity
+      Security:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/Security/Entity'
+        prefix: 'App\Domain\Security\Entity'
+        alias: Security
+      PLC:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/PLC/Entity'
+        prefix: 'App\Domain\PLC\Entity'
+        alias: PLC
+      ScheduleTask:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/ScheduleTask/Entity'
+        prefix: 'App\Domain\ScheduleTask\Entity'
+        alias: ScheduleTask
+      VisualNotification:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/VisualNotification/Entity'
+        prefix: 'App\Domain\VisualNotification\Entity'
+        alias: VisualNotification
+      Embedded:
+        type: attribute
+        is_bundle: false
+        dir: '%kernel.project_dir%/src/Domain/Common/Embedded'
+        prefix: 'App\Domain\Common\Embedded'
+        alias: Embedded
+
+    controller_resolver:
+      auto_mapping: false
+
+when@test:
+  doctrine:
     dbal:
-        schema_filter: '~^(?!messenger_messages)~'
-        url: '%env(resolve:DATABASE_URL)%'
-        types:
-            uuid: Ramsey\Uuid\Doctrine\UuidType
-            datetime_immutable: App\Infrastructure\Doctrine\Type\DatetimeImmutableType
-            time_immutable: App\Infrastructure\Doctrine\Type\TimeImmutable
-            datetime_immutable_microseconds: App\Infrastructure\Doctrine\Type\DateTimeImmutableMicroType
-            datetime_microseconds: App\Infrastructure\Doctrine\Type\DateTimeMicroType
+      # "TEST_TOKEN" is typically set by ParaTest
+      dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+  doctrine:
     orm:
-        auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mappings:
-            user:
-                type: yml
-                prefix: 'App\Domain\Identity\Entity'
-                dir: '%kernel.project_dir%/config/mappings/Identity'
-            embedded:
-                type: yml
-                prefix: 'App\Domain\Common\Embedded'
-                dir: '%kernel.project_dir%/config/mappings/Embedded'
-            sensor:
-                type: yml
-                prefix: 'App\Domain\Sensor\Entity'
-                dir: '%kernel.project_dir%/config/mappings/Sensor'
-            relay:
-                type: yml
-                prefix: 'App\Domain\Relay\Entity'
-                dir: '%kernel.project_dir%/config/mappings/Relay'
-            security:
-                type: yml
-                prefix: 'App\Domain\Security\Entity'
-                dir: '%kernel.project_dir%/config/mappings/Security'
-            fire-security:
-                type: yml
-                prefix: 'App\Domain\FireSecurity\Entity'
-                dir: '%kernel.project_dir%/config/mappings/FireSecurity'
-            site-page:
-                type: yml
-                prefix: 'App\Domain\Page\Entity'
-                dir: '%kernel.project_dir%/config/mappings/Page'
-            visual-notify:
-                type: yml
-                prefix: 'App\Domain\VisualNotification\Entity'
-                dir: '%kernel.project_dir%/config/mappings/VisualNotification'
-            plc:
-                type: yml
-                prefix: 'App\Domain\PLC\Entity'
-                dir: '%kernel.project_dir%/config/mappings/PLC'
-            schedule:
-                type: yml
-                prefix: 'App\Domain\ScheduleTask\Entity'
-                dir: '%kernel.project_dir%/config/mappings/ScheduleTask'
+      auto_generate_proxy_classes: false
+      proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+      query_cache_driver:
+        type: pool
+        pool: doctrine.system_cache_pool
+      result_cache_driver:
+        type: pool
+        pool: doctrine.result_cache_pool
+
+  framework:
+    cache:
+      pools:
+        doctrine.result_cache_pool:
+          adapter: cache.app
+        doctrine.system_cache_pool:
+          adapter: cache.system

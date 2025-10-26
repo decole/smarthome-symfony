@@ -12,23 +12,24 @@ final class RelayDeviceDataValidator extends AbstractDeviceDataValidator impleme
 {
     public function handle(): DeviceDataValidatedDto
     {
-        assert($this->device instanceof Relay);
+        \assert($this->device instanceof Relay);
 
         $payload = $this->payload->getPayload();
 
-        if ($payload !== (string)$this->device->getCheckTopicPayloadOn() &&
-            $payload !== (string)$this->device->getCheckTopicPayloadOff()
+        if ($payload !== (string) $this->device->getCheckTopicPayloadOn()
+            && $payload !== (string) $this->device->getCheckTopicPayloadOff()
         ) {
             return $this->createDto(
                 state: null,
                 device: $this->device,
-                isAlert: true
+                isAlert: true,
             );
         }
 
-        return $this->createDto(state: true,
+        return $this->createDto(
+            state: true,
             device: $this->device,
-            isAlert: false
+            isAlert: false,
         );
     }
 }

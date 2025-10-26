@@ -12,7 +12,7 @@ trait CommonCrudFieldTraits
     private function setEntityToDtoCommonParams(
         ValidationDtoInterface $dto,
         EntityInterface $entity,
-        bool $setType = true
+        bool $setType = true,
     ): void {
         if ($setType) {
             $dto->type = $entity->getType();

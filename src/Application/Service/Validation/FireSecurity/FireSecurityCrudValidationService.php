@@ -20,17 +20,16 @@ final class FireSecurityCrudValidationService implements ValidationInterface
 
     public function __construct(
         private readonly ValidatorInterface $validator,
-        private readonly FireSecurityRepositoryInterface $repository
-    ) {
-    }
+        private readonly FireSecurityRepositoryInterface $repository,
+    ) {}
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
-        assert($list instanceof ConstraintViolationList);
+        \assert($list instanceof ConstraintViolationList);
 
-        if (count($list) > 0) {
+        if (\count($list) > 0) {
             return $list;
         }
 
@@ -55,7 +54,7 @@ final class FireSecurityCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->name],
                 root: 'name',
                 propertyPath: 'name',
-                invalidValue: $this->dto->name
+                invalidValue: $this->dto->name,
             ));
         }
 
@@ -66,7 +65,7 @@ final class FireSecurityCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->topic],
                 root: 'topic',
                 propertyPath: 'topic',
-                invalidValue: $this->dto->topic
+                invalidValue: $this->dto->topic,
             ));
         }
 

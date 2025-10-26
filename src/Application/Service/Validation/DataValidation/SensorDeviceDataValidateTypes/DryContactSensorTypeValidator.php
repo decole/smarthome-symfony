@@ -12,14 +12,13 @@ final class DryContactSensorTypeValidator implements SensorTypeValidatorInterfac
 {
     public function __construct(
         private readonly DryContactSensor $device,
-        private readonly DevicePayload $payload
-    ) {
-    }
+        private readonly DevicePayload $payload,
+    ) {}
 
     public function validate(): bool
     {
-        return (string)$this->device->getPayloadLow() === $this->payload->getPayload() ||
-            (string)$this->device->getPayloadHigh() === $this->payload->getPayload();
+        return (string) $this->device->getPayloadLow() === $this->payload->getPayload()
+            || (string) $this->device->getPayloadHigh() === $this->payload->getPayload();
     }
 
     public function isAlert(): bool

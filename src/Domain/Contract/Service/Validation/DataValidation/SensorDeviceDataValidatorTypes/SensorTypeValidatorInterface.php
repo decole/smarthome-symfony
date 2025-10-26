@@ -12,7 +12,7 @@ interface SensorTypeValidatorInterface
     public function validate(): bool;
 
     /**
-     * Сработка по условию типа датчика. Выход за приделы нормы
+     * Сработка по условию типа датчика. Выход за приделы нормы.
      */
     public function isAlert(): bool;
 }

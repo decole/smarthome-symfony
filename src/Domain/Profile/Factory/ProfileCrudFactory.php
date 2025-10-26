@@ -15,7 +15,7 @@ final class ProfileCrudFactory extends AbstractCrudFactory
     public function __construct(
         private readonly ProfileRepositoryInterface $repository,
         private readonly ProfileCrudValidationService $validation,
-        DeviceCacheService $cacheService
+        DeviceCacheService $cacheService,
     ) {
         $this->cacheService = $cacheService;
     }

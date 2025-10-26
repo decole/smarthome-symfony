@@ -12,15 +12,13 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(event: EntityListEvent::NAME, method: 'onSecureEntityListEvent')]
 class SecurityEntityListEventListener
 {
-    public function __construct(private readonly SecurityRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private readonly SecurityRepositoryInterface $repository) {}
 
     public function onSecureEntityListEvent(EntityListEvent $event): void
     {
         $event->setEntityMapByType(
             type: Security::alias(),
-            entities: $this->repository->findAll()
+            entities: $this->repository->findAll(),
         );
     }
 }

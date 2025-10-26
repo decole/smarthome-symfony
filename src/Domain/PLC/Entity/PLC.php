@@ -11,22 +11,40 @@ use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
+use App\Infrastructure\Repository\PLC\PlcRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embedded;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: PlcRepository::class)]
+#[ORM\Table(name: 'plc')]
 final class PLC implements EntityInterface
 {
-    use Entity, CreatedAt, UpdatedAt;
+    use CreatedAt;
+    use Entity;
+    use UpdatedAt;
 
     public function __construct(
+        #[ORM\Column(type: Types::STRING, unique: true)]
+        #[Assert\NotBlank]
         private string $name,
+        #[ORM\Column(type: Types::STRING, unique: true)]
+        #[Assert\NotBlank]
         private string $targetTopic,
+        #[ORM\Column(type: Types::INTEGER)]
         private int $alarmSecondDelay,
-
+        #[Embedded(class: StatusMessage::class)]
         private StatusMessage $statusMessage,
+        #[ORM\Column(type: Types::SMALLINT)]
         private int $status,
-        private bool $notify
+        #[ORM\Column(type: Types::BOOLEAN)]
+        private bool $notify,
     ) {
         $this->identify();
         $this->onCreated();
+
+        $this->statusMessage = new StatusMessage();
 
         $this->checkStatusType($status);
     }
@@ -103,7 +121,7 @@ final class PLC implements EntityInterface
      */
     private function checkStatusType(?int $status): void
     {
-        if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('PLC status');
         }
     }

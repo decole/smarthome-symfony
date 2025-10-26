@@ -10,7 +10,6 @@ use Decole\Quasar\Exception\RussianWordException;
 use Decole\Quasar\QuasarClient;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 final class QuasarNotificationService
 {
@@ -26,28 +25,28 @@ final class QuasarNotificationService
         string $deviceId,
         string $scenarioId,
         private LoggerInterface $logger,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
     ) {
         $this->simpleClient = new QuasarClient($cookies);
         $this->advancedClient = new QuasarClient($cookies, 'Голос', $deviceId, $scenarioId);
     }
 
     /**
-     * Отправка в https://yandex.ru/quasar/iot/ в сценарий "Голос" требуемый текст и его озвучка
+     * Отправка в https://yandex.ru/quasar/iot/ в сценарий "Голос" требуемый текст и его озвучка.
      */
     public function send(string $message): void
     {
         try {
             $this->advancedClient->changeTextSpeechByScenario($message);
             $this->advancedClient->executeSpeechByScenario();
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             $this->logger->critical('Can`t send quasar notify message', [
                 'exception' => $exception->getMessage(),
             ]);
 
             $this->eventDispatcher->dispatch(
                 new AlertNotificationEvent($exception->getMessage(), [AlertNotificationEvent::MESSENGER]),
-                AlertNotificationEvent::NAME
+                AlertNotificationEvent::NAME,
             );
         }
     }

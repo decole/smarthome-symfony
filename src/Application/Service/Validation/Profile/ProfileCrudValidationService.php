@@ -22,15 +22,14 @@ final class ProfileCrudValidationService implements ValidationInterface
 
     public function __construct(
         private readonly ValidatorInterface $validator,
-        private readonly ProfileRepositoryInterface $repository
-    ) {
-    }
+        private readonly ProfileRepositoryInterface $repository,
+    ) {}
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
-        assert($list instanceof ConstraintViolationList);
+        \assert($list instanceof ConstraintViolationList);
 
         $list = $this->checkPasswordChangeLogic($list);
 
@@ -51,7 +50,7 @@ final class ProfileCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->email],
                 root: 'email',
                 propertyPath: 'email',
-                invalidValue: $this->dto->email
+                invalidValue: $this->dto->email,
             ));
         }
 
@@ -60,7 +59,7 @@ final class ProfileCrudValidationService implements ValidationInterface
 
     private function checkPasswordChangeLogic(ConstraintViolationList $list): ConstraintViolationListInterface
     {
-        if ($this->dto->isChangePassword === 'on') {
+        if ('on' === $this->dto->isChangePassword) {
             if ($this->dto->password !== $this->dto->passwordAgan) {
                 $list->add(new ConstraintViolation(
                     message: 'Password and password agan is not equal.',
@@ -68,7 +67,7 @@ final class ProfileCrudValidationService implements ValidationInterface
                     parameters: [$this->dto->password, $this->dto->passwordAgan],
                     root: ['password', 'password_agan'],
                     propertyPath: 'password',
-                    invalidValue: [$this->dto->password, $this->dto->passwordAgan]
+                    invalidValue: [$this->dto->password, $this->dto->passwordAgan],
                 ));
             }
 
@@ -79,7 +78,7 @@ final class ProfileCrudValidationService implements ValidationInterface
                     parameters: [$this->dto->password],
                     root: 'password',
                     propertyPath: 'password',
-                    invalidValue: [$this->dto->password]
+                    invalidValue: [$this->dto->password],
                 ));
             }
         }

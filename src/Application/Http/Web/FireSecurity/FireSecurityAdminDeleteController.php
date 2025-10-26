@@ -14,14 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class FireSecurityAdminDeleteController extends AbstractController
 {
-    public function __construct(private FireSecurityCrudService $crud)
-    {
-    }
+    public function __construct(private FireSecurityCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/fire-security/delete/{id}', name: "fire_secure_delete_by_id")]
+    #[Route('/fire-security/delete/{id}', name: 'fire_secure_delete_by_id')]
     public function delete(string $id): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

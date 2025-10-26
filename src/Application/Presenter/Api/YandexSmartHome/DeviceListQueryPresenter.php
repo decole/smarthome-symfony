@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Presenter\Api\YandexSmartHome;
 
 use App\Application\Presenter\Api\PresenterInterface;
@@ -27,8 +29,8 @@ final class DeviceListQueryPresenter implements PresenterInterface
         return [
             'request_id' => $this->requestId,
             'payload' => [
-                'devices' => $devices
-            ]
+                'devices' => $devices,
+            ],
         ];
     }
 

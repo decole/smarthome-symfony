@@ -11,12 +11,12 @@ use App\Domain\Security\Entity\Security;
 final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
     /**
-     * @var Security $device
+     * @var Security
      */
     /**
      * null - состояние неопределено
      * true - нормальное состояние
-     * false - обнаружено движение
+     * false - обнаружено движение.
      */
     public function handle(): DeviceDataValidatedDto
     {
@@ -30,7 +30,7 @@ final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator impl
         return $this->createDto(
             state: $state,
             device: $this->device,
-            isAlert: $this->payload->getPayload() === $this->device->getDetectPayload()
+            isAlert: $this->payload->getPayload() === $this->device->getDetectPayload(),
         );
     }
 }

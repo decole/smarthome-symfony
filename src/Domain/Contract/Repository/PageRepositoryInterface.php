@@ -16,7 +16,8 @@ interface PageRepositoryInterface
     /**
      * Finds all objects in the repository.
      *
-     * @return array<int, object> The objects.
+     * @return array<int, object> the objects
+     *
      * @psalm-return T[]
      */
     public function findAll(): array;

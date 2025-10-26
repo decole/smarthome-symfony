@@ -15,9 +15,8 @@ abstract class AbstractCriteria implements CriteriaInterface
     public function __construct(
         protected EventDispatcherInterface $eventDispatcher,
         protected EntityInterface $device,
-        protected DevicePayload $payload
-    ) {
-    }
+        protected DevicePayload $payload,
+    ) {}
 
     abstract public function notify(): void;
 
@@ -27,7 +26,7 @@ abstract class AbstractCriteria implements CriteriaInterface
     {
         $search = [
             '{value}',
-            '%s'
+            '%s',
         ];
 
         return str_replace($search, $this->payload->getPayload(), $this->prepareAlertMessage());

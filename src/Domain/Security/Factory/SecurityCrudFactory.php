@@ -15,7 +15,7 @@ final class SecurityCrudFactory extends AbstractCrudFactory
     public function __construct(
         private readonly SecurityRepositoryInterface $repository,
         private readonly SecurityCrudValidationService $validation,
-        DeviceCacheService $cacheService
+        DeviceCacheService $cacheService,
     ) {
         $this->cacheService = $cacheService;
     }

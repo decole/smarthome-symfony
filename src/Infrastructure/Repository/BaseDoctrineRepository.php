@@ -5,29 +5,20 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Contract\Repository\EntityInterface;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\TransactionRequiredException;
-use Ramsey\Uuid\UuidInterface;
 
-abstract class BaseDoctrineRepository
+abstract class BaseDoctrineRepository extends ServiceEntityRepository
 {
-    protected EntityManager $entityManager;
-
-    public function setEntityManager(EntityManager $entityManager): void
-    {
-        $this->entityManager = $entityManager;
-    }
-
     /**
      * @throws OptimisticLockException|ORMException
      */
     final public function save(EntityInterface $entity): EntityInterface
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush($entity);
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
 
         return $entity;
     }
@@ -38,25 +29,17 @@ abstract class BaseDoctrineRepository
      */
     final public function delete(EntityInterface $entity): void
     {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
-    }
-
-    /**
-     * @throws OptimisticLockException|TransactionRequiredException|ORMException
-     */
-    protected function find(string $entityClass, UuidInterface $id)
-    {
-        return $this->entityManager->find($entityClass, $id);
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush();
     }
 
     final protected function select(string $entityClass, string $alias): QueryBuilder
     {
-        return $this->entityManager->createQueryBuilder()->from($entityClass, $alias)->select($alias);
+        return $this->getEntityManager()->createQueryBuilder()->from($entityClass, $alias)->select($alias);
     }
 
-    final protected function from(string $entity, string $alias, string $indexBy = null): QueryBuilder
+    final protected function from(string $entity, string $alias, ?string $indexBy = null): QueryBuilder
     {
-        return $this->entityManager->createQueryBuilder()->from($entity, $alias, $indexBy);
+        return $this->getEntityManager()->createQueryBuilder()->from($entity, $alias, $indexBy);
     }
 }

@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Sensor\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'sensor_leakage')]
 class LeakageSensor extends Sensor
 {
     public const TYPE = 'leakage';
@@ -17,9 +21,10 @@ class LeakageSensor extends Sensor
         private StatusMessage $statusMessage,
         private int $status,
         private bool $notify,
-
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $payloadDry = null,
-        private ?string $payloadWet = null
+        #[ORM\Column(type: Types::STRING, nullable: true)]
+        private ?string $payloadWet = null,
     ) {
         parent::__construct(
             $this->name,
@@ -27,7 +32,7 @@ class LeakageSensor extends Sensor
             $this->payload,
             $this->statusMessage,
             $this->status,
-            $this->notify
+            $this->notify,
         );
     }
 

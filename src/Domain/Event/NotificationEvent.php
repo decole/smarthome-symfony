@@ -11,9 +11,7 @@ class NotificationEvent extends Event
 {
     public const NAME = 'notification.send';
 
-    public function __construct(private readonly NotificationMessageInterface $notify)
-    {
-    }
+    public function __construct(private readonly NotificationMessageInterface $notify) {}
 
     public function getNotify(): NotificationMessageInterface
     {

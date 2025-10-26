@@ -1,3 +1,3 @@
-CREATE DATABASE test;
+CREATE DATABASE uberserver_testtest_;
 
-GRANT ALL PRIVILEGES ON DATABASE test TO root;
+GRANT ALL PRIVILEGES ON DATABASE uberserver_testtest_ TO root;

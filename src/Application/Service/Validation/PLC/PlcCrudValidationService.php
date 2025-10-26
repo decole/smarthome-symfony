@@ -19,17 +19,16 @@ final class PlcCrudValidationService implements ValidationInterface
 
     public function __construct(
         private readonly ValidatorInterface $validator,
-        private readonly PlcRepositoryInterface $repository
-    ) {
-    }
+        private readonly PlcRepositoryInterface $repository,
+    ) {}
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
-        assert($list instanceof ConstraintViolationList);
+        \assert($list instanceof ConstraintViolationList);
 
-        if ($this->dto->name === null || $this->dto->targetTopic === null) {
+        if (null === $this->dto->name || null === $this->dto->targetTopic) {
             return $list;
         }
 
@@ -47,9 +46,9 @@ final class PlcCrudValidationService implements ValidationInterface
             $updatingEntity = $this->repository->findById($this->dto->savedId);
             $savedEntity = $this->repository->findByName($this->dto->name);
 
-            if ($savedEntity instanceof \App\Domain\PLC\Entity\PLC &&
-                $updatingEntity instanceof \App\Domain\PLC\Entity\PLC &&
-                $updatingEntity->getIdToString() !== $savedEntity->getIdToString()
+            if ($savedEntity instanceof \App\Domain\PLC\Entity\PLC
+                && $updatingEntity instanceof \App\Domain\PLC\Entity\PLC
+                && $updatingEntity->getIdToString() !== $savedEntity->getIdToString()
             ) {
                 $list->add(new ConstraintViolation(
                     message: 'Plc name already exist to another entity.',
@@ -57,7 +56,7 @@ final class PlcCrudValidationService implements ValidationInterface
                     parameters: [$this->dto->name],
                     root: 'name',
                     propertyPath: 'name',
-                    invalidValue: $this->dto->name
+                    invalidValue: $this->dto->name,
                 ));
             }
 
@@ -71,7 +70,7 @@ final class PlcCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->name],
                 root: 'name',
                 propertyPath: 'name',
-                invalidValue: $this->dto->name
+                invalidValue: $this->dto->name,
             ));
         }
 
@@ -82,7 +81,7 @@ final class PlcCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->targetTopic],
                 root: 'targetTopic',
                 propertyPath: 'targetTopic',
-                invalidValue: $this->dto->targetTopic
+                invalidValue: $this->dto->targetTopic,
             ));
         }
 

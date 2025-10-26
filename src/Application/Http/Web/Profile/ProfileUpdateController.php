@@ -15,15 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ProfileUpdateController extends AbstractController
 {
-    public function __construct(private readonly ProfileCrudService $crud)
-    {
-    }
+    public function __construct(private readonly ProfileCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException
      * @throws ORMException
      */
-    #[Route('/user/profile/update', name: "profile_update",methods: ['POST'])]
+    #[Route('/user/profile/update', name: 'profile_update', methods: ['POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
@@ -31,13 +29,13 @@ final class ProfileUpdateController extends AbstractController
         if ($request->isMethod('post')) {
             $user = $this->getUser();
 
-            assert($user instanceof User);
+            \assert($user instanceof User);
 
             $dto = $this->crud->createDto($user->getLogin(), $request);
 
             $errors = $this->crud->validate($dto);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->update($user, $dto);
             }
         }

@@ -14,15 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PageAdminDeleteController extends AbstractController
 {
-    public function __construct(private readonly PageCrudService $crud)
-    {
-    }
+    public function __construct(private readonly PageCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException
      * @throws ORMException
      */
-    #[Route('/pages/admin/delete/{id}', name: "page_admin_delete_by_id")]
+    #[Route('/pages/admin/delete/{id}', name: 'page_admin_delete_by_id')]
     public function delete(string $id): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

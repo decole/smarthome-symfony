@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Helper;
 
 class StringHelper
 {
     public static function sanitize(mixed $sanitizeString, ?string $default = null): mixed
     {
-        if (is_array($sanitizeString)) {
+        if (\is_array($sanitizeString)) {
             return $sanitizeString;
         }
 
-        if ($sanitizeString === null || $sanitizeString === '') {
+        if (null === $sanitizeString || '' === $sanitizeString) {
             return $default;
         }
 

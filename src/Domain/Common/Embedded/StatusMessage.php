@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace App\Domain\Common\Embedded;
 
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embeddable;
 
+#[Embeddable]
 final class StatusMessage
 {
     public function __construct(
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private readonly ?string $message_info = null,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private readonly ?string $message_ok = null,
-        private readonly ?string $message_warn = null
-    ) {
-    }
+        #[ORM\Column(type: Types::STRING, nullable: true)]
+        private readonly ?string $message_warn = null,
+    ) {}
 
     public function getMessageInfo(): ?string
     {

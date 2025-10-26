@@ -10,11 +10,11 @@ use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
 use App\Domain\Payload\Entity\DevicePayload;
 use Psr\Cache\InvalidArgumentException;
 
-final class DeviceDataValidationService
+final readonly class DeviceDataValidationService
 {
-    public function __construct(private readonly DeviceCacheService $deviceCacheService)
-    {
-    }
+    public function __construct(
+        private DeviceCacheService $deviceCacheService,
+    ) {}
 
     /**
      * @throws InvalidArgumentException
@@ -22,9 +22,8 @@ final class DeviceDataValidationService
      */
     public function execute(DevicePayload $payload): DeviceDataValidatedDto
     {
-        $validator = (new DeviceDataValidationFactory($this->deviceCacheService->getTopicMapByDeviceTopic()))
-            ->create($payload);
-
-        return $validator->handle();
+        return (new DeviceDataValidationFactory($this->deviceCacheService->getTopicMapByDeviceTopic()))
+            ->create($payload)
+            ->handle();
     }
 }

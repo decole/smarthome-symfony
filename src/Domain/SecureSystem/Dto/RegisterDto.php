@@ -9,10 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 final class RegisterDto
 {
     private ?string $name;
+
     private ?string $email;
+
     private ?string $password;
+
     private ?string $rePassword;
+
     private ?string $terms;
+
     private ?string $csrf;
 
     public function __construct(Request $request)

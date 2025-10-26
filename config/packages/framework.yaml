@@ -1,10 +1,17 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
+  # this defines the codes of the locales (languages) available in the application
+  # https://symfony.com/doc/current/reference/configuration/framework.html#enabled-locales
+    enabled_locales: ['en', 'ru']
     annotations: false
     http_method_override: false
     handle_all_throwables: true
+
+    csrf_protection: true
+
+    serializer:
+      enable_attributes: true
 
     http_client:
         max_host_connections: 10
@@ -23,10 +30,18 @@ framework:
         cookie_samesite: lax
         handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
 
-    #esi: true
-    #fragments: true
+    # When using the HTTP Cache, ESI allows to render page fragments separately
+    # and with different cache configurations for each fragment
+    # https://symfony.com/doc/current/http_cache/esi.html
+    esi: true
+    fragments: true
     php_errors:
-        log: true
+      log: true
+
+    form:
+      csrf_protection:
+        enabled: true
+        field_name: 'authenticate'
 
 when@prod:
     framework:

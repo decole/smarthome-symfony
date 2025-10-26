@@ -22,9 +22,7 @@ final class PlcCrudService
 {
     use StatusMessageTrait;
 
-    public function __construct(private readonly PlcCrudFactory $crud)
-    {
-    }
+    public function __construct(private readonly PlcCrudFactory $crud) {}
 
     public function validate(CrudPlcDto $dto, bool $isUpdate = false): ConstraintViolationListInterface
     {
@@ -38,7 +36,7 @@ final class PlcCrudService
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
-        assert($dto instanceof CrudPlcDto);
+        \assert($dto instanceof CrudPlcDto);
 
         $entity = $this->getNewEntityByDto($dto);
 
@@ -57,7 +55,7 @@ final class PlcCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof PLC);
+        \assert($entity instanceof PLC);
 
         $entity->setName($dto->name);
         $entity->setTargetTopic($dto->targetTopic);
@@ -66,12 +64,12 @@ final class PlcCrudService
         $entity->setStatusMessage(new StatusMessage(
             $dto->message_info,
             $dto->message_ok,
-            $dto->message_warn
+            $dto->message_warn,
         ));
 
-        $entity->setStatus($dto->status === 'on' ?
+        $entity->setStatus('on' === $dto->status ?
             EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
-        $entity->setNotify($dto->notify === 'on');
+        $entity->setNotify('on' === $dto->notify);
         $entity->onUpdated();
 
         return $this->crud->save($entity);
@@ -84,7 +82,7 @@ final class PlcCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
+        if ($entity instanceof EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -93,14 +91,14 @@ final class PlcCrudService
     {
         $dto = new CrudPlcDto();
 
-        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
+        if (!$request instanceof Request) {
             return $dto;
         }
 
         foreach ($request->request as $param => $value) {
             if (property_exists($dto, $param)) {
-                if ($param === 'alarmSecondDelay') {
-                    $dto->alarmSecondDelay = (int)StringHelper::sanitize($value);
+                if ('alarmSecondDelay' === $param) {
+                    $dto->alarmSecondDelay = (int) StringHelper::sanitize($value);
 
                     continue;
                 }
@@ -116,7 +114,7 @@ final class PlcCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof PLC);
+        \assert($entity instanceof PLC);
 
         $dto = new CrudPlcDto();
 
@@ -141,11 +139,11 @@ final class PlcCrudService
             statusMessage: new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,
-                $dto->message_warn
+                $dto->message_warn,
             ),
-            status: $dto->status === 'on' ?
+            status: 'on' === $dto->status ?
                 EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
-            notify: $dto->notify === 'on',
+            notify: 'on' === $dto->notify,
         );
     }
 }

@@ -1,3 +1,14 @@
+/public/build/fonts/glyphicons-*
+/public/build/images/glyphicons-*
+
+.php-version
+/.psalm/cache/
+
+.idea
+docker-compose.yaml
+/.docker.env
+
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -8,11 +19,14 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-.idea
-docker-compose.yaml
-/.docker.env
-/docker/alertmanager/alertmanager.yml
-/src/Application/Cli/Task/
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
@@ -25,12 +39,12 @@ yarn-error.log
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-/.psalm/cache/
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml

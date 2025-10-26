@@ -16,14 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class RelayAdminUpdateController extends AbstractController
 {
-    public function __construct(private RelayCrudService $crud)
-    {
-    }
+    public function __construct(private RelayCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/relay/admin/update/{id}', name: "relay_admin_update_by_id")]
+    #[Route('/relay/admin/update/{id}', name: 'relay_admin_update_by_id')]
     public function update(string $id, Request $request): Response
     {
         $errors = [];
@@ -37,7 +35,7 @@ final class RelayAdminUpdateController extends AbstractController
 
             $errors = $this->crud->validate($relayDto, true);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->update($id, $relayDto);
 
                 return $this->redirectToRoute('relay_admin');

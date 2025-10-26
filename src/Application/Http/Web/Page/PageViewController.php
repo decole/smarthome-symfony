@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PageViewController extends AbstractController
 {
-    public function __construct(private readonly SitePageService $service)
-    {
-    }
+    public function __construct(private readonly SitePageService $service) {}
 
     #[Route('/{name}')]
     public function view(string $name): Response

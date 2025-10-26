@@ -12,11 +12,11 @@ final class AliceSkillService
 {
     public function getDialogAnswer(?array $request): AliceSkillResponseDto
     {
-        return (new DialogFactory)->create($this->gidrate($request))->getAnswer();
+        return (new DialogFactory())->create($this->gidrate($request))->getAnswer();
     }
 
     private function gidrate(?array $request): AliceSkillRequestDto
     {
-        return (new AliceSkillRequestDto($request));
+        return new AliceSkillRequestDto($request);
     }
 }

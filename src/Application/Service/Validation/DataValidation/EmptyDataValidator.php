@@ -15,7 +15,7 @@ final class EmptyDataValidator implements DeviceDataValidatorInterface
         return new DeviceDataValidatedDto(
             state: null,
             device: new EmptyDevice(),
-            isAlerting: false
+            isAlerting: false,
         );
     }
 }

@@ -7,14 +7,11 @@ namespace App\Infrastructure\YandexSmartHome\Service;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use App\Infrastructure\YandexSmartHome\Device\DeviceInterface;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 final class SmartHomeService
 {
-    public function __construct(private DeviceService $deviceService, private MqttHandleService $service)
-    {
-    }
+    public function __construct(private DeviceService $deviceService, private MqttHandleService $service) {}
 
     public function getRequestId(Request $request): string
     {
@@ -22,8 +19,9 @@ final class SmartHomeService
     }
 
     /**
+     * @throws \Exception
+     *
      * @return DeviceInterface[]
-     * @throws Exception
      */
     public function devicesQuery(?string $content): array
     {
@@ -33,7 +31,7 @@ final class SmartHomeService
         $devices = $json->devices ?? null;
 
         if (!$devices) {
-            throw new Exception('field devises not found');
+            throw new \Exception('field devises not found');
         }
 
         foreach ($devices as $device) {
@@ -45,7 +43,7 @@ final class SmartHomeService
 
             $entity = $this->deviceService->getDevice($id);
 
-            if ($entity instanceof \App\Infrastructure\YandexSmartHome\Device\DeviceInterface) {
+            if ($entity instanceof DeviceInterface) {
                 $result[] = $entity;
             }
         }
@@ -54,14 +52,14 @@ final class SmartHomeService
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function relayAction(string $topic, $query): bool
     {
-        if (!array_key_exists(0, $query->payload->devices) ||
-            !array_key_exists(0, $query->payload->devices[0]->capabilities)
+        if (!\array_key_exists(0, $query->payload->devices)
+            || !\array_key_exists(0, $query->payload->devices[0]->capabilities)
         ) {
-            throw new Exception('not valid relay action state');
+            throw new \Exception('not valid relay action state');
         }
 
         $state = $query->payload->devices[0]->capabilities[0]->state->value;

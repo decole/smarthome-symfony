@@ -3,7 +3,8 @@ charset = utf-8
 end_of_line = lf
 indent_size = 4
 indent_style = space
-insert_final_newline = false
+insert_final_newline = true
+trim_trailing_whitespace = true
 max_line_length = 120
 tab_width = 4
 ij_continuation_indent_size = 8
@@ -869,3 +870,9 @@ ij_yaml_sequence_on_new_line = false
 ij_yaml_space_before_colon = false
 ij_yaml_spaces_within_braces = true
 ij_yaml_spaces_within_brackets = true
+
+[*.md]
+max_line_length = 80
+
+[COMMIT_EDITMSG]
+max_line_length = 0

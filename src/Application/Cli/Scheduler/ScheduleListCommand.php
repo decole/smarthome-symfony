@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Scheduler;
 
 use App\Domain\Contract\Repository\ScheduleTaskRepositoryInterface;
@@ -27,16 +29,16 @@ final class ScheduleListCommand extends Command
         $this->printEmptyRow($output);
 
         foreach ($taskList as $task) {
-            $data = json_encode($task->getArguments(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            $data = json_encode($task->getArguments(), \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES);
             $this->printTableRow(
                 [
                     $i++,
                     "{$task->getCommand()} {$data}",
                     $task->getInterval(),
                     $task->getLastRun()?->format('d.m.Y H:i:s'),
-                    $task->getNextRun()?->format('d.m.Y H:i:s')
+                    $task->getNextRun()?->format('d.m.Y H:i:s'),
                 ],
-                $output
+                $output,
             );
 
             $this->printEmptyRow($output);
@@ -47,23 +49,23 @@ final class ScheduleListCommand extends Command
 
     private function printTableRow(array $list, OutputInterface $output): void
     {
-        $lastIndex = count($list) - 1;
+        $lastIndex = \count($list) - 1;
         $nextRow = [];
         $printNextRow = false;
 
         foreach ($list as $key => $val) {
-            $len = strlen($val);
+            $len = mb_strlen($val);
             $formattedVal = '';
 
-            if ($len === self::CELL_CHARS) {
+            if (self::CELL_CHARS === $len) {
                 $formattedVal = $val;
                 $nextRow[] = '';
             } elseif ($len > self::CELL_CHARS) {
-                $formattedVal = substr($val, 0, self::CELL_CHARS);
-                $nextRow[] = substr($val, self::CELL_CHARS);
+                $formattedVal = mb_substr($val, 0, self::CELL_CHARS);
+                $nextRow[] = mb_substr($val, self::CELL_CHARS);
                 $printNextRow = true;
             } elseif ($len < self::CELL_CHARS) {
-                $formattedVal = str_pad($val, self::CELL_CHARS, ' ', STR_PAD_BOTH);
+                $formattedVal = mb_str_pad($val, self::CELL_CHARS, ' ', \STR_PAD_BOTH);
                 $nextRow[] = '';
             }
 

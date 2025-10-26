@@ -7,7 +7,6 @@ namespace App\Application\Service\Validation\DataValidation;
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidateTypes\Factory\SensorDataValidateFactory;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
 use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
-use App\Domain\Sensor\Entity\Sensor;
 
 final class SensorDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
@@ -17,7 +16,7 @@ final class SensorDeviceDataValidator extends AbstractDeviceDataValidator implem
             return $this->createDto(
                 state: true,
                 device: $this->device,
-                isAlert: false
+                isAlert: false,
             );
         }
 
@@ -26,7 +25,7 @@ final class SensorDeviceDataValidator extends AbstractDeviceDataValidator implem
         return $this->createDto(
             state: $validator->validate(),
             device: $this->device,
-            isAlert: $validator->isAlert()
+            isAlert: $validator->isAlert(),
         );
     }
 }

@@ -4,29 +4,54 @@ declare(strict_types=1);
 
 namespace App\Domain\Identity\Entity;
 
+use App\Domain\Common\Traits\Entity;
+use App\Domain\Contract\Repository\EntityInterface;
+use App\Infrastructure\Repository\Identity\UserRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Domain\Contract\Repository\EntityInterface;
-use League\FactoryMuffin\Faker\Faker;
-use App\Domain\Common\Traits\Entity;
-use DateTimeImmutable;
-use Exception;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'app_user')]
 final class User implements UserInterface, PasswordAuthenticatedUserInterface, EntityInterface
 {
     use Entity;
 
     private const EXPIRED_SECONDS = 3600;
-    public const ROLE_USER = 'ROLE_USER';
+    final public const ROLE_USER = 'ROLE_USER';
 
+    #[ORM\Column(type: Types::STRING)]
+    #[Assert\NotBlank]
     private string $name;
+
+    #[ORM\Column(type: Types::STRING, length: 180, nullable: true)]
+    #[Assert\Email]
     private ?string $email;
+
+    /**
+     * @var string[]
+     */
+    #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
+
+    #[ORM\Column(type: Types::STRING)]
     private string $password;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $isVerified = false;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $telegramId = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $restoreToken = null;
-    private ?DateTimeImmutable $restoreTokenCreatedAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $restoreTokenCreatedAt = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $googleAuthSecret = null;
 
     public function __construct()
@@ -53,20 +78,14 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
 
     public function getUserIdentifier(): string
     {
-        return (string)$this->email;
+        return (string) $this->email;
     }
 
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
     public function getUsername(): string
     {
-        return (string)$this->email;
+        return $this->getUserIdentifier();
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -74,6 +93,9 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -162,26 +184,26 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function generateRestoreToken(): void
     {
-        $this->restoreToken = md5(time() . (new Faker())->getGenerator()->text(1000));
-        $this->restoreTokenCreatedAt = new DateTimeImmutable('now');
+        $this->restoreToken = md5(time() . random_int(0, 100000));
+        $this->restoreTokenCreatedAt = new \DateTimeImmutable('now');
     }
 
     public function isRestoreTokenExpired(): bool
     {
-        return !$this->restoreTokenCreatedAt instanceof \DateTimeImmutable ||
-            time() > $this->getExpiredRestoreTokenDate()->getTimestamp();
+        return !$this->restoreTokenCreatedAt instanceof \DateTimeImmutable
+            || time() > $this->getExpiredRestoreTokenDate()->getTimestamp();
     }
 
-    public function getRestoreTokenDate(): DateTimeImmutable
+    public function getRestoreTokenDate(): \DateTimeImmutable
     {
         return $this->restoreTokenCreatedAt;
     }
 
-    public function getExpiredRestoreTokenDate(): DateTimeImmutable
+    public function getExpiredRestoreTokenDate(): \DateTimeImmutable
     {
         $seconds = self::EXPIRED_SECONDS;
 
@@ -202,5 +224,21 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
     public function setAuthSecret(?string $googleAuthSecret): void
     {
         $this->googleAuthSecret = $googleAuthSecret;
+    }
+
+    /**
+     * @return array{int|null, string|null, string|null}
+     */
+    public function __serialize(): array
+    {
+        return [$this->id, $this->email, $this->password];
+    }
+
+    /**
+     * @param array{int|null, string, string} $data
+     */
+    public function __unserialize(array $data): void
+    {
+        [$this->id, $this->email, $this->password] = $data;
     }
 }

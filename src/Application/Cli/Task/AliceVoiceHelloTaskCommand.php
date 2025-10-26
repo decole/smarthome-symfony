@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Task;
 
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
@@ -9,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Необходимость периодически тестировать работоспособность оповещения через колонку
+ * Необходимость периодически тестировать работоспособность оповещения через колонку.
  */
 #[AsCommand(name: 'cli:task:alice-morning', description: 'Alice morning hello')]
 final class AliceVoiceHelloTaskCommand extends Command

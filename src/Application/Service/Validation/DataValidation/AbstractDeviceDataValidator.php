@@ -10,16 +10,14 @@ use App\Domain\Payload\Entity\DevicePayload;
 
 abstract class AbstractDeviceDataValidator
 {
-    public function __construct(protected DevicePayload $payload, protected EntityInterface $device)
-    {
-    }
+    public function __construct(protected DevicePayload $payload, protected EntityInterface $device) {}
 
     public function createDto(?bool $state, EntityInterface $device, bool $isAlert): DeviceDataValidatedDto
     {
         return new DeviceDataValidatedDto(
             state: $state,
             device: $device,
-            isAlerting: $isAlert
+            isAlerting: $isAlert,
         );
     }
 }

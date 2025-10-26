@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Exception;
 
-use Exception;
-
-class SaveDeviceStateException extends Exception
+class SaveDeviceStateException extends \Exception
 {
     public static function undefined(string $type): self
     {

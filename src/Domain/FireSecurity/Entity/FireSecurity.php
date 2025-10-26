@@ -12,28 +12,55 @@ use App\Domain\Common\Traits\CrudCommonFields;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
+use App\Infrastructure\Repository\FireSecurity\FireSecurityRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embedded;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: FireSecurityRepository::class)]
+#[ORM\Table(name: 'fire_security')]
 final class FireSecurity implements EntityInterface
 {
-    use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
+    use CreatedAt;
+    use CrudCommonFields;
+    use Entity;
+    use UpdatedAt;
+
+    #[ORM\Column(type: Types::STRING, unique: true)]
+    #[Assert\NotBlank]
+    private string $name;
+
+    #[ORM\Column(type: Types::STRING, unique: true)]
+    private string $topic;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $payload;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $normalPayload;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $alertPayload;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $lastCommand;
+
+    #[Embedded(class: StatusMessage::class)]
+    private StatusMessage $statusMessage;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $notify;
 
     public function __construct(
-        private string $name,
-        private string $topic,
-        private ?string $payload,
-
-        private ?string $normalPayload,
-        private ?string $alertPayload,
-        private ?string $lastCommand,
-
-        private StatusMessage $statusMessage,
+        #[ORM\Column(type: Types::SMALLINT)]
         private int $status,
-        private bool $notify
     ) {
         $this->identify();
         $this->onCreated();
+        $this->statusMessage = new StatusMessage();
 
-        $this->checkStatusType($status);
+        $this->checkStatusType($this->status);
     }
 
     public static function alias(): string

@@ -17,17 +17,15 @@ final class SensorCrudValidationService implements ValidationInterface
 {
     private CrudSensorDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private SensorRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private ValidatorInterface $validator, private SensorRepositoryInterface $repository) {}
 
     public function validate(bool $isUpdate = false): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
-        assert($list instanceof ConstraintViolationList);
+        \assert($list instanceof ConstraintViolationList);
 
-        if ($this->dto->name === null || $this->dto->topic === null) {
+        if (null === $this->dto->name || null === $this->dto->topic) {
             return $list;
         }
 
@@ -52,7 +50,7 @@ final class SensorCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->name],
                 root: 'name',
                 propertyPath: 'name',
-                invalidValue: $this->dto->name
+                invalidValue: $this->dto->name,
             ));
         }
 
@@ -63,7 +61,7 @@ final class SensorCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->topic],
                 root: 'topic',
                 propertyPath: 'topic',
-                invalidValue: $this->dto->topic
+                invalidValue: $this->dto->topic,
             ));
         }
 

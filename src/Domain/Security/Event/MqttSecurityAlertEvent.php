@@ -12,9 +12,7 @@ class MqttSecurityAlertEvent extends Event
 {
     public const NAME = 'security.alert';
 
-    public function __construct(private readonly Security $device, private readonly DevicePayload $payload)
-    {
-    }
+    public function __construct(private readonly Security $device, private readonly DevicePayload $payload) {}
 
     public function getDevice(): Security
     {

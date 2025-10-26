@@ -20,17 +20,15 @@ final class PageCrudValidationService implements ValidationInterface
      */
     private ValidationDtoInterface $dto;
 
-    public function __construct(private ValidatorInterface $validator, private PageRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private ValidatorInterface $validator, private PageRepositoryInterface $repository) {}
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
-        assert($list instanceof ConstraintViolationList);
+        \assert($list instanceof ConstraintViolationList);
 
-        if ($this->dto->name === null || $this->dto->config === null) {
+        if (null === $this->dto->name || null === $this->dto->config) {
             return $list;
         }
 
@@ -55,7 +53,7 @@ final class PageCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->name],
                 root: 'name',
                 propertyPath: 'name',
-                invalidValue: $this->dto->name
+                invalidValue: $this->dto->name,
             ));
         }
 

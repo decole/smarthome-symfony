@@ -9,27 +9,37 @@ use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use App\Domain\Relay\Entity\Relay;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template-extends ServiceEntityRepository<Relay>
+ */
 final class RelayRepository extends BaseDoctrineRepository implements RelayRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Relay::class);
+    }
+
     public function findAll(?int $status = null): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('r')
             ->from(Relay::class, 'r')
             ->orderBy('r.createdAt', 'DESC');
 
-        if ($status !== null) {
-            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (null !== $status) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Relay device status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('r.status', ':status')
+                    $qb->expr()->eq('r.status', ':status'),
                 )
                 ->setParameter('status', $status);
         }
@@ -42,7 +52,7 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
      */
     public function findById(string $id): ?Relay
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('r')
             ->from(Relay::class, 'r')
             ->where('r.id = :value')
@@ -56,7 +66,7 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
      */
     public function findByName(string $value): ?Relay
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('r')
             ->from(Relay::class, 'r')
             ->where('r.name = :value')
@@ -70,7 +80,7 @@ final class RelayRepository extends BaseDoctrineRepository implements RelayRepos
      */
     public function findByTopic(string $value): ?Relay
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('r')
             ->from(Relay::class, 'r')
             ->where('r.topic = :value')

@@ -8,7 +8,6 @@ use App\Infrastructure\AliceSkill\Dialog\AliceDialogInterface;
 use App\Infrastructure\AliceSkill\Dialog\HelloDialog;
 use App\Infrastructure\AliceSkill\Dialog\PingDialog;
 use App\Infrastructure\AliceSkill\Dto\AliceSkillRequestDto;
-use App\Infrastructure\AliceSkill\Exception\AliceSkillException;
 
 final class DialogFactory
 {
@@ -23,7 +22,7 @@ final class DialogFactory
 
         /** @var AliceDialogInterface $dialogClass */
         foreach (self::MAP as $dialogClass) {
-            if (in_array($dto->getCommand(), $dialogClass::getCommandVerbList())) {
+            if (\in_array($dto->getCommand(), $dialogClass::getCommandVerbList(), true)) {
                 $class = $dialogClass::getInstance($dto);
             }
         }

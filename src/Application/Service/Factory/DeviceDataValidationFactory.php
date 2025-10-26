@@ -18,18 +18,19 @@ use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
 
-final class DeviceDataValidationFactory
+final readonly class DeviceDataValidationFactory
 {
-    public function __construct(private array $map)
-    {
-    }
+    /**
+     * @param array<string, EntityInterface> $map
+     */
+    public function __construct(private array $map) {}
 
     public function create(DevicePayload $payload): DeviceDataValidatorInterface
     {
-        /** @var Sensor|Relay|FireSecurity|Security $device */
+        /** @var Sensor|Relay|FireSecurity|Security|null $device */
         $device = $this->findDevice($payload);
 
-        if ($device === null) {
+        if (null === $device) {
             return new EmptyDataValidator();
         }
 
@@ -39,7 +40,7 @@ final class DeviceDataValidationFactory
             Security::alias() => new SecurityDeviceDataValidator($payload, $device),
             FireSecurity::alias() => new FireSecurityDeviceDataValidator($payload, $device),
 
-            default => throw DeviceDataException::notFoundValidatorType()
+            default => throw DeviceDataException::notFoundValidatorType(),
         };
     }
 

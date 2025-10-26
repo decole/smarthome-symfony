@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Stub\Infrastructure;
 
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
-use Closure;
 
 class StubMqttClient implements MqttClientInterface
 {
@@ -11,7 +12,7 @@ class StubMqttClient implements MqttClientInterface
 
     public function getClient(): mixed
     {
-        return (object)[];
+        return (object) [];
     }
 
     public function isConnect(): bool
@@ -34,11 +35,7 @@ class StubMqttClient implements MqttClientInterface
         $this->isConnect = true;
     }
 
-    public function publish(string $topic, string $payload, int $qos = 0, bool $retain = false): void
-    {
-    }
+    public function publish(string $topic, string $payload, int $qos = 0, bool $retain = false): void {}
 
-    public function subscribe(string $topic, int $qos, Closure $closure): void
-    {
-    }
+    public function subscribe(string $topic, int $qos, \Closure $closure): void {}
 }

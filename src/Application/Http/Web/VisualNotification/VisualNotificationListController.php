@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class VisualNotificationListController extends AbstractController
 {
-    public function __construct(private VisualNotificationService $service)
-    {
-    }
+    public function __construct(private VisualNotificationService $service) {}
 
     #[Route('/visual-notify/{type}', name: 'visual_notify')]
     public function index(int $type): Response
@@ -24,7 +22,7 @@ final class VisualNotificationListController extends AbstractController
         return $this->render('notification/index.html.twig', [
             'title' => 'Зафиксированные события',
             'type' => $type,
-            'notifies' => $this->service->getNotifiesByType(type: $type === 99 ? null : $type),
+            'notifies' => $this->service->getNotifiesByType(type: 99 === $type ? null : $type),
         ]);
     }
 }

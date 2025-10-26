@@ -11,9 +11,8 @@ final class SitePageService
 {
     public function __construct(
         private readonly PageRepositoryInterface $repository,
-        private readonly PageHydrateService $service
-    ) {
-    }
+        private readonly PageHydrateService $service,
+    ) {}
 
     /**
      * @throws DeviceDataException

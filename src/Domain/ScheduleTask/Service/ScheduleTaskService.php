@@ -9,22 +9,19 @@ use App\Domain\Contract\Repository\ScheduleTaskRepositoryInterface;
 use App\Domain\ScheduleTask\Entity\ScheduleTask;
 use App\Domain\ScheduleTask\Input\ScheduleTaskInputDto;
 use Cron\CronExpression;
-use DateTimeImmutable;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Throwable;
 
 final class ScheduleTaskService
 {
     public function __construct(
         private readonly ScheduleTaskRepositoryInterface $repository,
         private readonly TransactionInterface $transaction,
-        private readonly LoggerInterface $logger
-    ) {
-    }
+        private readonly LoggerInterface $logger,
+    ) {}
 
     public function execute(Application $application, OutputInterface $output): void
     {
@@ -46,7 +43,7 @@ final class ScheduleTaskService
         }
 
         $nextRunDate = $task->getNextRun()->getTimestamp();
-        $currentDate = (new DateTimeImmutable())->getTimestamp();
+        $currentDate = (new \DateTimeImmutable())->getTimestamp();
 
         if ($currentDate > $nextRunDate) {
             $this->begin($task);
@@ -55,10 +52,10 @@ final class ScheduleTaskService
                 $returnCode = $application->find($task->getCommand())
                     ->run(new ArrayInput($task->getArguments()), $output);
 
-                if ($returnCode === Command::SUCCESS) {
+                if (Command::SUCCESS === $returnCode) {
                     $this->end($task);
                 }
-            } catch (Throwable $exception) {
+            } catch (\Throwable $exception) {
                 $this->logger->critical('Crash handling command', [
                     'exception' => $exception->getMessage(),
                 ]);
@@ -73,7 +70,7 @@ final class ScheduleTaskService
             arguments: $dto->arguments,
             interval: $dto->interval,
             lastRun: null,
-            nextRun: $dto->nextRun
+            nextRun: $dto->nextRun,
         );
 
         $this->save($task);
@@ -84,32 +81,32 @@ final class ScheduleTaskService
     public function delete(ScheduleTask $task): void
     {
         $this->transaction->transactional(
-            fn () => $this->repository->delete($task)
+            fn () => $this->repository->delete($task),
         );
     }
 
     public function save(ScheduleTask $task): void
     {
         $this->transaction->transactional(
-            fn() => $this->repository->save($task)
+            fn () => $this->repository->save($task),
         );
     }
 
-    public function getNextDate(?string $interval): ?DateTimeImmutable
+    public function getNextDate(?string $interval): ?\DateTimeImmutable
     {
-        if ($interval === null || $interval === '') {
+        if (null === $interval || '' === $interval) {
             return null;
         }
 
-        $date = match (str_contains($interval, '*') ||
-            str_contains($interval, '@') ||
-            str_contains($interval, '/')
+        $date = match (str_contains($interval, '*')
+            || str_contains($interval, '@')
+            || str_contains($interval, '/')
         ) {
-            true => DateTimeImmutable::createFromMutable((new CronExpression($interval))->getNextRunDate()),
-            default => (new DateTimeImmutable())->modify($interval),
+            true => \DateTimeImmutable::createFromMutable((new CronExpression($interval))->getNextRunDate()),
+            default => (new \DateTimeImmutable())->modify($interval),
         };
 
-        if ($date === false) {
+        if (false === $date) {
             return null;
         }
 

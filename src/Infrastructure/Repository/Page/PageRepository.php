@@ -7,13 +7,23 @@ namespace App\Infrastructure\Repository\Page;
 use App\Domain\Contract\Repository\PageRepositoryInterface;
 use App\Domain\Page\Entity\Page;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template-extends ServiceEntityRepository<Page>
+ */
 final class PageRepository extends BaseDoctrineRepository implements PageRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Page::class);
+    }
+
     public function findAll(): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('p')
@@ -28,7 +38,7 @@ final class PageRepository extends BaseDoctrineRepository implements PageReposit
      */
     public function findByName(string $page): ?Page
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('p')
             ->from(Page::class, 'p')
             ->where('p.name = :value')
@@ -42,7 +52,7 @@ final class PageRepository extends BaseDoctrineRepository implements PageReposit
      */
     public function findById(string $id): ?Page
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('p')
             ->from(Page::class, 'p')
             ->where('p.id = :value')

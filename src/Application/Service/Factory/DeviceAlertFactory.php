@@ -19,9 +19,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class DeviceAlertFactory
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher)
-    {
-    }
+    public function __construct(private EventDispatcherInterface $eventDispatcher) {}
 
     public function create(EntityInterface $device, DevicePayload $payload): CriteriaInterface
     {

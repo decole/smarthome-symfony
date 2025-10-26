@@ -15,14 +15,13 @@ final class MqttSecurityAlertEventListener
 {
     public function __construct(
         private readonly MqttHandleService $service,
-    ) {
-    }
+    ) {}
 
     public function onSecurityAlert(MqttSecurityAlertEvent $event): void
     {
         $this->hydrate($event->getDevice()->getParams());
 
-        if ($event->getDevice()->getParams() === []) {
+        if ([] === $event->getDevice()->getParams()) {
             return;
         }
 
@@ -31,20 +30,20 @@ final class MqttSecurityAlertEventListener
 
     private function hydrate(array $raw): void
     {
-        if (array_key_exists('mqtt', $raw)) {
+        if (\array_key_exists('mqtt', $raw)) {
             $mqtt = $raw['mqtt'];
 
-            if (array_key_exists('publishTopic', $mqtt) && array_key_exists('payload', $mqtt)) {
+            if (\array_key_exists('publishTopic', $mqtt) && \array_key_exists('payload', $mqtt)) {
                 $this->service->post(new DevicePayload(topic: $mqtt['publishTopic'], payload: $mqtt['payload']));
             }
         }
 
-        if (array_key_exists('api', $raw)) {
+        if (\array_key_exists('api', $raw)) {
             $api = $raw['api'];
 
-            if (array_key_exists('entrypoint', $api) &&
-                array_key_exists('method', $api) &&
-                ($api['method'] === 'get' || $api['method'] === 'post')
+            if (\array_key_exists('entrypoint', $api)
+                && \array_key_exists('method', $api)
+                && ('get' === $api['method'] || 'post' === $api['method'])
             ) {
                 $url = $api['entrypoint'];
                 $method = $api['method'];

@@ -22,14 +22,15 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 final class DeviceCacheService implements CacheServiceInterface
 {
+    private const DURATION = 'PT6H';
+
     public function __construct(
         private readonly CacheService $cache,
         private readonly SensorRepositoryInterface $sensorRepository,
         private readonly RelayRepositoryInterface $relayRepository,
         private readonly SecurityRepositoryInterface $securityRepository,
-        private readonly FireSecurityRepositoryInterface $fireSecurityRepository
-    ) {
-    }
+        private readonly FireSecurityRepositoryInterface $fireSecurityRepository,
+    ) {}
 
     /**
      * @throws CacheException
@@ -43,28 +44,34 @@ final class DeviceCacheService implements CacheServiceInterface
     }
 
     /**
-     * @return array{"sensor":list<Sensor>, "relay":list<Relay>, "security":list<Security>, "fireSecurity":list<FireSecurity>}
      * @throws InvalidArgumentException
+     *
+     * @return array{"sensor":list<Sensor>, "relay":list<Relay>, "security":list<Security>, "fireSecurity":list<FireSecurity>}
      */
     public function getDeviceMap(): array
     {
         return $this->cache->getOrSet(
             key: CacheKeyListEnum::DEVICE_MAP_CACHE->value,
             callback: function (ItemInterface $item): array {
+                $item->expiresAfter(new \DateInterval(self::DURATION));
+
                 return $this->getMap();
-            }
+            },
         );
     }
 
     /**
-     * @return array<string, EntityInterface>
      * @throws InvalidArgumentException
+     *
+     * @return array<string, EntityInterface>
      */
     public function getTopicMapByDeviceTopic(): array
     {
         return $this->cache->getOrSet(
             key: CacheKeyListEnum::DEVICE_TOPIC_BY_TYPE->value,
             callback: function (ItemInterface $item): array {
+                $item->expiresAfter(new \DateInterval(self::DURATION));
+
                 $topicList = [];
                 $map = $this->getDeviceMap();
 
@@ -72,9 +79,11 @@ final class DeviceCacheService implements CacheServiceInterface
                     /** @var Sensor|Relay|FireSecurity|Security $device */
                     foreach ($devices as $device) {
                         if ($type === Relay::alias()) {
-                            $topicList[$device->getCheckTopic()] = $device;
+                            $checkTopic = $device->getCheckTopic();
 
-                            continue;
+                            if (null !== $checkTopic) {
+                                $topicList[$checkTopic] = $device;
+                            }
                         }
 
                         $topicList[$device->getTopic()] = $device;
@@ -82,7 +91,7 @@ final class DeviceCacheService implements CacheServiceInterface
                 }
 
                 return $topicList;
-            }
+            },
         );
     }
 

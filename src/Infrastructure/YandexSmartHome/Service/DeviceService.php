@@ -14,7 +14,7 @@ final class DeviceService
         foreach ($this->getDeviceList() as $deviceClass) {
             $device = new $deviceClass();
 
-            if ($device->getDevice()->id == $id) {
+            if ($device->getDevice()->id === $id) {
                 return $device;
             }
         }

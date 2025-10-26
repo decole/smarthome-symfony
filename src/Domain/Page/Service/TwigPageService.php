@@ -9,9 +9,7 @@ use App\Domain\Page\Entity\Page;
 
 final class TwigPageService
 {
-    public function __construct(private readonly PageRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private readonly PageRepositoryInterface $repository) {}
 
     /**
      * @return list<Page>

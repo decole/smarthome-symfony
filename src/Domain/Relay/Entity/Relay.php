@@ -13,37 +13,66 @@ use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Relay\Enum\RelayTypeEnum;
+use App\Infrastructure\Repository\Relay\RelayRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embedded;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: RelayRepository::class)]
+#[ORM\Table(name: 'relay')]
 final class Relay implements EntityInterface
 {
+    use CreatedAt;
+    use CrudCommonFields;
+    use Entity;
+    use UpdatedAt;
+
     /**
-     * @see App\Domain\Relay\Enum\RelayTypeEnum
+     * @see RelayTypeEnum
      */
     public const TYPE_TRANSCRIBES = [
         'relay' => 'реле',
         'swift' => 'клапан автополива',
     ];
 
-    use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
-
     public function __construct(
+        #[ORM\Column(type: Types::STRING)]
         private string $type,
+        #[ORM\Column(type: Types::STRING, unique: true)]
+        #[Assert\NotBlank]
         private string $name,
+        #[ORM\Column(type: Types::STRING, unique: true)]
+        #[Assert\NotBlank]
         private string $topic,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $payload,
+        #[ORM\Column(type: Types::STRING)]
         private string $commandOn,
+        #[ORM\Column(type: Types::STRING)]
         private string $commandOff,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $checkTopic,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $checkTopicPayloadOn,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $checkTopicPayloadOff,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $lastCommand,
+        #[ORM\Column(type: Types::BOOLEAN)]
         private bool $isFeedbackPayload,
+        #[Embedded(class: StatusMessage::class)]
         private StatusMessage $statusMessage,
+        #[ORM\Column(type: Types::SMALLINT)]
         private int $status,
-        private bool $notify
+        #[ORM\Column(type: Types::BOOLEAN)]
+        private bool $notify,
     ) {
         $this->identify();
         $this->onCreated();
+
+        $this->statusMessage = new StatusMessage();
+
         $this->checkStatusType($status);
         $this->checkRelayType($type);
     }
@@ -170,7 +199,7 @@ final class Relay implements EntityInterface
      */
     private function checkStatusType(int $status): void
     {
-        if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Relay device status');
         }
     }
@@ -180,7 +209,7 @@ final class Relay implements EntityInterface
      */
     private function checkRelayType(string $type): void
     {
-        if (!RelayTypeEnum::tryFrom($type) instanceof \App\Domain\Relay\Enum\RelayTypeEnum) {
+        if (!RelayTypeEnum::tryFrom($type) instanceof RelayTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Relay device type');
         }
     }

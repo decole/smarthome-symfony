@@ -6,7 +6,6 @@ namespace App\Domain\Common\Transactions;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Throwable;
 
 final class DoctrineTransaction implements TransactionInterface
 {
@@ -33,13 +32,13 @@ final class DoctrineTransaction implements TransactionInterface
             $this->connection->commit();
 
             return $returned;
-        } catch (Throwable $e) {
-            if ($failOver !== null) {
+        } catch (\Throwable $e) {
+            if (null !== $failOver) {
                 return $failOver($this->connection);
             }
 
             // Не закрываем entity manager в тестовом окружении
-            if ($this->env !== 'test') {
+            if ('test' !== $this->env) {
                 $this->manager->close();
             }
             $this->connection->rollBack();
@@ -59,9 +58,9 @@ final class DoctrineTransaction implements TransactionInterface
 
             $this->manager->flush($entities);
             $this->connection->commit();
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             // Не закрываем entity manager в тестовом окружении
-            if ($this->env !== 'test') {
+            if ('test' !== $this->env) {
                 $this->manager->close();
             }
             $this->connection->rollBack();

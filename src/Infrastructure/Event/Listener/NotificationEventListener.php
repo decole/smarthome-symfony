@@ -11,9 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 #[AsEventListener(event: NotificationEvent::NAME, method: 'onNotificationSend')]
 final class NotificationEventListener
 {
-    public function __construct(private MessageBusInterface $bus)
-    {
-    }
+    public function __construct(private MessageBusInterface $bus) {}
 
     public function onNotificationSend(NotificationEvent $event): void
     {

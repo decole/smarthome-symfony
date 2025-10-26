@@ -16,32 +16,28 @@ final class DatetimeImmutableType extends \Doctrine\DBAL\Types\DateTimeImmutable
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
-        /** @psalm-suppress InvalidClass */
-        if ($value instanceof \DatetimeImmutable) {
+        /* @psalm-suppress InvalidClass */
+        if ($value instanceof \DateTimeImmutable) {
             return $this->convertDateTimeToUTC($value)->format($platform->getDateTimeTzFormatString());
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', __CLASS__]
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', __CLASS__]);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
     {
-        if ($value === null || $value instanceof \DateTimeImmutable) {
+        if (null === $value || $value instanceof \DateTimeImmutable) {
             return $value;
         }
 
         $dateTime = \DateTimeImmutable::createFromFormat(
             $platform->getDateTimeFormatString(),
             $value,
-            new \DateTimeZone('UTC')
+            new \DateTimeZone('UTC'),
         );
 
         if (!$dateTime) {
@@ -49,18 +45,14 @@ final class DatetimeImmutableType extends \Doctrine\DBAL\Types\DateTimeImmutable
         }
 
         if (!$dateTime) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeFormatString()
-            );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeFormatString());
         }
 
         return $dateTime;
     }
 
     /**
-     * Конвертирует дату и время в utc
+     * Конвертирует дату и время в utc.
      *
      * @throws \Exception
      */
@@ -68,6 +60,7 @@ final class DatetimeImmutableType extends \Doctrine\DBAL\Types\DateTimeImmutable
     {
         $convertDateTime = new \DateTime($dateTime->format(\DateTime::ATOM));
         $convertDateTime->setTimezone(new \DateTimeZone('UTC'));
+
         return \DateTimeImmutable::createFromMutable($convertDateTime);
     }
 }

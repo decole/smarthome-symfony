@@ -8,13 +8,13 @@ final class ApiUriTranscribeService
 {
     public function transcribeUri(string $uri): array
     {
-        if ($uri === '') {
+        if ('' === $uri) {
             return [];
         }
 
         $elements = explode(',', $uri);
 
-        if (!is_array($elements)) {
+        if (!\is_array($elements)) {
             $elements = [$uri];
         }
 

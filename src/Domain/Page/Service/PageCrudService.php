@@ -32,9 +32,8 @@ final class PageCrudService
         private readonly SensorRepositoryInterface $sensorRepository,
         private readonly RelayRepositoryInterface $relayRepository,
         private readonly SecurityRepositoryInterface $securityRepository,
-        private readonly FireSecurityRepositoryInterface $fireSecurityRepository
-    ) {
-    }
+        private readonly FireSecurityRepositoryInterface $fireSecurityRepository,
+    ) {}
 
     public function validate(CrudPageDto $relayDto, bool $isUpdate = false): ConstraintViolationListInterface
     {
@@ -48,7 +47,7 @@ final class PageCrudService
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
-        assert($dto instanceof CrudPageDto);
+        \assert($dto instanceof CrudPageDto);
 
         $entity = $this->getNewEntityByDto($dto);
 
@@ -67,7 +66,7 @@ final class PageCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof Page);
+        \assert($entity instanceof Page);
 
         $entity->setName($dto->name);
         $entity->setConfig($dto->config);
@@ -86,7 +85,7 @@ final class PageCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
+        if ($entity instanceof EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -95,17 +94,17 @@ final class PageCrudService
     {
         $dto = new CrudPageDto();
 
-        if (!$request instanceof \Symfony\Component\HttpFoundation\Request || $request->request->get(self::NAME_ALIAS) === null) {
+        if (!$request instanceof Request || null === $request->request->get(self::NAME_ALIAS)) {
             $this->setDefault($dto);
 
             return $dto;
         }
 
-        $dto->name = (string)$request->request->get(self::NAME_ALIAS);
+        $dto->name = (string) $request->request->get(self::NAME_ALIAS);
         $dto->config = $this->getConfigByRequest($request);
-        $dto->alias = (string)$request->request->get(self::ALIAS_FIELD_ALIAS);
-        $dto->icon = (string)$request->request->get(self::ICON_ALIAS);
-        $dto->groupId = (int)$request->request->get(self::GROUP_ALIAS);
+        $dto->alias = (string) $request->request->get(self::ALIAS_FIELD_ALIAS);
+        $dto->icon = (string) $request->request->get(self::ICON_ALIAS);
+        $dto->groupId = (int) $request->request->get(self::GROUP_ALIAS);
 
         return $dto;
     }
@@ -114,7 +113,7 @@ final class PageCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof Page);
+        \assert($entity instanceof Page);
 
         $dto = new CrudPageDto();
 
@@ -129,13 +128,15 @@ final class PageCrudService
 
     public function getNewEntityByDto(CrudPageDto $dto): Page
     {
-        return new Page(
-            name: $dto->name,
-            config: $dto->config,
-            icon: $dto->icon,
-            alias: $dto->alias,
-            groupId: $dto->groupId
-        );
+        $entity = new Page();
+
+        $entity->setName($dto->name);
+        $entity->setConfig($dto->config);
+        $entity->setAlias($dto->alias);
+        $entity->setIcon($dto->icon);
+        $entity->setGroupId($dto->groupId);
+
+        return $entity;
     }
 
     public function getSelectedDeviceList(CrudPageDto $dto): array
@@ -173,13 +174,13 @@ final class PageCrudService
 
     private function isJoined(array $devices, string $deviceId): bool
     {
-        return in_array($deviceId, $devices ?? [], true);
+        return \in_array($deviceId, $devices ?? [], true);
     }
 
     public function getSanitizeRequest(?Request $request, string $name): array
     {
         $result = [];
-        $list = $request?->request->get($name) ?? [];
+        $list = $request?->request->all($name) ?? [];
 
         foreach ($list as $id) {
             $result[] = StringHelper::sanitize($id);

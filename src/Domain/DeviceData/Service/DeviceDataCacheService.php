@@ -5,107 +5,59 @@ declare(strict_types=1);
 namespace App\Domain\DeviceData\Service;
 
 use App\Domain\Payload\Entity\DevicePayload;
-use App\Infrastructure\Cache\CacheKeyListEnum;
 use App\Infrastructure\Cache\CacheService;
 use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 
 /**
- * Кэширует данные переданные устройствами
+ * Кэширует данные переданные устройствами.
  */
 final class DeviceDataCacheService
 {
     private const CACHE_LIMIT = 320;
+    private const PREFIX = 'topic';
 
-    private const LIST_KEY = 'list';
-
-    public function __construct(private readonly CacheService $cache)
-    {
-    }
+    public function __construct(private readonly CacheService $cache) {}
 
     /**
      * @throws InvalidArgumentException|CacheException
      */
     public function save(DevicePayload $message): void
     {
-        $map = $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST->value) ?? [];
-
-        $map[self::LIST_KEY][$message->getTopic()] = [
-            'payload' => $message->getPayload(),
-            'createdAt' => time(),
-            'expiredAt' => time() + self::CACHE_LIMIT,
-        ];
-
-        $map = $this->clearOldPayload($map);
-
-        $this->setCache($map);
+        $this->cache->set(
+            key: $this->topicSeparate($message->getTopic()),
+            value: $message->getPayload(),
+            lifetime: self::CACHE_LIMIT,
+        );
     }
 
     /**
      * @param list<string> $topics
-     * @return array<string, mixed>
+     *
      * @throws InvalidArgumentException
+     *
+     * @return array<string, mixed>
+     *
+     * @deprecated  refactoring
      */
     public function getPayloadByTopicList(array $topics): array
     {
         $result = [];
 
         foreach ($topics as $topic) {
-            $result[$topic] = $this->getTopicPayload(cached: $this->getList(), topic: trim($topic));
+            $result[$topic] = $this->getTopicPayload(topic: mb_trim($topic));
         }
 
         return $result;
     }
 
-    /**
-     * @param array<string, mixed> $map
-     */
-    public function clearOldPayload(array $map): array
+    private function getTopicPayload(mixed $topic): ?string
     {
-        foreach ($map[self::LIST_KEY] as $cachedTopic => $payload) {
-            if ($this->isExpiredPayload($payload['createdAt'])) {
-                unset($map[$cachedTopic]);
-            }
-        }
-
-        return $map;
+        return $this->cache->get($this->topicSeparate((string) $topic)) ?? null;
     }
 
-    /**
-     * @return array<string, mixed>
-     * @throws InvalidArgumentException
-     */
-    public function getList(): array
+    private function topicSeparate(mixed $topic): string
     {
-        return $this->cache->get(CacheKeyListEnum::DEVICE_TOPICS_LIST->value)[self::LIST_KEY] ?? [];
-    }
-
-    private function getTopicPayload(array $cached, mixed $topic): ?string
-    {
-        foreach ($cached as $cachedTopic => $payload) {
-            if (trim($cachedTopic) === trim($topic)) {
-                return $payload['payload'];
-            }
-        }
-
-        return null;
-    }
-
-    private function isExpiredPayload(int $payloadTime): bool
-    {
-        return time() > $payloadTime + self::CACHE_LIMIT;
-    }
-
-    /**
-     * @throws CacheException
-     * @throws InvalidArgumentException
-     */
-    private function setCache(array $map): void
-    {
-        $this->cache->set(
-            key: CacheKeyListEnum::DEVICE_TOPICS_LIST->value,
-            value: $map,
-            lifetime: self::CACHE_LIMIT
-        );
+        return \sprintf('%s_%s', self::PREFIX, str_replace(['/', '#'], '_', (string) $topic));
     }
 }

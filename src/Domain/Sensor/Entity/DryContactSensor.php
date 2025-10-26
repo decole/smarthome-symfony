@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Sensor\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'sensor_dry_contact')]
 class DryContactSensor extends Sensor
 {
     public const TYPE = 'dryContact';
@@ -17,9 +21,10 @@ class DryContactSensor extends Sensor
         private StatusMessage $statusMessage,
         private int $status,
         private bool $notify,
-
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $payloadHigh = null,
-        private ?string $payloadLow = null
+        #[ORM\Column(type: Types::STRING, nullable: true)]
+        private ?string $payloadLow = null,
     ) {
         parent::__construct(
             $this->name,
@@ -27,7 +32,7 @@ class DryContactSensor extends Sensor
             $this->payload,
             $this->statusMessage,
             $this->status,
-            $this->notify
+            $this->notify,
         );
     }
 

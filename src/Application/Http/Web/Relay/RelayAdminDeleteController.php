@@ -14,14 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class RelayAdminDeleteController extends AbstractController
 {
-    public function __construct(private readonly RelayCrudService $crud)
-    {
-    }
+    public function __construct(private readonly RelayCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/relay/admin/delete/{id}', name: "relay_admin_delete_by_id")]
+    #[Route('/relay/admin/delete/{id}', name: 'relay_admin_delete_by_id')]
     public function delete(string $id): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

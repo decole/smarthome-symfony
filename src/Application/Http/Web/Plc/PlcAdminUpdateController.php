@@ -15,14 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PlcAdminUpdateController extends AbstractController
 {
-    public function __construct(private readonly PlcCrudService $crud)
-    {
-    }
+    public function __construct(private readonly PlcCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/plc/admin/update/{id}', name: "plc_admin_update_by_id")]
+    #[Route('/plc/admin/update/{id}', name: 'plc_admin_update_by_id')]
     public function update(string $id, Request $request): Response
     {
         $errors = [];
@@ -37,7 +35,7 @@ final class PlcAdminUpdateController extends AbstractController
 
             $errors = $this->crud->validate($dto, true);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->update($id, $dto);
 
                 return $this->redirectToRoute('plc_admin');

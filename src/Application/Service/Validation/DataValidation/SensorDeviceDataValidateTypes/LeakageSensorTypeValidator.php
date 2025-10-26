@@ -12,19 +12,17 @@ final class LeakageSensorTypeValidator implements SensorTypeValidatorInterface
 {
     public function __construct(
         private readonly LeakageSensor $device,
-        private readonly DevicePayload $payload
-    )
-    {
-    }
+        private readonly DevicePayload $payload,
+    ) {}
 
     public function validate(): bool
     {
-        return (string)$this->device->getPayloadDry() === $this->payload->getPayload() ||
-            (string)$this->device->getPayloadWet() === $this->payload->getPayload();
+        return (string) $this->device->getPayloadDry() === $this->payload->getPayload()
+            || (string) $this->device->getPayloadWet() === $this->payload->getPayload();
     }
 
     public function isAlert(): bool
     {
-        return (string)$this->device->getPayloadWet() === $this->payload->getPayload();
+        return (string) $this->device->getPayloadWet() === $this->payload->getPayload();
     }
 }

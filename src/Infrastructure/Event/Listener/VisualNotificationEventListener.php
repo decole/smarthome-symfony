@@ -11,9 +11,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(event: VisualNotificationEvent::NAME, method: 'onNotificationSend')]
 final class VisualNotificationEventListener
 {
-    public function __construct(private readonly NotifyService $alertService)
-    {
-    }
+    public function __construct(private readonly NotifyService $alertService) {}
 
     public function onNotificationSend(VisualNotificationEvent $event): void
     {

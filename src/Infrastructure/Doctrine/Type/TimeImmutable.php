@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Type;
 
-use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 
@@ -17,47 +16,39 @@ final class TimeImmutable extends \Doctrine\DBAL\Types\DateTimeImmutableType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
-        /** @psalm-suppress InvalidClass */
-        if ($value instanceof \DatetimeImmutable) {
+        /* @psalm-suppress InvalidClass */
+        if ($value instanceof \DateTimeImmutable) {
             return $this->convertDateTimeToUTC($value)->format($platform->getTimeFormatString());
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', __CLASS__]
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', __CLASS__]);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
     {
-        if ($value === null || $value instanceof \DateTimeImmutable) {
+        if (null === $value || $value instanceof \DateTimeImmutable) {
             return $value;
         }
 
         $dateTime = \DateTimeImmutable::createFromFormat(
             '!' . $platform->getTimeFormatString(),
             $value,
-            new DateTimeZone('UTC')
+            new \DateTimeZone('UTC'),
         );
 
         if (!$dateTime) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getTimeFormatString()
-            );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getTimeFormatString());
         }
 
         return $dateTime;
     }
 
     /**
-     * Конвертирует дату и время в utc
+     * Конвертирует дату и время в utc.
      *
      * @throws \Exception
      */
@@ -65,6 +56,7 @@ final class TimeImmutable extends \Doctrine\DBAL\Types\DateTimeImmutableType
     {
         $convertDateTime = new \DateTime($dateTime->format(\DateTime::ATOM));
         $convertDateTime->setTimezone(new \DateTimeZone('UTC'));
+
         return \DateTimeImmutable::createFromMutable($convertDateTime);
     }
 }

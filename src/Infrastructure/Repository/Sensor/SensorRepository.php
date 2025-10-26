@@ -9,27 +9,37 @@ use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template-extends ServiceEntityRepository<Sensor>
+ */
 final class SensorRepository extends BaseDoctrineRepository implements SensorRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Sensor::class);
+    }
+
     public function findAll(?int $status = null): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('s')
             ->from(Sensor::class, 's')
             ->orderBy('s.createdAt', 'DESC');
 
-        if ($status !== null) {
-            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (null !== $status) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Sensor status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('s.status', ':status')
+                    $qb->expr()->eq('s.status', ':status'),
                 )
                 ->setParameter('status', $status);
         }
@@ -42,7 +52,7 @@ final class SensorRepository extends BaseDoctrineRepository implements SensorRep
      */
     public function findById(string $id): ?Sensor
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Sensor::class, 's')
             ->where('s.id = :value')
@@ -56,7 +66,7 @@ final class SensorRepository extends BaseDoctrineRepository implements SensorRep
      */
     public function findByName(string $value): ?Sensor
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Sensor::class, 's')
             ->where('s.name = :value')
@@ -70,7 +80,7 @@ final class SensorRepository extends BaseDoctrineRepository implements SensorRep
      */
     public function findByTopic(string $value): ?Sensor
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Sensor::class, 's')
             ->where('s.topic = :value')

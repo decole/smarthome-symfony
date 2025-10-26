@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Handler;
 
 use App\Domain\Notification\Entity\TelegramNotificationMessage;
@@ -9,9 +11,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class TelegramNotificationHandler
 {
-    public function __construct(private readonly TelegramService $service)
-    {
-    }
+    public function __construct(private readonly TelegramService $service) {}
 
     public function __invoke(TelegramNotificationMessage $message): void
     {

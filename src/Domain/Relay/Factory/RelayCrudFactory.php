@@ -15,7 +15,7 @@ final class RelayCrudFactory extends AbstractCrudFactory
     public function __construct(
         private readonly RelayRepositoryInterface $repository,
         private readonly RelayCrudValidationService $validation,
-        DeviceCacheService $cacheService
+        DeviceCacheService $cacheService,
     ) {
         $this->cacheService = $cacheService;
     }

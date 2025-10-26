@@ -22,7 +22,7 @@ final class SensorDataValidateFactory
 {
     public function create(EntityInterface $device, DevicePayload $payload): SensorTypeValidatorInterface
     {
-        return match (get_class($device)) {
+        return match ($device::class) {
             TemperatureSensor::class => new TemperatureSensorTypeValidator($device, $payload),
             HumiditySensor::class => new HumiditySensorTypeValidator($device, $payload),
             PressureSensor::class => new PressureSensorTypeValidator($device, $payload),

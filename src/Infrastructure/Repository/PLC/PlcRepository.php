@@ -9,27 +9,37 @@ use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\PlcRepositoryInterface;
 use App\Domain\PLC\Entity\PLC;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template-extends ServiceEntityRepository<PLC>
+ */
 final class PlcRepository extends BaseDoctrineRepository implements PlcRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, PLC::class);
+    }
+
     public function findAll(?int $status = null): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('d')
             ->from(PLC::class, 'd')
             ->orderBy('d.createdAt', 'DESC');
 
-        if ($status !== null) {
-            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (null !== $status) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('PLC status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('d.status', ':status')
+                    $qb->expr()->eq('d.status', ':status'),
                 )
                 ->setParameter('status', $status);
         }
@@ -42,7 +52,7 @@ final class PlcRepository extends BaseDoctrineRepository implements PlcRepositor
      */
     public function findById(string $id): ?PLC
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('d')
             ->from(PLC::class, 'd')
             ->where('d.id = :value')
@@ -56,7 +66,7 @@ final class PlcRepository extends BaseDoctrineRepository implements PlcRepositor
      */
     public function findByName(string $value): ?PLC
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('d')
             ->from(PLC::class, 'd')
             ->where('d.name = :value')
@@ -70,7 +80,7 @@ final class PlcRepository extends BaseDoctrineRepository implements PlcRepositor
      */
     public function findByTargetTopic(string $value): ?PLC
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('d')
             ->from(PLC::class, 'd')
             ->where('d.targetTopic = :value')

@@ -16,14 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SensorAdminUpdateController extends AbstractController
 {
-    public function __construct(private SensorCrudService $crud)
-    {
-    }
+    public function __construct(private SensorCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/sensors/admin/update/{id}', name: "sensors_admin_update_by_id")]
+    #[Route('/sensors/admin/update/{id}', name: 'sensors_admin_update_by_id')]
     public function update(string $id, Request $request): Response
     {
         $errors = [];
@@ -37,7 +35,7 @@ final class SensorAdminUpdateController extends AbstractController
 
             $errors = $this->crud->validate($sensorDto, true);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->update($id, $sensorDto);
 
                 return $this->redirectToRoute('sensors_admin');

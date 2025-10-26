@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Task;
 
 use App\Domain\DeviceData\Service\DeviceCacheService;
@@ -15,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Оповестить когда центральный клапан открыт
  * нужно для вторичного мониторинга, чтобы не допустить ошибочной траты ресурсов воды
- * оповестить через алису, телеграм и дискорд
+ * оповестить через алису, телеграм и дискорд.
  */
 #[AsCommand(name: 'cli:task:watering-on-checker', description: 'Alert by major watering switch is open')]
 final class WateringOnAlarmTaskCommand extends Command
@@ -26,7 +28,7 @@ final class WateringOnAlarmTaskCommand extends Command
     public function __construct(
         private readonly DeviceDataCacheService $service,
         private readonly DeviceCacheService $cacheService,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct();
     }
@@ -38,7 +40,7 @@ final class WateringOnAlarmTaskCommand extends Command
         $devices = $this->cacheService->getTopicMapByDeviceTopic();
 
         foreach ($devices as $device) {
-            if ($device instanceof Relay && $device->getCheckTopic() === self::TOPIC) {
+            if ($device instanceof Relay && self::TOPIC === $device->getCheckTopic()) {
                 $payloadCheckOn = $device->getCheckTopicPayloadOn();
             }
         }
@@ -58,7 +60,7 @@ final class WateringOnAlarmTaskCommand extends Command
 
         $event = new AlertNotificationEvent($message, [
             AlertNotificationEvent::MESSENGER,
-            AlertNotificationEvent::ALICE
+            AlertNotificationEvent::ALICE,
         ]);
 
         $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);

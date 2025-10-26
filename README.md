@@ -89,7 +89,8 @@ Create project by:
 - Yii2 (simple / advanced) [deprecated project]
 - Laravel (7/8/9) [deprecated project]
 - Symfony (5.4) [update to Symfony 6]
-- Symfony (6 - current LTS version)
+- Symfony 6 [update to Symfony 7]
+- Symfony 7
 
 
 ## RTFM:

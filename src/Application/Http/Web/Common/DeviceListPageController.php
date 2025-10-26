@@ -12,18 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class DeviceListPageController extends AbstractController
 {
-    public function __construct(private SitePageService $service)
-    {
-    }
+    public function __construct(private SitePageService $service) {}
 
-    #[Route('/devices', name: "devices")]
+    #[Route('/devices', name: 'devices')]
     public function devices(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
         return $this->render('page/index.html.twig', [
             'title' => 'Все данные',
-            'devices' => $this->service->getAllDeviceList()
+            'devices' => $this->service->getAllDeviceList(),
         ]);
     }
 }

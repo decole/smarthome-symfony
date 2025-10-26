@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Notification\Criteria;
 
-use App\Domain\FireSecurity\Entity\FireSecurity;
-
 final class FireSecureCriteria extends AbstractCriteria
 {
     /**

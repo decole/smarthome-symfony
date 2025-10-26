@@ -13,18 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class RelayAdminListController extends AbstractController
 {
-    public function __construct(private readonly RelayCrudService $crud)
-    {
-    }
+    public function __construct(private readonly RelayCrudService $crud) {}
 
-    #[Route('/relay/admin', name: "relay_admin")]
+    #[Route('/relay/admin', name: 'relay_admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
         return $this->render('crud/relay/relay.list.html.twig', [
             'relays' => $this->crud->list(),
-            'typeTranscribe' => Relay::TYPE_TRANSCRIBES
+            'typeTranscribe' => Relay::TYPE_TRANSCRIBES,
         ]);
     }
 }

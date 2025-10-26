@@ -9,27 +9,37 @@ use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Security\Entity\Security;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template-extends ServiceEntityRepository<Security>
+ */
 final class SecurityRepository extends BaseDoctrineRepository implements SecurityRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Security::class);
+    }
+
     public function findAll(?int $status = null): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('s')
             ->from(Security::class, 's')
             ->orderBy('s.createdAt', 'DESC');
 
-        if ($status !== null) {
-            if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (null !== $status) {
+            if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
                 throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
             }
 
             $qb
                 ->where(
-                    $qb->expr()->eq('s.status', ':status')
+                    $qb->expr()->eq('s.status', ':status'),
                 )
                 ->setParameter('status', $status);
         }
@@ -42,7 +52,7 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
      */
     public function findById(string $id): ?Security
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Security::class, 's')
             ->where('s.id = :value')
@@ -56,7 +66,7 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
      */
     public function findByName(string $value): ?Security
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Security::class, 's')
             ->where('s.name = :value')
@@ -70,7 +80,7 @@ final class SecurityRepository extends BaseDoctrineRepository implements Securit
      */
     public function findByTopic(string $value): ?Security
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('s')
             ->from(Security::class, 's')
             ->where('s.topic = :value')

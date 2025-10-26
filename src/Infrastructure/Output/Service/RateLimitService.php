@@ -15,9 +15,8 @@ final class RateLimitService
     public function __construct(
         private readonly CacheService $cacheService,
         private readonly int $httpLimit,
-        private readonly int $httpLimitMinutes
-    ) {
-    }
+        private readonly int $httpLimitMinutes,
+    ) {}
 
     public function http(Request $request): void
     {
@@ -25,7 +24,7 @@ final class RateLimitService
             ip: $request->getClientIp(),
             cacheKey: self::CACHE_HTTP_KEY,
             limit: $this->httpLimit,
-            minutes: $this->httpLimitMinutes
+            minutes: $this->httpLimitMinutes,
         );
 
         $this->consume($context);
@@ -33,7 +32,7 @@ final class RateLimitService
 
     private function consume(RateLimitContext $context): void
     {
-        $count = (int)$this->cacheService->get($this->getClientKey($context));
+        $count = (int) $this->cacheService->get($this->getClientKey($context));
 
         ++$count;
 
@@ -46,7 +45,7 @@ final class RateLimitService
 
     private function getClientKey(RateLimitContext $context): string
     {
-        return sprintf('%s_%s', $context->cacheKey, $context->ip);
+        return \sprintf('%s_%s', $context->cacheKey, $context->ip);
     }
 
     private function getLimitSeconds(RateLimitContext $context): int

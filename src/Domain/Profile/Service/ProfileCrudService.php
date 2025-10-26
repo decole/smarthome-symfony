@@ -27,9 +27,8 @@ final class ProfileCrudService
     public function __construct(
         private readonly ProfileCrudFactory $crud,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {}
 
     public function validate(CrudProfileDto $dto): ConstraintViolationListInterface
     {
@@ -47,12 +46,12 @@ final class ProfileCrudService
         $user->setEmail($dto->email);
         $user->setTelegramId($dto->telegramId);
 
-        if ($dto->isChangePassword !== null) {
+        if (null !== $dto->isChangePassword) {
             $user->setPassword($this->passwordHasher->hashPassword($user, $dto->password));
 
             $event = new AlertNotificationEvent(
                 message: "{$dto->login} profile password changed. New password: {$dto->password}",
-                types: [AlertNotificationEvent::MESSENGER]
+                types: [AlertNotificationEvent::MESSENGER],
             );
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }
@@ -65,15 +64,15 @@ final class ProfileCrudService
         $dto = new CrudProfileDto();
 
         $dto->login = $login;
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
-        $dto->email = (string)$request->request->get(self::EMAIL_ALIAS);
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        /* @psalm-suppress InvalidPropertyAssignmentValue */
+        $dto->email = (string) $request->request->get(self::EMAIL_ALIAS);
+        /* @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->telegramId = $this->integerOrNull($request->request->get(self::TELEGRAM_ALIAS));
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        /* @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->isChangePassword = $request->request->get(self::IS_CHANGE_PASSWORD_ALIAS);
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        /* @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->password = $request->request->get(self::PASSWORD_ALIAS);
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        /* @psalm-suppress InvalidPropertyAssignmentValue */
         $dto->passwordAgan = $request->request->get(self::PASSWORD_AGAN_ALIAS);
 
         return $dto;
@@ -81,6 +80,6 @@ final class ProfileCrudService
 
     private function integerOrNull(mixed $value): ?int
     {
-        return $value === null ? $value : (int)$value;
+        return null === $value ? $value : (int) $value;
     }
 }

@@ -10,25 +10,24 @@ final class RelaySchema implements SchemaInterface
 
     public function __construct(
         private readonly string $id,
-    ) {
-    }
+    ) {}
 
     public function getSchema(): array
     {
         return [
-            "id" => $this->id,
-            "capabilities" => [
+            'id' => $this->id,
+            'capabilities' => [
                 [
-                    "type" => "devices.capabilities.on_off",
-                    "retrievable" => true,
-                    "state" => [
+                    'type' => 'devices.capabilities.on_off',
+                    'retrievable' => true,
+                    'state' => [
                         'instance' => 'on',
-                        "value" => $this->state,
-                        "action_result" => [
-                            "status" => "DONE"
+                        'value' => $this->state,
+                        'action_result' => [
+                            'status' => 'DONE',
                         ],
                     ],
-                ]
+                ],
             ],
         ];
     }
