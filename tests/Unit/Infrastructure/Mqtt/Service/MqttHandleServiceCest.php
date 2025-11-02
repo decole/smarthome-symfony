@@ -2,21 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Infrastructure\Mqtt\Service;
+namespace App\Tests\Unit\Infrastructure\Mqtt\Service;
 
 use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Service\MqttHandleService;
 use App\Tests\Stub\Infrastructure\StubMqttClient;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use DG\BypassFinals;
 use Psr\Log\NullLogger;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[Skip('This test not support new version codeception')]
 class MqttHandleServiceCest
 {
     public function finalClass(UnitTester $I): void

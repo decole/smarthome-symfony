@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Infrastructure\SecureSystem\EventListener;
+namespace App\Tests\Unit\Infrastructure\SecureSystem\EventListener;
 
-use App\Tests\_support\Step\UnitStep\Infrastructure\TwoFactor\TwoFactorServiceStep;
+use App\Tests\Support\Step\UnitStep\Infrastructure\TwoFactor\TwoFactorServiceStep;
 use Codeception\Attribute\Skip;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-#[Skip('This test not support new version codeception')]
 class ResponseEventListenerCest
 {
+    #[Skip('This test not support new version codeception')]
     public function isVerifiedSession(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -24,6 +24,7 @@ class ResponseEventListenerCest
         $I->assertEquals(Response::class, $response::class);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function isNotVerifedSession(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -35,6 +36,7 @@ class ResponseEventListenerCest
         $I->assertEquals(RedirectResponse::class, $response::class);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function noAuth(TwoFactorServiceStep $I): void
     {
         $I->getUser();

@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Api\SmartHomeDevice;
 
 use App\Domain\DeviceData\Service\DeviceCacheService;
-use App\Domain\DeviceData\Service\DeviceDataCacheService;
-use App\Domain\DeviceData\Service\DeviceDataResolver;
-use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Tests\Support\Step\Api\SecureDeviceDataStep;
 use Codeception\Attribute\Skip;
-use Codeception\Stub;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 #[Skip('This test not support new version codeception')]
 class SecureDeviceSetStateTriggerApiControllerCest

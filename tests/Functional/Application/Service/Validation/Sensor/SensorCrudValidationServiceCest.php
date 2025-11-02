@@ -8,32 +8,29 @@ use App\Application\Http\Web\Sensor\Dto\CrudSensorDto;
 use App\Application\Service\Validation\Sensor\SensorCrudValidationService;
 use App\Domain\Sensor\Service\SensorCrudService;
 use App\Tests\Support\FunctionalTester;
-use Codeception\Attribute\Skip;
+use Codeception\Attribute\Examples;
 use Codeception\Example;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-#[Skip('This test not support new version codeception')]
 class SensorCrudValidationServiceCest
 {
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function positiveValidateCreate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
-        $dto->payloadMin = 0;
-        $dto->payloadMax = 100;
-        $dto->payloadDry = $dto->payloadLow = 0;
-        $dto->payloadWet = $dto->payloadHigh = 1;
+        $dto->payloadMin = '0';
+        $dto->payloadMax = '100';
+        $dto->payloadDry = $dto->payloadLow = '0';
+        $dto->payloadWet = $dto->payloadHigh = '1';
         $dto->message_info = $I->faker()->word();
         $dto->message_ok = $I->faker()->word();
         $dto->message_warn = $I->faker()->word();
@@ -50,25 +47,23 @@ class SensorCrudValidationServiceCest
         $I->assertEquals(0, $result->count());
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function positiveValidateUpdate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
-        $dto->payloadMin = 0;
-        $dto->payloadMax = 100;
-        $dto->payloadDry = $dto->payloadLow = 0;
-        $dto->payloadWet = $dto->payloadHigh = 1;
+        $dto->payloadMin = '0';
+        $dto->payloadMax = '100';
+        $dto->payloadDry = $dto->payloadLow = '0';
+        $dto->payloadWet = $dto->payloadHigh = '1';
         $dto->message_info = $I->faker()->word();
         $dto->message_ok = $I->faker()->word();
         $dto->message_warn = $I->faker()->word();
@@ -85,25 +80,23 @@ class SensorCrudValidationServiceCest
         $I->assertEquals(0, $result->count());
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function negativeValidateCreate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
-        $dto->payloadMin = 0;
-        $dto->payloadMax = 100;
-        $dto->payloadDry = $dto->payloadLow = 0;
-        $dto->payloadWet = $dto->payloadHigh = 1;
+        $dto->payloadMin = '0';
+        $dto->payloadMax = '100';
+        $dto->payloadDry = $dto->payloadLow = '0';
+        $dto->payloadWet = $dto->payloadHigh = '1';
         $dto->message_info = $I->faker()->word();
         $dto->message_ok = $I->faker()->word();
         $dto->message_warn = $I->faker()->word();
@@ -124,25 +117,23 @@ class SensorCrudValidationServiceCest
         $I->assertEquals('Sensor topic already exist.', $result[1]->getMessage());
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function positiveValidateUpdateExistEntity(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
-        $dto->payloadMin = 0;
-        $dto->payloadMax = 100;
-        $dto->payloadDry = $dto->payloadLow = 0;
-        $dto->payloadWet = $dto->payloadHigh = 1;
+        $dto->payloadMin = '0';
+        $dto->payloadMax = '100';
+        $dto->payloadDry = $dto->payloadLow = '0';
+        $dto->payloadWet = $dto->payloadHigh = '1';
         $dto->message_info = $I->faker()->word();
         $dto->message_ok = $I->faker()->word();
         $dto->message_warn = $I->faker()->word();

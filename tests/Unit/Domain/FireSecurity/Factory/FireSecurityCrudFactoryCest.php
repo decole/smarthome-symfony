@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\FireSecurity\Factory;
+namespace App\Tests\Unit\Domain\FireSecurity\Factory;
 
 use App\Application\Service\Validation\FireSecurity\FireSecurityCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\FireSecurityRepositoryInterface;
 use App\Domain\FireSecurity\Factory\FireSecurityCrudFactory;
 use App\Infrastructure\Repository\FireSecurity\FireSecurityRepository;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class FireSecurityCrudFactoryCest
 {
     public function getRepository(UnitTester $I): void

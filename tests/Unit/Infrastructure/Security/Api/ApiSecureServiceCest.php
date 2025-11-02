@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Infrastructure\Security\Api;
+namespace App\Tests\Unit\Infrastructure\Security\Api;
 
 use App\Infrastructure\Security\Api\ApiSecureService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class ApiSecureServiceCest
 {
     public function positiveValidate(UnitTester $I): void

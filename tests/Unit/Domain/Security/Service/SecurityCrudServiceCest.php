@@ -2,18 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Security\Service;
+namespace App\Tests\Unit\Domain\Security\Service;
 
 use App\Application\Helper\StringHelper;
-use App\Domain\Security\Entity\Security;
 use App\Domain\Security\Enum\SecurityTypeEnum;
 use App\Domain\Security\Service\SecurityCrudService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Codeception\Example;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Skip('This test not support new version codeception')]
 class SecurityCrudServiceCest
 {
     public function getTypes(UnitTester $I): void

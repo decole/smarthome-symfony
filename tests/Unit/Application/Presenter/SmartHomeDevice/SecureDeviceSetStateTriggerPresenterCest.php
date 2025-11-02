@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Application\Presenter\SmartHomeDevice;
+namespace App\Tests\Unit\Application\Presenter\SmartHomeDevice;
 
 use App\Application\Presenter\Api\SmartHomeDevice\SecureDeviceSetStateTriggerPresenter;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class SecureDeviceSetStateTriggerPresenterCest
 {
     public function positivePresent(UnitTester $I): void

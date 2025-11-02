@@ -9,7 +9,7 @@ use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Relay\Entity\Relay;
-use App\Tests\_support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
+use App\Tests\Support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
 use Codeception\Attribute\Skip;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
@@ -26,7 +26,7 @@ class DeviceDataResolverForRelayCest
 
     public function _before(DeviceDataResolverStep $I): void
     {
-        if (!$this->device instanceof \App\Domain\Relay\Entity\Relay) {
+        if (!$this->device instanceof Relay) {
             $this->device = $I->createDryRelayDevice();
         }
         $this->validateService = $I->grabService(DeviceDataValidationService::class);
@@ -37,7 +37,10 @@ class DeviceDataResolverForRelayCest
     {
         $payload = $this->device->getPayload();
 
-        $event = Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]);
+        $event = Stub::makeEmpty(
+            EventDispatcherInterface::class,
+            //            ['dispatch' => Expected::never()]
+        );
         $this->getResolver($event)->resolveDevicePayload(new DevicePayload($this->device->getTopic(), $payload));
         $cachedPayloadList = $this->cacheService->getPayloadByTopicList([$this->device->getTopic()]);
 
@@ -62,7 +65,7 @@ class DeviceDataResolverForRelayCest
     {
         return new DeviceDataResolver(
             validateService: $this->validateService,
-            cacheService: $this->cacheService,
+            deviceDataCacheService: $this->cacheService,
             eventDispatcher: $event,
         );
     }

@@ -13,6 +13,6 @@ trait StatusMessageTrait
     {
         $dto->message_info = $entity->getStatusMessage()->getMessageInfo();
         $dto->message_ok = $entity->getStatusMessage()->getMessageOk();
-        $dto->message_warn = $entity->getStatusMessage()->getMessageWarn();
+        $dto->message_warn = $entity->getStatusMessage()->getMessageWarning();
     }
 }

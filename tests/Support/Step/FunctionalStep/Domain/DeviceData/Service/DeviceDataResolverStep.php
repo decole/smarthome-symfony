@@ -51,10 +51,10 @@ class DeviceDataResolverStep extends FunctionalTester
         $dto->name = $this->faker()->word() . random_int(1, 1000) . $type;
         $dto->topic = $this->faker()->word() . random_int(1000, 2000);
         $dto->payload = $this->faker()->word();
-        $dto->payloadMin = 0;
-        $dto->payloadMax = 100;
-        $dto->payloadDry = $dto->payloadLow = 0;
-        $dto->payloadWet = $dto->payloadHigh = 1;
+        $dto->payloadMin = '0';
+        $dto->payloadMax = '100';
+        $dto->payloadDry = $dto->payloadLow = '0';
+        $dto->payloadWet = $dto->payloadHigh = '1';
         $dto->message_info = $this->faker()->word();
         $dto->message_ok = $this->faker()->word();
         $dto->message_warn = $this->faker()->word();

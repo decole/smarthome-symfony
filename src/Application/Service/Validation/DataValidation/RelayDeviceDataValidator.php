@@ -10,26 +10,25 @@ use App\Domain\Relay\Entity\Relay;
 
 final class RelayDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    public function handle(): DeviceDataValidatedDto
+    public function validate(DeviceDataValidatedDto $dto): void
     {
         \assert($this->device instanceof Relay);
 
         $payload = $this->payload->getPayload();
 
-        if ($payload !== (string) $this->device->getCheckTopicPayloadOn()
-            && $payload !== (string) $this->device->getCheckTopicPayloadOff()
-        ) {
-            return $this->createDto(
-                state: null,
-                device: $this->device,
-                isAlert: true,
-            );
+        if ($this->device->getTopic() === $this->payload->getTopic()) {
+            $dto->hasAlertingNotify = $this->device->getCommandOn() !== $payload
+                && $this->device->getCommandOff() !== $payload;
         }
 
-        return $this->createDto(
-            state: true,
-            device: $this->device,
-            isAlert: false,
-        );
+        if ($this->device->getCheckTopic() === $this->payload->getTopic()) {
+            $dto->hasAlertingNotify = $this->device->getCheckTopicPayloadOn() !== $payload
+                && $this->device->getCheckTopicPayloadOff() !== $payload;
+        }
+
+        if ($this->device->getStatus() && null !== $this->device->getCheckTopic()) {
+            $dto->hasCheckStatusWarning = $payload !== $this->device->getCheckTopicPayloadOn()
+            && $payload !== $this->device->getCheckTopicPayloadOff();
+        }
     }
 }

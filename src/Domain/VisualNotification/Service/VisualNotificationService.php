@@ -115,9 +115,9 @@ final class VisualNotificationService
     }
 
     /**
-     * @throws InvalidArgumentException
-     *
      * @return array<int, VisualNotification>
+     *
+     * @throws InvalidArgumentException
      */
     public function getNotifiesByType(?int $type = null): array
     {

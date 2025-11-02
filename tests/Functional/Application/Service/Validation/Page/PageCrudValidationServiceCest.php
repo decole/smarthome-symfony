@@ -8,11 +8,10 @@ use App\Application\Http\Web\Page\Dto\CrudPageDto;
 use App\Application\Service\Validation\Page\PageCrudValidationService;
 use App\Domain\Page\Service\PageCrudService;
 use App\Tests\Support\FunctionalTester;
-use Codeception\Attribute\Skip;
+use Codeception\Attribute\Examples;
 use Codeception\Example;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-#[Skip('This test not support new version codeception')]
 class PageCrudValidationServiceCest
 {
     public function positiveValidateCreate(FunctionalTester $I): void
@@ -120,28 +119,23 @@ class PageCrudValidationServiceCest
         $I->assertEquals(0, $result->count());
     }
 
-    /**
-     * @example(type="name")
-     * @example(type="config")
-     * @example(type="alias")
-     * @example(type="icon")
-     *
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
+    #[Examples('name')]
+    #[Examples('config')]
+    #[Examples('alias')]
+    #[Examples('icon')]
     public function negativeValidateCreateWithEmptyInput(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudPageDto();
 
-        $dto->name = 'name' === $example['type'] ? '' : $I->faker()->word();
-        $dto->config = 'config' === $example['type'] ? [] : $I->faker()->shuffleArray([
+        $dto->name = 'name' === $example[0] ? '' : $I->faker()->word();
+        $dto->config = 'config' === $example[0] ? [] : $I->faker()->shuffleArray([
             'sensor' => [],
             'relay' => [],
             'security' => [],
             'fireSecurity' => [],
         ]);
-        $dto->alias = 'alias' === $example['type'] ? '' : $I->faker()->word();
-        $dto->icon = 'icon' === $example['type'] ? '' : $I->faker()->word();
+        $dto->alias = 'alias' === $example[0] ? '' : $I->faker()->word();
+        $dto->icon = 'icon' === $example[0] ? '' : $I->faker()->word();
         $dto->groupId = random_int(0, 99);
 
         $service = $this->getService($I);

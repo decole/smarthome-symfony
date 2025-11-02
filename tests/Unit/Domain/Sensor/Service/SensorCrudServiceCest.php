@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Sensor\Service;
+namespace App\Tests\Unit\Domain\Sensor\Service;
 
 use App\Domain\Sensor\Entity\DryContactSensor;
 use App\Domain\Sensor\Entity\HumiditySensor;
@@ -10,12 +10,10 @@ use App\Domain\Sensor\Entity\LeakageSensor;
 use App\Domain\Sensor\Entity\PressureSensor;
 use App\Domain\Sensor\Entity\TemperatureSensor;
 use App\Domain\Sensor\Service\SensorCrudService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Codeception\Example;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Skip('This test not support new version codeception')]
 class SensorCrudServiceCest
 {
     public function getTypes(UnitTester $I): void

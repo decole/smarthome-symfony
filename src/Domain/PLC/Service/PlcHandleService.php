@@ -139,7 +139,11 @@ final class PlcHandleService
                     name: 'dummy',
                     targetTopic: 'dummy',
                     alarmSecondDelay: 0,
-                    statusMessage: new StatusMessage(),
+                    statusMessage: new StatusMessage(
+                        messageInfo: 'info',
+                        messageOk: 'ok',
+                        messageWarning: 'warning',
+                    ),
                     status: EntityStatusEnum::STATUS_ACTIVE->value,
                     notify: true,
                 ),

@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Relay\Service;
+namespace App\Tests\Unit\Domain\Relay\Service;
 
 use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Relay\Service\RelayCrudService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Codeception\Example;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Skip('This test not support new version codeception')]
 class RelayCrudServiceCest
 {
     public function getTypes(UnitTester $I): void

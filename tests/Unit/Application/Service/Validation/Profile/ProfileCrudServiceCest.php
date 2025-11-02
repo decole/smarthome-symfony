@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Application\Service\Validation\Profile;
+namespace App\Tests\Unit\Application\Service\Validation\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
 use App\Domain\Event\AlertNotificationEvent;
@@ -13,15 +13,13 @@ use App\Domain\Profile\Service\ProfileCrudService;
 use App\Domain\VisualNotification\Service\VisualNotificationService;
 use App\Infrastructure\Event\Listener\AlertNotificationEventListener;
 use App\Infrastructure\Repository\Identity\UserRepository;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Skip('This test not support new version codeception')]
 class ProfileCrudServiceCest
 {
     public function positiveCreateNotifyEvent(UnitTester $I): void

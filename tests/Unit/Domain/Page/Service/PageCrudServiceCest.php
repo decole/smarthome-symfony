@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Page\Service;
+namespace App\Tests\Unit\Domain\Page\Service;
 
 use App\Domain\Page\Service\PageCrudService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Skip('This test not support new version codeception')]
 class PageCrudServiceCest
 {
     public function createEmptyPageDto(UnitTester $I): void

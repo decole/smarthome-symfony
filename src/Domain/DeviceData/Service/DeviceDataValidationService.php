@@ -8,7 +8,6 @@ use App\Application\Exception\DeviceDataException;
 use App\Application\Service\Factory\DeviceDataValidationFactory;
 use App\Domain\DeviceData\Entity\DeviceDataValidatedDto;
 use App\Domain\Payload\Entity\DevicePayload;
-use Psr\Cache\InvalidArgumentException;
 
 final readonly class DeviceDataValidationService
 {
@@ -17,12 +16,11 @@ final readonly class DeviceDataValidationService
     ) {}
 
     /**
-     * @throws InvalidArgumentException
      * @throws DeviceDataException
      */
     public function execute(DevicePayload $payload): DeviceDataValidatedDto
     {
-        return (new DeviceDataValidationFactory($this->deviceCacheService->getTopicMapByDeviceTopic()))
+        return (new DeviceDataValidationFactory($this->deviceCacheService))
             ->create($payload)
             ->handle();
     }

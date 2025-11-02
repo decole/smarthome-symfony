@@ -48,10 +48,10 @@ class DeviceDataValidationFactoryStep extends FunctionalTester
         $dto->name = $this->faker()->word();
         $dto->topic = $this->faker()->word();
         $dto->payload = $this->faker()->word();
-        $dto->payloadMin = 0;
-        $dto->payloadMax = 100;
-        $dto->payloadDry = $dto->payloadLow = 0;
-        $dto->payloadWet = $dto->payloadHigh = 1;
+        $dto->payloadMin = '0';
+        $dto->payloadMax = '100';
+        $dto->payloadDry = $dto->payloadLow = '0';
+        $dto->payloadWet = $dto->payloadHigh = '1';
         $dto->message_info = $this->faker()->word();
         $dto->message_ok = $this->faker()->word();
         $dto->message_warn = $this->faker()->word();

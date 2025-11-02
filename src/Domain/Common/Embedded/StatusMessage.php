@@ -12,26 +12,26 @@ use Doctrine\ORM\Mapping\Embeddable;
 final class StatusMessage
 {
     public function __construct(
-        #[ORM\Column(type: Types::STRING, nullable: true)]
-        private readonly ?string $message_info = null,
-        #[ORM\Column(type: Types::STRING, nullable: true)]
-        private readonly ?string $message_ok = null,
-        #[ORM\Column(type: Types::STRING, nullable: true)]
-        private readonly ?string $message_warn = null,
+        #[ORM\Column(type: Types::STRING, nullable: true, name: 'message_info')]
+        private readonly ?string $messageInfo = null,
+        #[ORM\Column(type: Types::STRING, nullable: true, name: 'message_ok')]
+        private readonly ?string $messageOk = null,
+        #[ORM\Column(type: Types::STRING, nullable: true, name: 'message_warn')]
+        private readonly ?string $messageWarning = null,
     ) {}
 
     public function getMessageInfo(): ?string
     {
-        return $this->message_info;
+        return $this->messageInfo;
     }
 
     public function getMessageOk(): ?string
     {
-        return $this->message_ok;
+        return $this->messageOk;
     }
 
-    public function getMessageWarn(): ?string
+    public function getMessageWarning(): ?string
     {
-        return $this->message_warn;
+        return $this->messageWarning;
     }
 }

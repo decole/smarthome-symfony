@@ -13,6 +13,7 @@ use App\Domain\Sensor\Entity\Sensor;
 use App\Domain\Sensor\Entity\TemperatureSensor;
 use App\Domain\Sensor\Service\SensorCrudService;
 use App\Tests\Support\FunctionalTester;
+use Codeception\Attribute\Examples;
 use Codeception\Attribute\Skip;
 use Codeception\Example;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,21 +22,20 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 #[Skip('This test not support new version codeception')]
 class SensorCrudServiceCest
 {
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function validateNewEntity(FunctionalTester $I, Example $example): void
     {
+        $type = $example[0];
         $service = $this->getService($I);
 
-        $request = $this->getRequest($example['type'], $I);
+        $request = $this->getRequest($type, $I);
 
         /** @var CrudSensorDto $dto */
-        $dto = $service->createDto($example['type'], $request);
+        $dto = $service->createDto($type, $request);
 
         $violation = $service->validate($dto);
 
@@ -43,21 +43,20 @@ class SensorCrudServiceCest
         $I->assertEquals(0, $violation->count());
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function negativeValidateNewEntity(FunctionalTester $I, Example $example): void
     {
+        $type = $example[0];
         $service = $this->getService($I);
 
         $request = new Request([], []);
 
         /** @var CrudSensorDto $dto */
-        $dto = $service->createDto($example['type'], $request);
+        $dto = $service->createDto($type, $request);
 
         $violation = $service->validate($dto);
 
@@ -79,27 +78,19 @@ class SensorCrudServiceCest
         $I->assertEquals('topic', $validateFore->getPropertyPath());
     }
 
-    /**
-     * @example(type="temperature")
-     *
-     * @ example(type="humidity")
-     *
-     * @ example(type="leakage")
-     *
-     * @ example(type="pressure")
-     *
-     * @ example(type="dryContact")
-     *
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function create(FunctionalTester $I, Example $example): void
     {
+        $type = $example[0];
         $service = $this->getService($I);
 
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $type;
         $dto->name = $name = $I->faker()->word();
         $dto->topic = $topic = $I->faker()->word();
         $dto->payload = $payload = $I->faker()->word();
@@ -115,9 +106,9 @@ class SensorCrudServiceCest
         $two = $I->faker()->word();
         $specificFields = [];
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
@@ -126,7 +117,7 @@ class SensorCrudServiceCest
                 'payloadMax' => $two,
             ];
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
             $specificFields = [
@@ -134,7 +125,7 @@ class SensorCrudServiceCest
                 'payloadWet' => $two,
             ];
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
             $specificFields = [
@@ -148,7 +139,7 @@ class SensorCrudServiceCest
 
         $I->assertEquals($notify, $entity->isNotify());
 
-        $targetClass = $this->getTargetClass($example['type']);
+        $targetClass = $this->getTargetClass($type);
 
         $I->seeInRepository($targetClass, array_merge(
             [
@@ -165,23 +156,19 @@ class SensorCrudServiceCest
         ));
     }
 
-    /**
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     *
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function list(FunctionalTester $I, Example $example): void
     {
+        $type = $example[0];
         $service = $this->getService($I);
 
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $type;
         $dto->name = $name = $I->faker()->word();
         $dto->topic = $topic = $I->faker()->word();
         $dto->payload = $payload = $I->faker()->word();
@@ -194,18 +181,18 @@ class SensorCrudServiceCest
         $one = $I->faker()->word();
         $two = $I->faker()->word();
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
         }
@@ -228,7 +215,7 @@ class SensorCrudServiceCest
                 $I->assertEquals($payload, $entity->getPayload());
                 $I->assertEquals($messageInfo, $entity->getStatusMessage()->getMessageInfo());
                 $I->assertEquals($messageOk, $entity->getStatusMessage()->getMessageOk());
-                $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarn());
+                $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarning());
                 $I->assertEquals(1, $entity->getStatus());
                 $I->assertEquals(true, $entity->isNotify());
 
@@ -258,24 +245,21 @@ class SensorCrudServiceCest
         $I->assertEquals(1, $i, 'Sensor entity not found in repository');
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     *
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function update(FunctionalTester $I, Example $example): void
     {
-        $targetClass = $this->getTargetClass($example['type']);
+        $type = $example[0];
+
+        $targetClass = $this->getTargetClass($type);
         $service = $this->getService($I);
 
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $type;
         $dto->name = $name = $I->faker()->word();
         $dto->topic = $topic = $I->faker()->word();
         $dto->payload = $payload = $I->faker()->word();
@@ -289,9 +273,9 @@ class SensorCrudServiceCest
         $two = $I->faker()->word();
         $specificFields = [];
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
@@ -300,7 +284,7 @@ class SensorCrudServiceCest
                 'payloadMax' => $two,
             ];
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
             $specificFields = [
@@ -308,7 +292,7 @@ class SensorCrudServiceCest
                 'payloadWet' => $two,
             ];
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
             $specificFields = [
@@ -337,9 +321,9 @@ class SensorCrudServiceCest
         $one = $I->faker()->word();
         $two = $I->faker()->word();
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
@@ -348,7 +332,7 @@ class SensorCrudServiceCest
                 'payloadMax' => $two,
             ];
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
             $specificFields = [
@@ -356,7 +340,7 @@ class SensorCrudServiceCest
                 'payloadWet' => $two,
             ];
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
             $specificFields = [
@@ -385,24 +369,20 @@ class SensorCrudServiceCest
         ));
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     *
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function delete(FunctionalTester $I, Example $example): void
     {
-        $targetClass = $this->getTargetClass($example['type']);
+        $type = $example[0];
+        $targetClass = $this->getTargetClass($type);
         $service = $this->getService($I);
 
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $type;
         $dto->name = $name = $I->faker()->word();
         $dto->topic = $topic = $I->faker()->word();
         $dto->payload = $payload = $I->faker()->word();
@@ -416,9 +396,9 @@ class SensorCrudServiceCest
         $two = $I->faker()->word();
         $specificFields = [];
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
@@ -427,7 +407,7 @@ class SensorCrudServiceCest
                 'payloadMax' => $two,
             ];
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
             $specificFields = [
@@ -435,7 +415,7 @@ class SensorCrudServiceCest
                 'payloadWet' => $two,
             ];
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
             $specificFields = [
@@ -468,24 +448,20 @@ class SensorCrudServiceCest
         ]);
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     *
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function entityByDto(FunctionalTester $I, Example $example): void
     {
-        $targetClass = $this->getTargetClass($example['type']);
+        $type = $example['type'];
+        $targetClass = $this->getTargetClass($type);
         $service = $this->getService($I);
 
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $type;
         $dto->name = $name = $I->faker()->word();
         $dto->topic = $topic = $I->faker()->word();
         $dto->payload = $payload = $I->faker()->word();
@@ -499,9 +475,9 @@ class SensorCrudServiceCest
         $two = $I->faker()->word();
         $specificFields = [];
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
@@ -510,7 +486,7 @@ class SensorCrudServiceCest
                 'payloadMax' => $two,
             ];
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
             $specificFields = [
@@ -518,7 +494,7 @@ class SensorCrudServiceCest
                 'payloadWet' => $two,
             ];
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
             $specificFields = [
@@ -575,20 +551,19 @@ class SensorCrudServiceCest
         }
     }
 
-    /**
-     * @example(type="temperature")
-     * @example(type="humidity")
-     * @example(type="leakage")
-     * @example(type="pressure")
-     * @example(type="dryContact")
-     */
+    #[Examples('temperature')]
+    #[Examples('humidity')]
+    #[Examples('leakage')]
+    #[Examples('pressure')]
+    #[Examples('dryContact')]
     public function getNewEntityByDto(FunctionalTester $I, Example $example): void
     {
+        $type = $example[0];
         $service = $this->getService($I);
 
         $dto = new CrudSensorDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $type;
         $dto->name = $name = $I->faker()->word();
         $dto->topic = $topic = $I->faker()->word();
         $dto->payload = $payload = $I->faker()->word();
@@ -601,18 +576,18 @@ class SensorCrudServiceCest
         $one = $I->faker()->word();
         $two = $I->faker()->word();
 
-        if ('temperature' === $example['type']
-            || 'humidity' === $example['type']
-            || 'pressure' === $example['type']
+        if ('temperature' === $type
+            || 'humidity' === $type
+            || 'pressure' === $type
         ) {
             $dto->payloadMin = $one;
             $dto->payloadMax = $two;
         }
-        if ('leakage' === $example['type']) {
+        if ('leakage' === $type) {
             $dto->payloadDry = $one;
             $dto->payloadWet = $two;
         }
-        if ('dryContact' === $example['type']) {
+        if ('dryContact' === $type) {
             $dto->payloadLow = $one;
             $dto->payloadHigh = $two;
         }
@@ -624,7 +599,7 @@ class SensorCrudServiceCest
         $I->assertEquals($payload, $entity->getPayload());
         $I->assertEquals($messageInfo, $entity->getStatusMessage()->getMessageInfo());
         $I->assertEquals($messageOk, $entity->getStatusMessage()->getMessageOk());
-        $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarn());
+        $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarning());
         $I->assertEquals(1, $entity->getStatus());
         $I->assertEquals(true, $entity->isNotify());
 

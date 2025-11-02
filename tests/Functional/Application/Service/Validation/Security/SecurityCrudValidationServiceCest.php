@@ -8,10 +8,8 @@ use App\Application\Http\Web\Security\Dto\CrudSecurityDto;
 use App\Application\Service\Validation\Security\SecurityCrudValidationService;
 use App\Domain\Security\Service\SecurityCrudService;
 use App\Tests\Support\FunctionalTester;
-use Codeception\Attribute\Skip;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-#[Skip('This test not support new version codeception')]
 class SecurityCrudValidationServiceCest
 {
     public function positiveValidateCreate(FunctionalTester $I): void

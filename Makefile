@@ -39,6 +39,12 @@ test-clean-output:
 test-build:
 	docker compose exec php-fpm php vendor/codeception/codeception/codecept build
 
+test-run:
+	docker compose exec php-fpm php vendor/codeception/codeception/codecept run --steps
+
+test-migration:
+	docker compose exec php-fpm php bin/console d:m:m --no-interaction --env=test
+
 ps:
 	docker compose ps
 

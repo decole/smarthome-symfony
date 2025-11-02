@@ -6,7 +6,6 @@ namespace App\Application\Http\Api;
 
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class MainController extends AbstractFOSRestController

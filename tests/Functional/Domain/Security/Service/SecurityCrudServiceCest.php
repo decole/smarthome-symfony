@@ -186,7 +186,7 @@ class SecurityCrudServiceCest
                 $I->assertEquals($lastCommand, $entity->getLastCommand());
                 $I->assertEquals($messageInfo, $entity->getStatusMessage()->getMessageInfo());
                 $I->assertEquals($messageOk, $entity->getStatusMessage()->getMessageOk());
-                $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarn());
+                $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarning());
                 $I->assertEquals($example['statusRepo'], $entity->getStatus());
                 $I->assertEquals($notify, $entity->isNotify());
 
@@ -422,7 +422,7 @@ class SecurityCrudServiceCest
         $I->assertEquals($lastCommand, $entity->getLastCommand());
         $I->assertEquals($messageInfo, $entity->getStatusMessage()->getMessageInfo());
         $I->assertEquals($messageOk, $entity->getStatusMessage()->getMessageOk());
-        $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarn());
+        $I->assertEquals($messageWarn, $entity->getStatusMessage()->getMessageWarning());
         $I->assertEquals($example['statusRepo'], $entity->getStatus());
         $I->assertEquals($notify, $entity->isNotify());
     }

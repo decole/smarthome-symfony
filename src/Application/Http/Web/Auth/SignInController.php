@@ -28,7 +28,7 @@ final class SignInController extends AbstractController
         ?User $user,
         Request $request,
     ): Response {
-        if ($user instanceof \App\Domain\Identity\Entity\User) {
+        if ($user instanceof User) {
             return $this->redirectToRoute('main');
         }
         $rateLimitService->http($request);

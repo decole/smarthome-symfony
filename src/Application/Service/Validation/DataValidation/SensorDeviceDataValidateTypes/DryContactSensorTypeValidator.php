@@ -8,11 +8,11 @@ use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValida
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Sensor\Entity\DryContactSensor;
 
-final class DryContactSensorTypeValidator implements SensorTypeValidatorInterface
+final readonly class DryContactSensorTypeValidator implements SensorTypeValidatorInterface
 {
     public function __construct(
-        private readonly DryContactSensor $device,
-        private readonly DevicePayload $payload,
+        private DryContactSensor $device,
+        private DevicePayload $payload,
     ) {}
 
     public function validate(): bool
@@ -21,8 +21,8 @@ final class DryContactSensorTypeValidator implements SensorTypeValidatorInterfac
             || (string) $this->device->getPayloadHigh() === $this->payload->getPayload();
     }
 
-    public function isAlert(): bool
+    public function validateStatus(): bool
     {
-        return !$this->validate();
+        return $this->device->getPayload() !== $this->payload->getPayload();
     }
 }

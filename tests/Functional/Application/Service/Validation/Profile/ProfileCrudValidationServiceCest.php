@@ -6,20 +6,14 @@ namespace App\Tests\Functional\Application\Service\Validation\Profile;
 
 use App\Application\Http\Web\Profile\Dto\CrudProfileDto;
 use App\Application\Service\Validation\Profile\ProfileCrudValidationService;
-use App\Domain\Identity\Entity\User;
 use App\Tests\Support\FunctionalTester;
-use Codeception\Attribute\Skip;
+use Codeception\Attribute\Examples;
 use Codeception\Example;
 
-#[Skip('This test not support new version codeception')]
 class ProfileCrudValidationServiceCest
 {
-    /**
-     * @example(flag="0")
-     * @example(flag="1")
-     *
-     * @throws \Exception
-     */
+    #[Examples('0')]
+    #[Examples('1')]
     public function positiveValidateCreate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudProfileDto();
@@ -27,7 +21,7 @@ class ProfileCrudValidationServiceCest
         $dto->login = $I->faker()->word();
         $dto->email = $I->faker()->email();
         $dto->telegramId = random_int(10000000, 99999999);
-        $dto->isChangePassword = (bool) $example['flag'];
+        $dto->isChangePassword = $example[0];
         $dto->password = $dto->passwordAgan = $I->faker()->password();
 
         $service = $this->getService($I);
@@ -38,13 +32,9 @@ class ProfileCrudValidationServiceCest
         $I->assertEquals(0, $result->count());
     }
 
-    /**
-     * @example(password="asdkjhg1jh2g3xz",repassword="asdkjhg1jh2g3xz",expected=0)
-     * @example(password="asdkjhg1jh2g3xz",repassword="321kjhg1jh2g3xz",expected=1)
-     * @example(password="",repassword="",expected=1)
-     *
-     * @throws \Exception
-     */
+    #[Examples('asdkjhg1jh2g3xz', 'asdkjhg1jh2g3xz', '0')]
+    #[Examples('asdkjhg1jh2g3xz', '321kjhg1jh2g3xz', '1')]
+    #[Examples('', '', '1')]
     public function positiveValidateWithChangePasswordCreate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudProfileDto();
@@ -52,9 +42,9 @@ class ProfileCrudValidationServiceCest
         $dto->login = $I->faker()->word();
         $dto->email = $I->faker()->email();
         $dto->telegramId = random_int(10000000, 99999999);
-        $dto->isChangePassword = true;
-        $dto->password = $example['password'];
-        $dto->passwordAgan = $example['repassword'];
+        $dto->isChangePassword = '1';
+        $dto->password = $example[0];
+        $dto->passwordAgan = $example[1];
 
         $service = $this->getService($I);
         $service->setValue($dto);

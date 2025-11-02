@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Sensor\Exception;
+namespace App\Tests\Unit\Domain\Sensor\Exception;
 
 use App\Domain\Sensor\Exception\AdvancedFieldsException;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class AdvancedFieldsExceptionCest
 {
     public function positiveThrow(UnitTester $I): void

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Infrastructure\TwoFactor\Service;
+namespace App\Tests\Unit\Infrastructure\TwoFactor\Service;
 
 use App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService;
-use App\Tests\UnitTester;
+use App\Tests\Support\UnitTester;
 use Codeception\Attribute\Skip;
 
-#[Skip('This test not support new version codeception')]
 class TwoFactorQrCodeServiceCest
 {
+    #[Skip('This test not support new version codeception')]
     public function positiveGenerateImageSource(UnitTester $I): void
     {
         $user = $I->getUser();
@@ -22,6 +22,6 @@ class TwoFactorQrCodeServiceCest
 
     public function negativeGenerateImageSource(UnitTester $I): void
     {
-        $I->expectThrowable(\Throwable::class, fn(): \App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService => new TwoFactorQrCodeService());
+        $I->expectThrowable(\Throwable::class, fn(): TwoFactorQrCodeService => new TwoFactorQrCodeService());
     }
 }

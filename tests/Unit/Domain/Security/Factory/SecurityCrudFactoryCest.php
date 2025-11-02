@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Security\Factory;
+namespace App\Tests\Unit\Domain\Security\Factory;
 
 use App\Application\Service\Validation\Security\SecurityCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\SecurityRepositoryInterface;
 use App\Domain\Security\Factory\SecurityCrudFactory;
 use App\Infrastructure\Repository\Security\SecurityRepository;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class SecurityCrudFactoryCest
 {
     public function getRepository(UnitTester $I): void

@@ -32,6 +32,6 @@ class StringHelper
             ':',
         ];
 
-        return str_replace($characters, '_', $text);
+        return str_replace($characters, '_', (string) $text);
     }
 }

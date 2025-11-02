@@ -6,19 +6,14 @@ namespace App\Domain\Notification\Criteria;
 
 final class FireSecureCriteria extends AbstractCriteria
 {
-    /**
-     * В любом случае при сработке пожарного датчика будет оповещение.
-     */
-    public function notify(): void
-    {
-        $this->sendByVisualNotify();
-        $this->sendByMessengers();
-    }
-
     public function prepareAlertMessage(): string
     {
-        $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
+        $deviceAlertMessage = $this->dto->device->getStatusMessage()?->getMessageWarning() ?? null;
 
-        return $deviceAlertMessage ?? 'Внимание! Пожар!';
+        if (empty($deviceAlertMessage)) {
+            $deviceAlertMessage = 'Внимание! Пожар!';
+        }
+
+        return $deviceAlertMessage;
     }
 }

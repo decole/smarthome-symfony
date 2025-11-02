@@ -19,12 +19,12 @@ class TemperatureSensorTypeValidator implements SensorTypeValidatorInterface
 
     final public function validate(): bool
     {
-        return (int) $this->device->getPayloadMin() < (int) $this->payload->getPayload()
-            || (int) $this->device->getPayloadMax() > (int) $this->payload->getPayload();
+        return (float) $this->device->getPayloadMin() < (float) $this->payload->getPayload()
+            || (float) $this->device->getPayloadMax() > (float) $this->payload->getPayload();
     }
 
-    final public function isAlert(): bool
+    final public function validateStatus(): bool
     {
-        return !$this->validate();
+        return $this->device->getPayload() !== $this->payload->getPayload();
     }
 }

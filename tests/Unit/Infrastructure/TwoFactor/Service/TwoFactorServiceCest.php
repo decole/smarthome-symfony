@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Infrastructure\TwoFactor\Service;
+namespace App\Tests\Unit\Infrastructure\TwoFactor\Service;
 
-use App\Tests\_support\Step\UnitStep\Infrastructure\TwoFactor\TwoFactorServiceStep;
 use App\Infrastructure\TwoFactor\Service\TwoFactorService;
+use App\Tests\Support\Step\UnitStep\Infrastructure\TwoFactor\TwoFactorServiceStep;
 use Codeception\Attribute\Skip;
 use Codeception\Stub;
 
-#[Skip('This test not support new version codeception')]
 class TwoFactorServiceCest
 {
     public function positiveCheckIsEnable(TwoFactorServiceStep $I): void
@@ -26,6 +25,7 @@ class TwoFactorServiceCest
         $I->assertEquals(false, $service->isEnabled());
     }
 
+    #[Skip('This test not support new version codeception')]
     public function getTemporarySecretWithEmptyCode(TwoFactorServiceStep $I): void
     {
         $request = $I->getRequest();
@@ -38,6 +38,7 @@ class TwoFactorServiceCest
         $I->assertEquals($secret, $request->getSession()->get(TwoFactorService::TEMPORARY_KEY));
     }
 
+    #[Skip('This test not support new version codeception')]
     public function getTemporarySecretWithCode(TwoFactorServiceStep $I): void
     {
         $request = $I->getRequest();
@@ -49,6 +50,7 @@ class TwoFactorServiceCest
         $I->assertEquals($secret, $serviceSecret);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function validateCodeByEmptyCode(TwoFactorServiceStep $I): void
     {
         $service = new TwoFactorService(true);
@@ -56,6 +58,7 @@ class TwoFactorServiceCest
         $I->assertEquals(false, $service->validateCode($I->faker()->word(), null));
     }
 
+    #[Skip('This test not support new version codeception')]
     public function positiveConfirm(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -70,6 +73,7 @@ class TwoFactorServiceCest
         $I->assertEquals(true, $service->isConfirm($user, $request));
     }
 
+    #[Skip('This test not support new version codeception')]
     public function negativeConfirm(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -84,6 +88,7 @@ class TwoFactorServiceCest
         $I->assertEquals(false, $service->isConfirm($user, $request));
     }
 
+    #[Skip('This test not support new version codeception')]
     public function deleteSessionVerifiedStateHasSessionKey(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -99,6 +104,7 @@ class TwoFactorServiceCest
         $I->assertEquals(null, $key);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function deleteSessionVerifiedStateWithEmpty(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -113,6 +119,7 @@ class TwoFactorServiceCest
         $I->assertEquals(null, $key);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function setSessionIsVerifiedState(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -126,6 +133,7 @@ class TwoFactorServiceCest
         $I->assertEquals(md5($secret), $key);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function positiveCheckCode(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -143,6 +151,7 @@ class TwoFactorServiceCest
         $I->assertEquals(null, $dto->error);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function negativeCheckCodeEmptyCode(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
@@ -159,6 +168,7 @@ class TwoFactorServiceCest
         $I->assertEquals('Empty code', $dto->error);
     }
 
+    #[Skip('This test not support new version codeception')]
     public function negativeCheckCodeNotCorrectCode(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();

@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Profile\Factory;
+namespace App\Tests\Unit\Domain\Profile\Factory;
 
 use App\Application\Service\Validation\Profile\ProfileCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\ProfileRepositoryInterface;
 use App\Domain\Profile\Factory\ProfileCrudFactory;
 use App\Infrastructure\Repository\Profile\ProfileRepository;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class ProfileCrudFactoryCest
 {
     public function getRepository(UnitTester $I): void

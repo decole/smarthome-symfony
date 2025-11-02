@@ -6,3 +6,9 @@ actor: UnitTester
 modules:
     enabled:
         - Asserts
+        - Symfony:
+            app_path: 'src'
+            environment: 'test'
+        - Doctrine:
+            depends: Symfony
+            cleanup: true

@@ -9,15 +9,13 @@ use App\Domain\DeviceData\Service\DeviceDataCacheService;
 use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Domain\Payload\Entity\DevicePayload;
-use App\Tests\_support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
+use Codeception\Attribute\Examples;
 use Codeception\Example;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
-use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[Skip('This test not support new version codeception')]
 class DeviceDataResolverForSensorsCest
 {
     /**
@@ -38,19 +36,14 @@ class DeviceDataResolverForSensorsCest
         $this->cacheService = $I->grabService(DeviceDataCacheService::class);
     }
 
-    /**
-     * @example(type="temperature",payload="50")
-     * @example(type="humidity",payload="90")
-     * @example(type="pressure",payload="60")
-     * @example(type="leakage",payload="0")
-     * @example(type="dryContact",payload="0")
-     *
-     * @throws InvalidArgumentException
-     */
+    #[Examples('temperature', '50')]
+    #[Examples('humidity', '90')]
+    #[Examples('leakage', '60')]
+    #[Examples('dryContact', '0')]
     public function positiveResolveDevicePayload(DeviceDataResolverStep $I, Example $example): void
     {
-        $payloadExample = $example['payload'];
-        $type = $example['type'];
+        $type = $example[0];
+        $payloadExample = $example[1];
         $sensor = $this->list[$type];
 
         $event = Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => Expected::never()]);
@@ -62,19 +55,15 @@ class DeviceDataResolverForSensorsCest
         $I->assertEquals($payloadExample, $cachedPayloadList[$sensor->getTopic()]);
     }
 
-    /**
-     * @example(type="temperature",payload="200")
-     * @example(type="humidity",payload="-20")
-     * @example(type="pressure",payload="999")
-     * @example(type="leakage",payload="1")
-     * @example(type="dryContact",payload="1")
-     *
-     * @throws InvalidArgumentException
-     */
+    #[Examples('temperature', '200')]
+    #[Examples('humidity', '-20')]
+    #[Examples('pressure', '999')]
+    #[Examples('leakage', '1')]
+    #[Examples('dryContact', '1')]
     public function negativeResolveDevicePayload(DeviceDataResolverStep $I, Example $example): void
     {
-        $payloadExample = $example['payload'];
-        $type = $example['type'];
+        $type = $example[0];
+        $payloadExample = $example[1];
         $sensor = $this->list[$type];
 
         $event = Stub::makeEmpty(EventDispatcherInterface::class, [
@@ -92,7 +81,7 @@ class DeviceDataResolverForSensorsCest
     {
         return new DeviceDataResolver(
             validateService: $this->validateService,
-            cacheService: $this->cacheService,
+            deviceDataCacheService: $this->cacheService,
             eventDispatcher: $event,
         );
     }

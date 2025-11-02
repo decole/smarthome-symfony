@@ -15,10 +15,8 @@ use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
-use App\Tests\_support\Step\FunctionalStep\Application\Service\Factory\DeviceDataValidationFactoryStep;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\Step\FunctionalStep\Application\Service\Factory\DeviceDataValidationFactoryStep;
 
-#[Skip('This test not support new version codeception')]
 class DeviceDataValidationFactoryCest
 {
     private ?DeviceDataValidationFactory $factory = null;
@@ -54,12 +52,12 @@ class DeviceDataValidationFactoryCest
 
         $I->assertInstanceOf(Sensor::class, $device);
 
-        $dto = new DevicePayload($this->relay->getTopic(), 0);
+        $dto = new DevicePayload($this->relay->getTopic(), '0');
         $device = $this->factory->findDevice($dto);
 
         $I->assertInstanceOf(Relay::class, $device);
 
-        $dto = new DevicePayload($this->security->getTopic(), 0);
+        $dto = new DevicePayload($this->security->getTopic(), '0');
         $device = $this->factory->findDevice($dto);
 
         $I->assertInstanceOf(Security::class, $device);
@@ -70,12 +68,13 @@ class DeviceDataValidationFactoryCest
         $dto = new DevicePayload($this->sensor->getTopic(), $this->sensor->getPayload());
         $validator = $this->factory->create($dto);
 
+        $I->assertInstanceOf(Sensor::class, $this->sensor);
         $I->assertInstanceOf(SensorDeviceDataValidator::class, $validator);
     }
 
     public function findRelay(DeviceDataValidationFactoryStep $I): void
     {
-        $dto = new DevicePayload($this->relay->getTopic(), 0);
+        $dto = new DevicePayload($this->relay->getTopic(), '0');
         $validator = $this->factory->create($dto);
 
         $I->assertInstanceOf(RelayDeviceDataValidator::class, $validator);
@@ -83,7 +82,7 @@ class DeviceDataValidationFactoryCest
 
     public function findSecureDevice(DeviceDataValidationFactoryStep $I): void
     {
-        $dto = new DevicePayload($this->security->getTopic(), 0);
+        $dto = new DevicePayload($this->security->getTopic(), '0');
         $validator = $this->factory->create($dto);
 
         $I->assertInstanceOf(SecurityDeviceDataValidator::class, $validator);
@@ -91,7 +90,7 @@ class DeviceDataValidationFactoryCest
 
     public function findFireSecureDevice(DeviceDataValidationFactoryStep $I): void
     {
-        $dto = new DevicePayload($this->fireSecure->getTopic(), 0);
+        $dto = new DevicePayload($this->fireSecure->getTopic(), '0');
         $validator = $this->factory->create($dto);
 
         $I->assertInstanceOf(FireSecurityDeviceDataValidator::class, $validator);

@@ -10,27 +10,20 @@ use App\Domain\Security\Entity\Security;
 
 final class SecurityDeviceDataValidator extends AbstractDeviceDataValidator implements DeviceDataValidatorInterface
 {
-    /**
-     * @var Security
-     */
-    /**
-     * null - состояние неопределено
-     * true - нормальное состояние
-     * false - обнаружено движение.
-     */
-    public function handle(): DeviceDataValidatedDto
+    public function validate(DeviceDataValidatedDto $dto): void
     {
-        $state = match ($this->payload->getPayload()) {
-            $this->device->getHoldPayload() => true,
-            $this->device->getDetectPayload() => false,
+        \assert($this->device instanceof Security);
 
-            default => null,
-        };
+        if ($this->device->isGuarded()) {
+            $dto->hasAlertingNotify = match ($this->payload->getPayload()) {
+                $this->device->getDetectPayload() => true,
 
-        return $this->createDto(
-            state: $state,
-            device: $this->device,
-            isAlert: $this->payload->getPayload() === $this->device->getDetectPayload(),
-        );
+                default => false,
+            };
+        }
+
+        if ($this->device->getStatus()) {
+            $dto->hasCheckStatusWarning = $this->device->getPayload() !== $this->payload->getPayload();
+        }
     }
 }

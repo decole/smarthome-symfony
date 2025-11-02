@@ -9,13 +9,11 @@ use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Domain\Payload\Entity\DevicePayload;
-use App\Tests\_support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[Skip('This test not support new version codeception')]
 class DeviceDataResolverForFireSecureCest
 {
     private ?FireSecurity $device = null;
@@ -26,7 +24,7 @@ class DeviceDataResolverForFireSecureCest
 
     public function _before(DeviceDataResolverStep $I): void
     {
-        if (!$this->device instanceof \App\Domain\FireSecurity\Entity\FireSecurity) {
+        if (!$this->device instanceof FireSecurity) {
             $this->device = $I->createFireSecureDevice();
         }
         $this->validateService = $I->grabService(DeviceDataValidationService::class);
@@ -62,7 +60,7 @@ class DeviceDataResolverForFireSecureCest
     {
         return new DeviceDataResolver(
             validateService: $this->validateService,
-            cacheService: $this->cacheService,
+            deviceDataCacheService: $this->cacheService,
             eventDispatcher: $event,
         );
     }

@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Sensor\Factory;
+namespace App\Tests\Unit\Domain\Sensor\Factory;
 
 use App\Application\Service\Validation\Sensor\SensorCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\SensorRepositoryInterface;
 use App\Domain\Sensor\Factory\SensorCrudFactory;
 use App\Infrastructure\Repository\Sensor\SensorRepository;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class SensorCrudFactoryCest
 {
     public function getRepository(UnitTester $I): void

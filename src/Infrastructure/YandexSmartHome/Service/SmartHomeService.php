@@ -19,9 +19,9 @@ final class SmartHomeService
     }
 
     /**
-     * @throws \Exception
-     *
      * @return DeviceInterface[]
+     *
+     * @throws \Exception
      */
     public function devicesQuery(?string $content): array
     {

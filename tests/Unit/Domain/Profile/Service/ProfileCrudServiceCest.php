@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Profile\Service;
+namespace App\Tests\Unit\Domain\Profile\Service;
 
 use App\Domain\Profile\Service\ProfileCrudService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Skip('This test not support new version codeception')]
 class ProfileCrudServiceCest
 {
     public function createDto(UnitTester $I): void

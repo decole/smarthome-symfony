@@ -62,7 +62,7 @@ final class PlcCacheService implements CacheServiceInterface
             'topic' => $controller->getTargetTopic(),
             'delay' => $controller->getAlarmSecondDelay(),
             'okMessage' => $controller->getStatusMessage()->getMessageOk(),
-            'errorMessage' => $controller->getStatusMessage()->getMessageWarn(),
+            'errorMessage' => $controller->getStatusMessage()->getMessageWarning(),
             'isNotify' => $controller->isNotify(),
         ];
     }

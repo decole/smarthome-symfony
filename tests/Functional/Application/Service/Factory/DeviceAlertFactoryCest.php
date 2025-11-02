@@ -15,11 +15,9 @@ use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Tests\Support\Step\FunctionalStep\Application\Service\Factory\DeviceDataValidationFactoryStep;
-use Codeception\Attribute\Skip;
 use Codeception\Stub;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[Skip('This test not support new version codeception')]
 class DeviceAlertFactoryCest
 {
     // todo сделать проверку нотификаций
@@ -46,7 +44,7 @@ class DeviceAlertFactoryCest
 
         $factory = new DeviceAlertFactory($eventDispatcher);
 
-        $criteria = $factory->create($this->sensor, new DevicePayload($this->sensor->getPayload(), 0));
+        $criteria = $factory->create($this->sensor, new DevicePayload($this->sensor->getPayload(), '0'));
 
         $I->assertInstanceOf(SensorCriteria::class, $criteria);
     }
@@ -60,7 +58,7 @@ class DeviceAlertFactoryCest
 
         $factory = new DeviceAlertFactory($eventDispatcher);
 
-        $criteria = $factory->create($this->relay, new DevicePayload($this->relay->getPayload(), 0));
+        $criteria = $factory->create($this->relay, new DevicePayload($this->relay->getPayload(), '0'));
 
         $I->assertInstanceOf(RelayCriteria::class, $criteria);
     }
@@ -74,7 +72,7 @@ class DeviceAlertFactoryCest
 
         $factory = new DeviceAlertFactory($eventDispatcher);
 
-        $criteria = $factory->create($this->security, new DevicePayload($this->security->getPayload(), 0));
+        $criteria = $factory->create($this->security, new DevicePayload($this->security->getPayload(), '0'));
 
         $I->assertInstanceOf(SecurityCriteria::class, $criteria);
     }
@@ -88,7 +86,7 @@ class DeviceAlertFactoryCest
 
         $factory = new DeviceAlertFactory($eventDispatcher);
 
-        $criteria = $factory->create($this->fireSecure, new DevicePayload($this->fireSecure->getPayload(), 0));
+        $criteria = $factory->create($this->fireSecure, new DevicePayload($this->fireSecure->getPayload(), '0'));
 
         $I->assertInstanceOf(FireSecureCriteria::class, $criteria);
     }

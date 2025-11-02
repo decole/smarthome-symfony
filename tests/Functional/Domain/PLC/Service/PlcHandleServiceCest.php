@@ -11,14 +11,13 @@ use App\Domain\PLC\Service\PlcHandleService;
 use App\Domain\Sensor\Entity\Sensor;
 use App\Infrastructure\Cache\CacheKeyListEnum;
 use App\Infrastructure\Cache\CacheService;
-use App\Tests\_support\Step\FunctionalStep\Domain\PLC\Service\PlcHandleServiceStep;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\Step\FunctionalStep\Domain\PLC\Service\PlcHandleServiceStep;
+use Codeception\Attribute\Incomplete;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use Psr\Log\NullLogger;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[Skip('This test not support new version codeception')]
 class PlcHandleServiceCest
 {
     private ?Sensor $device = null;
@@ -31,7 +30,7 @@ class PlcHandleServiceCest
 
     public function _before(PlcHandleServiceStep $I): void
     {
-        if (!$this->device instanceof \App\Domain\Sensor\Entity\Sensor) {
+        if (!$this->device instanceof Sensor) {
             $this->device = $I->createSensor();
         }
 
@@ -40,6 +39,7 @@ class PlcHandleServiceCest
         $this->cache = $I->grabService(CacheService::class);
     }
 
+    #[Incomplete('This test not support new version codeception')]
     public function positiveCheckHandleData(PlcHandleServiceStep $I): void
     {
         $plc = $I->savePlc(
@@ -61,6 +61,9 @@ class PlcHandleServiceCest
         $reflection->invoke($service);
 
         $map = $this->getCachePlcMap();
+
+        dd($map[$this->device->getTopic()]);
+
         $I->assertNotNull($map);
         $I->assertEquals([$plcTopic], array_keys($map));
         $I->assertEquals($plcTopic, $map[$this->device->getTopic()]['topic'] ?? []);
@@ -74,7 +77,7 @@ class PlcHandleServiceCest
         $I->assertEquals($plcDelay, $plc->getAlarmSecondDelay());
         $I->assertEquals($plcName . ' info', $plc->getStatusMessage()->getMessageInfo());
         $I->assertEquals($plcName . ' ok', $plc->getStatusMessage()->getMessageOk());
-        $I->assertEquals($plcName . ' warning', $plc->getStatusMessage()->getMessageWarn());
+        $I->assertEquals($plcName . ' warning', $plc->getStatusMessage()->getMessageWarning());
         $I->assertEquals(true, $plc->isNotify());
     }
 
@@ -106,6 +109,7 @@ class PlcHandleServiceCest
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \ReflectionException
      */
+    #[Incomplete]
     public function offlineDeviceAndFirstDetectOfflinePlc(PlcHandleServiceStep $I): void
     {
         $I->savePlc(
@@ -141,6 +145,7 @@ class PlcHandleServiceCest
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \ReflectionException
      */
+    #[Incomplete]
     public function offlineDeviceAndFirstDetectOfflinePlcWithNotify(PlcHandleServiceStep $I): void
     {
         $I->savePlc(

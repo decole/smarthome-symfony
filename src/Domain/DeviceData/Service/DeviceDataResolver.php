@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\DeviceData\Service;
 
 use App\Application\Exception\DeviceDataException;
-use App\Application\Exception\HandledException;
 use App\Application\Service\Factory\DeviceAlertFactory;
 use App\Domain\Event\AlertNotificationEvent;
 use App\Domain\Payload\Entity\DevicePayload;
@@ -22,12 +21,12 @@ final class DeviceDataResolver
 
     public function __construct(
         private readonly DeviceDataValidationService $validateService,
-        private readonly DeviceDataCacheService $cacheService,
+        private readonly DeviceDataCacheService $deviceDataCacheService,
         private readonly EventDispatcherInterface $eventDispatcher,
     ) {}
 
     /**
-     * @throws InvalidArgumentException|CacheException|HandledException
+     * @throws InvalidArgumentException|CacheException
      */
     public function resolveDevicePayload(DevicePayload $payload): void
     {
@@ -35,7 +34,7 @@ final class DeviceDataResolver
             DeviceDataException::processInterrupted();
         }
 
-        $this->cacheService->save($payload);
+        $this->deviceDataCacheService->save($payload);
 
         $this->execute($payload);
     }
@@ -60,15 +59,14 @@ final class DeviceDataResolver
 
     /**
      * @throws DeviceDataException
-     * @throws InvalidArgumentException
      */
     private function validatePayload(DevicePayload $payload): void
     {
         $resultDto = $this->validateService->execute($payload);
 
-        if ($resultDto->isAlerting) {
+        if ($resultDto->hasAlertingNotify || $resultDto->hasCheckStatusWarning) {
             (new DeviceAlertFactory($this->eventDispatcher))
-                ->create($resultDto->device, $payload)
+                ->create($resultDto)
                 ->notify();
         }
     }

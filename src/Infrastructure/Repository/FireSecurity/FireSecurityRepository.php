@@ -24,9 +24,9 @@ final class FireSecurityRepository extends BaseDoctrineRepository implements Fir
     }
 
     /**
-     * @throws UnresolvableArgumentException
-     *
      * @return FireSecurity[]
+     *
+     * @throws UnresolvableArgumentException
      */
     public function findAll(?int $status = null): array
     {

@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Domain\Relay\Factory;
+namespace App\Tests\Unit\Domain\Relay\Factory;
 
 use App\Application\Service\Validation\Relay\RelayCrudValidationService;
 use App\Domain\Contract\CrudValidation\ValidationInterface;
 use App\Domain\Contract\Repository\RelayRepositoryInterface;
 use App\Domain\Relay\Factory\RelayCrudFactory;
 use App\Infrastructure\Repository\Relay\RelayRepository;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class RelayCrudFactoryCest
 {
     public function getRepository(UnitTester $I): void

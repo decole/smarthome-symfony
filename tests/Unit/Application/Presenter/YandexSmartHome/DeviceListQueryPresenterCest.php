@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Application\Presenter\YandexSmartHome;
+namespace App\Tests\Unit\Application\Presenter\YandexSmartHome;
 
 use App\Application\Presenter\Api\YandexSmartHome\DeviceListQueryPresenter;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class DeviceListQueryPresenterCest
 {
     public function positivePresent(UnitTester $I): void

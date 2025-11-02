@@ -12,26 +12,24 @@ use App\Application\Service\Validation\DataValidation\SecurityDeviceDataValidato
 use App\Application\Service\Validation\DataValidation\SensorDeviceDataValidator;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Contract\Service\Validation\DataValidation\DeviceDataValidatorInterface;
+use App\Domain\DeviceData\Service\DeviceCacheService;
 use App\Domain\FireSecurity\Entity\FireSecurity;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Relay\Entity\Relay;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Sensor\Entity\Sensor;
+use Psr\Cache\InvalidArgumentException;
 
 final readonly class DeviceDataValidationFactory
 {
-    /**
-     * @param array<string, EntityInterface> $map
-     */
-    public function __construct(private array $map) {}
+    public function __construct(private DeviceCacheService $service) {}
 
     public function create(DevicePayload $payload): DeviceDataValidatorInterface
     {
-        /** @var Sensor|Relay|FireSecurity|Security|null $device */
         $device = $this->findDevice($payload);
 
         if (null === $device) {
-            return new EmptyDataValidator();
+            return new EmptyDataValidator($payload);
         }
 
         return match ($device::alias()) {
@@ -44,8 +42,15 @@ final readonly class DeviceDataValidationFactory
         };
     }
 
+    /**
+     * @return Sensor|Relay|FireSecurity|Security|null
+     *
+     * @throws InvalidArgumentException
+     */
     public function findDevice(DevicePayload $payload): ?EntityInterface
     {
-        return $this->map[$payload->getTopic()] ?? null;
+        $map = $this->service->getTopicMapByDeviceTopic();
+
+        return $map[$payload->getTopic()] ?? null;
     }
 }

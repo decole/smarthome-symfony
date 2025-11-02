@@ -8,21 +8,21 @@ use App\Domain\Contract\Service\Validation\DataValidation\SensorDeviceDataValida
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Sensor\Entity\LeakageSensor;
 
-final class LeakageSensorTypeValidator implements SensorTypeValidatorInterface
+final readonly class LeakageSensorTypeValidator implements SensorTypeValidatorInterface
 {
     public function __construct(
-        private readonly LeakageSensor $device,
-        private readonly DevicePayload $payload,
+        private LeakageSensor $device,
+        private DevicePayload $payload,
     ) {}
 
     public function validate(): bool
     {
-        return (string) $this->device->getPayloadDry() === $this->payload->getPayload()
-            || (string) $this->device->getPayloadWet() === $this->payload->getPayload();
+        return $this->device->getPayloadWet() !== $this->payload->getPayload();
     }
 
-    public function isAlert(): bool
+    public function validateStatus(): bool
     {
-        return (string) $this->device->getPayloadWet() === $this->payload->getPayload();
+        return $this->device->getPayloadDry() !== $this->payload->getPayload()
+            && $this->device->getPayloadWet() !== $this->payload->getPayload();
     }
 }

@@ -12,12 +12,28 @@ abstract class AbstractDeviceDataValidator
 {
     public function __construct(protected DevicePayload $payload, protected EntityInterface $device) {}
 
-    public function createDto(?bool $state, EntityInterface $device, bool $isAlert): DeviceDataValidatedDto
+    abstract protected function validate(DeviceDataValidatedDto $dto): void;
+
+    final public function createDto(): DeviceDataValidatedDto
     {
         return new DeviceDataValidatedDto(
-            state: $state,
-            device: $device,
-            isAlerting: $isAlert,
+            devicePayload: $this->payload,
+            device: $this->device,
+            hasCheckStatusWarning: false,
+            hasAlertingNotify: false,
         );
+    }
+
+    final public function handle(): DeviceDataValidatedDto
+    {
+        $dto = $this->createDto();
+
+        if (!$this->device->isNotify()) {
+            return $dto;
+        }
+
+        $this->validate($dto);
+
+        return $dto;
     }
 }

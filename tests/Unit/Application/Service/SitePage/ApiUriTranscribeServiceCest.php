@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Application\Service\SitePage;
+namespace App\Tests\Unit\Application\Service\SitePage;
 
 use App\Application\Service\SitePage\ApiUriTranscribeService;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class ApiUriTranscribeServiceCest
 {
     public function emptyUrl(UnitTester $I): void

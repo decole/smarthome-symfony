@@ -14,8 +14,8 @@ use Psr\Cache\InvalidArgumentException;
  */
 final class DeviceDataCacheService
 {
-    private const CACHE_LIMIT = 320;
-    private const PREFIX = 'topic';
+    private const int CACHE_LIMIT = 320;
+    private const string PREFIX = 'topic';
 
     public function __construct(private readonly CacheService $cache) {}
 
@@ -33,8 +33,6 @@ final class DeviceDataCacheService
 
     /**
      * @param list<string> $topics
-     *
-     * @throws InvalidArgumentException
      *
      * @return array<string, mixed>
      *

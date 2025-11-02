@@ -44,9 +44,9 @@ final class DeviceCacheService implements CacheServiceInterface
     }
 
     /**
-     * @throws InvalidArgumentException
-     *
      * @return array{"sensor":list<Sensor>, "relay":list<Relay>, "security":list<Security>, "fireSecurity":list<FireSecurity>}
+     *
+     * @throws InvalidArgumentException
      */
     public function getDeviceMap(): array
     {
@@ -61,9 +61,9 @@ final class DeviceCacheService implements CacheServiceInterface
     }
 
     /**
-     * @throws InvalidArgumentException
-     *
      * @return array<string, EntityInterface>
+     *
+     * @throws InvalidArgumentException
      */
     public function getTopicMapByDeviceTopic(): array
     {

@@ -8,22 +8,19 @@ use App\Application\Http\Web\Relay\Dto\CrudRelayDto;
 use App\Application\Service\Validation\Relay\RelayCrudValidationService;
 use App\Domain\Relay\Service\RelayCrudService;
 use App\Tests\Support\FunctionalTester;
-use Codeception\Attribute\Skip;
+use Codeception\Attribute\Examples;
 use Codeception\Example;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-#[Skip('This test not support new version codeception')]
 class RelayCrudValidationServiceCest
 {
-    /**
-     * @example(type="relay")
-     * @example(type="swift")
-     */
+    #[Examples('relay')]
+    #[Examples('swift')]
     public function positiveValidateCreate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudRelayDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
@@ -50,15 +47,13 @@ class RelayCrudValidationServiceCest
         $I->assertEquals(0, $result->count());
     }
 
-    /**
-     * @example(type="relay")
-     * @example(type="swift")
-     */
+    #[Examples('relay')]
+    #[Examples('swift')]
     public function positiveValidateUpdate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudRelayDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
@@ -85,15 +80,13 @@ class RelayCrudValidationServiceCest
         $I->assertEquals(0, $result->count());
     }
 
-    /**
-     * @example(type="relay")
-     * @example(type="swift")
-     */
+    #[Examples('relay')]
+    #[Examples('swift')]
     public function negativeValidateCreate(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudRelayDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();
@@ -124,15 +117,13 @@ class RelayCrudValidationServiceCest
         $I->assertEquals('Relay topic already exist.', $result[1]->getMessage());
     }
 
-    /**
-     * @example(type="relay")
-     * @example(type="swift")
-     */
+    #[Examples('relay')]
+    #[Examples('swift')]
     public function positiveValidateUpdateExistEntity(FunctionalTester $I, Example $example): void
     {
         $dto = new CrudRelayDto();
 
-        $dto->type = $example['type'];
+        $dto->type = $example[0];
         $dto->name = $I->faker()->word();
         $dto->topic = $I->faker()->word();
         $dto->payload = $I->faker()->word();

@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\unit\Application\Helper;
+namespace App\Tests\Unit\Application\Helper;
 
 use App\Application\Helper\StringHelper;
-use App\Tests\UnitTester;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\UnitTester;
 
-#[Skip('This test not support new version codeception')]
 class StringHelperCest
 {
     public function checkSanitize(UnitTester $I): void

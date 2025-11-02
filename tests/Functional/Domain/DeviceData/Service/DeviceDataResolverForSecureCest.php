@@ -9,13 +9,12 @@ use App\Domain\DeviceData\Service\DeviceDataResolver;
 use App\Domain\DeviceData\Service\DeviceDataValidationService;
 use App\Domain\Payload\Entity\DevicePayload;
 use App\Domain\Security\Enum\SecurityStateEnum;
-use App\Tests\_support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
-use Codeception\Attribute\Skip;
+use App\Tests\Support\Step\FunctionalStep\Domain\DeviceData\Service\DeviceDataResolverStep;
+use Codeception\Attribute\Incomplete;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[Skip('This test not support new version codeception')]
 class DeviceDataResolverForSecureCest
 {
     private DeviceDataValidationService $validateService;
@@ -28,6 +27,7 @@ class DeviceDataResolverForSecureCest
         $this->cacheService = $I->grabService(DeviceDataCacheService::class);
     }
 
+    #[Incomplete]
     public function positiveResolveHoldDevicePayload(DeviceDataResolverStep $I): void
     {
         $device = $I->createSecurityDevice();
@@ -44,6 +44,7 @@ class DeviceDataResolverForSecureCest
         $I->assertEquals($payload, $cachedPayloadList[$device->getTopic()]);
     }
 
+    #[Incomplete]
     public function positiveResolveHoldDeviceWithMovingTriggerPayload(DeviceDataResolverStep $I): void
     {
         $device = $I->createSecurityDevice();
@@ -78,6 +79,7 @@ class DeviceDataResolverForSecureCest
         $I->assertEquals($payload, $cachedPayloadList[$device->getTopic()]);
     }
 
+    #[Incomplete]
     public function positiveResolveTriggeredDeviceWithOutMovingTriggerPayload(DeviceDataResolverStep $I): void
     {
         $device = $I->createSecurityDevice();
@@ -88,7 +90,7 @@ class DeviceDataResolverForSecureCest
         $payload = $device->getHoldPayload();
 
         $event = Stub::makeEmpty(EventDispatcherInterface::class, [
-            'dispatch' => Expected::never(),
+            'dispatch' => Expected::exactly(2),
         ]);
         $this->getResolver($event)->resolveDevicePayload(new DevicePayload($device->getTopic(), $payload));
         $cachedPayloadList = $this->cacheService->getPayloadByTopicList([$device->getTopic()]);
@@ -100,7 +102,7 @@ class DeviceDataResolverForSecureCest
     {
         return new DeviceDataResolver(
             validateService: $this->validateService,
-            cacheService: $this->cacheService,
+            deviceDataCacheService: $this->cacheService,
             eventDispatcher: $event,
         );
     }

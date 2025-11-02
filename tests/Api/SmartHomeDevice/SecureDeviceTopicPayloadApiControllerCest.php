@@ -26,7 +26,7 @@ class SecureDeviceTopicPayloadApiControllerCest
         $this->cache = $I->grabService(DeviceCacheService::class);
         $this->resolver = new DeviceDataResolver(
             validateService: $I->grabService(DeviceDataValidationService::class),
-            cacheService: $I->grabService(DeviceDataCacheService::class),
+            deviceDataCacheService: $I->grabService(DeviceDataCacheService::class),
             eventDispatcher: Stub::makeEmpty(EventDispatcherInterface::class, ['dispatch' => fn () => (object) []]),
         );
     }
