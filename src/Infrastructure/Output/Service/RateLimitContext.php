@@ -10,7 +10,6 @@ class RateLimitContext
         public readonly string $ip,
         public string $cacheKey,
         public readonly int $limit,
-        public readonly int $minutes
-    ) {
-    }
+        public readonly int $minutes,
+    ) {}
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli;
 
 use Symfony\Component\Console\Attribute\AsCommand;

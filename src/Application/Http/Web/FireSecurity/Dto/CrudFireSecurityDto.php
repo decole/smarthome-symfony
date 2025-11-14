@@ -16,6 +16,7 @@ class CrudFireSecurityDto implements ValidationDtoInterface
     #[Assert\NotBlank]
     #[Assert\NotNull]
     public ?string $topic = null;
+
     public ?string $payload = null;
 
     #[Assert\NotBlank]
@@ -29,9 +30,12 @@ class CrudFireSecurityDto implements ValidationDtoInterface
     public ?string $lastCommand = null;
 
     public ?string $message_info = null;
+
     public ?string $message_ok = null;
+
     public ?string $message_warn = null;
 
     public ?string $status = null;
+
     public ?string $notify = null;
 }

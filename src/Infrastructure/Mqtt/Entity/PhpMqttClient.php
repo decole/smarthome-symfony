@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Mqtt\Entity;
 
-use Closure;
 use PhpMqtt\Client\MqttClient as MqttClientAlias;
 use Ramsey\Uuid\Uuid;
 
@@ -17,17 +18,16 @@ final class PhpMqttClient implements MqttClientInterface
 
     public function __construct(
         private readonly string $broker,
-        private readonly int $port
-    ) {
-    }
+        private readonly int $port,
+    ) {}
 
     public function getClient(): MqttClientAlias
     {
-        if (!$this->client instanceof \PhpMqtt\Client\MqttClient) {
+        if (!$this->client instanceof MqttClientAlias) {
             $this->client = new MqttClientAlias(
                 $this->broker,
                 $this->port,
-                sprintf('php-client-%s', Uuid::uuid4()->toString())
+                \sprintf('php-client-%s', Uuid::uuid4()->toString()),
             );
         }
 
@@ -61,7 +61,7 @@ final class PhpMqttClient implements MqttClientInterface
         $this->disconnect();
     }
 
-    public function subscribe(string $topic, int $qos, Closure $closure): void
+    public function subscribe(string $topic, int $qos, \Closure $closure): void
     {
         $this->connect();
         $this->getClient()->subscribe($topic, $closure, $qos);

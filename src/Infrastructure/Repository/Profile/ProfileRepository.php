@@ -7,16 +7,26 @@ namespace App\Infrastructure\Repository\Profile;
 use App\Domain\Contract\Repository\ProfileRepositoryInterface;
 use App\Domain\Identity\Entity\User;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template-extends ServiceEntityRepository<User>
+ */
 final class ProfileRepository extends BaseDoctrineRepository implements ProfileRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
     /**
      * @throws NonUniqueResultException
      */
     public function findById(string $id): ?User
     {
-        return $this->entityManager->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.id = :value')
@@ -27,7 +37,7 @@ final class ProfileRepository extends BaseDoctrineRepository implements ProfileR
 
     public function isExistDuplicateEmail(string $login, string $email): bool
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('count(u.email)')
@@ -35,14 +45,14 @@ final class ProfileRepository extends BaseDoctrineRepository implements ProfileR
             ->andWhere(
                 $qb->expr()->andX(
                     $qb->expr()->eq('u.email', ':email'),
-                    $qb->expr()->neq('u.name', ':login')
-                )
+                    $qb->expr()->neq('u.name', ':login'),
+                ),
             );
 
         $qb
             ->setParameter('login', $login)
             ->setParameter('email', $email);
 
-        return $qb->getQuery()->getSingleScalarResult() !== 0;
+        return 0 !== $qb->getQuery()->getSingleScalarResult();
     }
 }

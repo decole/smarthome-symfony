@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli;
 
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
@@ -26,7 +28,7 @@ final class QuasarDeviceListCommand extends Command
         $map = $this->service->getDevices();
 
         foreach ($map as $device) {
-            $output->writeln(sprintf('<info>%s %s %s</info>', $device->getId(), $device->getName(), $device->getType()));
+            $output->writeln(\sprintf('<info>%s %s %s</info>', $device->getId(), $device->getName(), $device->getType()));
         }
 
         return Command::SUCCESS;

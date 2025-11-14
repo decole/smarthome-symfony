@@ -12,15 +12,13 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(event: EntityListEvent::NAME, method: 'onSensorEntityListEvent')]
 final class SensorEntityListEventListener
 {
-    public function __construct(private readonly SensorRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private readonly SensorRepositoryInterface $repository) {}
 
     public function onSensorEntityListEvent(EntityListEvent $event): void
     {
         $event->setEntityMapByType(
             type: Sensor::alias(),
-            entities: $this->repository->findAll()
+            entities: $this->repository->findAll(),
         );
     }
 }

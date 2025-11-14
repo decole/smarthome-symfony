@@ -13,11 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PageAdminUpdateController extends AbstractController
 {
-    public function __construct(private readonly PageCrudService $crud)
-    {
-    }
+    public function __construct(private readonly PageCrudService $crud) {}
 
-    #[Route('/pages/admin/update/{id}', name: "page_admin_update_by_id")]
+    #[Route('/pages/admin/update/{id}', name: 'page_admin_update_by_id')]
     public function update(string $id, Request $request): Response
     {
         $errors = [];
@@ -31,7 +29,7 @@ final class PageAdminUpdateController extends AbstractController
 
             $errors = $this->crud->validate($dto, true);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->update($id, $dto);
 
                 return $this->redirectToRoute('page_admin');

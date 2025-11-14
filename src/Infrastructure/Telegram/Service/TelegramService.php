@@ -10,7 +10,6 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Throwable;
 
 final class TelegramService
 {
@@ -23,9 +22,9 @@ final class TelegramService
     public function __construct(
         private LoggerInterface $logger,
         private EventDispatcherInterface $eventDispatcher,
-        private ?string $apiToken = null
+        private ?string $apiToken = null,
     ) {
-        if ($this->apiToken === null) {
+        if (null === $this->apiToken) {
             $this->logger->error('Telegram bot not configured, Api token is null');
 
             throw TelegramServiceException::apiTokenEmpty();
@@ -41,7 +40,7 @@ final class TelegramService
                 'chat_id' => $chatId,
                 'text' => $notify,
             ]);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             $this->logger->critical('Can`t send telegram message', [
                 'exception' => $exception->getMessage(),
                 'message' => $notify,
@@ -51,9 +50,9 @@ final class TelegramService
             $this->eventDispatcher->dispatch(
                 new AlertNotificationEvent(
                     $exception->getMessage(),
-                    [AlertNotificationEvent::MESSENGER]
+                    [AlertNotificationEvent::MESSENGER],
                 ),
-                AlertNotificationEvent::NAME
+                AlertNotificationEvent::NAME,
             );
         }
     }

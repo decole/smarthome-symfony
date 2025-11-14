@@ -8,18 +8,32 @@ use App\Domain\Common\Traits\CreatedAt;
 use App\Domain\Common\Traits\Entity;
 use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
+use App\Infrastructure\Repository\ScheduleTask\ScheduleTaskRepository;
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: ScheduleTaskRepository::class)]
+#[ORM\Table(name: 'schedule_task')]
 final class ScheduleTask implements EntityInterface
 {
-    use Entity, CreatedAt, UpdatedAt;
+    use CreatedAt;
+    use Entity;
+    use UpdatedAt;
 
     public function __construct(
+        #[ORM\Column(type: Types::STRING, unique: true)]
+        #[Assert\NotBlank]
         private string $command,
+        #[ORM\Column(type: Types::JSON)]
         private array $arguments,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $interval,
-        private ?DateTimeImmutable $lastRun,
-        private ?DateTimeImmutable $nextRun
+        #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+        private ?\DateTimeImmutable $lastRun,
+        #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+        private ?\DateTimeImmutable $nextRun,
     ) {
         $this->identify();
         $this->onCreated();
@@ -48,31 +62,31 @@ final class ScheduleTask implements EntityInterface
         $this->onUpdated();
     }
 
-    public function getLastRun(): ?DateTimeImmutable
+    public function getLastRun(): ?\DateTimeImmutable
     {
         return $this->lastRun;
     }
 
     public function setLastRun(): void
     {
-        $this->lastRun = new DateTimeImmutable();
+        $this->lastRun = new \DateTimeImmutable();
     }
 
-    public function getNextRun(): ?DateTimeImmutable
+    public function getNextRun(): ?\DateTimeImmutable
     {
         return $this->nextRun;
     }
 
-    public function setNextRun(?DateTimeImmutable $nextRun): void
+    public function setNextRun(?\DateTimeImmutable $nextRun): void
     {
         if ($nextRun instanceof \DateTimeImmutable) {
-            /** @var DateTimeImmutable $nextRun */
-            [$hour, $minute, $second] = [(int)$nextRun->format('H'), (int)$nextRun->format('i'), 0];
+            /* @var DateTimeImmutable $nextRun */
+            [$hour, $minute, $second] = [(int) $nextRun->format('H'), (int) $nextRun->format('i'), 0];
 
             $nextRun = $nextRun->setTime(
                 hour: $hour,
                 minute: $minute,
-                second: $second
+                second: $second,
             );
         }
 

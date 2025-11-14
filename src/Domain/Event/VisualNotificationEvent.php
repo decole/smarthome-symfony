@@ -17,9 +17,7 @@ final class VisualNotificationEvent extends Event
 {
     public const NAME = 'notification.visual.send';
 
-    public function __construct(private readonly string $message, private readonly EntityInterface $device)
-    {
-    }
+    public function __construct(private readonly string $message, private readonly EntityInterface $device) {}
 
     public function getMessage(): string
     {
@@ -27,7 +25,7 @@ final class VisualNotificationEvent extends Event
     }
 
     /**
-     * Определяет тип визуальной нотификации по типу датчика
+     * Определяет тип визуальной нотификации по типу датчика.
      */
     public function getNotifyType(): int
     {

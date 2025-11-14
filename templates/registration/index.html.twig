@@ -17,78 +17,12 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ path('home') }}"><b>{{ host }}</b></a>
+        <a href="{{ path('home_page') }}"><b>{{ host }}</b></a>
     </div>
 
     <div class="card">
         <div class="card-body register-card-body">
             <p class="login-box-msg">{{ 'Sing Up'|trans }}</p>
-{% if isEnableRegistration == 'true' %}
-            <form action="{{ path('app_register') }}" method="post">
-                <input type="hidden" name="csrf" value="{{ csrf }}">
-
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ name }}">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-user"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email" name="email" value="{{ email }}">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" name="password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <input type="password" class="form-control" placeholder="Retype password" name="repassword">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <div class="col-12">
-                        {% for flashes in app.flashes('errors') %}
-                            {% for field, error in flashes %}
-                                <p class="bg-danger p-1">{{ field }}: {{ error }}</p>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-7">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                            <label for="agreeTerms">
-                                <a href="#">{{ 'I have read'|trans }}</a>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-5">
-                        <button type="submit" class="btn btn-primary btn-block">{{ 'Send'|trans }}</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-{% else %}
-    <div class="text-center text-capitalize mb-3">
-        <h1>{{ 'Registration is closed'|trans }}</h1>
-    </div>
-{% endif %}
             <a href="{{ path('app_login') }}" class="text-center">{{ 'I am already registered'|trans }}</a>
         </div>
         <!-- /.form-box -->

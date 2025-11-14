@@ -8,11 +8,12 @@ interface SensorTypeValidatorInterface
 {
     /**
      * Проверка на адекватность пришедших значений.
+     * True - все в порядке.
      */
     public function validate(): bool;
 
     /**
-     * Сработка по условию типа датчика. Выход за приделы нормы
+     * Несовпадение хранимого статуса. Внезапное изменение статуса.
      */
-    public function isAlert(): bool;
+    public function validateStatus(): bool;
 }

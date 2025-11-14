@@ -12,11 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PlcAdminListController extends AbstractController
 {
-    public function __construct(private readonly PlcCrudService $crud)
-    {
-    }
+    public function __construct(private readonly PlcCrudService $crud) {}
 
-    #[Route('/plc/admin', name: "plc_admin")]
+    #[Route('/plc/admin', name: 'plc_admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

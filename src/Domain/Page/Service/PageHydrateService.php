@@ -14,9 +14,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 final class PageHydrateService
 {
     public function __construct(
-        private readonly EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {}
 
     /**
      * @throws DeviceDataException
@@ -27,13 +26,12 @@ final class PageHydrateService
 
         $mapByEntityType = $this->eventDispatcher->dispatch(new EntityListEvent(), EntityListEvent::NAME);
 
-        foreach ($page->getConfig() as $type => $config)
-        {
+        foreach ($page->getConfig() as $type => $config) {
             foreach ($config as $id) {
                 $result[] = (new PageEntityDtoFactory())->create($this->findEntity(
                     type: $type,
                     id: $id,
-                    map: $mapByEntityType->getEntityMap()
+                    map: $mapByEntityType->getEntityMap(),
                 ));
             }
         }

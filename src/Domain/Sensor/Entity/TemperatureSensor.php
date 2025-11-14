@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Sensor\Entity;
 
 use App\Domain\Common\Embedded\StatusMessage;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'sensor_temperature')]
 class TemperatureSensor extends Sensor
 {
     public const TYPE = 'temperature';
@@ -17,9 +21,10 @@ class TemperatureSensor extends Sensor
         private StatusMessage $statusMessage,
         private int $status,
         private bool $notify,
-
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $payloadMin = null,
-        private ?string $payloadMax = null
+        #[ORM\Column(type: Types::STRING, nullable: true)]
+        private ?string $payloadMax = null,
     ) {
         parent::__construct(
             $this->name,

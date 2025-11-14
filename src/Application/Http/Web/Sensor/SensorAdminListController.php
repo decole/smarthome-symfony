@@ -13,18 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SensorAdminListController extends AbstractController
 {
-    public function __construct(private SensorCrudService $crud)
-    {
-    }
+    public function __construct(private SensorCrudService $crud) {}
 
-    #[Route('/sensors/admin', name: "sensors_admin")]
+    #[Route('/sensors/admin', name: 'sensors_admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
 
         return $this->render('crud/sensor/sensor.list.html.twig', [
             'sensors' => $this->crud->list(),
-            'typeTranscribe' => Sensor::TYPE_TRANSCRIBES
+            'typeTranscribe' => Sensor::TYPE_TRANSCRIBES,
         ]);
     }
 }

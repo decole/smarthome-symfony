@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Handler;
 
 use App\Domain\Event\AlertNotificationEvent;
@@ -7,16 +9,14 @@ use App\Domain\Notification\Entity\AliceNotificationMessage;
 use App\Infrastructure\Quasar\Service\QuasarNotificationService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Throwable;
 
 #[AsMessageHandler]
 final class AliceSmartHomeNotificationHandler
 {
     public function __construct(
         private readonly QuasarNotificationService $service,
-        private readonly EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {}
 
     public function __invoke(AliceNotificationMessage $message): void
     {
@@ -39,12 +39,12 @@ final class AliceSmartHomeNotificationHandler
             if ($lineCount > 90) {
                 $chunks[$i] = $chunk;
                 $chunk = '';
-                $i++;
+                ++$i;
             }
 
-            $chunk = $chunk === '' ? $word : implode(' ', [$chunk, $word]);
+            $chunk = '' === $chunk ? $word : implode(' ', [$chunk, $word]);
 
-            if (count($textMap) === $key + 1) {
+            if (\count($textMap) === $key + 1) {
                 $chunks[$i] = $chunk;
             }
         }
@@ -54,10 +54,10 @@ final class AliceSmartHomeNotificationHandler
                 $this->service->send($words);
                 sleep(7);
             }
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             $this->eventDispatcher->dispatch(
                 new AlertNotificationEvent($exception->getMessage(), [AlertNotificationEvent::MESSENGER]),
-                AlertNotificationEvent::NAME
+                AlertNotificationEvent::NAME,
             );
         }
 

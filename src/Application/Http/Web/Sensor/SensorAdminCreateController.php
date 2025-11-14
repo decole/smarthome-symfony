@@ -16,11 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SensorAdminCreateController extends AbstractController
 {
-    public function __construct(private SensorCrudService $crud)
-    {
-    }
+    public function __construct(private SensorCrudService $crud) {}
 
-    #[Route('/sensors/admin/create', name: "sensors_admin_create")]
+    #[Route('/sensors/admin/create', name: 'sensors_admin_create')]
     public function createList(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
@@ -34,7 +32,7 @@ final class SensorAdminCreateController extends AbstractController
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/sensors/admin/create/{type}', name: "sensors_admin_create_by_type")]
+    #[Route('/sensors/admin/create/{type}', name: 'sensors_admin_create_by_type')]
     public function createByType(string $type, Request $request): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
@@ -44,7 +42,7 @@ final class SensorAdminCreateController extends AbstractController
         if ($request->isMethod('post')) {
             $errors = $this->crud->validate($sensorDto);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->create($sensorDto);
 
                 return $this->redirectToRoute('sensors_admin');

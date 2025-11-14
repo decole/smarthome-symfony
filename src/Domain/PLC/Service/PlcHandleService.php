@@ -15,7 +15,6 @@ use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 final class PlcHandleService
 {
@@ -27,9 +26,8 @@ final class PlcHandleService
         private readonly PlcCacheService $plcCache,
         private readonly DeviceDataCacheService $dataCacheService,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly LoggerInterface $logger
-    ) {
-    }
+        private readonly LoggerInterface $logger,
+    ) {}
 
     public function execute(): void
     {
@@ -41,7 +39,7 @@ final class PlcHandleService
 
                 sleep(10);
             }
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             $this->logger->warning('Error handle process', [
                 'exception' => $exception->getMessage(),
             ]);
@@ -50,7 +48,7 @@ final class PlcHandleService
                 new AlertNotificationEvent($exception->getMessage(), [
                     AlertNotificationEvent::MESSENGER,
                 ]),
-                AlertNotificationEvent::NAME
+                AlertNotificationEvent::NAME,
             );
         }
     }
@@ -59,20 +57,20 @@ final class PlcHandleService
     {
         $plcMap = $this->plcCache->getMap();
 
-        $targetTopicList = array_map(static fn(array $raw) => $raw['topic'], $plcMap);
+        $targetTopicList = array_map(static fn (array $raw) => $raw['topic'], $plcMap);
 
         $cachedTopicsWithPayload = $this->dataCacheService->getPayloadByTopicList($targetTopicList);
 
         foreach ($plcMap as $plc) {
-            if ($cachedTopicsWithPayload[$plc['topic']] === null && !$this->validate($plc)) {
+            if (null === $cachedTopicsWithPayload[$plc['topic']] && !$this->validate($plc)) {
                 $this->notifyOffline($plc);
 
                 continue;
             }
 
             // если контроллер вышел на связь - удалям кэш
-            if ($cachedTopicsWithPayload[$plc['topic']] !== null &&
-                $this->plcCache->getCacheItem($this->getCacheTopicKey($plc['topic']))->get() !== null
+            if (null !== $cachedTopicsWithPayload[$plc['topic']]
+                && null !== $this->plcCache->getCacheItem($this->getCacheTopicKey($plc['topic']))->get()
             ) {
                 $this->plcCache->set($this->getCacheTopicKey($plc['topic']), null, self::DELAY_DAY);
                 $this->notifyOnline($plc);
@@ -100,11 +98,12 @@ final class PlcHandleService
 
         $time = $this->plcCache->getCacheItem($cacheKey)->get();
 
-        if ($time === null) {
-            $this->plcCache->set($cacheKey, time() + (int)$plc['delay'], self::DELAY_DAY);
+        if (null === $time) {
+            $this->plcCache->set($cacheKey, time() + (int) $plc['delay'], self::DELAY_DAY);
 
             return true;
         }
+
         return time() < $time;
     }
 
@@ -112,7 +111,7 @@ final class PlcHandleService
     {
         $notifyKey = $this->getCacheNotifyKey($plc['topic']);
 
-        if ($this->plcCache->getCacheItem($notifyKey)->get() === null) {
+        if (null === $this->plcCache->getCacheItem($notifyKey)->get()) {
             $this->plcCache->set($notifyKey, true, self::DELAY_DAY);
 
             $this->createEvents($plc['errorMessage']);
@@ -130,7 +129,7 @@ final class PlcHandleService
             new AlertNotificationEvent($message, [
                 AlertNotificationEvent::MESSENGER,
             ]),
-            AlertNotificationEvent::NAME
+            AlertNotificationEvent::NAME,
         );
 
         $this->eventDispatcher->dispatch(
@@ -140,12 +139,16 @@ final class PlcHandleService
                     name: 'dummy',
                     targetTopic: 'dummy',
                     alarmSecondDelay: 0,
-                    statusMessage: new StatusMessage(),
+                    statusMessage: new StatusMessage(
+                        messageInfo: 'info',
+                        messageOk: 'ok',
+                        messageWarning: 'warning',
+                    ),
                     status: EntityStatusEnum::STATUS_ACTIVE->value,
-                    notify: true
-                )
+                    notify: true,
+                ),
             ),
-            VisualNotificationEvent::NAME
+            VisualNotificationEvent::NAME,
         );
     }
 }

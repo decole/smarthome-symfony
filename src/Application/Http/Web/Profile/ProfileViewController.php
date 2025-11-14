@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ProfileViewController extends AbstractController
 {
-    #[Route('/user/profile', name: "profile_view")]
+    #[Route('/user/profile', name: 'profile_view')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Scheduler;
 
 use App\Domain\Contract\Repository\ScheduleTaskRepositoryInterface;
@@ -17,7 +19,7 @@ final class ScheduleDeleteCommand extends Command
 
     public function __construct(
         private readonly ScheduleTaskService $service,
-        private readonly ScheduleTaskRepositoryInterface $repository
+        private readonly ScheduleTaskRepositoryInterface $repository,
     ) {
         parent::__construct();
     }
@@ -30,7 +32,7 @@ final class ScheduleDeleteCommand extends Command
         $i = 1;
         $list = $this->repository->findAll();
 
-        if ($list === []) {
+        if ([] === $list) {
             $output->writeln('Not have tasks. Count = 0.');
 
             return Command::SUCCESS;
@@ -48,9 +50,9 @@ final class ScheduleDeleteCommand extends Command
                     $task->getCommand(),
                     $task->getInterval(),
                     $task->getLastRun()?->format('d.m.Y H:i:s'),
-                    $task->getNextRun()?->format('d.m.Y H:i:s')
+                    $task->getNextRun()?->format('d.m.Y H:i:s'),
                 ],
-                $output
+                $output,
             );
 
             $this->printEmptyRow($output);
@@ -58,13 +60,13 @@ final class ScheduleDeleteCommand extends Command
 
         $number = $helper->ask($input, $output, $questionCommand);
 
-        if ($number === null) {
+        if (null === $number) {
             $output->writeln('Number task is required!');
 
             return Command::FAILURE;
         }
 
-        if ((int)$number === 0 || (int)$number > count($list)) {
+        if (0 === (int) $number || (int) $number > \count($list)) {
             $output->writeln('Number out of range count task!');
 
             return Command::FAILURE;
@@ -77,23 +79,23 @@ final class ScheduleDeleteCommand extends Command
 
     private function printTableRow(array $list, OutputInterface $output): void
     {
-        $lastIndex = count($list) - 1;
+        $lastIndex = \count($list) - 1;
         $nextRow = [];
         $printNextRow = false;
 
         foreach ($list as $key => $val) {
-            $len = strlen($val);
+            $len = mb_strlen($val);
             $formattedVal = '';
 
-            if ($len === self::CELL_CHARS) {
+            if (self::CELL_CHARS === $len) {
                 $formattedVal = $val;
                 $nextRow[] = '';
             } elseif ($len > self::CELL_CHARS) {
-                $formattedVal = substr($val, 0, self::CELL_CHARS);
-                $nextRow[] = substr($val, self::CELL_CHARS);
+                $formattedVal = mb_substr($val, 0, self::CELL_CHARS);
+                $nextRow[] = mb_substr($val, self::CELL_CHARS);
                 $printNextRow = true;
             } elseif ($len < self::CELL_CHARS) {
-                $formattedVal = str_pad($val, self::CELL_CHARS, ' ', STR_PAD_BOTH);
+                $formattedVal = mb_str_pad($val, self::CELL_CHARS, ' ', \STR_PAD_BOTH);
                 $nextRow[] = '';
             }
 

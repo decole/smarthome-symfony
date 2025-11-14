@@ -10,8 +10,6 @@ abstract class AbstractDevice
         self::SENSOR,
         self::RELAY,
     ];
-
     public const SENSOR = 'sensor';
-
     public const RELAY = 'relay';
 }

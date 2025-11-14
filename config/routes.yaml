@@ -1,9 +1,23 @@
-web:
-  resource: '../src/Application/Http/Web'
-  type: annotation
-  prefix: /
+controllers:
+  resource:
+    path: '../src/Application/Http/Web/'
+    namespace: App\Application\Http\Web
+  type: attribute
+  prefix: /{_locale}
+  defaults:
+    _locale: '%app.locale%'
 
 api:
-  resource: '../src/Application/Http/Api'
-  type: annotation
+  resource:
+    path: '../src/Application/Http/Api/'
+    namespace: App\Application\Http\Api
+  type: attribute
   prefix: /api
+
+main_page:
+  path: /
+  controller: App\Application\Http\Web\Home\HomePageController::index
+
+app_logout:
+  path: /logout
+  methods: GET

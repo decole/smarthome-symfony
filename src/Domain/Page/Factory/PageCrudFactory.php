@@ -15,7 +15,7 @@ final class PageCrudFactory extends AbstractCrudFactory
     public function __construct(
         private readonly PageRepositoryInterface $repository,
         private readonly PageCrudValidationService $validation,
-        DeviceCacheService $cacheService
+        DeviceCacheService $cacheService,
     ) {
         $this->cacheService = $cacheService;
     }

@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Scheduler;
 
 use App\Domain\ScheduleTask\Input\ScheduleTaskInputDto;
 use App\Domain\ScheduleTask\Service\ScheduleTaskService;
-use DateTimeImmutable;
-use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +21,7 @@ final class ScheduleAddCommand extends Command
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -30,21 +30,22 @@ final class ScheduleAddCommand extends Command
         $questionCommand = new Question("Insert console command:\n", null);
         $questionArguments = new Question(
             "Command have parameters? Empty, or example: argumentOne=parameter argumentTwo=10\n",
-            null
+            null,
         );
         $questionInterval = new Question(
             "Interval, empty if start once, example interval: @hourly, 1 day, 30 minutes, cron format - * * * * *\n",
-            null
+            null,
         );
         $questionNextRun = new Question(
             "Run as date. Example: empty - now or 2023-01-12 00:00:00\n",
-            null
+            null,
         );
 
         $command = $helper->ask($input, $output, $questionCommand);
 
-        if ($command === null) {
+        if (null === $command) {
             $output->writeln('Command value is required!');
+
             return Command::FAILURE;
         }
 
@@ -52,25 +53,24 @@ final class ScheduleAddCommand extends Command
         $interval = $helper->ask($input, $output, $questionInterval);
         $nextRun = $helper->ask($input, $output, $questionNextRun);
 
-        $this->service->add($this->hydrateAnswers($command, $arguments, $interval, $nextRun, $output));
+        $this->service->add($this->hydrateAnswers($command, $arguments, $interval, $nextRun));
 
         return Command::SUCCESS;
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function hydrateAnswers(
         string $command,
         ?string $rawArguments,
         ?string $rawInterval,
         ?string $rawNextRun,
-        OutputInterface $output
     ): ScheduleTaskInputDto {
         $arguments = [];
-        $nextRun = new DateTimeImmutable();
+        $nextRun = new \DateTimeImmutable();
 
-        if ($rawArguments !== null && $rawArguments !== '') {
+        if (null !== $rawArguments && '' !== $rawArguments) {
             foreach (explode(' ', $rawArguments) as $list) {
                 $map = explode('=', $list);
 
@@ -78,21 +78,21 @@ final class ScheduleAddCommand extends Command
             }
         }
 
-        if ($rawNextRun !== null && $rawNextRun !== '') {
-            $nextRun = new DateTimeImmutable($rawNextRun);
+        if (null !== $rawNextRun && '' !== $rawNextRun) {
+            $nextRun = new \DateTimeImmutable($rawNextRun);
         }
 
         return new ScheduleTaskInputDto(
             command: $command,
             arguments: $arguments,
             interval: $this->getInterval($rawInterval),
-            nextRun: $nextRun
+            nextRun: $nextRun,
         );
     }
 
     private function getInterval(?string $rawInterval): ?string
     {
-        if ($rawInterval !== null && $this->service->getNextDate($rawInterval) instanceof \DateTimeImmutable) {
+        if (null !== $rawInterval && $this->service->getNextDate($rawInterval) instanceof \DateTimeImmutable) {
             return $rawInterval;
         }
 

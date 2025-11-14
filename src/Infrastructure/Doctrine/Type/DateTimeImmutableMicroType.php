@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Type;
 
-use DateTimeImmutable;
-use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
@@ -21,12 +19,12 @@ final class DateTimeImmutableMicroType extends Type
 
     /**
      * @psalm-suppress InvalidReturnType
-     * @param mixed $value
+     *
      * @return bool|DatetimeImmutableType|null
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform): bool|null|DateTimeImmutable
+    public function convertToPHPValue($value, AbstractPlatform $platform): bool|\DateTimeImmutable|null
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
@@ -36,8 +34,8 @@ final class DateTimeImmutableMicroType extends Type
             $value .= '.000000';
         }
 
-        /** @psalm-suppress InvalidReturnStatement */
-        return DateTimeImmutable::createFromFormat($this->formatString(), $value, new DateTimeZone('UTC'));
+        /* @psalm-suppress InvalidReturnStatement */
+        return \DateTimeImmutable::createFromFormat($this->formatString(), $value, new \DateTimeZone('UTC'));
     }
 
     protected function formatString(): string
@@ -45,22 +43,17 @@ final class DateTimeImmutableMicroType extends Type
         return 'Y-m-d H:i:s.u';
     }
 
-
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
-        if ($value instanceof DateTimeImmutable) {
+        if ($value instanceof \DateTimeImmutable) {
             return $value->format($this->formatString());
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', 'DateTimeImmutable']
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTimeImmutable']);
     }
 
     public function getName(): string

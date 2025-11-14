@@ -12,11 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PageAdminListController extends AbstractController
 {
-    public function __construct(private readonly PageCrudService $crud)
-    {
-    }
+    public function __construct(private readonly PageCrudService $crud) {}
 
-    #[Route('/pages/admin', name: "page_admin")]
+    #[Route('/pages/admin', name: 'page_admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

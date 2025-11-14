@@ -1,6 +1,84 @@
-FROM registry.gitlab.com/decole/uberserver-symfony:base
+FROM php:8.4-fpm
 
 MAINTAINER decole <decole2014@yandex.ru>
+
+RUN apt update -q -y \
+    && apt upgrade -y \
+    && apt install -q -y --no-install-recommends \
+    zlib1g-dev \
+    curl \
+    libpq-dev \
+    libzip-dev \
+    libpng-dev \
+    zip \
+    libmcrypt-dev \
+    unzip \
+    git \
+    procps \
+    sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt update -q -y \
+    && apt install -q -y --no-install-recommends \
+    libzip-dev \
+    zip \
+    psmisc \
+    librabbitmq-dev \
+    libssh-dev \
+    libmagickwand-dev \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install xml \
+    && docker-php-ext-enable xml \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pgsql pdo_pgsql \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install sockets \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
+
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-install pcntl
+
+RUN apt-get -y update \
+    && apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl
+
+# https://pecl.php.net/package/APCu
+# PHP ext-apcu
+#ARG PHPEXT_APCU_VERSION=5.1.24
+#RUN set -eux; \
+#  pecl bundle -d /usr/src/php/ext apcu-${PHPEXT_APCU_VERSION}; \
+#  docker-php-ext-install -j$(nproc) apcu; \
+#  \
+#  docker-php-source delete; \
+#  rm -rf /tmp/* /var/tmp/*
+
+RUN apt-get -y update \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
+    && docker-php-source delete \
+    && rm -r /tmp/*
+
+RUN rm -rf /var/lib/apt/lists/*
+
+COPY ./docker/php/php-fpm.ini /usr/local/etc/php/php.ini
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# переход на русское зеркало
+RUN composer config -g repos.packagist composer https://packagist.org.ru
+
+RUN echo -e "\n\n====================== Remove unused ======================\n" \
+    && apt autoremove gcc -y \
+    && apt clean all \
+    && rm -rvf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && dpkg -la | awk '{print $2}' | grep '\-dev' | xargs apt remove -y \
+    && rm -rf /tmp/*
+
+WORKDIR /var/www
 
 # Install supervisor
 RUN apt-get update \

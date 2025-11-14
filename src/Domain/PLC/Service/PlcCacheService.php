@@ -20,8 +20,7 @@ final class PlcCacheService implements CacheServiceInterface
     public function __construct(
         private readonly PlcRepositoryInterface $repository,
         private readonly CacheService $cache,
-    ) {
-    }
+    ) {}
 
     public function create(): void
     {
@@ -38,7 +37,7 @@ final class PlcCacheService implements CacheServiceInterface
     {
         $cacheItem = $this->cache->getItem(self::CACHE_MAP_KEY);
 
-        if ($cacheItem->get() === null) {
+        if (null === $cacheItem->get()) {
             $this->create();
 
             return $this->cache->get(self::CACHE_MAP_KEY);
@@ -63,7 +62,7 @@ final class PlcCacheService implements CacheServiceInterface
             'topic' => $controller->getTargetTopic(),
             'delay' => $controller->getAlarmSecondDelay(),
             'okMessage' => $controller->getStatusMessage()->getMessageOk(),
-            'errorMessage'  => $controller->getStatusMessage()->getMessageWarn(),
+            'errorMessage' => $controller->getStatusMessage()->getMessageWarning(),
             'isNotify' => $controller->isNotify(),
         ];
     }

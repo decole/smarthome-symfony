@@ -9,22 +9,20 @@ use App\Domain\Payload\Entity\DevicePayload;
 use App\Infrastructure\Mqtt\Entity\MqttClientInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 final class MqttHandleService
 {
     public function __construct(
         private readonly MqttClientInterface $client,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly LoggerInterface $logger
-    ) {
-    }
+        private readonly LoggerInterface $logger,
+    ) {}
 
     public function post(DevicePayload $message): void
     {
         try {
             $this->client->publish($message->getTopic(), $message->getPayload());
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             $text = 'Crash public payload from mqtt protocol';
 
             $this->logger->critical($text, [

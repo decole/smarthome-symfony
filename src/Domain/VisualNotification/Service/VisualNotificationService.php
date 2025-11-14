@@ -9,8 +9,6 @@ use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
 use App\Domain\VisualNotification\Dto\VisualNotificationDto;
 use App\Domain\VisualNotification\Entity\VisualNotification;
 use App\Infrastructure\Cache\CacheService;
-use DateTimeImmutable;
-use DateTimeZone;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -21,7 +19,6 @@ final class VisualNotificationService
     private const CACHE_KEY_ALERT_TYPE = 'visual.notification.alert';
     private const FIRE_SECURE_TYPE = 'visual.notification.fire.secure';
     private const CACHE_KEY_SECURITY_TYPE = 'visual.notification.security';
-
     private const MAP = [
         self::CACHE_KEY_ALL_TYPE => null,
         self::CACHE_KEY_MESSAGE_TYPE => VisualNotification::MESSAGE_TYPE,
@@ -33,14 +30,14 @@ final class VisualNotificationService
     public function __construct(
         private readonly TransactionInterface $transaction,
         private readonly VisualNotificationRepositoryInterface $repository,
-        private readonly CacheService $cacheService
-    ) {
-    }
+        private readonly CacheService $cacheService,
+    ) {}
 
     /**
      * twig global var service. See /config/packages/twig.yaml
      * Визуальные нотификации - общие нотификации. Не будет филдьтров по пользователю.
-     * Данные кэшируются
+     * Данные кэшируются.
+     *
      * @return array<string, mixed>
      */
     public function notifications(): array
@@ -51,27 +48,27 @@ final class VisualNotificationService
         $alertsTime = $notificationsTime = $fireSecureAlertsTime = $secureAlertsTime = null;
 
         foreach ($notifies as $notify) {
-            if ($notify->getType() === VisualNotification::MESSAGE_TYPE) {
-                $notifications++;
+            if (VisualNotification::MESSAGE_TYPE === $notify->getType()) {
+                ++$notifications;
                 $notificationsTime = $this->minimalTime($notificationsTime, $notify->getCreatedAt());
             }
 
-            if ($notify->getType() === VisualNotification::ALERT_TYPE) {
-                $alerts++;
+            if (VisualNotification::ALERT_TYPE === $notify->getType()) {
+                ++$alerts;
                 $alertsTime = $this->minimalTime($alertsTime, $notify->getCreatedAt());
             }
 
-            if ($notify->getType() === VisualNotification::FIRE_SECURE_TYPE) {
-                $fireSecureAlerts++;
+            if (VisualNotification::FIRE_SECURE_TYPE === $notify->getType()) {
+                ++$fireSecureAlerts;
                 $fireSecureAlertsTime = $this->minimalTime($fireSecureAlertsTime, $notify->getCreatedAt());
             }
 
-            if ($notify->getType() === VisualNotification::SECURITY_TYPE) {
-                $secureAlerts++;
+            if (VisualNotification::SECURITY_TYPE === $notify->getType()) {
+                ++$secureAlerts;
                 $secureAlertsTime = $this->minimalTime($secureAlertsTime, $notify->getCreatedAt());
             }
 
-            $total++;
+            ++$total;
         }
 
         return [
@@ -102,7 +99,7 @@ final class VisualNotificationService
         $entity = new VisualNotification($dto->getType(), $dto->getMessage());
 
         $this->transaction->transactional(
-            fn () => $this->repository->save($entity)
+            fn () => $this->repository->save($entity),
         );
 
         $this->refreshCache($dto->getType());
@@ -111,7 +108,7 @@ final class VisualNotificationService
     public function setIsRead(?int $type = null): void
     {
         $this->transaction->transactional(
-            fn () => $this->repository->setAllIsRead($type)
+            fn () => $this->repository->setAllIsRead($type),
         );
 
         $this->refreshCache($type);
@@ -119,6 +116,7 @@ final class VisualNotificationService
 
     /**
      * @return array<int, VisualNotification>
+     *
      * @throws InvalidArgumentException
      */
     public function getNotifiesByType(?int $type = null): array
@@ -135,14 +133,15 @@ final class VisualNotificationService
             key: $cacheKey,
             callback: function (ItemInterface $item) use ($type): array {
                 $item->expiresAfter(3600);
+
                 return $this->repository->findByTypeAndIsRead(type: $type, isRead: false);
-            }
+            },
         );
     }
 
     public function refreshCache(?int $notifyType): void
     {
-        if ($notifyType === null) {
+        if (null === $notifyType) {
             foreach (self::MAP as $key => $type) {
                 $this->cacheService->set($key, $this->repository->findByTypeAndIsRead($type, false));
             }
@@ -159,7 +158,7 @@ final class VisualNotificationService
         }
     }
 
-    private function minimalTime(?DateTimeImmutable $time, DateTimeImmutable $createdAt): ?DateTimeImmutable
+    private function minimalTime(?\DateTimeImmutable $time, \DateTimeImmutable $createdAt): ?\DateTimeImmutable
     {
         if (!$time instanceof \DateTimeImmutable) {
             return $createdAt;
@@ -172,13 +171,13 @@ final class VisualNotificationService
         return $time;
     }
 
-    private function diffTime(?DateTimeImmutable $time): ?string
+    private function diffTime(?\DateTimeImmutable $time): ?string
     {
         if (!$time instanceof \DateTimeImmutable) {
             return null;
         }
 
-        $current = new DateTimeImmutable('now', new DateTimeZone('utc'));
+        $current = new \DateTimeImmutable('now', new \DateTimeZone('utc'));
 
         $diff = $current->getTimestamp() - $time->getTimestamp();
 
@@ -187,13 +186,13 @@ final class VisualNotificationService
         }
 
         if ($diff < 3600) {
-            return ceil($diff/60) . ' minutes';
+            return ceil($diff / 60) . ' minutes';
         }
 
         if ($diff < 86400) {
-            return ceil($diff/3600) . ' hours';
+            return ceil($diff / 3600) . ' hours';
         }
 
-        return ceil($diff/86400) . ' days';
+        return ceil($diff / 86400) . ' days';
     }
 }

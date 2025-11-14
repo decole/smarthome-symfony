@@ -1,25 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Http\Api\YandexSmartHome;
 
 use App\Application\Presenter\Api\YandexSmartHome\DeviceListQueryPresenter;
 use App\Infrastructure\YandexSmartHome\Service\SmartHomeService;
-use Monolog\Handler\FirePHPHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class SmartHomeApiController
+final class SmartHomeApiController extends AbstractFOSRestController
 {
     public function __construct(
         private readonly SmartHomeService $service,
-        private readonly LoggerInterface $smartHomeLogger
-    ) {
-    }
+        private readonly LoggerInterface $smartHomeLogger,
+    ) {}
 
     // Проверка доступности Endpoint URL провайдера
     #[Route('/alice_home/v1.0')]
@@ -57,18 +56,18 @@ final class SmartHomeApiController
                 'user_id' => 'decole2014',
                 'devices' => [
                     [
-                        'id' =>  'switcher1',
-                        'name' =>  'switcher1',
-                        'type' =>  'devices.types.switch',
+                        'id' => 'switcher1',
+                        'name' => 'switcher1',
+                        'type' => 'devices.types.switch',
                         'capabilities' => [
                             [
                                 'type' => 'devices.capabilities.on_off',
-                                'retrievable' => true
-                            ]
+                                'retrievable' => true,
+                            ],
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         return new JsonResponse($result);
@@ -111,30 +110,30 @@ final class SmartHomeApiController
         $state = $this->service->relayAction($topic, $query);
 
         $result = [
-            "request_id" => $requestId,
-            "payload" => [
-                "user_id" => "decole2014",
-                "devices" => [
+            'request_id' => $requestId,
+            'payload' => [
+                'user_id' => 'decole2014',
+                'devices' => [
                     [
-                        "id" =>  '1',
-                        "name" =>  'switcher1',
-                        "type" =>  'devices.types.switch',
-                        "capabilities" => [
+                        'id' => '1',
+                        'name' => 'switcher1',
+                        'type' => 'devices.types.switch',
+                        'capabilities' => [
                             [
-                                "type" => "devices.capabilities.on_off",
-                                "retrievable" => true,
-                                "state" => [
+                                'type' => 'devices.capabilities.on_off',
+                                'retrievable' => true,
+                                'state' => [
                                     'instance' => 'on',
-                                    "value" => $state,
-                                    "action_result" => [
-                                        "status" => "DONE"
+                                    'value' => $state,
+                                    'action_result' => [
+                                        'status' => 'DONE',
                                     ],
                                 ],
-                            ]
+                            ],
                         ],
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         return new JsonResponse($result);

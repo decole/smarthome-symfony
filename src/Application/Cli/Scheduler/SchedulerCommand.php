@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli\Scheduler;
 
 use App\Domain\ScheduleTask\Service\ScheduleTaskService;
-use PHPUnit\Util\Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class SchedulerCommand extends Command
 {
     public function __construct(
-        private readonly ScheduleTaskService $service
+        private readonly ScheduleTaskService $service,
     ) {
         parent::__construct();
     }
@@ -23,7 +24,7 @@ final class SchedulerCommand extends Command
         $application = $this->getApplication();
 
         if (!$application instanceof \Symfony\Component\Console\Application) {
-            throw new Exception('not create application');
+            throw new \Exception('not create application');
         }
 
         $this->service->execute($application, $output);

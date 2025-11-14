@@ -12,15 +12,13 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(event: EntityListEvent::NAME, method: 'onRelayEntityListEvent')]
 class RelayEntityListEventListener
 {
-    public function __construct(private readonly RelayRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private readonly RelayRepositoryInterface $repository) {}
 
     public function onRelayEntityListEvent(EntityListEvent $event): void
     {
         $event->setEntityMapByType(
             type: Relay::alias(),
-            entities: $this->repository->findAll()
+            entities: $this->repository->findAll(),
         );
     }
 }

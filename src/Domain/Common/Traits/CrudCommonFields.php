@@ -4,35 +4,34 @@ declare(strict_types=1);
 
 namespace App\Domain\Common\Traits;
 
-
 trait CrudCommonFields
 {
-    final public function getName(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    final public function setName(string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    final public function getTopic(): string
+    public function getTopic(): string
     {
         return $this->topic;
     }
 
-    final public function setTopic(string $topic): void
+    public function setTopic(string $topic): void
     {
         $this->topic = $topic;
     }
 
-    final public function getPayload(): ?string
+    public function getPayload(): ?string
     {
         return $this->payload;
     }
 
-    final public function setPayload(?string $payload): void
+    public function setPayload(?string $payload): void
     {
         $this->payload = $payload;
     }

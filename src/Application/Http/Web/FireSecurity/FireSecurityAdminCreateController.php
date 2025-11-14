@@ -15,14 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class FireSecurityAdminCreateController extends AbstractController
 {
-    public function __construct(private FireSecurityCrudService $crud)
-    {
-    }
+    public function __construct(private FireSecurityCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/fire-security/admin/create', name: "fire_secure_admin_create")]
+    #[Route('/fire-security/admin/create', name: 'fire_secure_admin_create')]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
@@ -30,10 +28,9 @@ final class FireSecurityAdminCreateController extends AbstractController
         $dto = $this->crud->createFireSecurityDto($request);
 
         if ($request->isMethod('post')) {
-
             $errors = $this->crud->validate($dto);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->create($dto);
 
                 return $this->redirectToRoute('fire_secure_admin');

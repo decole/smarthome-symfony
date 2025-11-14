@@ -12,9 +12,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 final class CacheService implements CacheServiceInterface
 {
-    public function __construct(private readonly RedisAdapter $cache)
-    {
-    }
+    public function __construct(private readonly RedisAdapter $cache) {}
 
     /**
      * @throws InvalidArgumentException
@@ -45,7 +43,7 @@ final class CacheService implements CacheServiceInterface
         /** @var ItemInterface $item */
         $item = $this->cache->getItem($key);
         $item->set($value);
-        $item->expiresAfter($lifetime === 0 ? null : $lifetime);
+        $item->expiresAfter(0 === $lifetime ? null : $lifetime);
 
         $this->cache->save($item);
     }

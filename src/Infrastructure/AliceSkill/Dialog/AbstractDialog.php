@@ -8,7 +8,5 @@ use App\Infrastructure\AliceSkill\Dto\AliceSkillRequestDto;
 
 abstract class AbstractDialog
 {
-    public function __construct(protected readonly AliceSkillRequestDto $requestDto)
-    {
-    }
+    public function __construct(protected readonly AliceSkillRequestDto $requestDto) {}
 }

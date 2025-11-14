@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Type;
 
-use DateTime;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
@@ -18,12 +17,9 @@ final class DateTimeMicroType extends Type
         return 'TIMESTAMP(6) WITHOUT TIME ZONE';
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform): bool|null|DateTime
+    public function convertToPHPValue($value, AbstractPlatform $platform): bool|\DateTime|null
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
@@ -33,7 +29,7 @@ final class DateTimeMicroType extends Type
             $value .= '.000000';
         }
 
-        return DateTime::createFromFormat($this->formatString(), $value);
+        return \DateTime::createFromFormat($this->formatString(), $value);
     }
 
     protected function formatString(): string
@@ -41,22 +37,17 @@ final class DateTimeMicroType extends Type
         return 'Y-m-d H:i:s.u';
     }
 
-
     public function convertToDatabaseValue($value, AbstractPlatform $platform): mixed
     {
-        if ($value === null) {
+        if (null === $value) {
             return null;
         }
 
-        if ($value instanceof DateTime) {
+        if ($value instanceof \DateTime) {
             return $value->format($this->formatString());
         }
 
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', 'DateTime']
-        );
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
     }
 
     public function getName(): string

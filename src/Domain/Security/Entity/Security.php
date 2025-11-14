@@ -14,10 +14,19 @@ use App\Domain\Common\Traits\UpdatedAt;
 use App\Domain\Contract\Repository\EntityInterface;
 use App\Domain\Security\Enum\SecurityStateEnum;
 use App\Domain\Security\Enum\SecurityTypeEnum;
+use App\Infrastructure\Repository\Security\SecurityRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embedded;
 
+#[ORM\Entity(repositoryClass: SecurityRepository::class)]
+#[ORM\Table(name: 'security')]
 final class Security implements EntityInterface
 {
-    use Entity, CreatedAt, UpdatedAt, CrudCommonFields;
+    use CreatedAt;
+    use CrudCommonFields;
+    use Entity;
+    use UpdatedAt;
 
     public const TYPE_TRANSCRIBES = [
         'mqtt_security_device' => 'mqtt датчик',
@@ -25,23 +34,32 @@ final class Security implements EntityInterface
     ];
 
     public function __construct(
+        #[ORM\Column(type: Types::STRING)]
         private string $securityType,
+        #[ORM\Column(type: Types::STRING, unique: true)]
         private string $name,
+        #[ORM\Column(type: Types::STRING, unique: true)]
         private string $topic,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $payload,
-
+        #[ORM\Column(type: Types::STRING)]
         private ?string $detectPayload,
+        #[ORM\Column(type: Types::STRING)]
         private ?string $holdPayload,
+        #[ORM\Column(type: Types::STRING, nullable: true)]
         private ?string $lastCommand,
-
+        #[ORM\Column(type: Types::JSON)]
         private array $params,
-
+        #[Embedded(class: StatusMessage::class)]
         private StatusMessage $statusMessage,
+        #[ORM\Column(type: Types::SMALLINT)]
         private int $status,
-        private bool $notify
+        #[ORM\Column(type: Types::BOOLEAN)]
+        private bool $notify,
     ) {
         $this->identify();
         $this->onCreated();
+        $this->statusMessage = new StatusMessage();
 
         $this->checkStatusType($status);
         $this->checkSecurityType($securityType);
@@ -140,15 +158,45 @@ final class Security implements EntityInterface
 
     private function checkStatusType(int $status): void
     {
-        if (!EntityStatusEnum::tryFrom($status) instanceof \App\Domain\Common\Enum\EntityStatusEnum) {
+        if (!EntityStatusEnum::tryFrom($status) instanceof EntityStatusEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Security device status');
         }
     }
 
     private function checkSecurityType(string $type): void
     {
-        if (!SecurityTypeEnum::tryFrom($type) instanceof \App\Domain\Security\Enum\SecurityTypeEnum) {
+        if (!SecurityTypeEnum::tryFrom($type) instanceof SecurityTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Security device type');
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getTopic(): string
+    {
+        return $this->topic;
+    }
+
+    public function setTopic(string $topic): void
+    {
+        $this->topic = $topic;
+    }
+
+    public function getPayload(): ?string
+    {
+        return $this->payload;
+    }
+
+    public function setPayload(?string $payload): void
+    {
+        $this->payload = $payload;
     }
 }

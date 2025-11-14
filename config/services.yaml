@@ -1,18 +1,124 @@
-imports:
-    - { resource: 'domain/services.yaml' }
-    - { resource: 'application/services.yaml' }
-    - { resource: 'infrastructure/services.yaml' }
+parameters:
+  app.locale: 'ru'
+  app.notifications.email_sender: anonymous@example.com
+  app.registration: '%env(APP_REGISTRATION_ENABLE)%'
+  app.host: '%env(APP_HOST)%'
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+          # this allows to define the scalar arguments once and apply them to any services
+          # defined/created in this file; if some argument is used rarely, instead of defining
+          # it here you can use the #[Autowire] attribute to inject it manually in the service constructor
+          array $enabledLocales: '%kernel.enabled_locales%'
+          string $defaultLocale: '%app.locale%'
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+          - '../src/DependencyInjection/'
+          - '../src/Entity/'
+          - '../src/Kernel.php'
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
 
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:
             - '@redis_client'
             - { 'prefix': 'session_', 'ttl': 31536000 }
 
-parameters:
-    app.registration: '%env(APP_REGISTRATION_ENABLE)%'
-    app.host: '%env(APP_HOST)%'
+    App\Domain\Common\Transactions\DoctrineTransaction:
+      arguments:
+        $env: '%env(APP_ENV)%'
+        $manager: '@doctrine.orm.entity_manager'
+
+    App\Domain\Common\Transactions\TransactionInterface:
+      alias: App\Domain\Common\Transactions\DoctrineTransaction
+
+    mqtt_client:
+      class: App\Infrastructure\Mqtt\Entity\PhpMqttClient
+      arguments:
+        $broker: '%env(MQTT_BROKER_URL)%'
+        $port: '%env(MQTT_PORT)%'
+
+    App\Infrastructure\Mqtt\Service\MqttHandleService:
+      arguments:
+        $client: '@mqtt_client'
+        $logger: '@monolog.logger.mqtt_transport'
+
+    App\Infrastructure\Mqtt\Service\MqttSubscribeService:
+      arguments:
+        $client: '@mqtt_client'
+        $logger: '@monolog.logger.mqtt_transport'
+
+    app.cache.adapter.redis:
+      parent: 'cache.adapter.redis'
+      tags:
+        - { name: 'cache.pool', namespace: 'doctrine_query' }
+
+    redis_client:
+      class: Redis
+      factory: Symfony\Component\Cache\Adapter\RedisAdapter::createConnection
+      arguments:
+        - '%env(REDIS_DSN)%'
+
+    redis_tag_adapter:
+      class: Symfony\Component\Cache\Adapter\RedisTagAwareAdapter
+      arguments:
+        - '@redis_client'
+        - 'uberserver_app'
+
+    redis_simple_adapter:
+      class: Symfony\Component\Cache\Adapter\RedisAdapter
+      arguments:
+        - '@redis_client'
+        - 'uberserver_app'
+
+    App\Infrastructure\Cache\CacheService:
+      arguments:
+        $cache: '@redis_simple_adapter'
+
+    App\Infrastructure\Prometheus\Metric\MqttPayloadMetricsCollector:
+      tags:
+        - { name: prometheus_metrics_bundle.metrics_generator }
+
+    App\Infrastructure\Telegram\Service\TelegramService:
+      arguments:
+        $apiToken: '%env(TELEGRAM_BOT_TOKEN)%'
+        $logger: '@monolog.logger.telegram_service'
+
+    App\Infrastructure\Quasar\Service\QuasarNotificationService:
+      arguments:
+        $cookies: '%env(ALICE_QUASAR_COOKIE)%'
+        $deviceId: '%env(ALICE_QUASAR_DEVICE)%'
+        $scenarioId: '%env(ALICE_QUASAR_SCENARIO_ID)%'
+        $logger: '@monolog.logger.quasar_service'
+
+    App\Infrastructure\TwoFactor\Service\TwoFactorQrCodeService:
+      arguments:
+        $host: '%env(APP_HOST)%'
+
+    App\Domain\:
+      resource: '%kernel.project_dir%/src/Domain/**/EventListener/*Listener.php'
+
+    App\Infrastructure\TwoFactor\Service\TwoFactorService:
+      arguments:
+        $isEnable: '%env(bool:TWO_FACTOR_AUTH)%'
+
+    App\Domain\ScheduleTask\Service\ScheduleTaskService:
+      arguments:
+        $logger: '@monolog.logger.schedule_service'
+
+    App\Infrastructure\Output\Service\RateLimitService:
+      arguments:
+        $httpLimit: 25
+        $httpLimitMinutes: 1
+
+    App\Infrastructure\Security\Api\ApiSecureService:
+      arguments:
+        $targetToken: '%env(API_BASIC_TOKEN)%'

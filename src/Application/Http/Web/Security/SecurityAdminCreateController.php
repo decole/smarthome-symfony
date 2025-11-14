@@ -16,14 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SecurityAdminCreateController extends AbstractController
 {
-    public function __construct(private SecurityCrudService $crud)
-    {
-    }
+    public function __construct(private SecurityCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/security/admin/create', name: "security_admin_create")]
+    #[Route('/security/admin/create', name: 'security_admin_create')]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
@@ -31,10 +29,9 @@ final class SecurityAdminCreateController extends AbstractController
         $securityDto = $this->crud->createSecurityDto($request);
 
         if ($request->isMethod('post')) {
-
             $errors = $this->crud->validate($securityDto);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->create($securityDto);
 
                 return $this->redirectToRoute('security_admin');

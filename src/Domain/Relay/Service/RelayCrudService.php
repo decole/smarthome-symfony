@@ -23,11 +23,10 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class RelayCrudService
 {
-    use StatusMessageTrait, CommonCrudFieldTraits;
+    use CommonCrudFieldTraits;
+    use StatusMessageTrait;
 
-    public function __construct(private readonly RelayCrudFactory $crud)
-    {
-    }
+    public function __construct(private readonly RelayCrudFactory $crud) {}
 
     public function validate(CrudRelayDto $relayDto, bool $isUpdate = false): ConstraintViolationListInterface
     {
@@ -41,7 +40,7 @@ final class RelayCrudService
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
-        assert($dto instanceof CrudRelayDto);
+        \assert($dto instanceof CrudRelayDto);
 
         $entity = $this->getNewEntityByDto($dto);
 
@@ -60,7 +59,7 @@ final class RelayCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof Relay);
+        \assert($entity instanceof Relay);
 
         $this->setDtoToEntityCommonParams($entity, $dto);
 
@@ -68,7 +67,7 @@ final class RelayCrudService
         $entity->setLastCommand($dto->lastCommand);
         $entity->setCommandOn($dto->commandOn);
         $entity->setCommandOff($dto->commandOff);
-        $entity->setIsFeedbackPayload($dto->isFeedbackPayload === 'on');
+        $entity->setIsFeedbackPayload('on' === $dto->isFeedbackPayload);
         $entity->setCheckTopic($dto->checkTopic);
         $entity->setCheckTopicPayloadOn($dto->checkTopicPayloadOn);
         $entity->setCheckTopicPayloadOff($dto->checkTopicPayloadOff);
@@ -76,12 +75,12 @@ final class RelayCrudService
         $entity->setStatusMessage(new StatusMessage(
             $dto->message_info,
             $dto->message_ok,
-            $dto->message_warn
+            $dto->message_warn,
         ));
 
-        $entity->setStatus($dto->status === 'on' ?
+        $entity->setStatus('on' === $dto->status ?
             EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
-        $entity->setNotify($dto->notify === 'on');
+        $entity->setNotify('on' === $dto->notify);
         $entity->onUpdated();
 
         return $this->crud->save($entity);
@@ -94,7 +93,7 @@ final class RelayCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
+        if ($entity instanceof EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -111,7 +110,7 @@ final class RelayCrudService
     {
         $dto = new CrudRelayDto();
 
-        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
+        if (!$request instanceof Request) {
             return $dto;
         }
 
@@ -128,7 +127,7 @@ final class RelayCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof Relay);
+        \assert($entity instanceof Relay);
 
         $dto = new CrudRelayDto();
 
@@ -155,7 +154,7 @@ final class RelayCrudService
      */
     public function getNewEntityByDto(CrudRelayDto $dto): Relay
     {
-        if (!RelayTypeEnum::tryFrom($dto->type) instanceof \App\Domain\Relay\Enum\RelayTypeEnum) {
+        if (!RelayTypeEnum::tryFrom($dto->type) instanceof RelayTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Relay device type');
         }
 
@@ -170,15 +169,15 @@ final class RelayCrudService
             checkTopicPayloadOn: $dto->checkTopicPayloadOn,
             checkTopicPayloadOff: $dto->checkTopicPayloadOff,
             lastCommand: $dto->lastCommand,
-            isFeedbackPayload: $dto->isFeedbackPayload === 'on',
+            isFeedbackPayload: 'on' === $dto->isFeedbackPayload,
             statusMessage: new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,
-                $dto->message_warn
+                $dto->message_warn,
             ),
-            status: $dto->status === 'on' ?
+            status: 'on' === $dto->status ?
                 EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
-            notify: $dto->notify === 'on',
+            notify: 'on' === $dto->notify,
         );
     }
 }

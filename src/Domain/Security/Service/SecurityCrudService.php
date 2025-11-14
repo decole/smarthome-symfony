@@ -11,7 +11,6 @@ use App\Domain\Common\Enum\EntityStatusEnum;
 use App\Domain\Common\Exception\UnresolvableArgumentException;
 use App\Domain\Contract\CrudValidation\ValidationDtoInterface;
 use App\Domain\Contract\Repository\EntityInterface;
-use App\Domain\Relay\Enum\RelayTypeEnum;
 use App\Domain\Security\Entity\Security;
 use App\Domain\Security\Enum\SecurityTypeEnum;
 use App\Domain\Security\Factory\SecurityCrudFactory;
@@ -19,17 +18,15 @@ use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
-use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class SecurityCrudService
 {
-    use StatusMessageTrait, CommonCrudFieldTraits;
+    use CommonCrudFieldTraits;
+    use StatusMessageTrait;
 
-    public function __construct(private readonly SecurityCrudFactory $crud)
-    {
-    }
+    public function __construct(private readonly SecurityCrudFactory $crud) {}
 
     public function validate(CrudSecurityDto $dto, bool $isUpdate = false): ConstraintViolationListInterface
     {
@@ -39,11 +36,11 @@ final class SecurityCrudService
     }
 
     /**
-     * @throws OptimisticLockException|ORMException|JsonException
+     * @throws OptimisticLockException|ORMException|\JsonException
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
-        assert($dto instanceof CrudSecurityDto);
+        \assert($dto instanceof CrudSecurityDto);
 
         $entity = $this->getNewEntityByDto($dto);
 
@@ -56,13 +53,13 @@ final class SecurityCrudService
     }
 
     /**
-     * @throws OptimisticLockException|ORMException|JsonException
+     * @throws OptimisticLockException|ORMException|\JsonException
      */
     public function update(string $id, CrudSecurityDto $dto): EntityInterface
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof Security);
+        \assert($entity instanceof Security);
 
         $entity->setType($dto->type);
 
@@ -72,20 +69,20 @@ final class SecurityCrudService
         $entity->setHoldPayload($dto->holdPayload);
         $entity->setLastCommand($dto->lastCommand);
 
-        $params = $dto->params === null ? [] :
-            json_decode($this->prepareToJson($dto->params), true, 512, JSON_THROW_ON_ERROR) ?? [];
+        $params = null === $dto->params ? [] :
+            json_decode($this->prepareToJson($dto->params), true, 512, \JSON_THROW_ON_ERROR) ?? [];
 
         $entity->setParams($params);
 
         $entity->setStatusMessage(new StatusMessage(
             $dto->message_info,
             $dto->message_ok,
-            $dto->message_warn
+            $dto->message_warn,
         ));
 
-        $entity->setStatus($dto->status === 'on' ?
+        $entity->setStatus('on' === $dto->status ?
             EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
-        $entity->setNotify($dto->notify === 'on');
+        $entity->setNotify('on' === $dto->notify);
         $entity->onUpdated();
 
         return $this->crud->save($entity);
@@ -98,7 +95,7 @@ final class SecurityCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
+        if ($entity instanceof EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -115,7 +112,7 @@ final class SecurityCrudService
     {
         $dto = new CrudSecurityDto();
 
-        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
+        if (!$request instanceof Request) {
             return $dto;
         }
 
@@ -129,13 +126,13 @@ final class SecurityCrudService
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function entityByDto(string $id): CrudSecurityDto
     {
         $entity = $this->crud->getEntityById($id);
 
-        assert($entity instanceof Security);
+        \assert($entity instanceof Security);
 
         $dto = new CrudSecurityDto();
 
@@ -145,9 +142,9 @@ final class SecurityCrudService
         $dto->holdPayload = $entity->getHoldPayload();
         $dto->lastCommand = $entity->getLastCommand();
 
-        $params = $entity->getParams() === [] ? ['example' => 'empty'] : $entity->getParams();
+        $params = [] === $entity->getParams() ? ['example' => 'empty'] : $entity->getParams();
 
-        $dto->params = json_encode($params, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $dto->params = json_encode($params, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES);
 
         $this->setStatusMessage($dto, $entity);
 
@@ -157,11 +154,11 @@ final class SecurityCrudService
     }
 
     /**
-     * @throws JsonException|UnresolvableArgumentException
+     * @throws \JsonException|UnresolvableArgumentException
      */
     public function getNewEntityByDto(CrudSecurityDto $dto): Security
     {
-        if (!SecurityTypeEnum::tryFrom($dto->type) instanceof \App\Domain\Security\Enum\SecurityTypeEnum) {
+        if (!SecurityTypeEnum::tryFrom($dto->type) instanceof SecurityTypeEnum) {
             throw UnresolvableArgumentException::argumentIsNotSet('Security device type');
         }
 
@@ -173,16 +170,16 @@ final class SecurityCrudService
             detectPayload: $dto->detectPayload,
             holdPayload: $dto->holdPayload,
             lastCommand: $dto->lastCommand,
-            params: $dto->params === '' || $dto->params === null ? [] :
-                json_decode($this->prepareToJson($dto->params), true, 512, JSON_THROW_ON_ERROR) ?? [],
+            params: '' === $dto->params || null === $dto->params ? [] :
+                json_decode($this->prepareToJson($dto->params), true, 512, \JSON_THROW_ON_ERROR) ?? [],
             statusMessage: new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,
-                $dto->message_warn
+                $dto->message_warn,
             ),
-            status: $dto->status === 'on' ?
+            status: 'on' === $dto->status ?
                 EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
-            notify: $dto->notify === 'on',
+            notify: 'on' === $dto->notify,
         );
     }
 

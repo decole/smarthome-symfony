@@ -8,9 +8,8 @@ final class VisualNotificationDto
 {
     public function __construct(
         private readonly int $type,
-        private readonly string $message
-    ) {
-    }
+        private readonly string $message,
+    ) {}
 
     public function getType(): int
     {

@@ -15,14 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PlcAdminCreateController extends AbstractController
 {
-    public function __construct(private readonly PlcCrudService $crud)
-    {
-    }
+    public function __construct(private readonly PlcCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/plc/admin/create', name: "plc_admin_create")]
+    #[Route('/plc/admin/create', name: 'plc_admin_create')]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);
@@ -30,10 +28,9 @@ final class PlcAdminCreateController extends AbstractController
         $dto = $this->crud->createDto($request);
 
         if ($request->isMethod('post')) {
-
             $errors = $this->crud->validate($dto);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->create($dto);
 
                 return $this->redirectToRoute('plc_admin');

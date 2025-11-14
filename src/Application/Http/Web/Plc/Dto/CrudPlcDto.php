@@ -23,10 +23,14 @@ final class CrudPlcDto implements ValidationDtoInterface
     public ?int $alarmSecondDelay = 60;
 
     public ?string $message_info = null;
+
     public ?string $message_ok = null;
+
     public ?string $message_warn = null;
 
     public ?string $status = null;
+
     public ?string $notify = null;
+
     public ?string $savedId = null;
 }

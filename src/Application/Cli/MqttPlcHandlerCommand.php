@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Cli;
 
 use App\Domain\PLC\Service\PlcHandleService;
@@ -12,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class MqttPlcHandlerCommand extends Command
 {
     public function __construct(
-        private readonly PlcHandleService $handler
+        private readonly PlcHandleService $handler,
     ) {
         parent::__construct();
     }

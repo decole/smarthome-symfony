@@ -13,7 +13,6 @@ use App\Infrastructure\Repository\Security\SecurityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Throwable;
 
 final class SecureDeviceDataService
 {
@@ -22,14 +21,13 @@ final class SecureDeviceDataService
         private readonly DeviceDataCacheService $dataCacheService,
         private readonly SecurityRepository $repository,
         private readonly TransactionInterface $transaction,
-        private readonly EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {}
 
     /**
      * Статус датчика - state
      * true - движение/сработка
-     * false - нет движения
+     * false - нет движения.
      *
      * (статус охранного датчика) - isTriggered:
      * true - взведен
@@ -50,20 +48,20 @@ final class SecureDeviceDataService
             }
         }
 
-        if ($targetDevice === null) {
+        if (null === $targetDevice) {
             return $dto;
         }
 
         $payload = $this->dataCacheService->getPayloadByTopicList([$topic])[$topic] ?? null;
 
-        $dto->standardisedState = $payload === (string)$targetDevice->getDetectPayload();
+        $dto->standardisedState = $payload === (string) $targetDevice->getDetectPayload();
         $dto->isGuarded = $targetDevice->isGuarded();
 
         return $dto;
     }
 
     /**
-     * Сохранение нового состояния устройства безопасности из виджета безопасности
+     * Сохранение нового состояния устройства безопасности из виджета безопасности.
      *
      * @throws NonUniqueResultException
      */
@@ -71,7 +69,7 @@ final class SecureDeviceDataService
     {
         $device = $this->repository->findByTopic($topic);
 
-        if (!$device instanceof \App\Domain\Security\Entity\Security) {
+        if (!$device instanceof Security) {
             return;
         }
 
@@ -79,15 +77,15 @@ final class SecureDeviceDataService
             SecurityStateEnum::GUARD_STATE->value : SecurityStateEnum::HOLD_STATE->value);
 
         $this->transaction->transactional(
-            fn (): \App\Domain\Contract\Repository\EntityInterface => $this->repository->save($device)
+            fn (): \App\Domain\Contract\Repository\EntityInterface => $this->repository->save($device),
         );
 
         try {
             $this->deviceService->create();
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $event = new AlertNotificationEvent(
                 "При команде Взять на охрану через api выявлена ошибка: {$e->getMessage()}",
-                [AlertNotificationEvent::MESSENGER]
+                [AlertNotificationEvent::MESSENGER],
             );
             $this->eventDispatcher->dispatch($event, AlertNotificationEvent::NAME);
         }

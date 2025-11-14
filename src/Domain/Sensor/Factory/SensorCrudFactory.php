@@ -15,17 +15,17 @@ final class SensorCrudFactory extends AbstractCrudFactory
     public function __construct(
         private readonly SensorRepositoryInterface $repository,
         private readonly SensorCrudValidationService $validation,
-        DeviceCacheService $cacheService
+        DeviceCacheService $cacheService,
     ) {
         $this->cacheService = $cacheService;
     }
 
-    final public function getRepository(): SensorRepositoryInterface
+    public function getRepository(): SensorRepositoryInterface
     {
         return $this->repository;
     }
 
-    final public function getValidationService(): ValidationInterface
+    public function getValidationService(): ValidationInterface
     {
         return $this->validation;
     }

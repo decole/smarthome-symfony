@@ -11,9 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 
 final class VisualNotificationHistoryService
 {
-    public function __construct(private readonly VisualNotificationRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private readonly VisualNotificationRepositoryInterface $repository) {}
 
     public function paginate(VisualNotificationHistoryInputDto $dto): VisualNotificationResultDto
     {
@@ -31,20 +29,20 @@ final class VisualNotificationHistoryService
             $this->getPages($dto),
             $this->gerPrev($current),
             $next,
-            $current
+            $current,
         );
     }
 
     private function gerPrev(int $current): int
     {
-        return $current === 1 ? 1 : $current - 1;
+        return 1 === $current ? 1 : $current - 1;
     }
 
     public function getPages(VisualNotificationHistoryInputDto $dto): int
     {
-        $value = (int)(floor($this->repository->count() / $dto->limit));
+        $value = (int) floor($this->repository->count() / $dto->limit);
 
-        if ($value === 0) {
+        if (0 === $value) {
             return 1;
         }
 

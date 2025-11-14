@@ -50,7 +50,12 @@ alarm event: аварийных
 fire-secure event: пожарных
 secure event: охранных
 no: неизвестных
+login:
 Authorization: Авторизация
+login.authorization: Авторизация
+label.password: Password
+label.remember_me: Запомнить меня
+action.sign_in: Войти
 device data: значение датчика
 Text for information: Текст для информации
 Text for ok status: Текст для статуса Oк

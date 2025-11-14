@@ -22,18 +22,16 @@ use App\Infrastructure\Doctrine\Traits\CommonCrudFieldTraits;
 use App\Infrastructure\Doctrine\Traits\StatusMessageTrait;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Webmozart\Assert\Assert;
 
 final class SensorCrudService
 {
-    use StatusMessageTrait, CommonCrudFieldTraits;
+    use CommonCrudFieldTraits;
+    use StatusMessageTrait;
 
-    public function __construct(private readonly SensorCrudFactory $crud)
-    {
-    }
+    public function __construct(private readonly SensorCrudFactory $crud) {}
 
     public function validate(CrudSensorDto $sensorDto, bool $isUpdate = false): ConstraintViolationListInterface
     {
@@ -47,7 +45,7 @@ final class SensorCrudService
      */
     public function create(ValidationDtoInterface $dto): EntityInterface
     {
-        assert($dto instanceof CrudSensorDto);
+        \assert($dto instanceof CrudSensorDto);
 
         $entity = $this->getNewEntityByDto($dto);
 
@@ -66,7 +64,7 @@ final class SensorCrudService
     {
         /** @var TemperatureSensor|HumiditySensor|PressureSensor|DryContactSensor|LeakageSensor $entity */
         $entity = $this->crud->getEntityById($id);
-        $rc = new ReflectionClass($entity);
+        $rc = new \ReflectionClass($entity);
 
         $this->setDtoToEntityCommonParams($entity, $dto);
 
@@ -86,12 +84,12 @@ final class SensorCrudService
         $entity->setStatusMessage(new StatusMessage(
             $dto->message_info,
             $dto->message_ok,
-            $dto->message_warn
+            $dto->message_warn,
         ));
 
-        $entity->setStatus($dto->status === 'on' ?
+        $entity->setStatus('on' === $dto->status ?
             EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value);
-        $entity->setNotify($dto->notify === 'on');
+        $entity->setNotify('on' === $dto->notify);
         $entity->onUpdated();
 
         return $this->crud->save($entity);
@@ -104,7 +102,7 @@ final class SensorCrudService
     {
         $entity = $this->crud->getEntityById($id);
 
-        if ($entity instanceof \App\Domain\Contract\Repository\EntityInterface) {
+        if ($entity instanceof EntityInterface) {
             $this->crud->delete($entity);
         }
     }
@@ -119,7 +117,7 @@ final class SensorCrudService
         $dto = new CrudSensorDto();
         $dto->type = $type;
 
-        if (!$request instanceof \Symfony\Component\HttpFoundation\Request) {
+        if (!$request instanceof Request) {
             return $dto;
         }
 
@@ -136,7 +134,7 @@ final class SensorCrudService
     {
         /** @var TemperatureSensor|HumiditySensor|PressureSensor|DryContactSensor|LeakageSensor $entity */
         $entity = $this->crud->getEntityById($id);
-        $rc = new ReflectionClass($entity);
+        $rc = new \ReflectionClass($entity);
 
         $dto = new CrudSensorDto();
 
@@ -169,19 +167,20 @@ final class SensorCrudService
             new StatusMessage(
                 $dto->message_info,
                 $dto->message_ok,
-                $dto->message_warn
+                $dto->message_warn,
             ),
-            $dto->status === 'on' ?
+            'on' === $dto->status ?
                 EntityStatusEnum::STATUS_ACTIVE->value : EntityStatusEnum::STATUS_DEACTIVATE->value,
-            $dto->notify === 'on',
-            ...$this->getAdvancedFields($dto)
+            'on' === $dto->notify,
+            ...$this->getAdvancedFields($dto),
         );
     }
 
     /**
-     * Дополнительные уникальные поля разных типов сенсоров
+     * Дополнительные уникальные поля разных типов сенсоров.
      *
      * @param CrudSensorDto $dto
+     *
      * @return array<array-key, mixed>
      */
     private function getAdvancedFields(ValidationDtoInterface $dto): array

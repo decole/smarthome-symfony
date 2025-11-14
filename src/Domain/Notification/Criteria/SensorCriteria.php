@@ -4,28 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domain\Notification\Criteria;
 
-use App\Domain\Sensor\Entity\Sensor;
-
 final class SensorCriteria extends AbstractCriteria
 {
-    public function notify(): void
-    {
-        /** @var Sensor $device */
-        $device = $this->device;
-
-        if ($device->isNotify()) {
-            $this->sendByVisualNotify();
-            $this->sendByMessengers();
-        }
-    }
-
     public function prepareAlertMessage(): string
     {
-        $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
+        $text = $this->dto->device->getStatusMessage()?->getMessageWarning() ?? null;
 
-        $name = $this->device?->getName() ?? $this->payload->getTopic();
+        if (empty($text)) {
+            $name = $this->dto->device->getName() ?? $this->dto->device->getTopic();
 
-        return $deviceAlertMessage ??
-            "Внимание! Сенсор {$name} имеет неопознанное состояние [{value}] !";
+            $text = \sprintf('Внимание! Сенсор %s имеет неопознанное состояние [{value}] !', $name);
+        }
+
+        return $text;
     }
 }

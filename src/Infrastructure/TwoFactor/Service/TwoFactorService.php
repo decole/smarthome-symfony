@@ -14,9 +14,7 @@ final class TwoFactorService
     public const NAME = '2fa';
     public const TEMPORARY_KEY = 'temp_secret';
 
-    public function __construct(private readonly bool $isEnable)
-    {
-    }
+    public function __construct(private readonly bool $isEnable) {}
 
     public function isEnabled(): bool
     {
@@ -26,11 +24,11 @@ final class TwoFactorService
     // checking the code from the user and saving the special flag to the session
     public function checkCode(User $user, ?string $code, Request $request): TwoFactorResultDto
     {
-        if ($code === null || $code === '' || $code === '0') {
+        if (null === $code || '' === $code || '0' === $code) {
             return new TwoFactorResultDto(false, 'Empty code');
         }
 
-        if(!$this->validateCode($user->getTwoFactorCode(), $code)) {
+        if (!$this->validateCode($user->getTwoFactorCode(), $code)) {
             return new TwoFactorResultDto(false, 'Not correct code');
         }
 
@@ -59,7 +57,7 @@ final class TwoFactorService
 
     public function validateCode(string $secret, ?string $code): bool|int
     {
-        if ($code === null || $code === '' || $code === '0') {
+        if (null === $code || '' === $code || '0' === $code) {
             return false;
         }
 

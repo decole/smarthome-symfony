@@ -1,4 +1,3 @@
-version: "3.4"
 services:
   nginx:
     image: nginx:alpine
@@ -16,7 +15,9 @@ services:
       - uberserver
 
   php-fpm:
-    image: registry.gitlab.com/decole/uberserver-symfony:supervisor
+    build:
+      context: ./
+      dockerfile: docker/php/DockerfileSupervisor
     container_name: uberserver-symfony-supervisor
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -30,12 +31,9 @@ services:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
       - "RABBITMQ_PORT=5672"
-      - "RABBITMQ_HOST=docker-rabbitmq"
       - "PHP_IDE_CONFIG=serverName=Docker"
     depends_on:
       postgres:
-        condition: service_healthy
-      rabbitmq:
         condition: service_healthy
     networks:
       - uberserver
@@ -76,63 +74,14 @@ services:
     networks:
       - uberserver
 
-  rabbitmq:
-    image: bitnami/rabbitmq:latest
-    container_name: uberserver-rabbitmq
-    volumes:
-      - ./docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
-      - uberserver-rabbitmq:/var/lib/rabbitmq
-    environment:
-      - "RABBITMQ_DEFAULT_USER=rabbit"
-      - "RABBITMQ_DEFAULT_PASS=rabbit"
-    ports:
-      - "5673:5672"
-      - "15673:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    networks:
-      - uberserver
-
   redis:
     image: redis:6.0
     container_name: uberserver-redis
     networks:
       - uberserver
 
-#  redisinsight:
-#      image: redislabs/redisinsight:latest
-#      container_name: uberserver-redisinsight
-#      restart: always
-#      ports:
-#          - "8001:8001"
-#      volumes:
-#        - uberserver-redisinsight:/db
-#      networks:
-#          - uberserver
-
-  mqtt-bridge:
-    build: ./docker/mqtt_rabbitMQ_bridge
-    container_name: uberserver-mqtt-bridge
-    volumes:
-      - .env.local:/mqttToRabbit/.env
-#    restart: always
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    ports:
-      - "2112:2112"
-    networks:
-      - uberserver
-
 volumes:
   uberserver-postgres: {}
-  uberserver-redisinsight: {}
-  uberserver-prometheus_data: {}
-  uberserver-rabbitmq: {}
-  alertmanager: {}
 
 networks:
   uberserver:

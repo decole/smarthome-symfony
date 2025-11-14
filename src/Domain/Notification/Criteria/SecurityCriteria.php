@@ -12,23 +12,31 @@ final class SecurityCriteria extends AbstractCriteria
     public function notify(): void
     {
         /** @var Security $device */
-        $device = $this->device;
+        $device = $this->dto->device;
 
         if ($device->isNotify() && $device->isGuarded()) {
-            $this->sendByVisualNotify();
-            $this->sendByMessengers();
+            $message = $this->generateAlertMessage();
 
-            $this->eventDispatcher->dispatch(event: new MqttSecurityAlertEvent($device, $this->payload));
+            $this->sendByVisualNotify($message);
+            $this->sendByMessengers($message);
+
+            $this->eventDispatcher->dispatch(event: new MqttSecurityAlertEvent($device, $this->dto->devicePayload));
         }
     }
 
     public function prepareAlertMessage(): string
     {
-        $deviceAlertMessage = $this->device?->getStatusMessage()?->getMessageWarn();
+        /** @var Security $device */
+        $device = $this->dto->device;
 
-        $name = $this->device?->getName() ?? $this->payload->getTopic();
+        $text = $device->getStatusMessage()?->getMessageWarning() ?? null;
 
-        return $deviceAlertMessage ??
-            "Внимание! Охранный датчик {$name} сработал. Состояние [{value}] !";
+        if (empty($text)) {
+            $name = $device->getName() ?? $this->dto->devicePayload->getTopic();
+
+            $text = \sprintf('Внимание! Охранный датчик %s сработал. Состояние [{value}] !', $name);
+        }
+
+        return $text;
     }
 }

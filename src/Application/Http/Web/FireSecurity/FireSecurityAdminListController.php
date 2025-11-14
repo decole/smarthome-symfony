@@ -12,11 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class FireSecurityAdminListController extends AbstractController
 {
-    public function __construct(private FireSecurityCrudService $crud)
-    {
-    }
+    public function __construct(private FireSecurityCrudService $crud) {}
 
-    #[Route('/fire-security/admin', name: "fire_secure_admin")]
+    #[Route('/fire-security/admin', name: 'fire_secure_admin')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_USER);

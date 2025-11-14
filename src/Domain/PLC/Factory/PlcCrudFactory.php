@@ -17,7 +17,7 @@ final class PlcCrudFactory extends AbstractCrudFactory
     public function __construct(
         private readonly PlcRepositoryInterface $repository,
         private readonly PlcCrudValidationService $validation,
-        PlcCacheService $cacheService
+        PlcCacheService $cacheService,
     ) {
         $this->cacheService = $cacheService;
     }

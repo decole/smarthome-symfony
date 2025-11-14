@@ -7,34 +7,42 @@ namespace App\Infrastructure\Repository\VisualNotification;
 use App\Domain\Contract\Repository\VisualNotificationRepositoryInterface;
 use App\Domain\VisualNotification\Entity\VisualNotification;
 use App\Infrastructure\Repository\BaseDoctrineRepository;
-use DateTimeImmutable;
-use DateTimeZone;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\Persistence\ManagerRegistry;
 use Webmozart\Assert\Assert;
 
+/**
+ * @template-extends ServiceEntityRepository<VisualNotification>
+ */
 final class VisualNotificationRepository extends BaseDoctrineRepository implements VisualNotificationRepositoryInterface
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, VisualNotification::class);
+    }
+
     public function setAllIsRead(?int $type = null): void
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->update(VisualNotification::class, 'v')
             ->set('v.isRead', ':updateIsRead')
             ->set('v.updatedAt', ':updatedAt')
             ->where(
-                $qb->expr()->eq('v.isRead', ':isRead')
+                $qb->expr()->eq('v.isRead', ':isRead'),
             )
             ->setParameter('isRead', false)
             ->setParameter('updateIsRead', true)
-            ->setParameter('updatedAt', new DateTimeImmutable('now', new DateTimeZone('UTC')), Types::DATE_IMMUTABLE);
+            ->setParameter('updatedAt', new \DateTimeImmutable('now', new \DateTimeZone('UTC')), Types::DATE_IMMUTABLE);
 
-        if ($type !== null) {
+        if (null !== $type) {
             Assert::inArray($type, VisualNotification::TYPE);
 
             $qb
                 ->andWhere(
-                    $qb->expr()->eq('v.type', ':type')
+                    $qb->expr()->eq('v.type', ':type'),
                 )
                 ->setParameter('type', $type);
         }
@@ -44,29 +52,29 @@ final class VisualNotificationRepository extends BaseDoctrineRepository implemen
 
     public function findByTypeAndIsRead(
         ?int $type = null,
-        ?bool $isRead = null
+        ?bool $isRead = null,
     ): array {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('v')
             ->from(VisualNotification::class, 'v')
             ->orderBy('v.createdAt', 'DESC');
 
-        if ($type !== null) {
+        if (null !== $type) {
             Assert::inArray($type, VisualNotification::TYPE);
 
             $qb
                 ->andWhere(
-                    $qb->expr()->eq('v.type', ':type')
+                    $qb->expr()->eq('v.type', ':type'),
                 )
                 ->setParameter('type', $type);
         }
 
-        if ($isRead !== null) {
+        if (null !== $isRead) {
             $qb
                 ->andWhere(
-                    $qb->expr()->eq('v.isRead', ':isRead')
+                    $qb->expr()->eq('v.isRead', ':isRead'),
                 )
                 ->setParameter('isRead', $isRead);
         }
@@ -76,7 +84,7 @@ final class VisualNotificationRepository extends BaseDoctrineRepository implemen
 
     public function findByFilters(Criteria $criteria): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb
             ->select('v')
@@ -85,15 +93,5 @@ final class VisualNotificationRepository extends BaseDoctrineRepository implemen
         $qb->addCriteria($criteria);
 
         return $qb->getQuery()->getResult();
-    }
-
-    public function count(): int
-    {
-        $qb = $this->entityManager->createQueryBuilder();
-        $qb
-            ->select('count(v.id)')
-            ->from(VisualNotification::class, 'v');
-
-        return $qb->getQuery()->getSingleScalarResult();
     }
 }

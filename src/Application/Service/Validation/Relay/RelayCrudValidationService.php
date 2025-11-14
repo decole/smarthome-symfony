@@ -17,19 +17,17 @@ final class RelayCrudValidationService implements ValidationInterface
 {
     private CrudRelayDto $dto;
 
-    public function __construct(private ValidatorInterface $validator, private RelayRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private ValidatorInterface $validator, private RelayRepositoryInterface $repository) {}
 
     public function validate(bool $isUpdate): ConstraintViolationListInterface
     {
         $list = $this->validator->validate($this->dto);
 
-        assert($list instanceof ConstraintViolationList);
+        \assert($list instanceof ConstraintViolationList);
 
         $list = $this->checkIsFeedbackLogic($list);
 
-        if ($this->dto->name === null || $this->dto->topic === null) {
+        if (null === $this->dto->name || null === $this->dto->topic) {
             return $list;
         }
 
@@ -54,7 +52,7 @@ final class RelayCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->name],
                 root: 'name',
                 propertyPath: 'name',
-                invalidValue: $this->dto->name
+                invalidValue: $this->dto->name,
             ));
         }
 
@@ -65,7 +63,7 @@ final class RelayCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->topic],
                 root: 'topic',
                 propertyPath: 'topic',
-                invalidValue: $this->dto->topic
+                invalidValue: $this->dto->topic,
             ));
         }
 
@@ -75,11 +73,11 @@ final class RelayCrudValidationService implements ValidationInterface
     private function checkIsFeedbackLogic(ConstraintViolationList $list): ConstraintViolationListInterface
     {
         if (
-            $this->dto->isFeedbackPayload === 'on' &&
-            (
-                $this->dto->checkTopic === null ||
-                $this->dto->checkTopicPayloadOn === null ||
-                $this->dto->checkTopicPayloadOff === null
+            'on' === $this->dto->isFeedbackPayload
+            && (
+                null === $this->dto->checkTopic
+                || null === $this->dto->checkTopicPayloadOn
+                || null === $this->dto->checkTopicPayloadOff
             )
         ) {
             $list->add(new ConstraintViolation(
@@ -88,7 +86,7 @@ final class RelayCrudValidationService implements ValidationInterface
                 parameters: [$this->dto->topic],
                 root: 'feedback',
                 propertyPath: 'feedback',
-                invalidValue: null
+                invalidValue: null,
             ));
         }
 

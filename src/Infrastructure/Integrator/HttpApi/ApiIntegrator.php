@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Integrator\HttpApi;
 
 use GuzzleHttp\Client;
-use Throwable;
 
 final class ApiIntegrator
 {
@@ -26,7 +25,7 @@ final class ApiIntegrator
             ]);
 
             return $response->getBody()->getContents() ?? null;
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             return null;
         }
     }
@@ -39,7 +38,7 @@ final class ApiIntegrator
             ]);
 
             return $response->getBody()->getContents() ?? null;
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             return null;
         }
     }

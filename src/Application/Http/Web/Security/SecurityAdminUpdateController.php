@@ -16,14 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SecurityAdminUpdateController extends AbstractController
 {
-    public function __construct(private SecurityCrudService $crud)
-    {
-    }
+    public function __construct(private SecurityCrudService $crud) {}
 
     /**
      * @throws OptimisticLockException|ORMException
      */
-    #[Route('/security/admin/update/{id}', name: "security_admin_update_by_id")]
+    #[Route('/security/admin/update/{id}', name: 'security_admin_update_by_id')]
     public function update(string $id, Request $request): Response
     {
         $errors = [];
@@ -37,7 +35,7 @@ final class SecurityAdminUpdateController extends AbstractController
 
             $errors = $this->crud->validate($securityDto, true);
 
-            if (count($errors) === 0) {
+            if (0 === \count($errors)) {
                 $this->crud->update($id, $securityDto);
 
                 return $this->redirectToRoute('security_admin');

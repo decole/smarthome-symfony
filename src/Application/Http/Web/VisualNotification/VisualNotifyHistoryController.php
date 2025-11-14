@@ -13,16 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class VisualNotifyHistoryController extends AbstractController
 {
-    public function __construct(private readonly VisualNotificationHistoryService $service)
-    {
-    }
+    public function __construct(private readonly VisualNotificationHistoryService $service) {}
 
     #[Route('/history/visual-notify', name: 'notify-history')]
     public function history(Request $request): Response
     {
         $dto = new VisualNotificationHistoryInputDto();
 
-        $dto->page = (int)$request->get('page', 1);
+        $dto->page = (int) $request->get('page', 1);
 
         $dto = $this->service->paginate($dto);
 

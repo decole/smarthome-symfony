@@ -11,7 +11,6 @@ final class VisualNotificationResultDto
         public readonly int $count,
         public readonly int $prev,
         public readonly int $next,
-        public readonly int $current
-    ) {
-    }
+        public readonly int $current,
+    ) {}
 }

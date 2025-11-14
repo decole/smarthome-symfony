@@ -18,16 +18,16 @@ interface VisualNotificationRepositoryInterface
      */
     public function findByTypeAndIsRead(
         ?int $type = null,
-        ?bool $isRead = null
+        ?bool $isRead = null,
     ): array;
 
     /**
-     * Пометить все прочитанное по типу либо все без типа нотификаций
+     * Пометить все прочитанное по типу либо все без типа нотификаций.
      */
     public function setAllIsRead(?int $type = null): void;
 
     /**
-     * Отдает данные согласно фильтру
+     * Отдает данные согласно фильтру.
      */
     public function findByFilters(Criteria $criteria): array;
 

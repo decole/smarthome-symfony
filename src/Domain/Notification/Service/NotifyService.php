@@ -6,7 +6,6 @@ namespace App\Domain\Notification\Service;
 
 use App\Domain\Event\NotificationEvent;
 use App\Domain\Notification\Entity\AliceNotificationMessage;
-use App\Domain\Notification\Entity\DiscordNotificationMessage;
 use App\Domain\Notification\Entity\TelegramNotificationMessage;
 use App\Domain\VisualNotification\Dto\VisualNotificationDto;
 use App\Domain\VisualNotification\Service\VisualNotificationService;
@@ -14,54 +13,35 @@ use App\Infrastructure\Repository\Identity\UserRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Сервис, через который происходит алертинг проекта
+ * Сервис, через который происходит алертинг проекта.
  */
 final class NotifyService
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly VisualNotificationService $service,
-        private readonly UserRepository $repository
-    ) {
-    }
+        private readonly UserRepository $repository,
+    ) {}
 
     /**
-     * Нотификация в телеграм (и в дискорд, если телеграм сообщений нет)
+     * Нотификация в телеграм
      */
     public function messengerNotify(string $message): void
     {
-        $count = 0;
-
         foreach ($this->repository->findAllWithTelegramId() as $user) {
             $id = $user->getTelegramId();
 
-            if ($id === '' || $id === null) {
+            if ('' === $id || null === $id) {
                 return;
             }
 
             $event = new NotificationEvent(new TelegramNotificationMessage($message, $user->getTelegramId()));
             $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
-
-            $count++;
-        }
-
-        if ($count === 0) {
-            $event = new NotificationEvent(new DiscordNotificationMessage($message));
-            $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
         }
     }
 
     /**
-     * Нотификация в дискорд
-     */
-    public function discordNotify(string $message): void
-    {
-        $event = new NotificationEvent(new DiscordNotificationMessage($message));
-        $this->eventDispatcher->dispatch($event, NotificationEvent::NAME);
-    }
-
-    /**
-     * Нотификация через колонку с Алисой по сервису Quasar IOT
+     * Нотификация через колонку с Алисой по сервису Quasar IOT.
      */
     public function aliceNotify(string $message): void
     {
