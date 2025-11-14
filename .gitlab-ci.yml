@@ -87,7 +87,6 @@ deploy_prod:
       git status
       git pull
       df -H /
-#      sh ci_to_prod.sh
       EOT
 #  dependencies:
 #    - tests
