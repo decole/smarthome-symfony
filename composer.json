@@ -1,8 +1,8 @@
 {
-    "name": "symfony/symfony-demo",
+    "name": "decole/smart-home",
     "license": "MIT",
     "type": "project",
-    "description": "Symfony Demo Application",
+    "description": "PHP MQTT smart home project",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "replace": {
