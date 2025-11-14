@@ -1,15 +1,25 @@
 stages:
   - manual-clean
+  - init
 #  - lint
 #  - build
 #  - compose
 #  - testing
   - deploy
 
-#variables:
-#  SSH_COMMAND: $SSH_COMMAND
-#  DB_HOST: $DB_HOST
-#
+variables:
+  SSH_COMMAND: $SSH_COMMAND
+  DB_HOST: $DB_HOST
+
+init:
+  stage: init
+  tags:
+    - smarthome
+  script:
+    - df -H /
+    - cd /var/www/smarthome/
+    - git checkout master
+
 #build:
 #  stage: build
 #  tags:
@@ -60,7 +70,7 @@ stages:
 clean:
   stage: manual-clean
   tags:
-    - uberserver
+    - smarthome
   script:
     - docker-compose -f docker-compose.ci.yaml down --remove-orphans
     - docker system prune -a -f
@@ -75,7 +85,7 @@ clean:
 deploy_prod:
   stage: deploy
   tags:
-    - uberserver
+    - smarthome
   script:
     - df -H /
     - |

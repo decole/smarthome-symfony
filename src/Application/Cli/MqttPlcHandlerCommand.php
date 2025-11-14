@@ -21,7 +21,7 @@ final class MqttPlcHandlerCommand extends Command
 
     public function configure(): void
     {
-        $this->setDescription('Мониторит контроллеры на рабочее состояник');
+        $this->setDescription('Мониторит контроллеры на рабочее состояние');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
