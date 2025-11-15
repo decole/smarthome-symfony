@@ -216,14 +216,19 @@ final class User implements UserInterface, PasswordAuthenticatedUserInterface, E
         $this->restoreTokenCreatedAt = null;
     }
 
-    public function getTwoFactorCode(): ?string
+    public function getTwoFactorSecret(): ?string
     {
         return $this->googleAuthSecret;
     }
 
-    public function setAuthSecret(?string $googleAuthSecret): void
+    public function setTwoFactorSecret(?string $googleAuthSecret): void
     {
         $this->googleAuthSecret = $googleAuthSecret;
+    }
+
+    public function isTwoFactorEnable(): bool
+    {
+        return (bool) $this->googleAuthSecret;
     }
 
     /**

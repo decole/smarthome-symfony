@@ -17,7 +17,7 @@ class TwoFactorCrudServiceCest
         $service = $I->getService($user);
         $service->add($user, $secret);
 
-        $I->assertEquals($secret, $user->getTwoFactorCode());
+        $I->assertEquals($secret, $user->getTwoFactorSecret());
     }
 
     public function positiveDeleteWithCode(TwoFactorCrudServiceStep $I): void
@@ -27,11 +27,11 @@ class TwoFactorCrudServiceCest
         $service = $I->getService($user);
         $service->add($user, $secret);
 
-        $I->assertEquals($secret, $user->getTwoFactorCode());
+        $I->assertEquals($secret, $user->getTwoFactorSecret());
 
         $service->delete($user, $I->getRequestWithSession());
 
-        $I->assertEquals(null, $user->getTwoFactorCode());
+        $I->assertEquals(null, $user->getTwoFactorSecret());
     }
 
     public function positiveDeleteWithoutCode(TwoFactorCrudServiceStep $I): void
@@ -40,6 +40,6 @@ class TwoFactorCrudServiceCest
         $service = $I->getService($user);
         $service->delete($user, $I->getRequestWithSession());
 
-        $I->assertEquals(null, $user->getTwoFactorCode());
+        $I->assertEquals(null, $user->getTwoFactorSecret());
     }
 }

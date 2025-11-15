@@ -14,13 +14,6 @@ final class TwoFactorService
     public const NAME = '2fa';
     public const TEMPORARY_KEY = 'temp_secret';
 
-    public function __construct(private readonly bool $isEnable) {}
-
-    public function isEnabled(): bool
-    {
-        return $this->isEnable;
-    }
-
     // checking the code from the user and saving the special flag to the session
     public function checkCode(User $user, ?string $code, Request $request): TwoFactorResultDto
     {
@@ -28,7 +21,7 @@ final class TwoFactorService
             return new TwoFactorResultDto(false, 'Empty code');
         }
 
-        if (!$this->validateCode($user->getTwoFactorCode(), $code)) {
+        if (!$this->validateCode($user->getTwoFactorSecret(), $code)) {
             return new TwoFactorResultDto(false, 'Not correct code');
         }
 
@@ -39,7 +32,7 @@ final class TwoFactorService
 
     public function setSessionIsVerifiedState(User $user, Request $request): void
     {
-        $request->getSession()->set(self::NAME, md5($user->getTwoFactorCode()));
+        $request->getSession()->set(self::NAME, md5($user->getTwoFactorSecret()));
     }
 
     public function deleteSessionVerifiedState(Request $request): void
@@ -52,7 +45,7 @@ final class TwoFactorService
     {
         $key = $request->getSession()->get(self::NAME);
 
-        return !empty($key) && $key === md5($user->getTwoFactorCode());
+        return !empty($key) && $key === md5($user->getTwoFactorSecret());
     }
 
     public function validateCode(string $secret, ?string $code): bool|int

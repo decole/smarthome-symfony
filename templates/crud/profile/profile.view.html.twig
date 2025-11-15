@@ -63,7 +63,7 @@
 
                     {% if twoFactor %}
                         <h5 class="mt-4 mb-2">{{ 'Two Factor'|trans }}</h5>
-                        {% if user.twoFactorCode is empty %}
+                        {% if user.isTwoFactorEnable is empty %}
                         <a href="{{ path('profile_two_factor_add') }}" class="btn btn-light">{{ 'Setup two factor'|trans }}</a>
                         {% else %}
                         <a href="{{ path('profile_two_factor_add') }}" class="btn btn-info">{{ 'Change two factor'|trans }}</a>

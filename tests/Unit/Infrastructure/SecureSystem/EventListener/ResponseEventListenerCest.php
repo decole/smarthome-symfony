@@ -15,7 +15,7 @@ class ResponseEventListenerCest
     public function isVerifiedSession(TwoFactorServiceStep $I): void
     {
         $user = $I->getUser();
-        $user->setAuthSecret($I->faker()->word());
+        $user->setTwoFactorSecret($I->faker()->word());
         $event = $I->createEvent($user, true);
         $listener = $I->createListener($user);
         $listener($event);

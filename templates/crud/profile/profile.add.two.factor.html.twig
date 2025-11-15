@@ -43,7 +43,7 @@
 
                         {% if twoFactor %}
                             <h5 class="mt-4 mb-2">{{ 'Two Factor'|trans }}</h5>
-                            {% if user.twoFactorCode is empty and isShowQrCode %}
+                            {% if user.isTwoFactorEnable is empty and isShowQrCode %}
                                 <img src="data:image/png;base64, {{ qr }}" alt="QR code" class="qr-code-image mb-3">
 
                                 <div class="form-group">
@@ -58,7 +58,7 @@
                     </div>
                     <!-- /.card-body -->
 
-                    {% if twoFactor and user.twoFactorCode is empty %}
+                    {% if twoFactor and user.isTwoFactorEnable is empty %}
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
                     </div>

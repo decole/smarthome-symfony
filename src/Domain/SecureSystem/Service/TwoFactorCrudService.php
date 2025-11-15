@@ -11,12 +11,12 @@ use App\Infrastructure\TwoFactor\Service\TwoFactorService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class TwoFactorCrudService
+final readonly class TwoFactorCrudService
 {
     public function __construct(
-        private readonly UserRepositoryInterface $repository,
-        private readonly TwoFactorService $twoFactorService,
-        private readonly TransactionInterface $transaction,
+        private UserRepositoryInterface $repository,
+        private TwoFactorService $twoFactorService,
+        private TransactionInterface $transaction,
     ) {}
 
     public function add(UserInterface $user, string $secret): void
@@ -25,7 +25,7 @@ final class TwoFactorCrudService
             $user = $this->repository->findOneByEmail($user->getUserIdentifier());
         }
 
-        $this->transaction->transactional(fn () => $user->setAuthSecret($secret));
+        $this->transaction->transactional(fn () => $user->setTwoFactorSecret($secret));
     }
 
     public function delete(UserInterface $user, Request $request): void
@@ -34,7 +34,7 @@ final class TwoFactorCrudService
             $user = $this->repository->findOneByEmail($user->getUserIdentifier());
         }
 
-        $this->transaction->transactional(fn () => $user->setAuthSecret(null));
+        $this->transaction->transactional(fn () => $user->setTwoFactorSecret(null));
 
         $this->twoFactorService->deleteSessionVerifiedState($request);
     }
