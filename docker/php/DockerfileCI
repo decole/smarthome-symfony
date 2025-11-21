@@ -7,7 +7,7 @@ ARG USER=gitlab-runner
 ARG UID=1001
 
 RUN chmod 777 -R /var/www \
-    && && mkdir -p /home/${USER}  \
+    && mkdir -p /home/${USER}  \
     && chown -R ${USER}:${USER} /var/www
 
 WORKDIR /var/www
