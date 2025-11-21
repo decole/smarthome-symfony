@@ -28,7 +28,6 @@ test-build:
 
 test-compose:
   stage: testing
-  interruptible: true
   tags:
     - smarthome
   dependencies:
