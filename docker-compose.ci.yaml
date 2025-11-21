@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  php-fpm:
+  php:
     build:
       context: .
       dockerfile: ./docker/php/DockerfileCI
@@ -11,18 +11,18 @@ services:
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
-      - "PHP_IDE_CONFIG=serverName=Docker"
     depends_on:
       - postgres
       - redis
     networks:
-      - uberserver-microservice
+      - smarthome-test
 
   postgres:
     image: postgres:11.2-alpine
     container_name: ci-postgres
     volumes:
       - ./docker/postgres/create_extension.sql:/docker-entrypoint-initdb.d/create_extension.sql
+      - ./docker/postgres/initialization-db.sql:/docker-entrypoint-initdb.d/initialization-db.sql
     ports:
       - "54333:5432"
     environment:
@@ -30,17 +30,14 @@ services:
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
     networks:
-      - uberserver-microservice
+      - smarthome-test
 
   redis:
     image: redis:6.0
     container_name: ci-redis
     networks:
-      - uberserver-microservice
-
-volumes:
-  notify-postgres:
+      - smarthome-test
 
 networks:
-  uberserver-microservice:
+  smarthome-test:
     driver: bridge
