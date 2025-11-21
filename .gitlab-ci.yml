@@ -24,8 +24,6 @@ test-build:
     - docker compose -f docker-compose.ci.yaml build php
     - docker compose -f docker-compose.ci.yaml down --remove-orphans
     - cp -n .env.test .env.test.local
-#    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env
-#    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
     - docker compose -f docker-compose.ci.yaml up -d
 
 test-compose:
@@ -52,7 +50,6 @@ tests-testing:
     - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept build
     - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept run --steps
     - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept clean
-    - docker compose -f docker-compose.ci.yaml run -T php rm -rf var/*
     - docker compose -f docker-compose.ci.yaml down --remove-orphans
 #  after_script:
 #    - >

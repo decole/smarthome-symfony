@@ -1,27 +1,15 @@
-## see .gitlab-ci.yml - build DockerfileCommands as commands-test docker image
-#FROM commands-test
-#
-#MAINTAINER decole <decole2014@yandex.ru>
-#
-#ARG USER=gitlab-runner
-#ARG UID=1001
-#
-#RUN useradd -G www-data,root -u ${UID} -d /home/${USER} ${USER}  \
-#    && mkdir -p /home/${USER}  \
-#    && chown -R ${USER}:${USER} /var/www \
-#    && chmod 777 -R /var/www
-#
-#WORKDIR /var/www
-#
-#USER ${USER}
-
-
-  GNU nano 6.2                                                                                                docker/php/DockerfileCI
 # see .gitlab-ci.yml - build DockerfileCommands as commands-test docker image
 FROM commands-test
 
 MAINTAINER decole <decole2014@yandex.ru>
 
-RUN chmod 777 -R /var/www
+ARG USER=gitlab-runner
+ARG UID=1001
+
+RUN chmod 777 -R /var/www \
+    && && mkdir -p /home/${USER}  \
+    && chown -R ${USER}:${USER} /var/www
 
 WORKDIR /var/www
+
+USER ${USER}
