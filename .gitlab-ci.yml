@@ -52,6 +52,7 @@ tests-testing:
     - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept build
     - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept run --steps
     - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept clean
+    - docker compose -f docker-compose.ci.yaml run -T php rm -rf var/*
     - docker compose -f docker-compose.ci.yaml down --remove-orphans
 #  after_script:
 #    - >
