@@ -1,6 +1,11 @@
+default:
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - vendor/
+
 stages:
   - manual-clean
-  - init
 #  - lint
 #  - build
 #  - compose
@@ -10,25 +15,18 @@ stages:
 variables:
   DB_HOST: $DB_HOST
 
-init:
-  stage: init
-  tags:
-    - smarthome
-  script:
-    - df -H /
-    - cd /var/www/smarthome/
-    - git checkout master
-
 test-build:
   stage: testing
   tags:
     - smarthome
   script:
-    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
+    - docker build -f docker/php/DockerfileCommands -t commands-test .
+    - docker compose -f docker-compose.ci.yaml build php
+    - docker compose -f docker-compose.ci.yaml down --remove-orphans
     - cp -n .env.test .env.test.local
 #    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env
-    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
-    - docker-compose -f docker-compose.ci.yaml up -d
+#    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
+    - docker compose -f docker-compose.ci.yaml up -d
 
 test-compose:
   stage: testing
@@ -38,9 +36,8 @@ test-compose:
   dependencies:
     - test-build
   script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php composer install --prefer-dist --no-ansi --no-interaction --no-progress
-    - docker-compose -f docker-compose.ci.yaml exec -T php php -v
-    - docker-compose -f docker-compose.ci.yaml exec -T php chmod 777 -R ./var ./tests/_output ./tests/Support
+    - docker compose -f docker-compose.ci.yaml run -T php composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - docker compose -f docker-compose.ci.yaml run -T php php -v
 
 tests-testing:
   stage: testing
@@ -49,13 +46,13 @@ tests-testing:
   dependencies:
     - test-compose
   script:
-    - docker-compose -f docker-compose.ci.yaml exec -T php php bin/console d:d:d --force
-    - docker-compose -f docker-compose.ci.yaml exec -T php php bin/console d:d:c
-    - docker-compose -f docker-compose.ci.yaml exec -T php php bin/console d:m:m --no-interaction --env=test
-    - docker-compose -f docker-compose.ci.yaml exec -T php ./vendor/codeception/codeception/codecept build
-    - docker-compose -f docker-compose.ci.yaml exec -T php ./vendor/codeception/codeception/codecept run --steps
-    - docker-compose -f docker-compose.ci.yaml exec -T php ./vendor/codeception/codeception/codecept clean
-    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
+    - docker compose -f docker-compose.ci.yaml run -T php php bin/console d:d:d --force --env=test
+    - docker compose -f docker-compose.ci.yaml run -T php php bin/console d:d:c --env=test
+    - docker compose -f docker-compose.ci.yaml run -T php php bin/console d:m:m --no-interaction --env=test
+    - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept build
+    - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept run --steps
+    - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept clean
+    - docker compose -f docker-compose.ci.yaml down --remove-orphans
 #  after_script:
 #    - >
 #      if [ $CI_JOB_STATUS == 'success' ]; then
@@ -103,15 +100,6 @@ tests-testing:
 #        docker image rm uberserver-symfony_php-fpm
 #      fi
 
-clean:
-  stage: manual-clean
-  tags:
-    - smarthome
-  script:
-    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-    - docker system prune -a -f
-  when: manual
-
 #psalm:
 #  stage: lint
 #  script:
@@ -124,18 +112,15 @@ deploy_prod:
     - smarthome
   script:
     - df -H /
-    - |
-      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
-      cd uberserver/
-      git checkout master
-      git fetch --all
-      git reset --hard HEAD
-      git status
-      git pull
-      df -H /
-      EOT
-#  dependencies:
-#    - tests
+    - cd /var/www/smarthome/
+    - git checkout master
+    - git fetch --all
+    - git reset --hard HEAD
+    - git status
+    - git pull
+    - df -H
+  dependencies:
+    - tests-testing
   environment:
     name: deploy
   only:

@@ -37,8 +37,6 @@ RUN apt update -q -y \
     && docker-php-ext-install sockets
 
 RUN docker-php-ext-configure pcntl --enable-pcntl \
-    && docker-php-ext-install pcntl \
-    RUN docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-install pcntl
 
 RUN apt-get -y update \

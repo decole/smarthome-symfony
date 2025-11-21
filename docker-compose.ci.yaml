@@ -1,5 +1,3 @@
-version: "3.4"
-
 services:
   php:
     build:
@@ -8,6 +6,7 @@ services:
     container_name: ci-symfony
     volumes:
       - ./docker/php/php-fpm.ini:/usr/local/etc/php/php.ini
+      - ./:/var/www
     environment:
       - "PSQL_PORT=5432"
       - "PSQL_HOST=postgres"
