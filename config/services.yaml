@@ -106,10 +106,6 @@ services:
     App\Domain\:
       resource: '%kernel.project_dir%/src/Domain/**/EventListener/*Listener.php'
 
-    App\Infrastructure\TwoFactor\Service\TwoFactorService:
-      arguments:
-        $isEnable: '%env(bool:TWO_FACTOR_AUTH)%'
-
     App\Domain\ScheduleTask\Service\ScheduleTaskService:
       arguments:
         $logger: '@monolog.logger.schedule_service'

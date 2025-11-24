@@ -1,70 +1,52 @@
+default:
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - vendor/
+
 stages:
-  - manual-clean
 #  - lint
-#  - build
-#  - compose
-#  - testing
+  - testing
   - deploy
 
-#variables:
-#  SSH_COMMAND: $SSH_COMMAND
-#  DB_HOST: $DB_HOST
-#
-#build:
-#  stage: build
-#  tags:
-#    - uberserver
-#  script:
-#    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-#    - cp -n .env.test .env.test.local
-#    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env
-#    - sed -i 's/uberserver/'"$DB_HOST"'/g' .env.test.local
-#    - docker-compose -f docker-compose.ci.yaml up -d
-#
-#compose:
-#  stage: compose
-#  interruptible: true
-#  tags:
-#    - uberserver
-#  dependencies:
-#    - build
-#  script:
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php -v
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm chmod 777 -R ./var ./tests/_output ./tests/_support
-#
-#tests:
-#  stage: testing
-#  tags:
-#    - uberserver
-#  dependencies:
-#    - compose
-#  script:
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:d --force
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console d:d:c
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm php bin/console doctrine:migrations:migrate --no-interaction
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept build
-#    - docker-compose -f docker-compose.ci.yaml exec -T php-fpm ./vendor/codeception/codeception/codecept run
-#    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-#  after_script:
-#    - >
-#      if [ $CI_JOB_STATUS == 'success' ]; then
-#        echo 'Success'
-#        docker image rm uberserver-symfony_php-fpm
-#      else
-#        echo 'Dropping build files'
-#        docker-compose -f docker-compose.ci.yaml down --remove-orphans
-#        docker image rm uberserver-symfony_php-fpm
-#      fi
+variables:
+  ALERT_HOST: $ALERT_HOST
 
-clean:
-  stage: manual-clean
+test-build:
+  stage: testing
   tags:
-    - uberserver
+    - smarthome
   script:
-    - docker-compose -f docker-compose.ci.yaml down --remove-orphans
-    - docker system prune -a -f
-  when: manual
+    - docker build -f docker/php/DockerfileCommands -t commands-test .
+    - docker compose -f docker-compose.ci.yaml build php
+    - docker compose -f docker-compose.ci.yaml down --remove-orphans
+    - cp -n .env.test .env.test.local
+    - docker compose -f docker-compose.ci.yaml up -d
+
+test-compose:
+  stage: testing
+  tags:
+    - smarthome
+  dependencies:
+    - test-build
+  script:
+    - docker compose -f docker-compose.ci.yaml run -T php composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - docker compose -f docker-compose.ci.yaml run -T php php -v
+
+tests-testing:
+  stage: testing
+  tags:
+    - smarthome
+  dependencies:
+    - test-compose
+  script:
+    - docker compose -f docker-compose.ci.yaml run -T php php bin/console d:d:d --force --env=test
+    - docker compose -f docker-compose.ci.yaml run -T php php bin/console d:d:c --env=test
+    - docker compose -f docker-compose.ci.yaml run -T php php bin/console d:m:m --no-interaction --env=test
+    - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept build
+    - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept run --steps
+    - docker compose -f docker-compose.ci.yaml run -T php ./vendor/codeception/codeception/codecept clean
+    - docker compose -f docker-compose.ci.yaml down --remove-orphans
 
 #psalm:
 #  stage: lint
@@ -75,22 +57,31 @@ clean:
 deploy_prod:
   stage: deploy
   tags:
-    - uberserver
+    - smarthome
   script:
     - df -H /
-    - |
-      ssh -T "$SSH_COMMAND" /bin/bash -s << EOT
-      cd uberserver/
-      git checkout master
-      git fetch --all
-      git reset --hard HEAD
-      git status
-      git pull
-      df -H /
-      EOT
-#  dependencies:
-#    - tests
+    - cd /var/www/smarthome/
+    - git checkout master
+    - git fetch --all
+    - git reset --hard HEAD
+    - git status
+    - git pull
+    - df -H /
+    - docker compose run -T php-fpm composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - docker compose run -T php-fpm php bin/console d:m:m --no-interaction
+    - docker compose down --remove-orphans
+    - docker compose up -d
+  dependencies:
+    - tests-testing
   environment:
     name: deploy
   only:
     - master
+  after_script:
+    - >
+      if [ $CI_JOB_STATUS == 'success' ]; then
+        echo 'Success'
+      else
+        curl -X GET "$ALERT_HOST"
+        curl -s -X POST https://api.telegram.org/bot${TG_TOKEN}/sendMessage -d chat_id="${TG_CHAT_ID}" -d text="Не может стартовать прод. Commit ${$CI_COMMIT_REF_SLUG}"
+      fi

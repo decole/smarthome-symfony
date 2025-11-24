@@ -1,13 +1,15 @@
-FROM DockerfileCommands
+# see .gitlab-ci.yml - build DockerfileCommands as commands-test docker image
+FROM commands-test
 
 MAINTAINER decole <decole2014@yandex.ru>
 
 ARG USER=gitlab-runner
-ARG UID=1000
+ARG UID=1001
 
 RUN useradd -G www-data,root -u ${UID} -d /home/${USER} ${USER}  \
     && mkdir -p /home/${USER}  \
-    && chown -R ${USER}:${USER} /var/www
+    && chown -R ${USER}:${USER} /var/www \
+    && chmod 777 -R /var/www
 
 WORKDIR /var/www
 

@@ -22,7 +22,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 final class DeviceCacheService implements CacheServiceInterface
 {
-    private const DURATION = 'PT6H';
+    private const string DURATION = 'PT6H';
 
     public function __construct(
         private readonly CacheService $cache,

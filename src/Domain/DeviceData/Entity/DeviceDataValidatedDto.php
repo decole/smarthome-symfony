@@ -15,4 +15,9 @@ final class DeviceDataValidatedDto
         public bool $hasCheckStatusWarning,
         public bool $hasAlertingNotify,
     ) {}
+
+    public function hasNotify(): bool
+    {
+        return $this->hasAlertingNotify || $this->hasCheckStatusWarning;
+    }
 }

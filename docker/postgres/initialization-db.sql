@@ -1,3 +1,7 @@
 CREATE DATABASE uberserver_testtest_;
 
 GRANT ALL PRIVILEGES ON DATABASE uberserver_testtest_ TO root;
+
+CREATE DATABASE root;
+
+GRANT ALL PRIVILEGES ON DATABASE root TO root;

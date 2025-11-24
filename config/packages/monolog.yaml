@@ -102,10 +102,6 @@ when@prod:
                 path: php://stderr
                 level: info
                 formatter: monolog.formatter.json
-            console:
-                type: console
-                process_psr_3_messages: false
-                channels: ["!event", "!doctrine"]
             deprecation:
                 type: stream
                 channels: [deprecation]

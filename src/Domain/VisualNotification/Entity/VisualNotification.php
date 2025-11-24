@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VisualNotificationRepository::class)]
 #[ORM\Table(name: 'visual_notify')]
-final class VisualNotification implements EntityInterface
+class VisualNotification implements EntityInterface
 {
     use CreatedAt;
     use Entity;

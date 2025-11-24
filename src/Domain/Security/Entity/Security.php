@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping\Embedded;
 
 #[ORM\Entity(repositoryClass: SecurityRepository::class)]
 #[ORM\Table(name: 'security')]
-final class Security implements EntityInterface
+class Security implements EntityInterface
 {
     use CreatedAt;
     use CrudCommonFields;
