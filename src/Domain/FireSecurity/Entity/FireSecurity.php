@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FireSecurityRepository::class)]
 #[ORM\Table(name: 'fire_security')]
-final class FireSecurity implements EntityInterface
+class FireSecurity implements EntityInterface
 {
     use CreatedAt;
     use CrudCommonFields;

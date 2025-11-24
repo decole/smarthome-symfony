@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScheduleTaskRepository::class)]
 #[ORM\Table(name: 'schedule_task')]
-final class ScheduleTask implements EntityInterface
+class ScheduleTask implements EntityInterface
 {
     use CreatedAt;
     use Entity;

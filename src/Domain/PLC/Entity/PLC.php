@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PlcRepository::class)]
 #[ORM\Table(name: 'plc')]
-final class PLC implements EntityInterface
+class PLC implements EntityInterface
 {
     use CreatedAt;
     use Entity;

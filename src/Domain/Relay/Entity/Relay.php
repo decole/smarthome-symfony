@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RelayRepository::class)]
 #[ORM\Table(name: 'relay')]
-final class Relay implements EntityInterface
+class Relay implements EntityInterface
 {
     use CreatedAt;
     use CrudCommonFields;
